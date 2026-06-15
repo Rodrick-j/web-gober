@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--admin-text-muted);
+}
+
+.dropZone {
+  border: 2px dashed var(--admin-border);
+  border-radius: 12px;
+  background: var(--admin-surface-2);
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  overflow: hidden;
+  position: relative;
+}
+
+.dropZone:hover {
+  border-color: var(--admin-primary);
+  background: rgba(139, 0, 0, 0.02);
+}
+
+.dragActive {
+  border-color: var(--admin-primary);
+  background: rgba(139, 0, 0, 0.05);
+  transform: scale(1.02);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.icon {
+  font-size: 2.5rem;
+  opacity: 0.8;
+}
+
+.text {
+  font-size: 0.9rem;
+  color: var(--admin-text);
+  margin: 0;
+}
+
+.subtext {
+  font-size: 0.75rem;
+  color: var(--admin-text-muted);
+  margin: 0;
+}
+
+.previewContainer {
+  width: 100%;
+  height: 240px;
+  position: relative;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.previewOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.hasPreview:hover .previewOverlay {
+  opacity: 1;
+}
+
+.fileSelected {
+  font-size: 0.85rem;
+  color: var(--admin-info);
+  background: var(--admin-info-bg, rgba(59, 130, 246, 0.1));
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  display: inline-flex;
+  font-weight: 500;
+}
+
+.error {
+  font-size: 0.8rem;
+  color: var(--admin-danger);
+  margin-top: 0.25rem;
+}

@@ -1,0 +1,60 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mainCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: var(--admin-surface-2);
+  padding: 1.5rem;
+  border-radius: 12px;
+  height: fit-content;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 1rem;
+}
+
+.errorAlert {
+  background: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,273 @@
+.footer {
+  background-color: #11141c; /* Deep professional dark blue/slate */
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.topBand {
+  background: linear-gradient(135deg, #a3161c 0%, #d82b33 50%, #8b0000 100%);
+  padding: 1.5rem 0;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(163, 22, 28, 0.4);
+  z-index: 2;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.topBandInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.brandBlock {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.brandLogo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.brandLogo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.brandName {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.brandSub {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.socialWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.socialTitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.socialLinks {
+  display: flex;
+  gap: 1rem;
+}
+
+.socialLink {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.socialLink:hover {
+  transform: translateY(-5px) scale(1.15);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  color: #ffffff;
+}
+
+/* Redes Sociales Colores de Marca y Resplandor */
+.socialLink.fb:hover { background: #1877f2; box-shadow: 0 10px 25px rgba(24,119,242,0.6); border-color: transparent; }
+.socialLink.tw:hover { background: #000000; box-shadow: 0 10px 25px rgba(0,0,0,0.6); border-color: transparent; }
+.socialLink.ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); box-shadow: 0 10px 25px rgba(220,39,67,0.6); border-color: transparent; }
+.socialLink.tk:hover { background: #000000; color: #ff0050; box-shadow: 0 10px 25px rgba(0,0,0,0.6); border-color: transparent; text-shadow: 2px 2px 0px #00f2fe; }
+.socialLink.yt:hover { background: #ff0000; box-shadow: 0 10px 25px rgba(255,0,0,0.6); border-color: transparent; }
+
+.linksGrid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.colTitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-bottom: 0.75rem;
+}
+
+.colTitle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: #c1272d;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.linksGrid div:hover .colTitle::after {
+  width: 60px;
+}
+
+.linksGrid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footerLink {
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+}
+
+.footerLink:hover {
+  color: #ffffff;
+  background: rgba(193, 39, 45, 0.8);
+  border-color: rgba(193, 39, 45, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.contactItem:hover {
+  color: #ffffff;
+}
+
+.contactIcon {
+  color: #c1272d;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.bottomBar {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  background: #0b0c10;
+  padding: 1.5rem 2rem;
+  font-size: 0.85rem;
+  color: #64748b;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bottomBar span {
+  font-weight: 500;
+}
+
+.bottomLinks {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.bottomLinks a {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 500;
+}
+
+.bottomLinks a:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .brandBlock {
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+  }
+  .socialWrapper {
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    gap: 0.8rem;
+  }
+  .socialLinks {
+    justify-content: center;
+    width: 100%;
+  }
+  .bottomBar {
+    flex-direction: column;
+    text-align: center;
+  }
+  .bottomLinks {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,105 @@
+.intro-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #67181a; /* Rojo Carmesi Oficial */
+  background-image: 
+    radial-gradient(circle at center, rgba(156, 7, 32, 0.8) 0%, transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+  background-position: center center;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Add a subtle scanline effect */
+.intro-container::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.intro-content {
+  text-align: center;
+  color: white;
+  z-index: 10;
+  position: relative;
+}
+
+.intro-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 4.5rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.title-futuristic-glow {
+  color: #D4A017;
+  text-shadow: 0 0 10px rgba(212, 160, 23, 0.8), 0 0 20px rgba(212, 160, 23, 0.6), 0 0 40px rgba(212, 160, 23, 0.4), 0 0 80px rgba(212, 160, 23, 0.2);
+  letter-spacing: 8px; /* Wider spacing for a sci-fi feel */
+  position: relative;
+  display: inline-block;
+}
+
+.intro-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(3rem, 4vw, 4rem);
+  font-weight: 900;
+  margin-top: 2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffb843; /* Codigo Alterno dorado de la imagen */
+  text-shadow: 0 0 10px rgba(255, 184, 67, 0.4), 0 0 20px rgba(255, 184, 67, 0.2);
+}
+
+.intro-logo {
+  display: block;
+  margin: 0 auto 2.5rem auto;
+  width: auto;
+  height: 200px;
+  max-width: 90vw;
+  object-fit: contain;
+  box-shadow: 0 0 30px rgba(212, 160, 23, 0.4);
+  border: 2px solid rgba(212, 160, 23, 0.5);
+  border-radius: 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Glitch animation class for framer motion if needed, or CSS */
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+
+.glitch-effect {
+  animation: glitch 0.3s ease infinite;
+  animation-play-state: paused;
+}
+
+.glitch-effect:hover {
+  animation-play-state: running;
+}

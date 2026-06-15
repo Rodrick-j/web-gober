@@ -1,0 +1,65 @@
+.editorContainer {
+  margin-bottom: 1.5rem;
+}
+
+.loading {
+  padding: 2rem;
+  text-align: center;
+  color: var(--admin-text-muted);
+  background: var(--admin-surface-2);
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sobreescribiendo estilos de Quill para que encajen con nuestro diseño Blanco Premium */
+.quillEditor {
+  background: var(--admin-surface);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.quillEditor :global(.ql-toolbar.ql-snow) {
+  border: 1px solid var(--admin-border);
+  border-bottom: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background: var(--admin-surface-2);
+  padding: 12px 8px;
+}
+
+.quillEditor :global(.ql-container.ql-snow) {
+  border: 1px solid var(--admin-border);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  min-height: 250px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--admin-text);
+  background: var(--admin-surface);
+}
+
+.quillEditor :global(.ql-editor) {
+  min-height: 250px;
+}
+
+.quillEditor :global(.ql-editor.ql-blank::before) {
+  color: var(--admin-text-muted);
+  font-style: normal;
+  opacity: 0.7;
+}
+
+.quillEditor :global(.ql-snow .ql-picker) {
+  color: var(--admin-text);
+}
+
+.quillEditor :global(.ql-snow .ql-stroke) {
+  stroke: var(--admin-text);
+}
+
+.quillEditor :global(.ql-snow .ql-fill) {
+  fill: var(--admin-text);
+}

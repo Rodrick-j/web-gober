@@ -1,0 +1,297 @@
+.sliderSection {
+  width: 100%;
+  padding: 2rem 1.5rem;
+  background-color: var(--color-bg-alt); /* O un color de fondo sutil */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliderFrame {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  height: 70vh;
+  min-height: 500px;
+  /* Gold Diamond Gradient */
+  background: linear-gradient(60deg, #f6d365, #ffb347, #f6d365, #ffffff, #f6d365);
+  background-size: 300% 300%;
+  animation: diamondGold 4s ease infinite;
+  border-radius: 20px;
+  padding: 8px; /* Thickness of the gold border */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 25px rgba(255, 215, 0, 0.4);
+}
+
+@keyframes diamondGold {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.swiperRoot {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px; /* Inner radius to match outer */
+  overflow: hidden;
+}
+
+.slideInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.bgBlur {
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  filter: blur(20px);
+  z-index: 0;
+  opacity: 0.8;
+}
+
+.bgOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* Oscurece el fondo desenfocado */
+  z-index: 1;
+}
+
+.bgImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  /* Next.js Image fill mode requiere position: relative en el contenedor */
+}
+
+/* Cuando el slide está activo, hacemos un ligero zoom in */
+:global(.swiper-slide-active) .bgImage img {
+  transform: scale(1.05);
+  transition: transform 6s linear;
+}
+
+.gradientOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  z-index: 1;
+}
+
+.slideContent {
+  position: absolute;
+  bottom: 25%; /* Much higher than before to avoid bullets */
+  left: 8%; /* Indented from left */
+  max-width: 800px;
+  z-index: 2;
+  color: #ffffff !important; /* Force white color */
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slideTitle {
+  font-family: var(--font-heading), 'Outfit', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  color: #ffffff !important;
+  text-transform: uppercase;
+  /* Very strong shadow for readability on any background */
+  text-shadow: 0px 4px 15px rgba(0,0,0,0.9), 0px 0px 30px rgba(0,0,0,0.7), 2px 2px 0px rgba(0,0,0,0.5);
+  line-height: 1.1;
+}
+
+.slideLink {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background-color: var(--color-gold);
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.slideLink:hover {
+  background-color: var(--color-gold-light);
+  transform: translateY(-2px);
+}
+
+/* Paginación (Puntos) */
+.customBullet {
+  width: 12px !important;
+  height: 12px !important;
+  background: rgba(255, 255, 255, 0.5) !important;
+  opacity: 1 !important;
+  border-radius: 50% !important;
+  transition: all 0.3s !important;
+}
+
+.customBulletActive {
+  width: 30px !important;
+  border-radius: 10px !important;
+  background: white !important;
+}
+
+/* Flechas de Navegación Nativas de Swiper */
+:global(.swiper-button-prev),
+:global(.swiper-button-next) {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50%;
+  color: white !important;
+  transition: all 0.3s;
+}
+
+:global(.swiper-button-prev::after),
+:global(.swiper-button-next::after) {
+  font-size: 1.5rem !important;
+  font-weight: bold;
+}
+
+:global(.swiper-button-prev):hover,
+:global(.swiper-button-next):hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+:global(.swiper-button-prev) {
+  left: 20px !important;
+}
+
+:global(.swiper-button-next) {
+  right: 20px !important;
+}
+
+/* Fallback si no hay fotos */
+.heroFallback {
+  position: relative;
+  width: 100%;
+  padding: 8rem 2rem;
+  background-color: var(--color-primary-dark);
+  color: white;
+  text-align: center;
+}
+
+.heroFallback .title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.heroFallback .highlight {
+  color: var(--color-gold);
+}
+
+.heroFallback .subtitle {
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .sliderSection {
+    padding: 0.5rem;
+  }
+  .sliderFrame {
+    height: 50vh;
+    min-height: 400px;
+    padding: 4px; /* Marco más delgado en móvil */
+  }
+  .slideContent {
+    bottom: 10%;
+    left: 5%;
+    right: 5%;
+  }
+  .slideTitle {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+    margin-bottom: 0.8rem;
+  }
+  .slideLink {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  :global(.swiper-button-prev),
+  :global(.swiper-button-next) {
+    display: none !important; /* Ocultar flechas en móvil para limpiar la pantalla */
+  }
+}
+
+/* Floating Social Networks */
+.floatingSocials {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  z-index: 30; /* Ensure it's above the arrow */
+}
+
+.socialIcon {
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+}
+
+.socialIcon:hover {
+  transform: scale(1.15) translateX(-5px);
+  background: rgba(255, 255, 255, 0.9);
+  color: #a80a15;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Redes Sociales Colores de Marca al Hover */
+.socialIcon.fb:hover { background: #1877f2; color: white; border-color: transparent; }
+.socialIcon.tw:hover { background: #000000; color: white; border-color: transparent; }
+.socialIcon.ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border-color: transparent; }
+.socialIcon.tk:hover { background: #000000; color: #ff0050; border-color: transparent; text-shadow: 1px 1px 0px #00f2fe; }
+.socialIcon.yt:hover { background: #ff0000; color: white; border-color: transparent; }
+
+@media (max-width: 768px) {
+  .floatingSocials {
+    top: 15px;
+    right: 15px;
+    gap: 8px;
+  }
+  .socialIcon {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
+  }
+}

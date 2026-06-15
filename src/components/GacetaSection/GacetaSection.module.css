@@ -1,0 +1,222 @@
+.gacetaSection {
+  background: var(--color-white);
+}
+
+.gacetaHeader {
+  margin-bottom: 4rem;
+}
+
+.glowingTitle {
+  font-size: clamp(3rem, 5vw, 4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  background: linear-gradient(to right, #9c0720 0%, #ff0a33 50%, #9c0720 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 4s linear infinite, glowPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(156, 7, 32, 0.2));
+  }
+  100% {
+    filter: drop-shadow(0 0 8px rgba(255, 10, 51, 0.4));
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* Left Panel */
+.leftPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.catCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 0.875rem;
+}
+
+.catCard:hover {
+  background: rgba(156, 7, 32, 0.03); /* Fondo sutil rojo carmesí */
+  border-color: rgba(156, 7, 32, 0.2);
+  transform: translateX(8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.catIcon {
+  font-size: 1.5rem;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.catCard:hover .catIcon {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.catArrow {
+  transition: transform 0.3s ease;
+  color: var(--color-text-muted);
+}
+
+.catCard:hover .catArrow {
+  transform: translateX(5px);
+  color: var(--color-primary);
+}
+
+.catLabel {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 0.875rem;
+}
+
+.catCount {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+/* Right Panel */
+.rightPanel {
+  position: sticky;
+  top: calc(var(--navbar-height) + 2rem);
+}
+
+.docList {
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.docListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.liveIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #16a34a;
+}
+
+.liveDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+  animation: pulse-red 2s ease-in-out infinite;
+}
+
+.docItem {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background var(--transition-fast);
+  cursor: pointer;
+}
+
+.docItem:last-child {
+  border-bottom: none;
+}
+
+.docItem:hover {
+  background: var(--color-white);
+}
+
+.docType {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.docNumber {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.docTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.45;
+}
+
+.docFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.docDate {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.docDownload {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: rgba(139,0,0,0.08);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.docDownload:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; gap: 2rem; }
+  .rightPanel { position: static; }
+}
+
+@media (max-width: 768px) {
+  .gacetaHeader {
+    margin-bottom: 2rem;
+  }
+  .glowingTitle {
+    font-size: clamp(2.2rem, 8vw, 3rem);
+  }
+}
