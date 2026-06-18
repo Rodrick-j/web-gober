@@ -26,7 +26,7 @@
 }
 
 .title {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 3.5rem;
   font-weight: 900;
   color: #ffffff !important; /* Force white color to fix contrast */
@@ -39,7 +39,7 @@
 }
 
 .subtitle {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 1.15rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.9);
@@ -63,7 +63,7 @@
   text-align: center;
   padding: 4rem;
   color: #6c757d;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 1.1rem;
   background: white;
   border-radius: 1rem;
@@ -130,7 +130,7 @@
   align-items: center;
   justify-content: center;
   color: #adb5bd;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
 }
 
@@ -139,7 +139,7 @@
   top: 1.25rem;
   left: 1.25rem;
   color: white;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -158,7 +158,7 @@
 }
 
 .date {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   font-weight: 600;
   color: #c1272d;
@@ -169,7 +169,7 @@
 }
 
 .cardTitle {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.4rem;
   font-weight: 800;
   color: #1a1a1a;
@@ -183,7 +183,7 @@
 }
 
 .cardExcerpt {
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   color: #6c757d;
   line-height: 1.6;
@@ -192,7 +192,7 @@
 }
 
 .readMore {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-weight: 700;
   color: #c1272d;
   font-size: 0.95rem;

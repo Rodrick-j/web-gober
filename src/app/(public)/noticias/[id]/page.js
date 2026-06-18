@@ -77,7 +77,7 @@ export default async function NoticiaDetailPage({ params }) {
 
   return (
     <>
-      <Navbar />
+
       
       <main className={styles.articlePage}>
         {/* Hero Section */}
@@ -92,6 +92,8 @@ export default async function NoticiaDetailPage({ params }) {
               fill
               className={styles.heroImage} 
               sizes="100vw"
+              priority
+              quality={100}
             />
           ) : (
             <div className={styles.heroImage} style={{ background: 'var(--color-surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '5rem', opacity: 0.5 }}>
@@ -139,6 +141,7 @@ export default async function NoticiaDetailPage({ params }) {
                           width={70}
                           height={70}
                           style={{ objectFit: 'cover' }}
+                          quality={100}
                         />
                       ) : (
                         <div className={styles.authorityPlaceholder}>
@@ -179,6 +182,7 @@ export default async function NoticiaDetailPage({ params }) {
                             width={80}
                             height={80}
                             className={styles.relatedImage} 
+                            quality={100}
                           />
                         ) : (
                           <div className={styles.relatedImage} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', opacity: 0.5 }}>
@@ -202,7 +206,7 @@ export default async function NoticiaDetailPage({ params }) {
         </section>
       </main>
 
-      <Footer />
+
     </>
   );
 }

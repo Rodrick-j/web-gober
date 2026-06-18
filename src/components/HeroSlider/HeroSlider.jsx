@@ -79,6 +79,7 @@ export default function HeroSlider({ banners, redes }) {
                   style={{ objectFit: 'cover' }}
                   sizes="100vw"
                   priority={banners.indexOf(banner) === 0}
+                  quality={100}
                 />
               </div>
               <div className={styles.bgOverlay} />
@@ -92,6 +93,7 @@ export default function HeroSlider({ banners, redes }) {
                   style={{ objectFit: 'contain', objectPosition: 'center' }}
                   sizes="100vw"
                   priority={banners.indexOf(banner) === 0}
+                  quality={100}
                 />
               </div>
               

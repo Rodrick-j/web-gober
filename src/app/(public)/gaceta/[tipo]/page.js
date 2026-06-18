@@ -85,7 +85,7 @@ export default async function GacetaPage({ params }) {
 
   return (
     <>
-      <Navbar />
+
       
       <main className={styles.portalContainer}>
         {/* Header Dinámico Premium */}
@@ -105,7 +105,7 @@ export default async function GacetaPage({ params }) {
         </div>
       </main>
 
-      <Footer />
+
     </>
   );
 }

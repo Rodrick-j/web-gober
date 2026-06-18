@@ -44,7 +44,7 @@ export default async function NoticiasPortalPage({ searchParams }) {
 
   return (
     <>
-      <Navbar />
+
       <main className={styles.mainContainer}>
         <div className="container">
           <header className={styles.portalHeader}>
@@ -93,6 +93,8 @@ export default async function NoticiasPortalPage({ searchParams }) {
                     fill
                     style={{ objectFit: 'cover' }}
                     sizes="(max-width: 992px) 100vw, 60vw"
+                    priority
+                    quality={100}
                   />
                 ) : (
                   <div className={styles.noImage}>GADOR</div>
@@ -127,6 +129,7 @@ export default async function NoticiasPortalPage({ searchParams }) {
                         fill
                         className={styles.cardImage} 
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        quality={100}
                       />
                     ) : (
                       <div className={styles.cardNoImage}>{noticia.secretarias?.icono || '📰'}</div>
@@ -148,7 +151,7 @@ export default async function NoticiasPortalPage({ searchParams }) {
           )}
         </div>
       </main>
-      <Footer />
+
     </>
   );
 }

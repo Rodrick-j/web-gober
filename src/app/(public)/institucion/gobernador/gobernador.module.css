@@ -1,0 +1,220 @@
+.pageWrapper {
+  min-height: 100vh;
+  padding: 120px 2rem 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* --- IMAGE CONTAINER --- */
+.pantoneCard {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  transition: transform 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pantoneCard:hover {
+  transform: translateY(-10px);
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  background-color: transparent;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+  -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
+}
+
+.pantoneLabel {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.pantoneTitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+
+.pantoneCode {
+  font-family: 'Inter', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #67181a;
+  margin-top: 0.25rem;
+}
+
+/* --- TEXT CONTENT --- */
+.contentArea {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.mainTitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1.15;
+  color: #1a1a1a;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+}
+
+.subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  color: #67181a;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border-left: 4px solid #D4AF37;
+  padding-left: 1rem;
+}
+
+.biography {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #4a4a4a;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.biography p {
+  margin: 0;
+}
+
+.biography p:first-child {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.quoteCard {
+  background: linear-gradient(135deg, rgba(103, 24, 26, 0.05) 0%, rgba(212, 175, 55, 0.05) 100%);
+  border-left: 4px solid #67181a;
+  padding: 2rem;
+  border-radius: 0 12px 12px 0;
+  margin-top: 1rem;
+}
+
+.quoteText {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 600;
+  color: #67181a;
+  margin: 0;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .pantoneCard {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding: 100px 1rem 3rem 1rem;
+  }
+
+  .mainTitle {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+  }
+
+  .pantoneTitle {
+    font-size: 1.5rem;
+  }
+}
+
+/* --- MOTIF DECORATIONS --- */
+.esquineroTopLeft {
+  position: absolute;
+  top: -60px;
+  left: -40px;
+  width: 80px;
+  height: 80px;
+  opacity: 0.2;
+  pointer-events: none;
+  animation: spinSlow 25s linear infinite;
+}
+
+.esquineroBottomRight {
+  position: absolute;
+  bottom: -40px;
+  right: -40px;
+  width: 100px;
+  height: 100px;
+  opacity: 0.2;
+  pointer-events: none;
+  animation: spinSlowReverse 30s linear infinite;
+}
+
+.separadorMotivo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.separadorLinea {
+  flex-grow: 1;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.5) 0%, transparent 100%);
+}
+
+.separadorIcono {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  animation: spinSlow 20s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinSlowReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}

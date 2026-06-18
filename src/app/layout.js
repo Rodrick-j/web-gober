@@ -1,5 +1,4 @@
 import './globals.css';
-import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackground';
 
 export const metadata = {
   title: 'Gobierno Autónomo Departamental de Oruro',
@@ -26,7 +25,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <AnimatedBackground />
         {children}
       </body>
     </html>

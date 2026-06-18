@@ -53,6 +53,11 @@ export default async function SecretariaDetailPage({ params }) {
     notFound();
   }
 
+  // Override para secretaría de minería
+  if (slug === 'mineria-metalurgia-recursos-energeticos') {
+    sec.banner_url = '/banner-mineria.png';
+  }
+
   const acento = sec.color_acento || '#8B0000';
   const hasVideo = sec.video_url && sec.video_url.trim() !== '';
   const isDirectMp4 = hasVideo && sec.video_url.toLowerCase().includes('.mp4');
@@ -60,9 +65,21 @@ export default async function SecretariaDetailPage({ params }) {
   const youtubeId = ytData.id;
   const youtubeStart = ytData.start ? `&start=${ytData.start}` : '';
 
+  const nombreRaw = sec.nombre || '';
+  const prefix = "Secretaría Departamental de";
+  let titlePrefix = "";
+  let titleSuffix = "";
+
+  if (nombreRaw.toLowerCase().startsWith(prefix.toLowerCase())) {
+    titlePrefix = "SECRETARÍA DEPARTAMENTAL DE";
+    titleSuffix = nombreRaw.substring(prefix.length).trim().toUpperCase();
+  } else {
+    titleSuffix = nombreRaw.toUpperCase();
+  }
+
   return (
     <>
-      <Navbar />
+
       <div style={{ backgroundColor: '#fafafa', minHeight: '100vh', '--acento': acento }}>
       <div className={styles.hero}>
         {isDirectMp4 ? (
@@ -95,24 +112,23 @@ export default async function SecretariaDetailPage({ params }) {
               } : { backgroundColor: '#111' }}
             ></div>
           </div>
-        ) : sec.banner_url ? (
+        ) : (
           <Image 
-            src={sec.banner_url} 
+            src={sec.banner_url || '/secretaria_default_banner.png'} 
             alt={`Banner ${sec.nombre}`} 
             fill
             className={styles.heroImage} 
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
             sizes="100vw"
           />
-        ) : (
-          <div className={styles.heroImage} style={{ background: `linear-gradient(45deg, #8b0000, #111)` }}></div>
         )}
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
-          <div className={styles.iconCircle} style={{ color: acento }}>
-            {sec.icono}
-          </div>
-          <h1 className={styles.heroTitle}>{sec.nombre}</h1>
-          <p style={{ fontSize: '1.2rem', opacity: 0.9 }}>Gobierno Autónomo Departamental de Oruro</p>
+          <h1 className={styles.heroTitle}>
+            {titlePrefix && <span className={styles.heroTitlePrefix}>{titlePrefix}</span>}
+            <span className={styles.heroTitleSuffix}>{titleSuffix}</span>
+          </h1>
+          <p className={styles.heroSubtitle}>Gobierno Autónomo Departamental de Oruro</p>
         </div>
       </div>
 
@@ -166,8 +182,8 @@ export default async function SecretariaDetailPage({ params }) {
                   <Image 
                     src={sec.secretario_foto_url} 
                     alt={sec.secretario_nombre || 'Autoridad'} 
-                    width={140}
-                    height={160}
+                    width={300}
+                    height={350}
                     className={styles.secretarioFoto} 
                   />
                 ) : (
@@ -240,7 +256,7 @@ export default async function SecretariaDetailPage({ params }) {
         </div>
       </div>
       </div>
-      <Footer />
+
     </>
   );
 }

@@ -1,4 +1,4 @@
-import Navbar from '@/components/Navbar/Navbar';
+
 import GovernorSection from '@/components/GovernorSection/GovernorSection';
 import HeroSlider from '@/components/HeroSlider/HeroSlider';
 import IntroAnimation from '@/components/IntroAnimation/IntroAnimation';
@@ -8,7 +8,7 @@ import QuickAccess from '@/components/QuickAccess/QuickAccess';
 import NewsSection from '@/components/NewsSection/NewsSection';
 import GacetaSection from '@/components/GacetaSection/GacetaSection';
 import LocationSection from '@/components/LocationSection/LocationSection';
-import Footer from '@/components/Footer/Footer';
+import CenefaCultural from '@/components/CenefaCultural/CenefaCultural';
 import { createClient } from '@/lib/supabase/server';
 
 export default async function Home() {
@@ -70,21 +70,32 @@ export default async function Home() {
   return (
     <>
       <IntroAnimation />
-      <Navbar />
+
       <main>
         {/* Carrusel Principal */}
         <HeroSlider banners={banners || []} redes={redesConfig} />
         <BreakingNews config={tickerConfig} />
+        <CenefaCultural />
 
         {/* Sección del Gobernador */}
         <GovernorSection />
+        <CenefaCultural />
+
         <SecretariatsSection secretarias={secretarias || []} />
+        <CenefaCultural />
+
         <QuickAccess />
+        <CenefaCultural />
+
         <NewsSection noticias={ultimasNoticias || []} />
+        <CenefaCultural />
+
         <GacetaSection documentos={ultimosDocumentos || []} />
+        <CenefaCultural />
+
         <LocationSection contacto={contactoConfig} />
       </main>
-      <Footer />
+
     </>
   );
 }

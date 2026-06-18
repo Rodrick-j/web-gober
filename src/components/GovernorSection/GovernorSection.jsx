@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import styles from './GovernorSection.module.css';
 
 export default function GovernorSection() {
@@ -22,7 +25,13 @@ export default function GovernorSection() {
           </div>
         </div>
 
-        <div className={styles.imageContent}>
+        <motion.div 
+          className={styles.imageContent}
+          initial={{ opacity: 0, scale: 0.5, y: 100 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
+        >
           <div className={styles.imageWrapper}>
             <Image
               src="/gober_oruro.jpg" 
@@ -32,9 +41,10 @@ export default function GovernorSection() {
               className={styles.image}
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
+              quality={100}
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

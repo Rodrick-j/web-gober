@@ -123,11 +123,11 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className={styles.logo}>
             <Image
-              src="/logo-largo.png"
+              src="/imagotipo_gador_2026.png"
               alt="Gobierno Autónomo Departamental de Oruro"
               height={80}
               width={260}
-              style={{ width: 'auto', height: 'auto', maxHeight: '80px', objectFit: 'contain' }}
+              style={{ objectFit: 'contain' }}
               priority
             />
           </Link>
