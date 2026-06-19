@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 // SVG Icons
@@ -44,6 +45,8 @@ export default function MisionVisionSection({ mision, vision, titleClass, textCl
 }
 
 function FlipCard({ title, text, Icon, titleClass, textClass }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
   return (
     <motion.div 
       initial="hidden"
@@ -57,13 +60,17 @@ function FlipCard({ title, text, Icon, titleClass, textClass }) {
       style={{
         perspective: '1000px',
         width: '100%',
-        minHeight: '250px'
+        minHeight: '250px',
+        cursor: 'pointer'
       }}
+      onHoverStart={() => setIsFlipped(true)}
+      onHoverEnd={() => setIsFlipped(false)}
+      onTap={() => setIsFlipped(!isFlipped)}
     >
       <motion.div
         className="flip-card-inner"
         initial={false}
-        whileHover={{ rotateY: 180 }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
         style={{
           display: 'grid',
           width: '100%',
@@ -77,7 +84,7 @@ function FlipCard({ title, text, Icon, titleClass, textClass }) {
             gridArea: '1 / 1',
             backfaceVisibility: 'hidden',
             background: 'linear-gradient(135deg, #fff 0%, #f9f9f9 100%)',
-            padding: '3rem',
+            padding: '2rem',
             borderRadius: '20px',
             boxShadow: '0 15px 35px rgba(0,0,0,0.1)',
             display: 'flex',
@@ -97,10 +104,10 @@ function FlipCard({ title, text, Icon, titleClass, textClass }) {
           >
             <Icon />
           </motion.div>
-          <h2 className={titleClass} style={{ margin: 0, border: 'none', padding: 0, fontSize: '2rem' }}>
+          <h2 className={titleClass} style={{ margin: 0, border: 'none', padding: 0, fontSize: '1.8rem' }}>
             {title}
           </h2>
-          <p style={{ marginTop: '1rem', color: '#888', fontStyle: 'italic' }}>Pasa el cursor (o toca) para voltear</p>
+          <p style={{ marginTop: '1rem', color: '#888', fontStyle: 'italic', fontSize: '0.9rem' }}>Pasa el cursor (o toca) para voltear</p>
         </div>
 
         {/* BACK FACE */}
@@ -111,22 +118,34 @@ function FlipCard({ title, text, Icon, titleClass, textClass }) {
             transform: 'rotateY(180deg)',
             background: 'var(--acento, #8B0000)',
             color: '#fff',
-            padding: '3rem',
+            padding: '2rem',
             borderRadius: '20px',
             boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            textAlign: 'center'
+            textAlign: 'center',
+            gap: '0.8rem'
           }}
         >
+          <h3 style={{ 
+            margin: 0, 
+            fontSize: '1.3rem', 
+            fontWeight: 'bold', 
+            color: 'rgba(255,255,255,0.95)', 
+            borderBottom: '1px solid rgba(255,255,255,0.2)', 
+            paddingBottom: '0.4rem',
+            width: '100%'
+          }}>
+            {title}
+          </h3>
           <div className={textClass} style={{ 
             whiteSpace: 'pre-wrap', 
             color: '#fff', 
-            fontSize: '1.15rem', 
-            lineHeight: '1.8',
-            textShadow: '0 2px 4px rgba(0,0,0,0.2)' 
+            fontSize: '0.95rem', 
+            lineHeight: '1.6',
+            textShadow: '0 1px 2px rgba(0,0,0,0.2)' 
           }}>
             {text}
           </div>

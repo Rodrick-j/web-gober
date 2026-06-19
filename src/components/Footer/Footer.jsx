@@ -37,7 +37,7 @@ export default async function Footer() {
         <div className={styles.topBandInner}>
           <div className={styles.brandBlock}>
             <div className={styles.brandLogo}>
-              <Image src="/escudo_oruro.jpg" alt="Escudo de Oruro" width={60} height={60} />
+              <Image src="/footer_icon.jpg" alt="Logo de Oruro" width={60} height={60} />
             </div>
             <div>
               <div className={styles.brandName}>Gobierno Autónomo Departamental de Oruro</div>
