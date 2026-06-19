@@ -1,6 +1,6 @@
 .sliderSection {
   width: 100%;
-  padding: 2rem 1.5rem;
+  padding: 0;
   background-color: var(--color-bg-alt); /* O un color de fondo sutil */
   display: flex;
   justify-content: center;
@@ -10,28 +10,13 @@
 .sliderFrame {
   position: relative;
   width: 100%;
-  max-width: 1400px;
-  height: 70vh;
-  min-height: 500px;
-  /* Gold Diamond Gradient */
-  background: linear-gradient(60deg, #f6d365, #ffb347, #f6d365, #ffffff, #f6d365);
-  background-size: 300% 300%;
-  animation: diamondGold 4s ease infinite;
-  border-radius: 20px;
-  padding: 8px; /* Thickness of the gold border */
-  box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 25px rgba(255, 215, 0, 0.4);
-}
-
-@keyframes diamondGold {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  aspect-ratio: 21 / 9;
+  min-height: 300px;
 }
 
 .swiperRoot {
   width: 100%;
   height: 100%;
-  border-radius: 14px; /* Inner radius to match outer */
   overflow: hidden;
 }
 
@@ -216,12 +201,12 @@
 
 @media (max-width: 768px) {
   .sliderSection {
-    padding: 0.5rem;
+    padding: 0;
   }
   .sliderFrame {
-    height: 50vh;
-    min-height: 400px;
-    padding: 4px; /* Marco más delgado en móvil */
+    aspect-ratio: 16 / 9;
+    height: auto;
+    min-height: auto;
   }
   .slideContent {
     bottom: 10%;
