@@ -7,23 +7,13 @@
 }
 
 .glowingTitle {
-  font-size: clamp(3rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 900;
   text-transform: uppercase;
-  background: linear-gradient(to right, #9c0720 0%, #ff0a33 50%, #9c0720 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-size: 200% auto;
-  animation: shine 4s linear infinite, glowPulse 2s ease-in-out infinite alternate;
-}
-
-@keyframes glowPulse {
-  0% {
-    filter: drop-shadow(0 0 2px rgba(156, 7, 32, 0.2));
-  }
-  100% {
-    filter: drop-shadow(0 0 8px rgba(255, 10, 51, 0.4));
-  }
+  background-size: 100%;
 }
 
 .layout {
@@ -49,30 +39,57 @@
 .catCard {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
   background: var(--color-white);
   border-radius: var(--radius-md);
-  border: 1px solid rgba(0,0,0,0.05);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   font-size: 0.875rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.catCard::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--color-primary);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.catCard:hover::before {
+  transform: scaleY(1);
 }
 
 .catCard:hover {
-  background: rgba(156, 7, 32, 0.03); /* Fondo sutil rojo carmesí */
-  border-color: rgba(156, 7, 32, 0.2);
-  transform: translateX(8px) scale(1.02);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  border-color: rgba(156, 7, 32, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
 }
 
 .catIcon {
-  font-size: 1.5rem;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(156, 7, 32, 0.08);
+  color: var(--color-primary);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .catCard:hover .catIcon {
-  transform: scale(1.2) rotate(10deg);
+  background: var(--color-primary);
+  color: #fff;
+  transform: scale(1.1) rotate(5deg);
 }
 
 .catArrow {
@@ -86,13 +103,15 @@
 }
 
 .catLabel {
-  font-weight: 600;
+  font-family: var(--font-heading);
+  font-weight: 700;
   color: var(--color-text);
-  font-size: 0.875rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
 }
 
 .catCount {
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   color: var(--color-text-muted);
 }
 

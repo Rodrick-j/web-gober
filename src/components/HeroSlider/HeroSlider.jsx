@@ -79,22 +79,36 @@ export default function HeroSlider({ banners, redes }) {
                   style={{ objectFit: 'cover' }}
                   sizes="100vw"
                   priority={banners.indexOf(banner) === 0}
-                  quality={100}
+                  quality={30}
                 />
               </div>
               <div className={styles.bgOverlay} />
-              
-              {/* Imagen principal completa */}
+
+              {/* Imagen principal */}
               <div className={styles.bgImage}>
+                {/* Desktop Image */}
                 <Image
                   src={banner.imagen_url}
                   alt={banner.titulo || 'Banner Gobernación de Oruro'}
                   fill
-                  style={{ objectFit: 'contain', objectPosition: 'center' }}
                   sizes="100vw"
                   priority={banners.indexOf(banner) === 0}
-                  quality={100}
+                  unoptimized={true}
+                  className={`${styles.mainImage} ${banner.imagen_movil_url ? styles.hideOnMobile : ''}`}
                 />
+                
+                {/* Mobile Image */}
+                {banner.imagen_movil_url && (
+                  <Image
+                    src={banner.imagen_movil_url}
+                    alt={`${banner.titulo || 'Banner'} móvil`}
+                    fill
+                    sizes="100vw"
+                    priority={banners.indexOf(banner) === 0}
+                    unoptimized={true}
+                    className={`${styles.mainImage} ${styles.showOnlyOnMobile}`}
+                  />
+                )}
               </div>
               
               {/* Capa Oscura (Opcional, para que el texto resalte) */}

@@ -27,10 +27,10 @@ export default function GovernorSection() {
 
         <motion.div 
           className={styles.imageContent}
-          initial={{ opacity: 0, scale: 0.5, y: 100 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95 }}
+          whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
+          transition={{ duration: 2.5, ease: 'easeOut' }}
         >
           <div className={styles.imageWrapper}>
             <Image
@@ -41,7 +41,7 @@ export default function GovernorSection() {
               className={styles.image}
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
-              quality={100}
+              quality={80}
             />
           </div>
         </motion.div>

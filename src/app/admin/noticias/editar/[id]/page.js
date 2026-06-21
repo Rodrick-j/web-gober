@@ -17,6 +17,8 @@ export default function EditarNoticiaPage() {
   const [resumen, setResumen] = useState('');
   const [contenido, setContenido] = useState('');
   const [estado, setEstado] = useState('publicado');
+  const [categoria, setCategoria] = useState('Todas');
+  const [esComunicado, setEsComunicado] = useState(false);
   const [imagenUrlActual, setImagenUrlActual] = useState(null);
   const [imagen, setImagen] = useState(null);
   
@@ -39,6 +41,8 @@ export default function EditarNoticiaPage() {
           setResumen(data.resumen || '');
           setContenido(data.contenido || '');
           setEstado(data.estado || 'publicado');
+          setCategoria(data.categoria || 'Todas');
+          setEsComunicado(data.es_comunicado_rapido || false);
           setImagenUrlActual(data.imagen_portada_url || null);
         }
       } catch (err) {
@@ -79,7 +83,9 @@ export default function EditarNoticiaPage() {
         resumen,
         contenido,
         imagen_portada_url: nuevaImagenUrl,
-        estado
+        estado,
+        categoria,
+        es_comunicado_rapido: esComunicado
       };
 
       // Si cambia a publicado y no tenía fecha, ponerle fecha. 
@@ -175,10 +181,42 @@ export default function EditarNoticiaPage() {
                 <FileUpload 
                   onFileSelect={setImagen} 
                   accept="image/*"
-                  label=""
+                  label={esComunicado ? "Opcional para comunicados" : ""}
                   icon="📸"
                   maxSizeMB={5}
                 />
+              </div>
+
+              <div className="formGroup" style={{ background: 'var(--admin-surface-2)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--admin-border)' }}>
+                <label className="formLabel" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', marginBottom: 0 }}>
+                  <input 
+                    type="checkbox" 
+                    checked={esComunicado}
+                    onChange={(e) => setEsComunicado(e.target.checked)}
+                    style={{ width: '1.2rem', height: '1.2rem', accentColor: 'var(--color-primary)' }}
+                  />
+                  <span>¿Es un comunicado rápido?</span>
+                </label>
+                <p style={{ fontSize: '0.8rem', color: 'var(--admin-text-muted)', marginTop: '0.5rem', marginBottom: 0 }}>
+                  Aparecerá en la barra lateral sin necesidad de foto.
+                </p>
+              </div>
+
+              <div className="formGroup">
+                <label className="formLabel">Categoría</label>
+                <select 
+                  className="formSelect"
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
+                >
+                  <option value="Todas">General / Todas</option>
+                  <option value="Gobernador">Gobernador</option>
+                  <option value="Salud">Salud</option>
+                  <option value="Obras Públicas">Obras Públicas</option>
+                  <option value="Educación">Educación</option>
+                  <option value="Cultura y Turismo">Cultura y Turismo</option>
+                  <option value="Deportes">Deportes</option>
+                </select>
               </div>
 
               <div className="formGroup">

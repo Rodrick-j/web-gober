@@ -107,6 +107,14 @@
   align-items: center;
   gap: 0.25rem;
   flex: 1;
+  background: rgba(0, 0, 0, 0.03); /* Fondo sutil para agrupar los botones */
+  padding: 0.35rem 0.5rem;
+  border-radius: 100px; /* Forma de píldora */
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+  justify-content: center; /* Centrar los botones en la píldora */
+  max-width: fit-content;
+  margin: 0 auto; /* Centrar la píldora en el navbar */
 }
 
 .navItem {
@@ -116,39 +124,23 @@
 .navLink {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  gap: 0.4rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 100px; /* Botones tipo píldora */
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-text);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #444;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   white-space: nowrap;
   position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.navLink::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(45deg, #a80a15, #d41423); /* Rojo intenso corporativo */
-  z-index: -1;
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 8px;
+  background: transparent;
 }
 
 .navLink:hover {
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(168, 10, 21, 0.25);
-}
-
-.navLink:hover::before {
-  transform: scaleY(1);
+  color: var(--color-primary);
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0,0,0,0.04);
 }
 
 /* Dropdown */
@@ -270,101 +262,120 @@
 .hamburger::after  { top: 7px; }
 
 .hamburger.open { background: transparent; }
-.hamburger.open::before { transform: rotate(45deg); top: 0; }
-.hamburger.open::after  { transform: rotate(-45deg); top: 0; }
-
-/* Mobile Menu */
 .mobileMenu {
-  position: fixed;
-  top: 0;
-  right: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
   width: 100%;
-  max-width: 340px;
-  height: 100vh;
-  background: #f4f6f8; /* Fondo gris claro suave */
-  z-index: 1100;
-  box-shadow: var(--shadow-xl);
-  overflow-y: auto;
-  border-left: 1px solid rgba(0,0,0,0.05);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  z-index: 999;
 }
 
 .mobileMenuInner {
-  padding: 1.5rem 1.5rem 2rem;
+  width: 100%;
+  max-width: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0;
+  margin: 0;
 }
 
 .closeMobileBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
   display: flex;
-  align-self: flex-end;
-  background: var(--color-white);
+  background: rgba(255,255,255,0.9);
   border: 1px solid rgba(0,0,0,0.06);
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  width: 40px; /* Reducido de 50px */
+  height: 40px; /* Reducido de 50px */
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
   color: var(--color-text);
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   transition: all var(--transition-fast);
+  z-index: 10;
 }
 
 .closeMobileBtn:hover {
   background: rgba(139,0,0,0.05);
   color: var(--color-primary);
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 
 .mobileLink {
-  display: block;
-  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.85rem 1.25rem; /* Reducido de 1.25rem 1.5rem */
   font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--color-text);
-  background: var(--color-white); /* Contenedor blanco */
-  border: 1px solid rgba(0,0,0,0.04);
-  border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03); /* Sombra suave para que flote */
+  font-size: 0.85rem; /* Reducido de 0.95rem */
+  font-weight: 600;
+  color: #1a1a1a;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  border-radius: 0;
+  box-shadow: none;
   transition: all var(--transition-fast);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0;
+  text-transform: uppercase;
 }
 
 .mobileLink:hover {
-  border-color: rgba(139,0,0,0.2);
-  box-shadow: 0 4px 12px rgba(139,0,0,0.08);
+  background: rgba(0,0,0,0.02);
   color: var(--color-primary);
-  transform: translateY(-2px);
 }
 
 .mobileSub {
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-left: 2px solid rgba(139,0,0,0.2); /* Línea roja indicadora */
-  margin-left: 0.8rem;
-  margin-top: 0.5rem;
+  padding: 0;
+  margin: 0;
+  background: #f8f9fa;
 }
 
 .mobileSubLink {
   display: block;
-  padding: 0.75rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.75rem 1.25rem 0.75rem 3.25rem; /* Reducido para encajar mejor */
+  font-size: 0.8rem; /* Reducido de 0.9rem */
   font-weight: 500;
   color: var(--color-text-muted);
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: var(--radius-sm);
-  margin-bottom: 0.35rem;
+  background: transparent;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  border-radius: 0;
+  margin-bottom: 0;
   transition: all var(--transition-fast);
 }
 
 .mobileSubLink:hover {
   color: var(--color-primary);
-  background: var(--color-white);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  background: rgba(0,0,0,0.03);
+}
+
+.mobileSubGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.mobileSubGrid .mobileSubLink {
+  padding: 0.65rem 0.5rem 0.65rem 1.25rem;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.mobileSubGrid .mobileSubLink:nth-child(odd) {
+  border-right: 1px solid rgba(0,0,0,0.04);
+}
+
+.mobileSubGrid .mobileSubLink .navEmoji {
+  margin: 0;
+  font-size: 0.95rem;
 }
 
 /* Responsive */
@@ -372,4 +383,53 @@
   .desktopNav { display: none; }
   .mobileToggle { display: flex; }
   .topBarLinks { display: none; }
+}
+
+/* =====================================================
+   MOBILE CHIPS — Secretarías en modo celular
+   ===================================================== */
+
+.mobileChipsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem 1rem 1rem;
+  background: #f8f9fa;
+}
+
+.mobileChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.85rem;
+  background: #ffffff;
+  border: 1px solid rgba(156, 7, 32, 0.2);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+  white-space: normal;
+  max-width: calc(50% - 0.25rem);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  text-decoration: none;
+  text-align: left;
+}
+
+.mobileChip:hover,
+.mobileChip:active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+  transform: scale(1.04);
+}
+
+.chipEmoji {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.chipText {
+  line-height: 1.2;
 }

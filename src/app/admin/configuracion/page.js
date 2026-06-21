@@ -3,6 +3,10 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
+import { uploadFile } from '@/lib/supabase/storage';
+import FileUpload from '@/components/admin/FileUpload/FileUpload';
+import Image from 'next/image';
+import { revalidateConfig } from './actions';
 
 export default function ConfiguracionPage() {
   const supabase = createClient();
@@ -25,6 +29,14 @@ export default function ConfiguracionPage() {
     tiktok: ''
   });
 
+  // Estado para Comunicado Popup
+  const [comunicado, setComunicado] = useState({
+    activo: false,
+    imagen_url: '',
+    enlace: ''
+  });
+  const [comunicadoFile, setComunicadoFile] = useState(null);
+
   useEffect(() => {
     async function cargarConfiguracion() {
       const { data, error } = await supabase
@@ -44,6 +56,13 @@ export default function ConfiguracionPage() {
               youtube: config.valor.youtube || '',
               instagram: config.valor.instagram || '',
               tiktok: config.valor.tiktok || ''
+            });
+          }
+          if (config.clave === 'comunicado_popup') {
+            setComunicado({
+              activo: config.valor.activo || false,
+              imagen_url: config.valor.imagen_url || '',
+              enlace: config.valor.enlace || ''
             });
           }
         });
@@ -93,6 +112,32 @@ export default function ConfiguracionPage() {
       clave: 'redes_sociales',
       valor: redesData
     });
+
+    // Subir imagen del comunicado si existe nueva
+    let finalComunicadoImgUrl = comunicado.imagen_url;
+    if (comunicadoFile) {
+      try {
+        finalComunicadoImgUrl = await uploadFile(comunicadoFile, 'general');
+      } catch (err) {
+        console.error("Error subiendo imagen del comunicado", err);
+        alert('Error al subir la imagen del comunicado.');
+      }
+    }
+
+    const comunicadoData = {
+      activo: comunicado.activo,
+      imagen_url: finalComunicadoImgUrl,
+      enlace: comunicado.enlace
+    };
+
+    // Upsert Comunicado
+    await supabase.from('configuracion_global').upsert({
+      clave: 'comunicado_popup',
+      valor: comunicadoData
+    });
+
+    // Limpiar caché de Next.js para reflejar los cambios en público inmediatamente
+    await revalidateConfig();
 
     setSaving(false);
     alert('Configuración guardada exitosamente.');
@@ -230,6 +275,78 @@ export default function ConfiguracionPage() {
                 style={{ width: '100%', maxWidth: '500px', padding: '0.5rem' }}
               />
             </div>
+          </div>
+        </div>
+
+        {/* Comunicado Emergente Section */}
+        <div className="tableCard" style={{ padding: '2rem' }}>
+          <h2 style={{ marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
+            Comunicado Emergente (Popup de Inicio)
+          </h2>
+          <p style={{ fontSize: '0.85rem', color: '#666', marginBottom: '1.5rem' }}>
+            Esta imagen aparecerá en el centro de la pantalla la primera vez que un usuario entre a la página principal.
+          </p>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <label style={{ fontWeight: 'bold' }}>¿Activar Comunicado?</label>
+              <button 
+                type="button"
+                onClick={() => setComunicado({...comunicado, activo: !comunicado.activo})}
+                style={{
+                  background: comunicado.activo ? 'var(--color-primary)' : '#ccc',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '20px',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  transition: 'background 0.3s'
+                }}
+              >
+                {comunicado.activo ? 'SÍ, ACTIVADO' : 'NO, DESACTIVADO'}
+              </button>
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>Enlace Opcional (URL)</label>
+              <input 
+                type="text" 
+                className="input" 
+                value={comunicado.enlace} 
+                onChange={(e) => setComunicado({...comunicado, enlace: e.target.value})}
+                placeholder="Ej: https://youtube.com/... (Dejar en blanco si no tiene link)"
+                style={{ width: '100%', maxWidth: '500px', padding: '0.5rem' }}
+              />
+            </div>
+
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.5rem' }}>Imagen del Comunicado</label>
+              <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+                <div style={{ flex: '1', minWidth: '250px', maxWidth: '400px' }}>
+                  <FileUpload 
+                    onFileSelect={setComunicadoFile} 
+                    accept="image/*"
+                    label="Cambiar o subir imagen"
+                  />
+                </div>
+                {comunicado.imagen_url && !comunicadoFile && (
+                  <div style={{ position: 'relative', width: '250px', height: '200px', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden' }}>
+                    <Image 
+                      src={comunicado.imagen_url} 
+                      alt="Comunicado actual" 
+                      fill 
+                      style={{ objectFit: 'contain', background: '#f5f5f5' }} 
+                    />
+                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.5)', color: 'white', fontSize: '0.75rem', padding: '0.25rem', textAlign: 'center' }}>
+                      Imagen Actual Activa
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
           </div>
         </div>
 

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { uploadFile } from '@/lib/supabase/storage';
 import Image from 'next/image';
 
 export default function EditarCarruselForm({ banner }) {
@@ -13,6 +14,7 @@ export default function EditarCarruselForm({ banner }) {
   const [animacionTexto, setAnimacionTexto] = useState(banner.animacion_texto || 'fade-in');
   const [animacionCarrusel, setAnimacionCarrusel] = useState(banner.animacion_carrusel || 'creative');
   const [activo, setActivo] = useState(banner.activo !== false);
+  const [imagenMovil, setImagenMovil] = useState(null);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -23,6 +25,11 @@ export default function EditarCarruselForm({ banner }) {
     setError('');
 
     try {
+      let nuevaImagenMovilUrl = banner.imagen_movil_url;
+      if (imagenMovil) {
+        nuevaImagenMovilUrl = await uploadFile(imagenMovil, 'general');
+      }
+
       const { error: updateError } = await supabase
         .from('banners_inicio')
         .update({
@@ -30,7 +37,8 @@ export default function EditarCarruselForm({ banner }) {
           enlace_url: enlaceUrl,
           animacion_texto: animacionTexto,
           animacion_carrusel: animacionCarrusel,
-          activo
+          activo,
+          imagen_movil_url: nuevaImagenMovilUrl
         })
         .eq('id', banner.id);
 
@@ -130,15 +138,38 @@ export default function EditarCarruselForm({ banner }) {
           </div>
 
           <div style={{ marginTop: 'auto', background: '#111', padding: '0.5rem', borderRadius: '12px', border: '1px solid var(--admin-border)', textAlign: 'center' }}>
-            <div style={{ position: 'relative', width: '100%', height: '140px', borderRadius: '8px', overflow: 'hidden' }}>
-              <Image 
-                src={banner.imagen_url} 
-                alt="Banner actual" 
-                fill
-                style={{ objectFit: 'cover' }} 
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+              <div style={{ position: 'relative', width: '100%', height: '100px', borderRadius: '8px', overflow: 'hidden' }}>
+                <Image 
+                  src={banner.imagen_url} 
+                  alt="Banner PC" 
+                  fill
+                  style={{ objectFit: 'cover' }} 
+                />
+              </div>
+              <div style={{ position: 'relative', width: '100%', height: '100px', borderRadius: '8px', overflow: 'hidden', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.8rem' }}>
+                {banner.imagen_movil_url ? (
+                  <Image 
+                    src={banner.imagen_movil_url} 
+                    alt="Banner Móvil" 
+                    fill
+                    style={{ objectFit: 'cover' }} 
+                  />
+                ) : 'Sin imagen móvil'}
+              </div>
+            </div>
+            <p style={{ fontSize: '0.75rem', color: '#999', margin: '0.5rem 0' }}>Para cambiar la imagen principal de PC, debes subir un banner nuevo.</p>
+
+            <div style={{ marginTop: '1rem', textAlign: 'left' }}>
+              <label className="formLabel" style={{ color: 'white', fontSize: '0.85rem' }}>Cambiar Imagen Celular (Vertical)</label>
+              <input 
+                type="file" 
+                accept="image/*"
+                onChange={(e) => setImagenMovil(e.target.files[0])}
+                disabled={isSubmitting}
+                style={{ marginTop: '0.5rem', width: '100%', fontSize: '0.8rem', color: '#ccc' }}
               />
             </div>
-            <p style={{ fontSize: '0.75rem', color: '#999', margin: '0.5rem 0' }}>La imagen no se puede cambiar aquí. Para cambiarla, debes subir un banner nuevo.</p>
           </div>
 
           <button 

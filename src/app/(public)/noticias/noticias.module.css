@@ -8,9 +8,24 @@
 .portalHeader {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.portalHeader h1 {
+  font-size: 1.5rem !important; /* Más pequeño en celular */
+}
+
+@media (min-width: 768px) {
+  .portalHeader h1 {
+    font-size: 2.2rem !important;
+  }
+}
+
+.mainTitle {
+  font-family: var(--font-heading);
+  color: var(--color-primary); /* Rojo carmesí */
 }
 
 @media (min-width: 768px) {
@@ -23,8 +38,15 @@
 
 .subtitle {
   color: var(--color-text-muted);
-  font-size: 1.1rem;
+  font-size: 0.8rem; /* Aún más pequeño en celular */
   max-width: 600px;
+  line-height: 1.4;
+}
+
+@media (min-width: 768px) {
+  .subtitle {
+    font-size: 1.1rem;
+  }
 }
 
 /* Search Form */
@@ -34,9 +56,9 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 30px;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.6rem; /* Aún más pequeño */
   width: 100%;
-  max-width: 400px;
+  max-width: 320px; /* Reducido de 400 a 320 */
   transition: all 0.3s ease;
 }
 
@@ -51,8 +73,8 @@
   background: transparent;
   color: var(--color-text);
   font-family: inherit;
-  font-size: 1rem;
-  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem; /* Reducido de 1rem a 0.85rem */
+  padding: 0.2rem 0.4rem;
   outline: none;
 }
 
@@ -105,7 +127,7 @@
 
 .featuredImage {
   position: relative;
-  aspect-ratio: 16/9;
+  height: 260px; /* Más espacio para que la imagen principal no se recorte feo */
   background: var(--color-surface-2);
   display: flex;
   align-items: center;
@@ -117,6 +139,7 @@
   .featuredImage {
     height: 100%;
     aspect-ratio: auto;
+    min-height: 400px;
   }
 }
 
@@ -139,7 +162,7 @@
 }
 
 .featuredContent {
-  padding: 2rem;
+  padding: 1rem; /* Menos padding en celular para aprovechar espacio */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -167,11 +190,11 @@
 
 .featuredTitle {
   font-family: var(--font-heading);
-  font-size: 1.75rem;
+  font-size: 1.05rem; /* Texto más pequeño */
   font-weight: 900;
   color: var(--color-primary-dark);
-  line-height: 1.2;
-  margin-bottom: 1rem;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
   /* Profesional Gradient for Title */
   background: linear-gradient(135deg, #a80a15 0%, #1a1a1a 100%);
   -webkit-background-clip: text;
@@ -185,14 +208,22 @@
 }
 
 .featuredExcerpt {
-  font-size: 1.1rem;
+  font-size: 0.85rem; /* Letra más pequeña */
   color: var(--color-text-muted);
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2; /* Menos texto en celular */
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+@media (min-width: 992px) {
+  .featuredExcerpt {
+    font-size: 1.1rem;
+    -webkit-line-clamp: 3;
+    margin-bottom: 2rem;
+  }
 }
 
 .readMore {
@@ -208,11 +239,24 @@
   text-decoration: underline;
 }
 
-/* News Grid */
 .newsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas en celular */
+  gap: 1rem; /* Menos espacio en celular para que quepan bien 2 columnas */
+}
+
+@media (min-width: 768px) {
+  .newsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .newsGrid {
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en PC */
+    gap: 2rem;
+  }
 }
 
 .newsCard {
@@ -229,6 +273,12 @@
   box-shadow: 0 4px 15px rgba(0,0,0,0.03);
 }
 
+@media (min-width: 768px) {
+  .newsCard {
+    border-radius: 16px;
+  }
+}
+
 .newsCard:hover {
   transform: translateY(-4px) scale(1.01);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
@@ -237,13 +287,19 @@
 
 .cardImageWrapper {
   position: relative;
-  aspect-ratio: 16/10;
+  height: 120px; /* Reducido drásticamente para caber 2 en celular */
   background: var(--color-surface-2);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   border-bottom: 1px solid var(--color-border);
+}
+
+@media (min-width: 768px) {
+  .cardImageWrapper {
+    height: 200px;
+  }
 }
 
 .cardImage {
@@ -263,7 +319,7 @@
 }
 
 .cardBody {
-  padding: 1.5rem;
+  padding: 0.75rem; /* Aún menos padding para acomodar 2 columnas en celular */
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -271,10 +327,10 @@
 
 .cardTitle {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 0.9rem; /* Mucho más pequeño para 2 columnas */
   font-weight: 700;
   color: var(--color-text);
-  line-height: 1.3;
+  line-height: 1.2;
   margin-bottom: 0.75rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -283,7 +339,7 @@
 }
 
 .cardExcerpt {
-  font-size: 0.95rem;
+  font-size: 0.8rem; /* Letra de resumen más pequeña */
   color: var(--color-text-muted);
   line-height: 1.5;
   display: -webkit-box;
@@ -292,6 +348,11 @@
   overflow: hidden;
   margin-bottom: 1rem;
   flex: 1;
+}
+
+@media (min-width: 768px) {
+  .cardTitle { font-size: 1.1rem; }
+  .cardExcerpt { font-size: 0.95rem; }
 }
 
 /* Empty state */
@@ -315,4 +376,199 @@
 .emptyState p {
   color: var(--color-text-muted);
   font-size: 1.1rem;
+}
+
+/* Nuevas Secciones para Rediseño Profesional */
+
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .layoutGrid {
+    grid-template-columns: 3fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Filtros (Píldoras) */
+.filtersWrapper {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 2rem;
+  /* Ocultar scrollbar */
+  scrollbar-width: none; 
+}
+
+.filtersWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.filterPill {
+  white-space: nowrap;
+  padding: 0.35rem 0.8rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: var(--font-heading);
+}
+
+.filterPill:hover {
+  background: rgba(0,0,0,0.03);
+  color: var(--color-text);
+}
+
+.filterPill.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+/* Comunicados Rápidos (Sidebar) */
+.sidebarWidget {
+  background: var(--color-surface);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+.widgetTitle {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 2px solid rgba(168, 10, 21, 0.1);
+  padding-bottom: 0.5rem;
+}
+
+.comunicadoList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.comunicadoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-bottom: 1px dashed var(--color-border);
+  padding-bottom: 1rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.comunicadoItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.comunicadoItem:hover {
+  opacity: 0.7;
+}
+
+.comunicadoDate {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+}
+
+.comunicadoTitle {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+/* Newsletter Banner */
+.newsletterBanner {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-top: 4rem;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  box-shadow: 0 15px 30px rgba(168, 10, 21, 0.2);
+}
+
+@media (min-width: 768px) {
+  .newsletterBanner {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding: 3rem;
+  }
+}
+
+.newsletterText h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: white;
+}
+
+.newsletterText p {
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+  max-width: 400px;
+}
+
+.newsletterForm {
+  display: flex;
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 0.25rem;
+  border-radius: 100px;
+}
+
+.newsletterForm input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  font-family: var(--font-body);
+}
+
+.newsletterForm button {
+  background: var(--color-text);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 100px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.newsletterForm button:hover {
+  background: #333;
 }

@@ -15,9 +15,11 @@
   position: relative;
   width: 40px;
   height: 40px;
-  opacity: 0.85;
+  opacity: 1;
   animation: spinSlow 15s linear infinite;
   will-change: transform;
+  /* Rojo carmesí más vivo (Gobernación) */
+  filter: brightness(0) saturate(100%) invert(14%) sepia(96%) saturate(4051%) hue-rotate(339deg) brightness(90%) contrast(98%);
 }
 
 /* Alternate rotation directions for chess effect */

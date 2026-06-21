@@ -191,10 +191,36 @@
 
 @media (max-width: 768px) {
   .governorSection {
-    padding: 4rem 1.5rem;
+    padding: 2rem 1.2rem;
+  }
+
+  .container {
+    gap: 1.5rem;
   }
 
   .title {
-    font-size: 3rem;
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    border-left: 3px solid #D4AF37;
+    padding-left: 0.8rem;
+  }
+
+  .description {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    gap: 0.8rem;
+  }
+
+  .unidadText {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+  }
+
+  .imageContent {
+    height: 380px;
   }
 }

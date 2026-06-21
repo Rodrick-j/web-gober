@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { createClient } from '@/lib/supabase/client';
 import styles from './Navbar.module.css';
 
+
 const navItems = [
   { label: 'Inicio', emoji: '🏠', href: '/' },
   {
@@ -53,17 +54,27 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     
+    const handleResize = () => {
+      if (window.innerWidth > 900) {
+        setMobileOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+
     // Fetch Secretarias
     async function fetchSecretarias() {
       const { data } = await supabase
         .from('secretarias')
-        .select('nombre_corto, slug, icono')
+        .select('nombre, nombre_corto, slug, icono')
         .order('orden', { ascending: true });
       if (data) setSecretariasList(data);
     }
     fetchSecretarias();
 
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Update navItems dynamically with DB secretariats
@@ -73,9 +84,10 @@ export default function Navbar() {
         ...item,
         children: secretariasList.length > 0 ? secretariasList.map(sec => ({
           label: sec.nombre_corto,
+          fullLabel: sec.nombre || sec.nombre_corto, // nombre completo para chips móvil
           emoji: sec.icono || '🏛️',
           href: `/secretarias/${sec.slug}`
-        })) : [{ label: 'Cargando secretarías...', emoji: '⏳', href: '#' }]
+        })) : [{ label: 'Cargando secretarías...', fullLabel: 'Cargando...', emoji: '⏳', href: '#' }]
       };
     }
     return item;
@@ -120,16 +132,104 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
         <div className={styles.navInner}>
-          {/* Logo */}
-          <Link href="/" className={styles.logo}>
-            <Image
-              src="/imagotipo_gador_2026.png"
-              alt="Gobierno Autónomo Departamental de Oruro"
-              height={80}
-              width={260}
-              style={{ objectFit: 'contain' }}
-              priority
-            />
+          {/* Logo Illusion Flip */}
+          <Link href="/" className={styles.logo} style={{ display: 'block', width: 260, height: 80 }}>
+            <motion.div
+              animate={{ scaleX: [1, 1, 0, 1, 1, 0, 1] }}
+              transition={{
+                repeat: Infinity,
+                duration: 8,
+                times: [0, 0.4, 0.45, 0.5, 0.9, 0.95, 1],
+                ease: "easeInOut",
+              }}
+              style={{
+                position: 'relative',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {/* Front Face: Logo */}
+              <motion.div 
+                animate={{ opacity: [1, 1, 0, 0, 0, 0, 1] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 8,
+                  times: [0, 0.4, 0.45, 0.5, 0.9, 0.95, 1],
+                  ease: "easeInOut",
+                }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              >
+                <Image
+                  src="/imagotipo_gador_2026.png"
+                  alt="Gobierno Autónomo Departamental de Oruro"
+                  height={80}
+                  width={260}
+                  style={{ objectFit: 'contain' }}
+                  priority
+                />
+              </motion.div>
+
+              {/* Back Face: ORURO 2026-2031 */}
+              <motion.div 
+                animate={{ opacity: [0, 0, 0, 1, 1, 0, 0] }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 8,
+                  times: [0, 0.4, 0.45, 0.5, 0.9, 0.95, 1],
+                  ease: "easeInOut",
+                }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              >
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.8rem'
+                }}>
+                  <Image 
+                    src="/icons/icon.jpg"
+                    alt="Escudo de Oruro" 
+                    width={40}
+                    height={40}
+                    style={{ objectFit: 'contain', borderRadius: '8px' }} 
+                  />
+                  <div style={{
+                    fontSize: '1.4rem',
+                    fontWeight: 900,
+                    fontFamily: 'var(--font-heading)',
+                    color: '#DC143C', /* Rojo Carmesí Brillante */
+                    textShadow: '0 0 8px rgba(220, 20, 60, 0.8), 0 0 15px rgba(255, 0, 0, 0.6)',
+                    lineHeight: 1
+                  }}>
+                    ORURO
+                  </div>
+                  <motion.div 
+                    animate={{ 
+                      scale: [1, 1.05, 1], 
+                      textShadow: [
+                        "0 0 5px rgba(255, 215, 0, 0.6)", 
+                        "0 0 15px rgba(255, 215, 0, 1)", 
+                        "0 0 5px rgba(255, 215, 0, 0.6)"
+                      ] 
+                    }}
+                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                    style={{ 
+                      fontSize: '1.3rem', 
+                      fontWeight: 900,
+                      fontFamily: 'var(--font-heading)',
+                      color: '#FFD700',
+                      lineHeight: 1
+                    }}
+                  >
+                    2026-2031
+                  </motion.div>
+                </div>
+              </motion.div>
+            </motion.div>
           </Link>
 
           {/* Desktop Nav */}
@@ -197,37 +297,26 @@ export default function Navbar() {
             </button>
           </div>
         </div>
-      </motion.header>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            className={styles.mobileMenu}
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
-            transition={{ type: 'tween', duration: 0.3 }}
-          >
-            <div className={styles.mobileMenuInner}>
-              <button 
-                className={styles.closeMobileBtn} 
-                onClick={() => setMobileOpen(false)}
-                aria-label="Cerrar menú"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-              </button>
-
-              {dynamicNavItems.map((item, i) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.07 }}
-                >
+        {/* Mobile Menu Dropdown */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              className={styles.mobileMenu}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              style={{ overflow: 'hidden' }}
+            >
+              <div className={styles.mobileMenuInner}>
+                {dynamicNavItems.map((item, i) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                  >
                   {item.children ? (
                     <button
                       className={styles.mobileLink}
@@ -259,12 +348,23 @@ export default function Navbar() {
                         transition={{ duration: 0.3 }}
                         style={{ overflow: 'hidden' }}
                       >
-                        <div style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
-                          {item.children.map((child) => (
-                            <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
-                              <span className={styles.navEmoji}>{child.emoji}</span> {child.label}
-                            </Link>
-                          ))}
+                        <div 
+                          className={item.label === 'Secretarías' ? styles.mobileChipsGrid : ''}
+                          style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}
+                        >
+                          {item.children.map((child) => {
+                            const isSecretarias = item.label === 'Secretarías';
+                            return isSecretarias ? (
+                              <Link key={child.label} href={child.href} className={styles.mobileChip} onClick={() => setMobileOpen(false)}>
+                                <span className={styles.chipEmoji}>{child.emoji}</span>
+                                <span className={styles.chipText}>{child.fullLabel || child.label}</span>
+                              </Link>
+                            ) : (
+                              <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
+                                <span className={styles.navEmoji}>{child.emoji}</span> {child.label}
+                              </Link>
+                            );
+                          })}
                         </div>
                       </motion.div>
                     )}
@@ -275,6 +375,7 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+      </motion.header>
     </>
   );
 }

@@ -49,10 +49,26 @@ export default function GacetaSection({ documentos = [] }) {
 
             <ScrollReveal direction="up" wrapChildren stagger={0.1} className={styles.categories}>
               {[
-                { label: 'Leyes Departamentales', icon: '📜', desc: 'Ver normativa departamental' },
-                { label: 'Decretos Departamentales', icon: '📑', desc: 'Acceder a decretos oficiales' },
-                { label: 'Decretos Ejecutivos', icon: '🖊️', desc: 'Consultar decretos del ejecutivo' },
-                { label: 'Resoluciones Administrativas', icon: '📋', desc: 'Ver resoluciones emitidas' },
+                { 
+                  label: 'Leyes Departamentales', 
+                  icon: <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>, 
+                  desc: 'Ver normativa departamental' 
+                },
+                { 
+                  label: 'Decretos Departamentales', 
+                  icon: <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>, 
+                  desc: 'Acceder a decretos oficiales' 
+                },
+                { 
+                  label: 'Decretos Ejecutivos', 
+                  icon: <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>, 
+                  desc: 'Consultar decretos del ejecutivo' 
+                },
+                { 
+                  label: 'Resoluciones Administrativas', 
+                  icon: <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>, 
+                  desc: 'Ver resoluciones emitidas' 
+                },
               ].map((cat) => (
                 <Link href="/gaceta" key={cat.label} className={styles.catCard} id={`gaceta-${cat.label.toLowerCase().replace(/\s+/g,'-')}`}>
                   <span className={styles.catIcon}>{cat.icon}</span>

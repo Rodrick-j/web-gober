@@ -16,6 +16,8 @@ export default function CrearNoticiaPage() {
   const [resumen, setResumen] = useState('');
   const [contenido, setContenido] = useState('');
   const [estado, setEstado] = useState('publicado');
+  const [categoria, setCategoria] = useState('Todas');
+  const [esComunicado, setEsComunicado] = useState(false);
   const [imagen, setImagen] = useState(null);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,6 +62,8 @@ export default function CrearNoticiaPage() {
           contenido,
           imagen_portada_url: imagenUrl,
           estado,
+          categoria,
+          es_comunicado_rapido: esComunicado,
           fecha_publicacion: fechaPublicacion,
           autor_id: user.id,
           secretaria_id: perfil?.secretaria_id || null // Automáticamente se enlaza a su secretaría
@@ -148,10 +152,42 @@ export default function CrearNoticiaPage() {
                 <FileUpload 
                   onFileSelect={setImagen} 
                   accept="image/*"
-                  label=""
+                  label={esComunicado ? "Opcional para comunicados" : ""}
                   icon="📸"
                   maxSizeMB={5}
                 />
+              </div>
+
+              <div className="formGroup" style={{ background: 'var(--admin-surface-2)', padding: '1rem', borderRadius: '10px', border: '1px solid var(--admin-border)' }}>
+                <label className="formLabel" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', marginBottom: 0 }}>
+                  <input 
+                    type="checkbox" 
+                    checked={esComunicado}
+                    onChange={(e) => setEsComunicado(e.target.checked)}
+                    style={{ width: '1.2rem', height: '1.2rem', accentColor: 'var(--color-primary)' }}
+                  />
+                  <span>¿Es un comunicado rápido?</span>
+                </label>
+                <p style={{ fontSize: '0.8rem', color: 'var(--admin-text-muted)', marginTop: '0.5rem', marginBottom: 0 }}>
+                  Aparecerá en la barra lateral sin necesidad de foto.
+                </p>
+              </div>
+
+              <div className="formGroup">
+                <label className="formLabel">Categoría</label>
+                <select 
+                  className="formSelect"
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
+                >
+                  <option value="Todas">General / Todas</option>
+                  <option value="Gobernador">Gobernador</option>
+                  <option value="Salud">Salud</option>
+                  <option value="Obras Públicas">Obras Públicas</option>
+                  <option value="Educación">Educación</option>
+                  <option value="Cultura y Turismo">Cultura y Turismo</option>
+                  <option value="Deportes">Deportes</option>
+                </select>
               </div>
 
               <div className="formGroup">

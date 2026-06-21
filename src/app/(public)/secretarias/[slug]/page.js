@@ -3,6 +3,8 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
+import EstadisticasChart from '@/components/EstadisticasChart/EstadisticasChart';
+import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import styles from './SecretariaDetail.module.css';
 
 export const revalidate = 0; // Mostrar cambios instantáneos (sin caché)
@@ -59,9 +61,16 @@ export default async function SecretariaDetailPage({ params }) {
   }
 
   const acento = sec.color_acento || '#8B0000';
-  const hasVideo = sec.video_url && sec.video_url.trim() !== '';
-  const isDirectMp4 = hasVideo && sec.video_url.toLowerCase().includes('.mp4');
-  const ytData = hasVideo && !isDirectMp4 ? getYouTubeData(sec.video_url) : { id: null, start: null };
+  
+  const hasSpecificVideo = sec.video_url && sec.video_url.trim() !== '';
+  const isDefaultBanner = !sec.banner_url || sec.banner_url === '/secretaria_default_banner.png';
+  
+  // Si no tiene video específico y usa el banner estático, lo reemplazamos por el video
+  const finalVideoUrl = hasSpecificVideo ? sec.video_url : (isDefaultBanner ? '/default_banner_video.mp4' : null);
+  
+  const hasVideo = finalVideoUrl !== null;
+  const isDirectMp4 = hasVideo && finalVideoUrl.toLowerCase().includes('.mp4');
+  const ytData = hasVideo && !isDirectMp4 ? getYouTubeData(finalVideoUrl) : { id: null, start: null };
   const youtubeId = ytData.id;
   const youtubeStart = ytData.start ? `&start=${ytData.start}` : '';
 
@@ -85,13 +94,31 @@ export default async function SecretariaDetailPage({ params }) {
         {isDirectMp4 ? (
           <div className={styles.videoWrapper}>
             <video
-              src={sec.video_url}
+              src={finalVideoUrl}
               autoPlay
               muted
               loop
               playsInline
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
+            {/* Texto ORURO para tapar marca de agua de Gemini */}
+            <div style={{
+              position: 'absolute',
+              bottom: '5px',
+              right: '20px',
+              zIndex: 10,
+              color: 'rgba(255,255,255,0.9)',
+              fontSize: '1.2rem',
+              fontWeight: '900',
+              letterSpacing: '5px',
+              textShadow: '0 2px 5px rgba(0,0,0,0.8)',
+              padding: '10px 25px',
+              background: 'rgba(0,0,0,0.6)',
+              borderRadius: '8px',
+              backdropFilter: 'blur(8px)'
+            }}>
+              ORURO
+            </div>
           </div>
         ) : youtubeId ? (
           <div className={styles.videoWrapper}>
@@ -145,28 +172,23 @@ export default async function SecretariaDetailPage({ params }) {
               </>
             )}
 
-            {sec.mision && (
-              <>
-                <h2 className={styles.sectionTitle}>Nuestra Misión</h2>
-                <div className={styles.textBody} style={{ whiteSpace: 'pre-wrap' }}>
-                  {sec.mision}
-                </div>
-              </>
-            )}
-
-            {sec.vision && (
-              <>
-                <h2 className={styles.sectionTitle}>Nuestra Visión</h2>
-                <div className={styles.textBody} style={{ whiteSpace: 'pre-wrap' }}>
-                  {sec.vision}
-                </div>
-              </>
-            )}
+            <MisionVisionSection 
+              mision={sec.mision} 
+              vision={sec.vision} 
+              titleClass={styles.sectionTitle} 
+              textClass={styles.textBody} 
+            />
 
             {!sec.descripcion && !sec.mision && !sec.vision && (
               <p style={{ color: '#888', fontStyle: 'italic', textAlign: 'center', padding: '2rem 0' }}>
                 La información detallada de esta secretaría se está actualizando.
               </p>
+            )}
+
+            {slug.includes('planificacion') && (
+              <div style={{ marginTop: '40px' }}>
+                <EstadisticasChart />
+              </div>
             )}
           </div>
         </div>

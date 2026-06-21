@@ -9,6 +9,7 @@ import NewsSection from '@/components/NewsSection/NewsSection';
 import GacetaSection from '@/components/GacetaSection/GacetaSection';
 import LocationSection from '@/components/LocationSection/LocationSection';
 import CenefaCultural from '@/components/CenefaCultural/CenefaCultural';
+import PopupComunicado from '@/components/PopupComunicado/PopupComunicado';
 import { createClient } from '@/lib/supabase/server';
 
 export default async function Home() {
@@ -21,11 +22,11 @@ export default async function Home() {
     .eq('activo', true)
     .order('orden', { ascending: true });
 
-  // Fetch configuración global (ticker, redes, contacto)
+  // Fetch configuración global (ticker, redes, contacto, comunicado)
   const { data: configData } = await supabase
     .from('configuracion_global')
     .select('*')
-    .in('clave', ['ticker_noticias', 'contacto_oficial', 'redes_sociales']);
+    .in('clave', ['ticker_noticias', 'contacto_oficial', 'redes_sociales', 'comunicado_popup']);
 
   const tickerConfig = configData?.find(c => c.clave === 'ticker_noticias')?.valor || {
     velocidad_segundos: 60,
@@ -42,6 +43,10 @@ export default async function Home() {
 
   const redesConfig = configData?.find(c => c.clave === 'redes_sociales')?.valor || {
     facebook: '#', twitter: '#', youtube: '#', instagram: '#', tiktok: '#'
+  };
+
+  const comunicadoConfig = configData?.find(c => c.clave === 'comunicado_popup')?.valor || {
+    activo: false, imagen_url: '', enlace: ''
   };
 
   // Fetch Secretarías activas
@@ -70,6 +75,7 @@ export default async function Home() {
   return (
     <>
       <IntroAnimation />
+      <PopupComunicado config={comunicadoConfig} />
 
       <main>
         {/* Carrusel Principal */}

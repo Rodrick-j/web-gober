@@ -29,6 +29,8 @@ export default async function NoticiasPage() {
       fecha_publicacion, 
       estado, 
       imagen_portada_url,
+      categoria,
+      es_comunicado_rapido,
       secretarias ( nombre_corto )
     `)
     .order('fecha_publicacion', { ascending: false });
@@ -71,6 +73,8 @@ export default async function NoticiasPage() {
               <tr>
                 <th>Imagen</th>
                 <th>Título</th>
+                <th>Categoría</th>
+                <th>Tipo</th>
                 {esSuperAdmin && <th>Secretaría</th>}
                 <th>Fecha</th>
                 <th>Estado</th>
@@ -80,7 +84,7 @@ export default async function NoticiasPage() {
             <tbody>
               {noticias?.length === 0 ? (
                 <tr>
-                  <td colSpan={esSuperAdmin ? 6 : 5} style={{ textAlign: 'center', padding: '2rem' }}>
+                  <td colSpan={esSuperAdmin ? 8 : 7} style={{ textAlign: 'center', padding: '2rem' }}>
                     No hay noticias registradas.
                   </td>
                 </tr>
@@ -98,6 +102,18 @@ export default async function NoticiasPage() {
                     </td>
                     <td>
                       <strong>{noticia.titulo}</strong>
+                    </td>
+                    <td>
+                      <span className={styles.badgeSecretaria} style={{ background: 'var(--admin-surface-2)', color: 'var(--admin-text)' }}>
+                        {noticia.categoria || 'Todas'}
+                      </span>
+                    </td>
+                    <td>
+                      {noticia.es_comunicado_rapido ? (
+                        <span className="badge badgeWarning">Comunicado Rápido</span>
+                      ) : (
+                        <span className="badge badgeSuccess" style={{ background: '#3b82f6', color: '#fff' }}>Noticia Normal</span>
+                      )}
                     </td>
                     {esSuperAdmin && (
                       <td>

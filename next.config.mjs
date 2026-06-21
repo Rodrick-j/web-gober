@@ -1,4 +1,4 @@
-﻿/** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   // Permitir archivos grandes (hasta 50MB) en Server Actions y API Routes
   experimental: {
@@ -22,8 +22,8 @@ const nextConfig = {
     ],
     // Formatos modernos â€” Next.js servirÃ¡ AVIF/WebP automÃ¡ticamente
     formats: ['image/avif', 'image/webp'],
-    // Calidades de compresiÃ³n
-    qualities: [50, 75, 85, 90, 100],
+    // Calidades de compresiÃ³n permitidas
+    qualities: [30, 50, 60, 75, 80, 85, 90, 100],
     // TamaÃ±os por defecto
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],

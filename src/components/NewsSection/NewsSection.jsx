@@ -69,7 +69,7 @@ export default function NewsSection({ noticias = [] }) {
                     fill
                     className={styles.featuredImage}
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    quality={100}
+                    quality={80}
                   />                </div>
                 <div className={styles.featuredContent}>
                   <div className={styles.cardMeta}>
@@ -143,6 +143,7 @@ export default function NewsSection({ noticias = [] }) {
                       frameBorder="0" 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                       allowFullScreen
+                      loading="lazy"
                       className={styles.videoIframe}
                     ></iframe>
                     <div className={styles.videoMeta}>

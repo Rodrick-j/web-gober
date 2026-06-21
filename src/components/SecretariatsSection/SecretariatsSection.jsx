@@ -64,9 +64,13 @@ export default function SecretariatsSection({ secretarias = [] }) {
               >
                 {/* Image Placeholder / Icon Box */}
                 <div className="secretariat-image-placeholder" style={{ background: `linear-gradient(135deg, ${sec.color_acento || '#C1272D'}, ${sec.color_acento || '#C1272D'}dd)` }}>
-                  <span className="secretariat-image-icon" style={{ fontSize: '3rem', color: 'white' }}>
-                    {sec.icono || '🏛️'}
-                  </span>
+                  {(sec.slug === 'mineria-metalurgia-recursos-energeticos' ? '/images/secretarias/mineria.png' : sec.banner_url) ? (
+                    <img src={sec.slug === 'mineria-metalurgia-recursos-energeticos' ? '/images/secretarias/mineria.png' : sec.banner_url} alt={sec.nombre_corto || sec.nombre} className="secretariat-image" />
+                  ) : (
+                    <span className="secretariat-image-icon" style={{ fontSize: '3rem', color: 'white' }}>
+                      {sec.icono || '🏛️'}
+                    </span>
+                  )}
                 </div>
                 
                 <div className="secretariat-info">

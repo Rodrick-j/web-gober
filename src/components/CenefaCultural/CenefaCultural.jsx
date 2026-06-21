@@ -16,24 +16,27 @@ export default function CenefaCultural() {
 
   useEffect(() => {
     // Generate enough items to fill the screen depending on width
-    const screenWidth = window.innerWidth;
-    // Assume each motif takes about 80px of space
-    const numItems = Math.ceil(screenWidth / 60);
-    const generatedItems = Array.from({ length: numItems }).map((_, index) => {
-      // Rotate through the 4 motifs
-      return motifs[index % motifs.length];
-    });
-    setItems(generatedItems);
+    const generateItems = (width) => {
+      const numItems = Math.ceil(width / 60);
+      return Array.from({ length: numItems }).map((_, index) => motifs[index % motifs.length]);
+    };
+
+    setItems(generateItems(window.innerWidth));
     
-    // Handle resize
+    // Debounced resize handler
+    let resizeTimer;
     const handleResize = () => {
-      const newNumItems = Math.ceil(window.innerWidth / 60);
-      const newItems = Array.from({ length: newNumItems }).map((_, index) => motifs[index % motifs.length]);
-      setItems(newItems);
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        setItems(generateItems(window.innerWidth));
+      }, 200);
     };
     
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
+    };
   }, []);
 
   if (items.length === 0) return <div className={styles.cenefaContainer}></div>;

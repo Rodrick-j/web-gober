@@ -10,6 +10,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@nivo/bar": "^0.99.0",
+    "@nivo/core": "^0.99.0",
+    "@nivo/pie": "^0.99.0",
     "@supabase/ssr": "^0.12.0",
     "@supabase/supabase-js": "^2.108.1",
     "browser-image-compression": "^2.0.2",
@@ -22,7 +25,6 @@
     "swiper": "^12.2.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "^1.13.16",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "wrangler": "^4.100.0"
