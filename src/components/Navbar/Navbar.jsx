@@ -162,14 +162,14 @@ export default function Navbar() {
                 }}
                 style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
-                <Image
-                  src="/imagotipo_gador_2026.png"
-                  alt="Gobierno Autónomo Departamental de Oruro"
-                  height={80}
-                  width={260}
-                  style={{ objectFit: 'contain' }}
-                  priority
-                />
+                  <Image
+                    src="/imagotipo_gador_2026.png"
+                    alt="Gobierno Autónomo Departamental de Oruro"
+                    height={80}
+                    width={260}
+                    style={{ objectFit: 'contain', width: 'auto', height: '80px' }}
+                    priority
+                  />
               </motion.div>
 
               {/* Back Face: ORURO 2026-2031 */}

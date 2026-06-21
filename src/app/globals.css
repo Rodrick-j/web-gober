@@ -58,8 +58,8 @@
   --spacing-2xl: 6rem;
 
   /* Typography */
-  --font-body: 'Panton', 'Inter', -apple-system, sans-serif;
-  --font-heading: 'Panton', 'Outfit', -apple-system, sans-serif;
+  --font-body: 'Panton', var(--font-inter), -apple-system, sans-serif;
+  --font-heading: 'Panton', var(--font-outfit), -apple-system, sans-serif;
 
   /* Transitions */
   --transition-fast: 0.15s ease;

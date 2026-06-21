@@ -9,11 +9,8 @@ export default function PopupComunicado({ config }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    console.log("Config del Comunicado:", config);
-
     // Verificar si el comunicado está activo y tiene imagen
     if (!config?.activo || !config?.imagen_url) {
-      console.log("El comunicado NO está activo o le falta la imagen.");
       return;
     }
 
@@ -27,14 +24,11 @@ export default function PopupComunicado({ config }) {
     const delayTime = hasSeenIntro ? 1000 : 4500;
     
     if (!hasSeenPopup || forceShow) {
-      console.log(`Mostrando el comunicado en ${delayTime}ms...`);
       // Retraso ajustado para no solaparse con la animación inicial
       const timer = setTimeout(() => {
         setIsVisible(true);
       }, delayTime);
       return () => clearTimeout(timer);
-    } else {
-      console.log("El comunicado ya fue visto en esta sesión. Ignorando.");
     }
   }, [config]);
 

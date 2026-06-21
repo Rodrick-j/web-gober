@@ -93,7 +93,6 @@ export default function HeroSlider({ banners, redes }) {
                   fill
                   sizes="100vw"
                   priority={banners.indexOf(banner) === 0}
-                  unoptimized={true}
                   className={`${styles.mainImage} ${banner.imagen_movil_url ? styles.hideOnMobile : ''}`}
                 />
                 
@@ -105,7 +104,6 @@ export default function HeroSlider({ banners, redes }) {
                     fill
                     sizes="100vw"
                     priority={banners.indexOf(banner) === 0}
-                    unoptimized={true}
                     className={`${styles.mainImage} ${styles.showOnlyOnMobile}`}
                   />
                 )}
