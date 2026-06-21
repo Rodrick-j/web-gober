@@ -40,7 +40,7 @@ export default function AnimatedBackground() {
         height: '100vh',
         zIndex: -1,
         pointerEvents: 'none',
-        backgroundColor: '#F3F4F6',
+        backgroundColor: '#F3F4F6', // Gris muy claro de fondo
         overflow: 'hidden',
       }}
     >
