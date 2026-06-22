@@ -6,7 +6,9 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 
-export async function proxy(request) {
+export const runtime = 'edge';
+
+export async function middleware(request) {
   let supabaseResponse = NextResponse.next({ request });
 
   // Crear cliente Supabase para el middleware

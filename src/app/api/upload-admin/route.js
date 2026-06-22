@@ -2,6 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
 // Esta ruta usa la llave MAESTRA (service role) del servidor.
+export const runtime = 'edge';
+
 // Jamás se expone al navegador. Salta todas las restricciones de seguridad (RLS).
 export async function POST(request) {
   try {
