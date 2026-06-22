@@ -4,6 +4,8 @@
   background: linear-gradient(135deg, rgba(253, 251, 251, 0.7) 0%, rgba(235, 237, 238, 0.7) 100%);
   position: relative;
   overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Decoración dorada sutil en el fondo */
@@ -103,7 +105,8 @@
   line-height: 1.1;
   text-transform: uppercase;
   margin-top: 2.5rem;
-  white-space: nowrap; /* Mantiene todo en una sola línea */
+  white-space: normal;
+  overflow-wrap: break-word;
   background: linear-gradient(to right, #67181a 0%, #ff0a33 50%, #67181a 100%);
   -webkit-background-clip: text;
   background-clip: text;

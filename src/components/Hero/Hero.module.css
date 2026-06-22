@@ -11,6 +11,7 @@
   overflow: hidden;
   background: var(--color-primary-dark);
   padding-top: 0;
+  max-width: 100%;
 }
 
 /* Background */
@@ -358,9 +359,12 @@
     padding-top: 4rem;
   }
   .heroImageCard { display: none; }
+  .floatCard { display: none; }
   .statsBar {
     flex-wrap: wrap;
     gap: 1px;
+    padding-left: 0;
+    padding-right: 0;
   }
   .statItem {
     flex: 1 1 45%;
