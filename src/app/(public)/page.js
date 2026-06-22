@@ -30,7 +30,7 @@ export default async function Home() {
   ] = await Promise.all([
     supabase.from('banners_inicio').select('*').eq('activo', true).order('orden', { ascending: true }),
     supabase.from('configuracion_global').select('*').in('clave', ['ticker_noticias', 'contacto_oficial', 'redes_sociales', 'comunicado_popup']),
-    supabase.from('secretarias').select('id, nombre, nombre_corto, slug, icono, secretario_nombre, secretario_cargo').eq('activo', true).order('orden', { ascending: true }),
+    supabase.from('secretarias').select('id, nombre, nombre_corto, slug, icono, secretario_nombre, secretario_cargo, secretario_foto_url, secretario_bio').eq('activo', true).order('orden', { ascending: true }),
     supabase.from('noticias').select('id, titulo, resumen, fecha_publicacion, imagen_portada_url, secretarias(nombre_corto, icono, color_acento)').eq('estado', 'publicado').order('fecha_publicacion', { ascending: false }).limit(5),
     supabase.from('documentos').select('id, tipo, numero, titulo, fecha_publicacion, archivo_url').eq('es_publico', true).order('fecha_publicacion', { ascending: false }).limit(5)
   ]);
