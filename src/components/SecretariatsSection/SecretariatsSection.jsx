@@ -13,8 +13,18 @@ import './SecretariatsSection.css';
 export default function SecretariatsSection({ secretarias = [] }) {
   // Use DB data if available, fallback to empty state
   const displaySecretariats = secretarias.length > 0 ? secretarias : [];
-  
   const [selectedSec, setSelectedSec] = useState(null);
+
+  const getSecretariaImage = (slug, banner_url) => {
+    if (banner_url) return banner_url;
+    if (!slug) return null;
+    if (slug.includes('general')) return '/images/secretarias/sec_general.png';
+    if (slug.includes('productiv')) return '/images/secretarias/desarrollo_productivo.png';
+    if (slug.includes('cultur')) return '/images/secretarias/cultura_turismo.png';
+    if (slug.includes('obras')) return '/images/secretarias/obras_publicas.png';
+    if (slug.includes('miner')) return '/images/secretarias/mineria.png';
+    return null;
+  };
 
   return (
     <section className="secretariats-section">
@@ -64,8 +74,8 @@ export default function SecretariatsSection({ secretarias = [] }) {
               >
                 {/* Image Placeholder / Icon Box */}
                 <div className="secretariat-image-placeholder" style={{ background: `linear-gradient(135deg, ${sec.color_acento || '#C1272D'}, ${sec.color_acento || '#C1272D'}dd)` }}>
-                  {(sec.slug === 'mineria-metalurgia-recursos-energeticos' ? '/images/secretarias/mineria.png' : sec.banner_url) ? (
-                    <img src={sec.slug === 'mineria-metalurgia-recursos-energeticos' ? '/images/secretarias/mineria.png' : sec.banner_url} alt={sec.nombre_corto || sec.nombre} className="secretariat-image" />
+                  {getSecretariaImage(sec.slug, sec.banner_url) ? (
+                    <img src={getSecretariaImage(sec.slug, sec.banner_url)} alt={sec.nombre_corto || sec.nombre} className="secretariat-image" />
                   ) : (
                     <span className="secretariat-image-icon" style={{ fontSize: '3rem', color: 'white' }}>
                       {sec.icono || '🏛️'}
@@ -75,9 +85,13 @@ export default function SecretariatsSection({ secretarias = [] }) {
                 
                 <div className="secretariat-info">
                   <h3 className="secretariat-name" style={{ fontSize: '1.1rem' }}>{sec.nombre_corto || sec.nombre}</h3>
-                  <p className="secretariat-role">{sec.secretario_nombre || 'Sin autoridad asignada'}</p>
+                  {sec.secretario_nombre ? (
+                    <p className="secretariat-role">{sec.secretario_nombre}</p>
+                  ) : (
+                    <p className="secretariat-role pending-shimmer">Designación Pendiente</p>
+                  )}
                   <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
-                    {sec.secretario_cargo || 'Secretario/a Departamental'}
+                    {sec.secretario_cargo || 'Autoridad Departamental'}
                   </p>
                 </div>
               </motion.div>
@@ -126,8 +140,12 @@ export default function SecretariatsSection({ secretarias = [] }) {
                 {/* Lado Derecho: Contenido */}
                 <div className="sec-modal-right">
                   <div className="sec-modal-badge">{selectedSec.nombre_corto || selectedSec.nombre}</div>
-                  <h3 className="sec-modal-name">{selectedSec.secretario_nombre || 'Sin autoridad asignada'}</h3>
-                  <p className="sec-modal-role">{selectedSec.secretario_cargo || 'Secretario/a Departamental'}</p>
+                  {selectedSec.secretario_nombre ? (
+                    <h3 className="sec-modal-name">{selectedSec.secretario_nombre}</h3>
+                  ) : (
+                    <h3 className="sec-modal-name pending-shimmer">Designación Pendiente</h3>
+                  )}
+                  <p className="sec-modal-role">{selectedSec.secretario_cargo || 'Autoridad Departamental'}</p>
                   
                   <div className="sec-modal-bio">
                     {selectedSec.secretario_bio ? (
