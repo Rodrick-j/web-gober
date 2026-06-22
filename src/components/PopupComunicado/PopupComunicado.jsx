@@ -53,7 +53,7 @@ export default function PopupComunicado({ config }) {
             initial={{ opacity: 0, scale: 0.8, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 50 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <button 
               className={styles.closeButton} 
