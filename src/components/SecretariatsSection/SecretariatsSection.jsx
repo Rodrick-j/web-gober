@@ -25,6 +25,9 @@ export default function SecretariatsSection({ secretarias = [] }) {
     if (slug.includes('miner')) return '/images/secretarias/mineria.png';
     if (slug.includes('medio-ambiente')) return '/images/secretarias/medio_ambiente.png';
     if (slug.includes('desarrollo-social')) return '/images/secretarias/desarrollo_social.png';
+    if (slug.includes('planificacion')) return '/images/secretarias/planificacion.jpg';
+    if (slug.includes('juridicos')) return '/images/secretarias/asuntos_juridicos.jpg';
+    if (slug.includes('finanzas')) return '/images/secretarias/admin_finanzas.jpg';
     return null;
   };
 
@@ -88,13 +91,16 @@ export default function SecretariatsSection({ secretarias = [] }) {
                 <div className="secretariat-info">
                   <h3 className="secretariat-name" style={{ fontSize: '1.1rem' }}>{sec.nombre_corto || sec.nombre}</h3>
                   {sec.secretario_nombre ? (
-                    <p className="secretariat-role">{sec.secretario_nombre}</p>
+                    <>
+                      <p className="secretariat-role">{sec.secretario_nombre}</p>
+                      <p className="secretariat-subrole">{sec.secretario_cargo || 'Autoridad Departamental'}</p>
+                    </>
                   ) : (
-                    <p className="secretariat-role pending-shimmer">Designación Pendiente</p>
+                    <div className="pending-auth-container">
+                      <div className="pulse-dot"></div>
+                      <p className="secretariat-role pending-shimmer">Designación Pendiente</p>
+                    </div>
                   )}
-                  <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.2rem' }}>
-                    {sec.secretario_cargo || 'Autoridad Departamental'}
-                  </p>
                 </div>
               </motion.div>
             </SwiperSlide>
@@ -143,11 +149,16 @@ export default function SecretariatsSection({ secretarias = [] }) {
                 <div className="sec-modal-right">
                   <div className="sec-modal-badge">{selectedSec.nombre_corto || selectedSec.nombre}</div>
                   {selectedSec.secretario_nombre ? (
-                    <h3 className="sec-modal-name">{selectedSec.secretario_nombre}</h3>
+                    <>
+                      <h3 className="sec-modal-name">{selectedSec.secretario_nombre}</h3>
+                      <p className="sec-modal-role">{selectedSec.secretario_cargo || 'Autoridad Departamental'}</p>
+                    </>
                   ) : (
-                    <h3 className="sec-modal-name pending-shimmer">Designación Pendiente</h3>
+                    <div className="pending-auth-container" style={{ justifyContent: 'flex-start', marginTop: '0.5rem', marginBottom: '1rem' }}>
+                      <div className="pulse-dot"></div>
+                      <h3 className="sec-modal-name pending-shimmer" style={{ margin: 0, fontSize: '1.5rem' }}>Designación Pendiente</h3>
+                    </div>
                   )}
-                  <p className="sec-modal-role">{selectedSec.secretario_cargo || 'Autoridad Departamental'}</p>
                   
                   <div className="sec-modal-bio">
                     {selectedSec.secretario_bio ? (
