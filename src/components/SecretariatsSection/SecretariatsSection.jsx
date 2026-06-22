@@ -23,6 +23,8 @@ export default function SecretariatsSection({ secretarias = [] }) {
     if (slug.includes('cultur')) return '/images/secretarias/cultura_turismo.png';
     if (slug.includes('obras')) return '/images/secretarias/obras_publicas.png';
     if (slug.includes('miner')) return '/images/secretarias/mineria.png';
+    if (slug.includes('medio-ambiente')) return '/images/secretarias/medio_ambiente.png';
+    if (slug.includes('desarrollo-social')) return '/images/secretarias/desarrollo_social.png';
     return null;
   };
 
