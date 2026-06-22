@@ -7,7 +7,7 @@ const nextConfig = {
     },
   },
   images: {
-    // Dominios remotos permitidos para optimizaciÃ³n de imÃ¡genes
+    // Dominios remotos permitidos
     remotePatterns: [
       {
         protocol: 'https',
@@ -20,16 +20,13 @@ const nextConfig = {
         pathname: '/storage/v1/object/public/**',
       },
     ],
-    // Formatos modernos â€” Next.js servirÃ¡ AVIF/WebP automÃ¡ticamente
-    formats: ['image/avif', 'image/webp'],
-    // Calidades de compresiÃ³n permitidas
-    qualities: [30, 50, 60, 75, 80, 85, 90, 100],
-    // TamaÃ±os por defecto
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Cloudflare Workers no tiene servidor de optimización de imágenes de Next.js.
+    // Las imágenes se sirven directamente desde Supabase CDN (ya optimizadas en origen).
+    unoptimized: true,
   },
 };
 
 export default nextConfig;
+
 
 

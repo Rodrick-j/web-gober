@@ -1,7 +1,6 @@
 'use client';
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
-import { useCountUp, useGSAP } from '@/hooks/useGSAP';
+import { useRef, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import styles from './Hero.module.css';
 
 /* ── Stats data ──────────────────────────────────────── */
@@ -22,13 +21,56 @@ const itemVariants = {
   visible:  { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
 };
 
+/* ── Count-up hook (sin GSAP, usando IntersectionObserver + RAF) ── */
+function useCountUp(end, duration = 2200) {
+  const [count, setCount] = useState('0');
+  const ref = useRef(null);
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    const numericEnd = parseFloat(String(end).replace(/[^0-9.]/g, ''));
+    const hasK = String(end).includes('K');
+    const hasPlus = String(end).includes('+');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          const startTime = performance.now();
+
+          const tick = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // ease out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * numericEnd);
+            const formatted = hasK
+              ? `${current}K${hasPlus ? '+' : ''}`
+              : `${current}${hasPlus ? '+' : ''}`;
+            setCount(formatted);
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+
+          requestAnimationFrame(tick);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end, duration]);
+
+  return { ref, count };
+}
+
 /* ── Animated stat number ────────────────────────────── */
 function StatNumber({ raw, label }) {
-  const ref = useRef(null);
-  useCountUp(ref, raw, 2.2);
+  const { ref, count } = useCountUp(raw, 2200);
   return (
-    <div className={styles.statItem}>
-      <div ref={ref} className={styles.statValue}>0</div>
+    <div ref={ref} className={styles.statItem}>
+      <div className={styles.statValue}>{count}</div>
       <div className={styles.statLabel}>{label}</div>
     </div>
   );
@@ -36,36 +78,26 @@ function StatNumber({ raw, label }) {
 
 /* ── Main Hero ───────────────────────────────────────── */
 export default function Hero() {
-  const heroRef  = useRef(null);
-  const titleRef = useRef(null);
-  const bgRef    = useRef(null);
+  const heroRef = useRef(null);
 
-  /* GSAP parallax on scroll */
-  useGSAP((gsap, ScrollTrigger) => {
-    // Subtle parallax on the background orbs
-    gsap.to(bgRef.current, {
-      yPercent: 30,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-  }, []);
+  // Parallax CSS-scroll suave usando framer-motion (sin GSAP)
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
 
   return (
     <section ref={heroRef} className={styles.hero} id="inicio">
 
-      {/* Background */}
-      <div ref={bgRef} className={styles.heroBg}>
+      {/* Background con parallax vía framer-motion */}
+      <motion.div className={styles.heroBg} style={{ y: bgY }}>
         <div className={styles.bgGradient} />
         <div className={styles.bgPattern} />
         <div className={`${styles.orb} ${styles.orb1}`} />
         <div className={`${styles.orb} ${styles.orb2}`} />
         <div className={`${styles.orb} ${styles.orb3}`} />
-      </div>
+      </motion.div>
 
       {/* Hero Content */}
       <div className={styles.heroContent}>
@@ -82,7 +114,7 @@ export default function Hero() {
             </span>
           </motion.div>
 
-          <motion.h1 ref={titleRef} className={styles.heroTitle} variants={itemVariants}>
+          <motion.h1 className={styles.heroTitle} variants={itemVariants}>
             Gobierno Autónomo
             <br />
             <span className={styles.heroTitleAccent}>Departamental</span>
@@ -161,7 +193,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Stats Bar — GSAP count-up */}
+      {/* Stats Bar — count-up con IntersectionObserver puro */}
       <motion.div
         className={styles.statsBar}
         initial={{ opacity: 0, y: 30 }}
@@ -175,3 +207,4 @@ export default function Hero() {
     </section>
   );
 }
+

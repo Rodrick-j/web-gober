@@ -4,36 +4,33 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './IntroAnimation.css';
 
-export default function IntroAnimation() {
-  // Siempre inicializamos en true para que coincida con el servidor (SSR)
-  // Esto evita errores de hidratación que congelan las animaciones de framer-motion.
-  const [show, setShow] = useState(true);
+export default function IntroAnimation({ isSeen }) {
+  // Inicializar estado usando el prop que viene del servidor (evita hydration mismatch)
+  const [show, setShow] = useState(!isSeen);
 
   useEffect(() => {
-    // Una vez montado en el cliente, verificamos si ya se vio la intro
-    const alreadySeen = sessionStorage.getItem('introSeen');
-    
-    if (alreadySeen) {
-      // Si ya la vio, la ocultamos inmediatamente
-      setShow(false);
+    // Si ya se vio en el servidor, no hacemos nada más
+    if (isSeen) {
       document.body.style.overflow = 'unset';
       return;
     }
 
+    // Si no se ha visto, configuramos el temporizador y el cookie para la próxima visita
     document.body.style.overflow = 'hidden';
     
     // Aumentamos a 4500ms (4.5s) para el efecto épico completo
     const timer = setTimeout(() => {
       setShow(false);
       document.body.style.overflow = 'unset';
-      sessionStorage.setItem('introSeen', '1');
+      // Guardar cookie que expira en 1 día
+      document.cookie = "introSeen=1; path=/; max-age=86400; samesite=lax";
     }, 4500);
 
     return () => {
       clearTimeout(timer);
       document.body.style.overflow = 'unset';
     };
-  }, []);
+  }, [isSeen]);
 
   return (
     <AnimatePresence>

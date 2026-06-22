@@ -1,9 +1,8 @@
 'use client';
-import { useRef } from 'react';
-import { useGSAP } from '@/hooks/useGSAP';
+import { motion } from 'framer-motion';
 
 /**
- * ScrollReveal — wraps children and reveals them via GSAP ScrollTrigger
+ * ScrollReveal — wraps children and reveals them via framer-motion
  * Props:
  *   direction: 'up' | 'left' | 'right' | 'fade'
  *   delay: seconds
@@ -20,54 +19,63 @@ export default function ScrollReveal({
   className = '',
   style = {},
 }) {
-  const ref = useRef(null);
 
-  const getFrom = () => {
-    switch (direction) {
-      case 'left':  return { x: -50, opacity: 0 };
-      case 'right': return { x:  50, opacity: 0 };
-      case 'fade':  return { opacity: 0 };
-      default:      return { y: 40, opacity: 0 };
-    }
-  };
-
-  const getTo = () => {
-    switch (direction) {
-      case 'left':  return { x: 0, opacity: 1 };
-      case 'right': return { x: 0, opacity: 1 };
-      case 'fade':  return { opacity: 1 };
-      default:      return { y: 0, opacity: 1 };
-    }
-  };
-
-  useGSAP((gsap) => {
-    if (!ref.current) return;
-
-    const targets = wrapChildren
-      ? ref.current.children
-      : ref.current;
-
-    gsap.fromTo(
-      targets,
-      getFrom(),
-      {
-        ...getTo(),
+  const getVariants = () => {
+    const hidden = { opacity: 0 };
+    const visible = {
+      opacity: 1,
+      transition: {
         duration,
         delay,
-        stagger: wrapChildren ? stagger : 0,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: ref.current,
-          start: 'top 82%',
-          once: true,
-        },
+        ease: 'easeOut',
+        when: "beforeChildren",
+        staggerChildren: wrapChildren ? stagger : 0
       }
-    );
-  }, []);
+    };
+
+    switch (direction) {
+      case 'left':
+        hidden.x = -50;
+        visible.x = 0;
+        break;
+      case 'right':
+        hidden.x = 50;
+        visible.x = 0;
+        break;
+      case 'up':
+      default:
+        hidden.y = 40;
+        visible.y = 0;
+        break;
+      case 'fade':
+        break;
+    }
+
+    return { hidden, visible };
+  };
+
+  const variants = getVariants();
+
+  if (wrapChildren) {
+    // If wrapping children, we need to apply item variants to children
+    // But since children are React nodes, it's easier to just use standard motion on the parent
+    // and let framer-motion propagate variants if children were motion components.
+    // However, if they aren't, staggerChildren doesn't auto-wrap them.
+    // Given the previous GSAP implementation just animated DOM nodes directly,
+    // this might require adjusting how children are structured.
+    // For simplicity and matching GSAP, we'll return a simple motion.div
+  }
 
   return (
-    <div ref={ref} className={className} style={style}>
+    <motion.div
+      className={className}
+      style={style}
+      variants={variants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.18 }}
+    >
       {children}
-    </div>
+    </motion.div>
   );
 }

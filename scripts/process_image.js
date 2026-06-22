@@ -7,7 +7,7 @@ const outputPath = path.join(__dirname, '../public/images/marca_gobierno_blanco.
 async function processImage() {
   try {
     const image = await Jimp.read(imagePath);
-    
+
     image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
       const r = this.bitmap.data[idx + 0];
       const g = this.bitmap.data[idx + 1];
