@@ -303,11 +303,11 @@ export default function Navbar() {
           {mobileOpen && (
             <motion.div
               className={styles.mobileMenu}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-              style={{ overflow: 'hidden' }}
+              initial={{ opacity: 0, y: -15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              style={{ transformOrigin: 'top' }}
             >
               <div className={styles.mobileMenuInner}>
                 {dynamicNavItems.map((item, i) => (
@@ -315,7 +315,7 @@ export default function Navbar() {
                     key={item.label}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.05 }}
+                    transition={{ delay: i * 0.02, duration: 0.2 }}
                   >
                   {item.children ? (
                     <button
@@ -345,7 +345,7 @@ export default function Navbar() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        transition={{ duration: 0.15, ease: 'easeOut' }}
                         style={{ overflow: 'hidden' }}
                       >
                         <div 
