@@ -120,11 +120,36 @@ export default async function NoticiaDetailPage({ params }) {
         <section className="container">
           <div className={styles.articleLayout}>
             
-            <article className={styles.mainContent}>
-              <div 
-                className={styles.richTextContent}
-                dangerouslySetInnerHTML={{ __html: noticia.contenido }}
-              />
+            <article className={styles.mainContent} style={{ minWidth: 0, width: '100%', overflow: 'hidden' }}>
+              <div
+                style={{
+                  background: '#fff',
+                  borderRadius: '16px',
+                  padding: '2rem 2.5rem',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                  border: '1px solid #E5E7EB',
+                  boxSizing: 'border-box',
+                  width: '100%',
+                  overflow: 'hidden',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '1.0625rem',
+                    lineHeight: '1.85',
+                    color: 'var(--color-text)',
+                    textAlign: 'justify',
+                    wordBreak: 'normal',
+                    overflowWrap: 'break-word',
+                    hyphens: 'none',
+                    WebkitHyphens: 'none',
+                    width: '100%',
+                    maxWidth: '100%',
+                    display: 'block',
+                  }}
+                  dangerouslySetInnerHTML={{ __html: noticia.contenido }}
+                />
+              </div>
             </article>
 
             <aside className={styles.sidebar}>

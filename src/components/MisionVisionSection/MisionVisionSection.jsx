@@ -104,10 +104,10 @@ function FlipCard({ title, text, Icon, titleClass, textClass }) {
           >
             <Icon />
           </motion.div>
-          <h2 className={titleClass} style={{ margin: 0, border: 'none', padding: 0, fontSize: '1.8rem' }}>
+          <h2 className={titleClass} style={{ margin: 0, border: 'none', padding: 0, fontSize: '1.8rem', textAlign: 'center' }}>
             {title}
           </h2>
-          <p style={{ marginTop: '1rem', color: '#888', fontStyle: 'italic', fontSize: '0.9rem' }}>Pasa el cursor (o toca) para voltear</p>
+          <p style={{ marginTop: '1rem', color: '#888', fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'center' }}>Pasa el cursor (o toca) para voltear</p>
         </div>
 
         {/* BACK FACE */}
@@ -145,7 +145,8 @@ function FlipCard({ title, text, Icon, titleClass, textClass }) {
             color: '#fff', 
             fontSize: '0.95rem', 
             lineHeight: '1.6',
-            textShadow: '0 1px 2px rgba(0,0,0,0.2)' 
+            textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+            textAlign: 'center'
           }}>
             {text}
           </div>

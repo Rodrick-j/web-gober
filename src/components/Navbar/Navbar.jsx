@@ -132,9 +132,17 @@ export default function Navbar() {
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
         <div className={styles.navInner}>
-          {/* Logo Illusion Flip */}
-          <Link href="/" className={styles.logo} style={{ display: 'block', width: 260, height: 80 }}>
-            <motion.div
+          <Link 
+            href="/" 
+            className={styles.logo} 
+            style={{ 
+              display: 'block', 
+              width: 340, 
+              height: 100,
+              background: 'linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%)',
+              borderRadius: '12px'
+            }}
+          >            <motion.div
               animate={{ scaleX: [1, 1, 0, 1, 1, 0, 1] }}
               transition={{
                 repeat: Infinity,
@@ -151,7 +159,7 @@ export default function Navbar() {
                 justifyContent: 'center',
               }}
             >
-              {/* Front Face: Logo */}
+              {/* Front Face: Logo institucional */}
               <motion.div 
                 animate={{ opacity: [1, 1, 0, 0, 0, 0, 1] }}
                 transition={{
@@ -165,14 +173,14 @@ export default function Navbar() {
                   <Image
                     src="/imagotipo_gador_2026.png"
                     alt="Gobierno Autónomo Departamental de Oruro"
-                    height={80}
-                    width={260}
-                    style={{ objectFit: 'contain', width: 'auto', height: '80px' }}
+                    height={90}
+                    width={300}
+                    style={{ objectFit: 'contain', width: 'auto', height: '90px', mixBlendMode: 'multiply' }}
                     priority
                   />
               </motion.div>
 
-              {/* Back Face: ORURO 2026-2031 */}
+              {/* Back Face: Imagen MARCA GOBIERNO con texto completo */}
               <motion.div 
                 animate={{ opacity: [0, 0, 0, 1, 1, 0, 0] }}
                 transition={{
@@ -183,51 +191,13 @@ export default function Navbar() {
                 }}
                 style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.8rem'
-                }}>
-                  <Image 
-                    src="/icons/icon.jpg"
-                    alt="Escudo de Oruro" 
-                    width={40}
-                    height={40}
-                    style={{ objectFit: 'contain', borderRadius: '8px' }} 
-                  />
-                  <div style={{
-                    fontSize: '1.4rem',
-                    fontWeight: 900,
-                    fontFamily: 'var(--font-heading)',
-                    color: '#DC143C', /* Rojo Carmesí Brillante */
-                    textShadow: '0 0 8px rgba(220, 20, 60, 0.8), 0 0 15px rgba(255, 0, 0, 0.6)',
-                    lineHeight: 1
-                  }}>
-                    ORURO
-                  </div>
-                  <motion.div 
-                    animate={{ 
-                      scale: [1, 1.05, 1], 
-                      textShadow: [
-                        "0 0 5px rgba(255, 215, 0, 0.6)", 
-                        "0 0 15px rgba(255, 215, 0, 1)", 
-                        "0 0 5px rgba(255, 215, 0, 0.6)"
-                      ] 
-                    }}
-                    transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-                    style={{ 
-                      fontSize: '1.3rem', 
-                      fontWeight: 900,
-                      fontFamily: 'var(--font-heading)',
-                      color: '#FFD700',
-                      lineHeight: 1
-                    }}
-                  >
-                    2026-2031
-                  </motion.div>
-                </div>
+                <Image
+                  src="/marca_gobierno.png"
+                  alt="¡Gobierno de Unidad!"
+                  width={380}
+                  height={120}
+                  style={{ objectFit: 'contain', width: 'auto', height: '110px', mixBlendMode: 'multiply' }}
+                />
               </motion.div>
             </motion.div>
           </Link>
