@@ -9,15 +9,13 @@ export default function CenefaCultural() {
   
   const motifs = [
     '/motivos/motivo_10.png',
-    '/motivos/motivo_11.png',
-    '/motivos/motivo_14.png',
-    '/motivos/motivo_16.png'
+    '/motivos/motivo_11.png'
   ];
 
   useEffect(() => {
     // Generate enough items to fill the screen depending on width
     const generateItems = (width) => {
-      const numItems = Math.ceil(width / 60);
+      const numItems = Math.ceil(width / 45);
       return Array.from({ length: numItems }).map((_, index) => motifs[index % motifs.length]);
     };
 
@@ -49,7 +47,7 @@ export default function CenefaCultural() {
             src={src} 
             alt={`Motivo Cultural ${index}`}
             fill
-            sizes="60px"
+            sizes="30px"
             style={{ objectFit: 'contain' }}
           />
         </div>

@@ -16,8 +16,8 @@ export default function AnimatedBackground() {
   const [elements, setElements] = useState([]);
 
   useEffect(() => {
-    // Reduce to 10 elements (was 20) for better performance
-    const newElements = Array.from({ length: 10 }).map((_, i) => ({
+    // Reduce to 5 elements (was 10) for better performance
+    const newElements = Array.from({ length: 5 }).map((_, i) => ({
       id: i,
       size: Math.random() * 120 + 40,
       x: Math.random() * 100,

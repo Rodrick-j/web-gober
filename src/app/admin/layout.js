@@ -5,7 +5,6 @@ import './admin.css';
 // Cloudflare Workers requiere Edge Runtime
 export const runtime = 'edge';
 
-
 export const metadata = {
   title: 'Panel Admin — GADOR Oruro',
   description: 'Panel de administración del Gobierno Autónomo Departamental de Oruro',

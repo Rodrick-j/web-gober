@@ -10,8 +10,9 @@
 .sliderFrame {
   position: relative;
   width: 100%;
-  aspect-ratio: 21 / 9;
-  min-height: 300px;
+  aspect-ratio: 24 / 9;
+  max-height: 540px;
+  min-height: 280px;
 }
 
 .swiperRoot {
@@ -217,11 +218,12 @@
   }
   .sliderFrame {
     aspect-ratio: auto;
-    height: 65vh;
-    min-height: 400px;
+    height: 80vh;
+    min-height: 520px;
+    max-height: none;
   }
   .slideContent {
-    bottom: 10%;
+    bottom: 15%;
     left: 5%;
     right: 5%;
   }
@@ -244,34 +246,50 @@
   }
   :global(.swiper-button-prev),
   :global(.swiper-button-next) {
-    display: none !important; /* Ocultar flechas en móvil para limpiar la pantalla */
+    display: flex !important;
+    width: 38px;
+    height: 38px;
+    background: rgba(15, 23, 42, 0.5);
+  }
+  :global(.swiper-button-prev::after),
+  :global(.swiper-button-next::after) {
+    font-size: 1.1rem !important;
+  }
+  :global(.swiper-button-prev) {
+    left: 10px !important;
+  }
+  :global(.swiper-button-next) {
+    right: 10px !important;
   }
 }
 
 /* Floating Social Networks */
 .floatingSocials {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  bottom: 20px;
+  right: 30px;
+  top: auto;
+  transform: none;
   display: flex;
   flex-direction: row;
-  gap: 12px;
-  z-index: 30; /* Ensure it's above the arrow */
+  gap: 10px;
+  z-index: 30;
 }
 
 .socialIcon {
-  width: 36px;
-  height: 36px;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(5px);
+  width: 34px;
+  height: 34px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 1rem;
+  font-size: 0.95rem;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .staticOverlay {
@@ -360,8 +378,12 @@
 
 @media (max-width: 768px) {
   .floatingSocials {
-    top: 15px;
+    position: absolute;
+    bottom: 12px;
     right: 15px;
+    top: auto;
+    transform: none;
+    flex-direction: row;
     gap: 8px;
   }
   .socialIcon {

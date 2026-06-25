@@ -4,7 +4,6 @@ import './globals.css';
 // Cloudflare Workers requiere Edge Runtime en todas las rutas
 export const runtime = 'edge';
 
-
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' });
 

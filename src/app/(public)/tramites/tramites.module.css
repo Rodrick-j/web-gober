@@ -1,0 +1,563 @@
+/* =====================================================
+   PORTAL DE TRÁMITES EN LÍNEA — ESTILOS VANILLA CSS
+   ===================================================== */
+
+.heroTramites {
+  position: relative;
+  padding: 4.5rem 0 3.5rem 0;
+  background: linear-gradient(135deg, #1A1A2E 0%, #300d14 50%, #520811 100%);
+  color: #fff;
+  overflow: hidden;
+  border-bottom: 2px solid var(--color-gold);
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.12;
+  background-image: radial-gradient(#ffb843 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.25rem;
+  background: rgba(255, 184, 67, 0.15);
+  border: 1px solid var(--color-gold);
+  border-radius: 999px;
+  color: var(--color-gold-light);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  backdrop-filter: blur(8px);
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.heroSubtitle {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 700px;
+  margin: 0 auto 2.5rem auto;
+  line-height: 1.6;
+}
+
+/* Buscador Interactivo */
+.searchContainer {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto 2.5rem auto;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1.1rem 1.5rem 1.1rem 3.5rem;
+  font-size: 1.05rem;
+  font-family: var(--font-body);
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--color-gold);
+  box-shadow: 0 15px 50px rgba(255, 184, 67, 0.3);
+  transform: translateY(-2px);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.4rem;
+  color: var(--color-primary);
+  pointer-events: none;
+}
+
+.clearSearchBtn {
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #eee;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clearSearchBtn:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+/* Estadísticas Header */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.statCard {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.statValue {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--color-gold);
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.75);
+  font-weight: 500;
+}
+
+/* Sección de Contenido Principal */
+.mainSection {
+  padding: 3rem 0;
+  background-color: #f8fafc;
+  min-height: 60vh;
+}
+
+/* Categorías Tabs */
+.categoriesWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.categoryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.categoryBtn:hover {
+  border-color: var(--color-primary-light);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.categoryBtn.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(156, 7, 32, 0.3);
+}
+
+/* Grilla de Trámites */
+.gridTramites {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.cardTramite {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.cardTramite::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: var(--color-primary);
+}
+
+.cardTramite:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+  border-color: #cbd5e1;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.cardCode {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  background: rgba(156, 7, 32, 0.08);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
+
+.cardTime {
+  font-size: 0.75rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+.cardSec {
+  font-size: 0.78rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.cardSummary {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardFooter {
+  padding-top: 1rem;
+  border-top: 1px dashed #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardCostWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardCostLabel {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.cardCostValue {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.btnVerDetalle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.15rem;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 999px;
+  transition: all 0.2s;
+}
+
+.btnVerDetalle:hover {
+  background: var(--color-primary-dark);
+  transform: translateX(3px);
+}
+
+/* Modal Detalles */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modalBox {
+  background: #fff;
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  border-radius: 24px;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader {
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+  border-bottom: 1px solid #e2e8f0;
+  position: relative;
+}
+
+.modalCloseBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.modalCloseBtn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.modalContent {
+  padding: 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.modalSectionTitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-bottom: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.requisitosList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.requisitoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  color: #334155;
+}
+
+.requisitoCheck {
+  color: #10b981;
+  font-weight: bold;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.pasosWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pasoCard {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.pasoNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+.pasoText {
+  font-size: 0.92rem;
+  color: #475569;
+  padding-top: 0.3rem;
+}
+
+.modalActions {
+  padding: 1.5rem 2.5rem;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.btnDownload {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.85rem;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #7a0518 100%);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(156, 7, 32, 0.25);
+  transition: all 0.25s;
+}
+
+.btnDownload:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(156, 7, 32, 0.35);
+}
+
+/* Simulador Flotante Tracking */
+.trackerBox {
+  margin-top: 4rem;
+  background: #1e293b;
+  border-radius: 20px;
+  padding: 2.5rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.trackerTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.trackerSub {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  max-width: 500px;
+  margin-bottom: 1.5rem;
+}
+
+.trackerForm {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+.trackerInput {
+  flex: 1;
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #475569;
+  background: #0f172a;
+  color: #fff;
+  font-size: 0.95rem;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+.trackerInput:focus {
+  outline: none;
+  border-color: var(--color-gold);
+}
+
+.btnTracker {
+  padding: 0.85rem 1.5rem;
+  background: var(--color-gold);
+  color: #1e293b;
+  font-weight: 800;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.btnTracker:hover {
+  background: var(--color-gold-light);
+}
+
+@media (max-width: 768px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+  .gridTramites { grid-template-columns: 1fr; }
+  .modalHeader, .modalContent, .modalActions { padding: 1.5rem; }
+  .trackerForm { flex-direction: column; }
+}

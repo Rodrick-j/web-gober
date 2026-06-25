@@ -9,6 +9,7 @@ import styles from './Navbar.module.css';
 
 const navItems = [
   { label: 'Inicio', emoji: '🏠', href: '/' },
+  { label: 'Trámites', emoji: '📋', href: '/tramites' },
   {
     label: 'Secretarías',
     emoji: '🏢',
@@ -50,6 +51,15 @@ export default function Navbar() {
   const timeoutRef = useRef(null);
   const supabase = useMemo(() => createClient(), []);
 
+  const fallbackSecretarias = [
+    { nombre: 'Secretaría Departamental de Minería y Metalurgia', nombre_corto: 'Minería y Metalurgia', slug: 'mineria-y-metalurgia', icono: '⛏️' },
+    { nombre: 'Secretaría Departamental de Medio Ambiente, Agua y Madre Tierra', nombre_corto: 'Medio Ambiente y Madre Tierra', slug: 'medio-ambiente', icono: '🌿' },
+    { nombre: 'Secretaría Departamental de Asuntos Jurídicos', nombre_corto: 'Asuntos Jurídicos', slug: 'asuntos-juridicos', icono: '⚖️' },
+    { nombre: 'Secretaría Departamental de Obras Públicas e Infraestructura', nombre_corto: 'Obras e Infraestructura', slug: 'obras-publicas', icono: '🏗️' },
+    { nombre: 'Secretaría Departamental de Desarrollo Social y Salud', nombre_corto: 'Desarrollo Social', slug: 'desarrollo-social', icono: '🏥' },
+    { nombre: 'Secretaría Departamental de Economía y Finanzas', nombre_corto: 'Economía y Finanzas', slug: 'economia-y-finanzas', icono: '💰' }
+  ];
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -63,11 +73,19 @@ export default function Navbar() {
 
     // Fetch Secretarias
     async function fetchSecretarias() {
-      const { data } = await supabase
-        .from('secretarias')
-        .select('nombre, nombre_corto, slug, icono')
-        .order('orden', { ascending: true });
-      if (data) setSecretariasList(data);
+      try {
+        const { data, error } = await supabase
+          .from('secretarias')
+          .select('nombre, nombre_corto, slug, icono')
+          .order('orden', { ascending: true });
+        if (data && !error && data.length > 0) {
+          setSecretariasList(data);
+        } else {
+          setSecretariasList(fallbackSecretarias);
+        }
+      } catch (err) {
+        setSecretariasList(fallbackSecretarias);
+      }
     }
     fetchSecretarias();
 
@@ -75,19 +93,20 @@ export default function Navbar() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [supabase]);
 
   // Update navItems dynamically with DB secretariats
   const dynamicNavItems = navItems.map(item => {
     if (item.label === 'Secretarías') {
+      const listToUse = secretariasList.length > 0 ? secretariasList : fallbackSecretarias;
       return {
         ...item,
-        children: secretariasList.length > 0 ? secretariasList.map(sec => ({
+        children: listToUse.map(sec => ({
           label: sec.nombre_corto,
-          fullLabel: sec.nombre || sec.nombre_corto, // nombre completo para chips móvil
+          fullLabel: sec.nombre || sec.nombre_corto,
           emoji: sec.icono || '🏛️',
           href: `/secretarias/${sec.slug}`
-        })) : [{ label: 'Cargando secretarías...', fullLabel: 'Cargando...', emoji: '⏳', href: '#' }]
+        }))
       };
     }
     return item;
@@ -134,15 +153,16 @@ export default function Navbar() {
         <div className={styles.navInner}>
           <Link 
             href="/" 
-            className={styles.logo} 
+            className={styles.logo}
             style={{ 
               display: 'block', 
-              width: 340, 
-              height: 100,
-              background: 'linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%)',
-              borderRadius: '12px'
+              width: 290, 
+              height: 68,
+              background: 'transparent',
+              position: 'relative'
             }}
-          >            <motion.div
+          >
+            <motion.div
               animate={{ scaleX: [1, 1, 0, 1, 1, 0, 1] }}
               transition={{
                 repeat: Infinity,
@@ -168,14 +188,14 @@ export default function Navbar() {
                   times: [0, 0.4, 0.45, 0.5, 0.9, 0.95, 1],
                   ease: "easeInOut",
                 }}
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
               >
                   <Image
                     src="/imagotipo_gador_2026.png"
                     alt="Gobierno Autónomo Departamental de Oruro"
-                    height={90}
-                    width={300}
-                    style={{ objectFit: 'contain', width: 'auto', height: '90px', mixBlendMode: 'multiply' }}
+                    height={64}
+                    width={280}
+                    style={{ objectFit: 'contain', width: 'auto', height: '62px' }}
                     priority
                   />
               </motion.div>
@@ -189,14 +209,14 @@ export default function Navbar() {
                   times: [0, 0.4, 0.45, 0.5, 0.9, 0.95, 1],
                   ease: "easeInOut",
                 }}
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
               >
                 <Image
                   src="/marca_gobierno.png"
                   alt="¡Gobierno de Unidad!"
-                  width={380}
-                  height={120}
-                  style={{ objectFit: 'contain', width: 'auto', height: '110px', mixBlendMode: 'multiply' }}
+                  width={310}
+                  height={68}
+                  style={{ objectFit: 'contain', width: 'auto', height: '64px' }}
                 />
               </motion.div>
             </motion.div>
