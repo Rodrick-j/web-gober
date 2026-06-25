@@ -14,7 +14,6 @@ export default function IntroAnimation({ isSeen }) {
   };
 
   useEffect(() => {
-    // Comprobar cookie en el cliente si no viene del prop del servidor
     const seen = isSeen !== undefined ? isSeen : document.cookie.includes('introSeen=1');
     if (seen) {
       document.body.style.overflow = 'unset';
@@ -24,10 +23,10 @@ export default function IntroAnimation({ isSeen }) {
     setShow(true);
     document.body.style.overflow = 'hidden';
     
-    // Reducido a 1600ms para carga ultrarrápida
+    // Increased slightly for a more majestic, unhurried feel
     const timer = setTimeout(() => {
       handleClose();
-    }, 1600);
+    }, 2800);
 
     return () => {
       clearTimeout(timer);
@@ -44,61 +43,32 @@ export default function IntroAnimation({ isSeen }) {
           style={{ cursor: 'pointer' }}
           title="Haz clic para saltar la introducción"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.05, filter: 'blur(15px)' }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
+          exit={{ opacity: 0, filter: 'blur(20px)', transition: { duration: 1.2, ease: "easeInOut" } }}
         >
+          {/* Fondo elegante con viñeta profunda */}
           <div className="intro-overlay"></div>
-
-          <div className="svg-container">
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="geometric-lines">
-              <motion.path
-                d="M 5 5 L 95 5 L 95 95 L 5 95 Z"
-                fill="transparent"
-                stroke="#ffb843"
-                strokeWidth="0.1"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 0.4 }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
-              />
-              <motion.path
-                d="M 15 15 L 85 15 L 85 85 L 15 85 Z"
-                fill="transparent"
-                stroke="#ffffff"
-                strokeWidth="0.05"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 0.2 }}
-                transition={{ duration: 1.0, delay: 0.2, ease: "easeInOut" }}
-              />
-              <motion.path
-                d="M 10 20 L 20 20 L 20 10 M 90 20 L 80 20 L 80 10 M 10 80 L 20 80 L 20 90 M 90 80 L 80 80 L 80 90"
-                fill="transparent"
-                stroke="#ffb843"
-                strokeWidth="0.2"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 0.6 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              />
-            </svg>
-          </div>
+          
+          {/* Textura sutil institucional */}
+          <div className="intro-texture"></div>
 
           <div className="intro-content">
             <div style={{ overflow: 'hidden' }}>
               <motion.h2
                 className="intro-gov-text"
-                initial={{ y: "100%", opacity: 0, letterSpacing: "0px" }}
-                animate={{ y: 0, opacity: 1, letterSpacing: "6px" }}
-                transition={{ duration: 0.7, delay: 0.2, ease: [0.33, 1, 0.68, 1] }}
+                initial={{ y: "20px", opacity: 0, letterSpacing: "2px" }}
+                animate={{ y: 0, opacity: 1, letterSpacing: "8px" }}
+                transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
               >
                 Gobierno Autónomo Departamental de
               </motion.h2>
             </div>
             
-            <div style={{ overflow: 'hidden', padding: '10px 0' }}>
+            <div style={{ overflow: 'hidden', padding: '5px 0' }}>
               <motion.h1
                 className="intro-title-oruro"
-                initial={{ y: "100%", opacity: 0, filter: 'blur(10px)', scale: 1.05 }}
-                animate={{ y: 0, opacity: 1, filter: 'blur(0px)', scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.4, ease: [0.33, 1, 0.68, 1] }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
               >
                 ORURO
               </motion.h1>
@@ -108,7 +78,7 @@ export default function IntroAnimation({ isSeen }) {
               className="intro-divider"
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.7, ease: "easeInOut" }}
+              transition={{ duration: 1.2, delay: 0.8, ease: "easeInOut" }}
             />
 
             <div style={{ overflow: 'hidden' }}>
@@ -116,19 +86,19 @@ export default function IntroAnimation({ isSeen }) {
                 src="/images/marca_gobierno_blanco.png"
                 alt="Marca Gobierno"
                 className="intro-marca-img"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.9, type: "spring" }}
+                initial={{ opacity: 0, y: 15, filter: 'blur(5px)' }}
+                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 1.2, delay: 1.1, ease: "easeOut" }}
               />
             </div>
 
             <motion.p
-              style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.75rem', marginTop: '1.5rem', letterSpacing: '2px', textTransform: 'uppercase' }}
+              className="intro-skip-text"
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.0 }}
+              animate={{ opacity: 0.5 }}
+              transition={{ delay: 1.8, duration: 1 }}
             >
-              [ Clic para entrar ]
+              Cargando portal oficial...
             </motion.p>
           </div>
         </motion.div>

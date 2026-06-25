@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/public';
 import { notFound } from 'next/navigation';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
@@ -34,6 +34,15 @@ const TYPE_CONFIG = {
   }
 };
 
+export function generateStaticParams() {
+  return [
+    { tipo: 'leyes' },
+    { tipo: 'decretos-departamentales' },
+    { tipo: 'decretos-ejecutivos' },
+    { tipo: 'resoluciones' },
+  ];
+}
+
 export async function generateMetadata({ params }) {
   const { tipo } = await params;
   const config = TYPE_CONFIG[tipo];
@@ -57,7 +66,7 @@ export default async function GacetaPage({ params }) {
     notFound();
   }
 
-  const supabase = await createClient();
+  const supabase = createClient();
   
   // Consultar la tabla "documentos" (donde el admin guarda los documentos)
   const { data, error } = await supabase

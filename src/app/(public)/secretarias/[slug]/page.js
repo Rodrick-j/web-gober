@@ -1,13 +1,14 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/public';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
-import EstadisticasChart from '@/components/EstadisticasChart/EstadisticasChart';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import styles from './SecretariaDetail.module.css';
 
-export const revalidate = 0; // Mostrar cambios instantáneos (sin caché)
+import EstadisticasChartWrapper from '@/components/EstadisticasChart/EstadisticasChartWrapper';
+
+
 
 function getYouTubeData(url) {
   if (!url) return { id: null, start: null };
@@ -23,9 +24,17 @@ function getYouTubeData(url) {
   return { id, start };
 }
 
+export async function generateStaticParams() {
+  const supabase = createClient();
+  const { data: secretarias } = await supabase.from('secretarias').select('slug');
+  return (secretarias || []).map((sec) => ({
+    slug: sec.slug,
+  }));
+}
+
 // Generar rutas estáticas si es posible, aunque con revalidate es suficiente
 export async function generateMetadata({ params }) {
-  const supabase = await createClient();
+  const supabase = createClient();
   const slug = (await params).slug;
   const { data: secretaria } = await supabase
     .from('secretarias')
@@ -42,7 +51,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function SecretariaDetailPage({ params }) {
-  const supabase = await createClient();
+  const supabase = createClient();
   const slug = (await params).slug;
 
   const { data: sec, error } = await supabase
@@ -187,7 +196,7 @@ export default async function SecretariaDetailPage({ params }) {
 
             {slug.includes('planificacion') && (
               <div style={{ marginTop: '40px' }}>
-                <EstadisticasChart />
+                <EstadisticasChartWrapper />
               </div>
             )}
           </div>

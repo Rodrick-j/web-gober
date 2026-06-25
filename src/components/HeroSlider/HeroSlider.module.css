@@ -10,9 +10,10 @@
 .sliderFrame {
   position: relative;
   width: 100%;
-  aspect-ratio: 24 / 9;
-  max-height: 540px;
-  min-height: 280px;
+  /* Usar casi toda la pantalla menos el header para que las fotos se vean inmensas y completas */
+  height: calc(100vh - 120px);
+  max-height: 900px;
+  min-height: 500px;
 }
 
 .swiperRoot {
@@ -58,8 +59,8 @@
 }
 
 .mainImage {
-  object-fit: cover;
-  object-position: center;
+  object-fit: cover; /* Llena TODO el espacio sin dejar bordes a los lados */
+  object-position: top center; /* Ancla la imagen arriba para no cortar las cabezas */
 }
 
 .hideOnMobile {
@@ -82,12 +83,17 @@
   left: 0;
   width: 100%;
   height: 100%;
+  /* Degradado Rojo Carmesí Institucional - Efecto Niebla */
   background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.5) 100%
+    to top,
+    rgba(103, 24, 26, 0.9) 0%,      /* Carmesí muy oscuro en la base para leer el texto */
+    rgba(156, 7, 32, 0.5) 45%,      /* Carmesí medio */
+    rgba(156, 7, 32, 0.1) 80%,      /* Casi transparente hacia arriba */
+    rgba(0, 0, 0, 0) 100%
   );
-  z-index: 1;
+  z-index: 3; /* Asegurar que cubra la imagen pero quede debajo del texto */
+  pointer-events: none;
+  mix-blend-mode: multiply; /* Da un efecto fotográfico profesional */
 }
 
 .slideContent {
@@ -95,7 +101,7 @@
   bottom: 25%; /* Much higher than before to avoid bullets */
   left: 8%; /* Indented from left */
   max-width: 800px;
-  z-index: 2;
+  z-index: 20; /* Asegurar que quede por encima del overlay rojo */
   color: #ffffff !important; /* Force white color */
 }
 

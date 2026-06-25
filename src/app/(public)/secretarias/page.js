@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/public';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
@@ -9,10 +9,10 @@ export const metadata = {
   description: 'Conoce las diferentes Secretarías que conforman el Gobierno Autónomo Departamental de Oruro.',
 };
 
-export const revalidate = 60; // Revalidar la página cada 60 segundos
+
 
 export default async function SecretariasHubPage() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data: secretarias, error } = await supabase
     .from('secretarias')

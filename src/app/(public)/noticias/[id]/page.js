@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient } from '@/lib/supabase/public';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -7,9 +7,17 @@ import Footer from '@/components/Footer/Footer';
 import ShareButtons from './ShareButtons';
 import styles from './noticia-detail.module.css';
 
+export async function generateStaticParams() {
+  const supabase = createClient();
+  const { data: noticias } = await supabase.from('noticias').select('id');
+  return (noticias || []).map((noticia) => ({
+    id: noticia.id.toString(),
+  }));
+}
+
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
   
   const { data: noticia } = await supabase
     .from('noticias')
@@ -34,7 +42,7 @@ export async function generateMetadata({ params }) {
 
 export default async function NoticiaDetailPage({ params }) {
   const { id } = await params;
-  const supabase = await createClient();
+  const supabase = createClient();
 
   // Obtener la noticia principal
   const { data: noticia, error } = await supabase

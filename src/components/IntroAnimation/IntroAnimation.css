@@ -4,24 +4,12 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #67181a; /* Rojo Carmesi Oficial */
+  background-color: #2b040a; /* Rojo Carmesi MUY profundo e institucional */
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-}
-
-.intro-video-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-  opacity: 0.3; /* Sutil para no quitar atencion a los textos */
-  filter: grayscale(30%) contrast(1.2);
 }
 
 .intro-overlay {
@@ -30,24 +18,21 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* Radial gradient con el Rojo Carmesi y un rojo mas vivo en el centro */
-  background: radial-gradient(circle at center, rgba(156, 7, 32, 0.85) 0%, rgba(103, 24, 26, 0.98) 100%);
+  /* Radial gradient ultra elegante */
+  background: radial-gradient(circle at center, rgba(156, 7, 32, 0.4) 0%, rgba(20, 2, 4, 0.95) 100%);
   z-index: 2;
 }
 
-.svg-container {
+.intro-texture {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.03;
   z-index: 3;
-  pointer-events: none;
-}
-
-.geometric-lines {
-  width: 100%;
-  height: 100%;
 }
 
 .intro-content {
@@ -61,8 +46,8 @@
 }
 
 .intro-gov-text {
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.7rem, 1.5vw, 1.2rem);
+  font-family: var(--font-heading);
+  font-size: clamp(0.7rem, 1.5vw, 1.1rem);
   font-weight: 300;
   margin: 0;
   color: #ffffff;
@@ -71,28 +56,37 @@
 }
 
 .intro-title-oruro {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: clamp(3.5rem, 12vw, 9rem);
-  font-weight: 900;
+  font-weight: 300; /* Letra más delgada y elegante */
   margin: 0;
   line-height: 1;
   text-transform: uppercase;
   color: #ffffff;
-  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 60px rgba(255, 184, 67, 0.2);
+  letter-spacing: 0.1em;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 184, 67, 0.1);
 }
 
 .intro-divider {
-  width: clamp(80px, 15vw, 150px);
-  height: 2px;
-  background: #ffb843; /* Dorado */
-  margin: 1.5rem 0;
-  box-shadow: 0 0 20px rgba(255, 184, 67, 0.8);
+  width: clamp(100px, 20vw, 200px);
+  height: 1px; /* Línea de oro más delgada */
+  background: linear-gradient(90deg, transparent, #ffb843, transparent);
+  margin: 2rem 0;
 }
 
 .intro-marca-img {
   width: 100%;
-  max-width: clamp(280px, 45vw, 650px);
+  max-width: clamp(280px, 45vw, 550px);
   margin-top: 1rem;
-  filter: drop-shadow(0 4px 15px rgba(255, 255, 255, 0.4));
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.5));
   object-fit: contain;
+}
+
+.intro-skip-text {
+  color: #ffffff;
+  font-size: 0.7rem;
+  margin-top: 3rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-family: var(--font-body);
 }
