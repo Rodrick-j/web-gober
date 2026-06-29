@@ -146,6 +146,17 @@ export default async function NoticiasPage() {
                             </button>
                           </form>
                         )}
+                        <form action={async () => {
+                          'use server';
+                          const supabaseServer = await createClient();
+                          await supabaseServer.from('noticias').delete().eq('id', noticia.id);
+                          revalidatePath('/admin/noticias');
+                          revalidatePath('/');
+                        }}>
+                          <button type="submit" className="btnSecondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', background: '#fee2e2', color: '#ef4444', border: '1px solid #fca5a5', cursor: 'pointer' }}>
+                            Eliminar
+                          </button>
+                        </form>
                       </div>
                     </td>
                   </tr>

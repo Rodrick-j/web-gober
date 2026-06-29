@@ -69,52 +69,7 @@
   letter-spacing: 1px;
 }
 
-.socialWrapper {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
 
-.socialTitle {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.5px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.socialLinks {
-  display: flex;
-  gap: 1rem;
-}
-
-.socialLink {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.socialLink:hover {
-  transform: translateY(-5px) scale(1.15);
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  color: #ffffff;
-}
-
-/* Redes Sociales Colores de Marca y Resplandor */
-.socialLink.fb:hover { background: #1877f2; box-shadow: 0 10px 25px rgba(24,119,242,0.6); border-color: transparent; }
-.socialLink.tw:hover { background: #000000; box-shadow: 0 10px 25px rgba(0,0,0,0.6); border-color: transparent; }
-.socialLink.ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); box-shadow: 0 10px 25px rgba(220,39,67,0.6); border-color: transparent; }
-.socialLink.tk:hover { background: #000000; color: #ff0050; box-shadow: 0 10px 25px rgba(0,0,0,0.6); border-color: transparent; text-shadow: 2px 2px 0px #00f2fe; }
-.socialLink.yt:hover { background: #ff0000; box-shadow: 0 10px 25px rgba(255,0,0,0.6); border-color: transparent; }
 
 .linksGrid {
   max-width: 1280px;

@@ -22,7 +22,7 @@ export default function GobernadorPage() {
           >
             {/* Esquinero Superior Izquierdo */}
             <div className={styles.esquineroTopLeft}>
-              <Image src="/motivos/motivo_14.png" alt="Motivo Cultural" fill style={{ objectFit: 'contain' }} />
+              <Image src="/motivos/motivo_10.png" alt="Motivo Cultural" fill style={{ objectFit: 'contain' }} />
             </div>
 
             <div className={styles.pantoneCard}>
@@ -49,7 +49,7 @@ export default function GobernadorPage() {
           >
             {/* Esquinero Inferior Derecho */}
             <div className={styles.esquineroBottomRight}>
-              <Image src="/motivos/motivo_16.png" alt="Motivo Cultural" fill style={{ objectFit: 'contain' }} />
+              <Image src="/motivos/motivo_11.png" alt="Motivo Cultural" fill style={{ objectFit: 'contain' }} />
             </div>
 
             <div>

@@ -19,6 +19,11 @@ export default function CrearNoticiaPage() {
   const [categoria, setCategoria] = useState('Todas');
   const [esComunicado, setEsComunicado] = useState(false);
   const [imagen, setImagen] = useState(null);
+  const [fechaPublicacion, setFechaPublicacion] = useState('');
+  const [enlaceFacebook, setEnlaceFacebook] = useState('');
+  const [enlaceTwitter, setEnlaceTwitter] = useState('');
+  const [enlaceInstagram, setEnlaceInstagram] = useState('');
+  const [enlaceTiktok, setEnlaceTiktok] = useState('');
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -50,7 +55,9 @@ export default function CrearNoticiaPage() {
 
       // 3. Generar slug a partir del título
       const slug = titulo.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + Date.now();
-      const fechaPublicacion = estado === 'publicado' ? new Date().toISOString() : null;
+      const finalFechaPublicacion = fechaPublicacion 
+        ? new Date(fechaPublicacion).toISOString() 
+        : (estado === 'publicado' ? new Date().toISOString() : null);
 
       // 4. Guardar en base de datos
       const { error: insertError } = await supabase
@@ -64,7 +71,11 @@ export default function CrearNoticiaPage() {
           estado,
           categoria,
           es_comunicado_rapido: esComunicado,
-          fecha_publicacion: fechaPublicacion,
+          fecha_publicacion: finalFechaPublicacion,
+          enlace_facebook: enlaceFacebook || null,
+          enlace_twitter: enlaceTwitter || null,
+          enlace_instagram: enlaceInstagram || null,
+          enlace_tiktok: enlaceTiktok || null,
           autor_id: user.id,
           secretaria_id: perfil?.secretaria_id || null // Automáticamente se enlaza a su secretaría
         });
@@ -144,6 +155,54 @@ export default function CrearNoticiaPage() {
                   placeholder="Escribe el artículo detallado aquí. Puedes usar negritas, colores y listas..."
                 />
               </div>
+
+              <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'var(--admin-surface-2)', borderRadius: '12px', border: '1px solid var(--admin-border)' }}>
+                <h4 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--admin-text)' }}>Enlaces a Redes Sociales (Opcional)</h4>
+                
+                <div className="formGroup">
+                  <label className="formLabel">Enlace de Facebook</label>
+                  <input 
+                    type="url" 
+                    className="formInput" 
+                    placeholder="https://facebook.com/..."
+                    value={enlaceFacebook}
+                    onChange={(e) => setEnlaceFacebook(e.target.value)}
+                  />
+                </div>
+
+                <div className="formGroup">
+                  <label className="formLabel">Enlace de X (Twitter)</label>
+                  <input 
+                    type="url" 
+                    className="formInput" 
+                    placeholder="https://x.com/..."
+                    value={enlaceTwitter}
+                    onChange={(e) => setEnlaceTwitter(e.target.value)}
+                  />
+                </div>
+
+                <div className="formGroup">
+                  <label className="formLabel">Enlace de Instagram</label>
+                  <input 
+                    type="url" 
+                    className="formInput" 
+                    placeholder="https://instagram.com/..."
+                    value={enlaceInstagram}
+                    onChange={(e) => setEnlaceInstagram(e.target.value)}
+                  />
+                </div>
+
+                <div className="formGroup">
+                  <label className="formLabel">Enlace de TikTok</label>
+                  <input 
+                    type="url" 
+                    className="formInput" 
+                    placeholder="https://tiktok.com/..."
+                    value={enlaceTiktok}
+                    onChange={(e) => setEnlaceTiktok(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
 
             <div className={styles.sideCol}>
@@ -200,6 +259,19 @@ export default function CrearNoticiaPage() {
                   <option value="publicado">Publicado (Visible en la web)</option>
                   <option value="borrador">Borrador (Oculto)</option>
                 </select>
+              </div>
+
+              <div className="formGroup">
+                <label className="formLabel">Fecha y Hora de Publicación</label>
+                <input 
+                  type="datetime-local" 
+                  className="formInput" 
+                  value={fechaPublicacion}
+                  onChange={(e) => setFechaPublicacion(e.target.value)}
+                />
+                <p style={{ fontSize: '0.8rem', color: 'var(--admin-text-muted)', marginTop: '0.5rem', marginBottom: 0 }}>
+                  Si la dejas vacía, se usará la fecha actual al publicar.
+                </p>
               </div>
 
               <button 

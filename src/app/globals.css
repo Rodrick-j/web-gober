@@ -146,6 +146,43 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* =====================================================
+   RICH TEXT CONTENT
+   ===================================================== */
+.rich-text-content {
+  text-align: left !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  word-wrap: normal !important;
+  white-space: normal !important;
+}
+
+.rich-text-content p {
+  margin-bottom: 1.25em;
+}
+
+.rich-text-content ul, .rich-text-content ol {
+  margin-bottom: 1.25em;
+  padding-left: 2rem;
+}
+
+.rich-text-content li {
+  margin-bottom: 0.5em;
+}
+
+.rich-text-content ul {
+  list-style-type: disc;
+}
+
+.rich-text-content ol {
+  list-style-type: decimal;
+}
+
+.rich-text-content h1, .rich-text-content h2, .rich-text-content h3, .rich-text-content h4 {
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+/* =====================================================
    LAYOUT UTILITIES
    ===================================================== */
 

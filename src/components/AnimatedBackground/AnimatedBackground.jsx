@@ -16,8 +16,8 @@ export default function AnimatedBackground() {
   const [elements, setElements] = useState([]);
 
   useEffect(() => {
-    // Reduce to 5 elements (was 10) for better performance
-    const newElements = Array.from({ length: 5 }).map((_, i) => ({
+    // Increased to 25 elements as per user request for more chakanas in background
+    const newElements = Array.from({ length: 25 }).map((_, i) => ({
       id: i,
       size: Math.random() * 120 + 40,
       x: Math.random() * 100,

@@ -21,6 +21,11 @@ export default function EditarNoticiaPage() {
   const [esComunicado, setEsComunicado] = useState(false);
   const [imagenUrlActual, setImagenUrlActual] = useState(null);
   const [imagen, setImagen] = useState(null);
+  const [fechaPublicacion, setFechaPublicacion] = useState('');
+  const [enlaceFacebook, setEnlaceFacebook] = useState('');
+  const [enlaceTwitter, setEnlaceTwitter] = useState('');
+  const [enlaceInstagram, setEnlaceInstagram] = useState('');
+  const [enlaceTiktok, setEnlaceTiktok] = useState('');
   
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,6 +49,18 @@ export default function EditarNoticiaPage() {
           setCategoria(data.categoria || 'Todas');
           setEsComunicado(data.es_comunicado_rapido || false);
           setImagenUrlActual(data.imagen_portada_url || null);
+          if (data.fecha_publicacion) {
+            // Format to YYYY-MM-DDThh:mm for datetime-local input
+            const dateObj = new Date(data.fecha_publicacion);
+            // Adjust for local timezone offset to display correctly in input
+            const tzOffset = dateObj.getTimezoneOffset() * 60000;
+            const localISOTime = (new Date(dateObj - tzOffset)).toISOString().slice(0, 16);
+            setFechaPublicacion(localISOTime);
+          }
+          setEnlaceFacebook(data.enlace_facebook || '');
+          setEnlaceTwitter(data.enlace_twitter || '');
+          setEnlaceInstagram(data.enlace_instagram || '');
+          setEnlaceTiktok(data.enlace_tiktok || '');
         }
       } catch (err) {
         console.error('Error fetching noticia:', err);
@@ -74,7 +91,9 @@ export default function EditarNoticiaPage() {
       }
 
       const slug = titulo.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + id;
-      const fechaPublicacion = estado === 'publicado' ? new Date().toISOString() : null;
+      const finalFechaPublicacion = fechaPublicacion 
+        ? new Date(fechaPublicacion).toISOString() 
+        : (estado === 'publicado' ? new Date().toISOString() : null);
 
       // 4. Actualizar en base de datos
       const updateData = {
@@ -85,15 +104,13 @@ export default function EditarNoticiaPage() {
         imagen_portada_url: nuevaImagenUrl,
         estado,
         categoria,
-        es_comunicado_rapido: esComunicado
+        es_comunicado_rapido: esComunicado,
+        fecha_publicacion: finalFechaPublicacion,
+        enlace_facebook: enlaceFacebook || null,
+        enlace_twitter: enlaceTwitter || null,
+        enlace_instagram: enlaceInstagram || null,
+        enlace_tiktok: enlaceTiktok || null
       };
-
-      // Si cambia a publicado y no tenía fecha, ponerle fecha. 
-      // Si cambia a borrador, no quitamos la fecha (o sí), vamos a dejar que mantenga la original si ya tenía.
-      if (estado === 'publicado') {
-        // En una app real, revisaríamos si ya tenía fecha. Por simplicidad, la actualizamos.
-        updateData.fecha_publicacion = fechaPublicacion;
-      }
 
       const { error: updateError } = await supabase
         .from('noticias')
@@ -167,6 +184,54 @@ export default function EditarNoticiaPage() {
                   placeholder="Escribe el artículo detallado aquí. Puedes usar negritas, colores y listas..."
                 />
               </div>
+
+              <div style={{ marginTop: '2rem', padding: '1.5rem', background: 'var(--admin-surface-2)', borderRadius: '12px', border: '1px solid var(--admin-border)' }}>
+                <h4 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--admin-text)' }}>Enlaces a Redes Sociales (Opcional)</h4>
+                
+                <div className="formGroup">
+                  <label className="formLabel">Enlace de Facebook</label>
+                  <input 
+                    type="url" 
+                    className="formInput" 
+                    placeholder="https://facebook.com/..."
+                    value={enlaceFacebook}
+                    onChange={(e) => setEnlaceFacebook(e.target.value)}
+                  />
+                </div>
+
+                <div className="formGroup">
+                  <label className="formLabel">Enlace de X (Twitter)</label>
+                  <input 
+                    type="url" 
+                    className="formInput" 
+                    placeholder="https://x.com/..."
+                    value={enlaceTwitter}
+                    onChange={(e) => setEnlaceTwitter(e.target.value)}
+                  />
+                </div>
+
+                <div className="formGroup">
+                  <label className="formLabel">Enlace de Instagram</label>
+                  <input 
+                    type="url" 
+                    className="formInput" 
+                    placeholder="https://instagram.com/..."
+                    value={enlaceInstagram}
+                    onChange={(e) => setEnlaceInstagram(e.target.value)}
+                  />
+                </div>
+
+                <div className="formGroup">
+                  <label className="formLabel">Enlace de TikTok</label>
+                  <input 
+                    type="url" 
+                    className="formInput" 
+                    placeholder="https://tiktok.com/..."
+                    value={enlaceTiktok}
+                    onChange={(e) => setEnlaceTiktok(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
 
             <div className={styles.sideCol}>
@@ -229,6 +294,19 @@ export default function EditarNoticiaPage() {
                   <option value="publicado">Publicado (Visible en la web)</option>
                   <option value="borrador">Borrador (Oculto)</option>
                 </select>
+              </div>
+
+              <div className="formGroup">
+                <label className="formLabel">Fecha y Hora de Publicación</label>
+                <input 
+                  type="datetime-local" 
+                  className="formInput" 
+                  value={fechaPublicacion}
+                  onChange={(e) => setFechaPublicacion(e.target.value)}
+                />
+                <p style={{ fontSize: '0.8rem', color: 'var(--admin-text-muted)', marginTop: '0.5rem', marginBottom: 0 }}>
+                  Si la dejas vacía, se usará la fecha actual al publicar.
+                </p>
               </div>
 
               <button 

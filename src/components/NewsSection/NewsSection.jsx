@@ -94,27 +94,33 @@ export default function NewsSection({ noticias = [] }) {
           {news.length > 0 && (
             <ScrollReveal direction="right" wrapChildren stagger={0.1} className={styles.newsList}>
               {news.map((item) => (
-                <article
+                <Link href={`/noticias/${item.id}`}
                   key={item.id}
-                className={`${styles.newsCard} card`}
-                id={`news-card-${item.id}`}
-              >
-                <div className={styles.newsEmoji}>{item.emoji}</div>
-                <div className={styles.newsCardContent}>
-                  <div className={styles.cardMeta}>
-                    <span className="badge badge-gray">{item.category}</span>
-                    <span className={styles.cardDate}>{item.date}</span>
+                  className={`${styles.newsCard} card`}
+                  id={`news-card-${item.id}`}
+                >
+                  <div className={styles.newsImageWrapper}>
+                    {item.imagen && item.imagen !== '/placeholder-news.jpg' ? (
+                      <Image src={item.imagen} alt={item.title} fill className={styles.newsCardImage} sizes="(max-width: 768px) 100vw, 25vw" quality={80} />
+                    ) : (
+                      <div className={styles.newsEmoji}>{item.emoji}</div>
+                    )}
                   </div>
-                  <h4 className={styles.newsCardTitle}>{item.title}</h4>
-                  <p className={styles.newsCardExcerpt}>{item.excerpt}</p>
-                  <Link href={`/noticias/${item.id}`} className={styles.readLink} id={`news-link-${item.id}`}>
-                    Leer más
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </Link>
-                </div>
-              </article>
+                  <div className={styles.newsCardContent}>
+                    <div className={styles.cardMeta}>
+                      <span className="badge badge-gray">{item.category}</span>
+                      <span className={styles.cardDate}>{item.date}</span>
+                    </div>
+                    <h4 className={styles.newsCardTitle}>{item.title}</h4>
+                    <p className={styles.newsCardExcerpt}>{item.excerpt}</p>
+                    <div className={styles.readLink} id={`news-link-${item.id}`}>
+                      Leer más
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
+                    </div>
+                  </div>
+                </Link>
               ))}
             </ScrollReveal>
           )}

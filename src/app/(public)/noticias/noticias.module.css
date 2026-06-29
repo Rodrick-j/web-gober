@@ -263,7 +263,7 @@
   display: flex;
   flex-direction: column;
   background: var(--color-surface);
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(156, 7, 32, 0.2); /* Borde con un poco de color rojo por defecto */
   border-radius: 16px;
   overflow: hidden;
   text-decoration: none;
@@ -282,7 +282,7 @@
 .newsCard:hover {
   transform: translateY(-4px) scale(1.01);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-  border-color: rgba(168, 10, 21, 0.15);
+  border-color: var(--color-primary); /* Borde totalmente rojo al hacer hover */
 }
 
 .cardImageWrapper {
@@ -346,13 +346,24 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   flex: 1;
+}
+
+.cardAction {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-top: auto;
 }
 
 @media (min-width: 768px) {
   .cardTitle { font-size: 1.1rem; }
-  .cardExcerpt { font-size: 0.95rem; }
+  .cardExcerpt { font-size: 0.95rem; margin-bottom: 1rem; }
+  .cardAction { font-size: 0.95rem; }
 }
 
 /* Empty state */
