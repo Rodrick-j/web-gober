@@ -7,6 +7,7 @@ import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSe
 import styles from './SecretariaDetail.module.css';
 
 import EstadisticasChartWrapper from '@/components/EstadisticasChart/EstadisticasChartWrapper';
+import PlanificacionSection from './PlanificacionSection';
 
 
 
@@ -196,7 +197,10 @@ export default async function SecretariaDetailPage({ params }) {
 
             {slug.includes('planificacion') && (
               <div style={{ marginTop: '40px' }}>
-                <EstadisticasChartWrapper />
+                <PlanificacionSection />
+                <div style={{ marginTop: '3rem' }}>
+                  <EstadisticasChartWrapper />
+                </div>
               </div>
             )}
           </div>

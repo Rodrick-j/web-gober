@@ -102,15 +102,15 @@
 .featuredCard {
   display: grid;
   grid-template-columns: 1fr;
-  background: var(--color-surface);
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   margin-bottom: 3rem;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+  box-shadow: var(--shadow-md);
 }
 
 @media (min-width: 992px) {
@@ -120,9 +120,9 @@
 }
 
 .featuredCard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.1);
-  border-color: rgba(168, 10, 21, 0.2);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(156, 7, 32, 0.3);
 }
 
 .featuredImage {
@@ -262,15 +262,15 @@
 .newsCard {
   display: flex;
   flex-direction: column;
-  background: var(--color-surface);
-  border: 1px solid rgba(156, 7, 32, 0.2); /* Borde con un poco de color rojo por defecto */
-  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   height: 100%;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  box-shadow: var(--shadow-sm);
 }
 
 @media (min-width: 768px) {
@@ -280,9 +280,9 @@
 }
 
 .newsCard:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
-  border-color: var(--color-primary); /* Borde totalmente rojo al hacer hover */
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
 }
 
 .cardImageWrapper {
@@ -432,16 +432,17 @@
 
 .filterPill {
   white-space: nowrap;
-  padding: 0.35rem 0.8rem;
-  border-radius: 100px;
-  font-size: 0.75rem;
+  padding: 0.4rem 1rem;
+  border-radius: 8px; /* Menos redondo, más serio */
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-text-muted);
-  background: var(--color-surface);
+  background: #ffffff;
   border: 1px solid var(--color-border);
   transition: all 0.2s ease;
   cursor: pointer;
-  font-family: var(--font-heading);
+  font-family: inherit;
+  box-shadow: var(--shadow-sm);
 }
 
 .filterPill:hover {
@@ -457,11 +458,11 @@
 
 /* Comunicados Rápidos (Sidebar) */
 .sidebarWidget {
-  background: var(--color-surface);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  box-shadow: var(--shadow-sm);
 }
 
 .widgetTitle {

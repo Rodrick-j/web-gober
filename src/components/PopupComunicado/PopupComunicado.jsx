@@ -59,12 +59,41 @@ export default function PopupComunicado({ config }) {
               className={styles.closeButton} 
               onClick={handleClose}
               aria-label="Cerrar comunicado"
+              style={{ zIndex: 30, top: '-20px', right: '-20px', boxShadow: '0 4px 15px rgba(0,0,0,0.5)' }}
             >
               ✕
             </button>
             
-            <ContentWrapper {...wrapperProps}>
-              <div className={styles.imageWrapper}>
+            {/* Banner superior de ancho completo que NO tapa la imagen */}
+            <div style={{
+              width: '100%',
+              background: 'var(--color-primary)',
+              color: '#ffffff',
+              fontWeight: '900',
+              fontSize: '1.5rem',
+              padding: '0.75rem',
+              textAlign: 'center',
+              borderTopLeftRadius: '12px',
+              borderTopRightRadius: '12px',
+              letterSpacing: '2px',
+              textTransform: 'uppercase',
+              boxShadow: '0 -5px 15px rgba(0, 0, 0, 0.2)',
+              animation: 'pulseBg 3s infinite',
+              zIndex: 20
+            }}>
+              ¡Comunicado!
+            </div>
+            
+            <style>{`
+              @keyframes pulseBg {
+                0% { background-color: var(--color-primary); }
+                50% { background-color: var(--color-primary-dark); }
+                100% { background-color: var(--color-primary); }
+              }
+            `}</style>
+            
+            <ContentWrapper {...wrapperProps} style={{ ...wrapperProps.style, display: 'block', width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
+              <div className={styles.imageWrapper} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
                 <Image
                   src={config.imagen_url}
                   alt="Comunicado Importante"

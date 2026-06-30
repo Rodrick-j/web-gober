@@ -10,23 +10,18 @@ export default function IntroAnimation({ isSeen }) {
   const handleClose = () => {
     setShow(false);
     document.body.style.overflow = 'unset';
-    document.cookie = "introSeen=1; path=/; max-age=86400; samesite=lax";
+    // Se elimina la cookie para que SIEMPRE aparezca como pidió el usuario
   };
 
   useEffect(() => {
-    const seen = isSeen !== undefined ? isSeen : document.cookie.includes('introSeen=1');
-    if (seen) {
-      document.body.style.overflow = 'unset';
-      return;
-    }
-
+    // Se fuerza a que siempre muestre la intro
     setShow(true);
     document.body.style.overflow = 'hidden';
     
-    // Increased slightly for a more majestic, unhurried feel
+    // Animaciones ultra lentas y profesionales, más tiempo de respiración
     const timer = setTimeout(() => {
       handleClose();
-    }, 2800);
+    }, 4500);
 
     return () => {
       clearTimeout(timer);
@@ -55,20 +50,20 @@ export default function IntroAnimation({ isSeen }) {
             <div style={{ overflow: 'hidden' }}>
               <motion.h2
                 className="intro-gov-text"
-                initial={{ y: "20px", opacity: 0, letterSpacing: "2px" }}
-                animate={{ y: 0, opacity: 1, letterSpacing: "8px" }}
-                transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 1, 0.5, 1] }}
+                initial={{ opacity: 0, y: 15, filter: 'blur(10px)' }}
+                animate={{ opacity: 0.9, y: 0, filter: 'blur(0px)' }}
+                transition={{ duration: 1.8, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
               >
                 Gobierno Autónomo Departamental de
               </motion.h2>
             </div>
             
-            <div style={{ overflow: 'hidden', padding: '5px 0' }}>
+            <div style={{ overflow: 'hidden', padding: '10px 0' }}>
               <motion.h1
                 className="intro-title-oruro"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                initial={{ opacity: 0, scale: 1.05, filter: 'blur(15px)' }}
+                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                transition={{ duration: 2.2, delay: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}
               >
                 ORURO
               </motion.h1>
@@ -78,7 +73,7 @@ export default function IntroAnimation({ isSeen }) {
               className="intro-divider"
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 1.2, delay: 0.8, ease: "easeInOut" }}
+              transition={{ duration: 1.5, delay: 1.2, ease: "easeInOut" }}
             />
 
             <div style={{ overflow: 'hidden' }}>
@@ -86,9 +81,9 @@ export default function IntroAnimation({ isSeen }) {
                 src="/images/marca_gobierno_blanco.png"
                 alt="Marca Gobierno"
                 className="intro-marca-img"
-                initial={{ opacity: 0, y: 15, filter: 'blur(5px)' }}
+                initial={{ opacity: 0, y: 25, filter: 'blur(8px)' }}
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 1.2, delay: 1.1, ease: "easeOut" }}
+                transition={{ duration: 1.8, delay: 1.5, ease: [0.21, 0.47, 0.32, 0.98] }}
               />
             </div>
 
@@ -96,7 +91,7 @@ export default function IntroAnimation({ isSeen }) {
               className="intro-skip-text"
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.5 }}
-              transition={{ delay: 1.8, duration: 1 }}
+              transition={{ delay: 2.5, duration: 1.5 }}
             >
               Cargando portal oficial...
             </motion.p>

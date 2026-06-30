@@ -4,43 +4,81 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createClient } from '@/lib/supabase/client';
+import { 
+  Home, 
+  ClipboardList, 
+  Building2, 
+  ScrollText, 
+  Landmark, 
+  Search, 
+  Newspaper,
+  BookOpen,
+  FileText,
+  FileSignature,
+  Pin,
+  User,
+  GitMerge,
+  Scale,
+  Pickaxe,
+  Leaf,
+  Gavel,
+  HardHat,
+  HeartPulse,
+  Coins
+} from 'lucide-react';
 import styles from './Navbar.module.css';
 
+// Helper function to extract initials from full name
+function getAcronym(nombre) {
+  if(!nombre) return '';
+  const ignoredWords = ['de', 'y', 'e', 'la', 'las', 'el', 'los', 'en'];
+  const words = nombre.split(' ').filter(w => !ignoredWords.includes(w.toLowerCase()));
+  return words.map(w => w[0].toUpperCase()).join('.') + '.';
+}
 
 const navItems = [
-  { label: 'Inicio', emoji: '🏠', href: '/' },
-  { label: 'Trámites', emoji: '📋', href: '/tramites' },
+  { label: 'Inicio', Icon: Home, href: '/' },
+  { label: 'Trámites', Icon: ClipboardList, href: '/tramites' },
   {
     label: 'Secretarías',
-    emoji: '🏢',
+    Icon: Building2,
     href: '#',
     children: [], // Se llenará dinámicamente desde la base de datos
   },
   {
     label: 'Gaceta Oficial',
-    emoji: '📜',
+    Icon: ScrollText,
     href: '#',
     children: [
-      { label: 'Leyes Departamentales', emoji: '⚖️', href: '/gaceta/leyes' },
-      { label: 'Decretos Departamentales', emoji: '📄', href: '/gaceta/decretos-departamentales' },
-      { label: 'Decretos Ejecutivos', emoji: '📝', href: '/gaceta/decretos-ejecutivos' },
-      { label: 'Resoluciones Administrativas', emoji: '📌', href: '/gaceta/resoluciones' },
+      { label: 'Leyes Departamentales', Icon: Scale, href: '/gaceta/leyes' },
+      { label: 'Decretos Departamentales', Icon: FileText, href: '/gaceta/decretos-departamentales' },
+      { label: 'Decretos Ejecutivos', Icon: FileSignature, href: '/gaceta/decretos-ejecutivos' },
+      { label: 'Resoluciones Administrativas', Icon: Pin, href: '/gaceta/resoluciones' },
     ],
   },
   {
     label: 'Institución',
-    emoji: '🏛️',
+    Icon: Landmark,
     href: '#',
     children: [
-      { label: 'El Gobernador', emoji: '👨‍💼', href: '/institucion/gobernador' },
-      { label: 'Historia', emoji: '📖', href: '/institucion/historia' },
-      { label: 'Organigrama', emoji: '📊', href: '/institucion/organigrama' },
-      { label: 'Marco Normativo', emoji: '⚖️', href: '/institucion/marco-normativo' },
+      { label: 'El Gobernador', Icon: User, href: '/institucion/gobernador' },
+      { label: 'Historia', Icon: BookOpen, href: '/institucion/historia' },
+      { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
+      { label: 'Marco Normativo', Icon: Scale, href: '/institucion/marco-normativo' },
     ],
   },
-  { label: 'Transparencia', emoji: '🔍', href: '/transparencia' },
-  { label: 'Noticias', emoji: '📰', href: '/noticias' },
+  { label: 'Transparencia', Icon: Search, href: '/transparencia' },
+  { label: 'Noticias', Icon: Newspaper, href: '/noticias' },
 ];
+
+const secretariasIconMap = {
+  'mineria-y-metalurgia': Pickaxe,
+  'medio-ambiente': Leaf,
+  'asuntos-juridicos': Gavel,
+  'obras-publicas': HardHat,
+  'desarrollo-social': HeartPulse,
+  'economia-y-finanzas': Coins
+};
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -101,12 +139,16 @@ export default function Navbar() {
       const listToUse = secretariasList.length > 0 ? secretariasList : fallbackSecretarias;
       return {
         ...item,
-        children: listToUse.map(sec => ({
-          label: sec.nombre_corto,
-          fullLabel: sec.nombre || sec.nombre_corto,
-          emoji: sec.icono || '🏛️',
-          href: `/secretarias/${sec.slug}`
-        }))
+        children: listToUse.map(sec => {
+          const SecIcon = secretariasIconMap[sec.slug] || Building2;
+          return {
+            label: sec.nombre_corto,
+            fullLabel: sec.nombre || sec.nombre_corto,
+            Icon: SecIcon,
+            href: `/secretarias/${sec.slug}`,
+            acronym: getAcronym(sec.nombre || sec.nombre_corto)
+          }
+        })
       };
     }
     return item;
@@ -238,7 +280,7 @@ export default function Navbar() {
                     if (item.href === '#') e.preventDefault();
                   }}
                 >
-                  <span className={styles.navEmoji}>{item.emoji}</span>
+                  <span className={styles.navEmoji}><item.Icon size={18} strokeWidth={2.2} /></span>
                   {item.label}
                   {item.children && (
                     <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
@@ -250,7 +292,7 @@ export default function Navbar() {
                 <AnimatePresence>
                   {item.children && activeDropdown === item.label && (
                     <motion.div
-                      className={styles.dropdown}
+                      className={item.label === 'Secretarías' ? styles.megaMenu : styles.dropdown}
                       initial={{ opacity: 0, y: 15, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 15, scale: 0.95 }}
@@ -259,10 +301,20 @@ export default function Navbar() {
                       onMouseLeave={handleMouseLeave}
                     >
                       {item.children.map((child) => (
-                        <Link key={child.label} href={child.href} className={styles.dropdownLink}>
-                          <span className={styles.dropdownEmoji}>{child.emoji}</span>
-                          {child.label}
-                        </Link>
+                        item.label === 'Secretarías' ? (
+                          <Link key={child.label} href={child.href} className={styles.megaLink}>
+                            <div className={styles.megaEmoji}><child.Icon size={24} strokeWidth={2} /></div>
+                            <div className={styles.megaText}>
+                              <span className={styles.megaAcronym}>{child.acronym}</span>
+                              <span className={styles.megaFullName}>{child.fullLabel}</span>
+                            </div>
+                          </Link>
+                        ) : (
+                          <Link key={child.label} href={child.href} className={styles.dropdownLink}>
+                            <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
+                            {child.label}
+                          </Link>
+                        )
                       ))}
                     </motion.div>
                   )}
@@ -313,7 +365,7 @@ export default function Navbar() {
                       onClick={() => toggleMobileAccordion(item.label)}
                       style={{ width: '100%', textAlign: 'left', border: 'none', background: 'transparent', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
                     >
-                      <span><span className={styles.navEmoji}>{item.emoji}</span> {item.label}</span>
+                      <span><span className={styles.navEmoji}><item.Icon size={18} strokeWidth={2.2} /></span> {item.label}</span>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ transform: activeMobileAccordion === item.label ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }}>
                         <path d="M6 9l6 6 6-6" />
                       </svg>
@@ -324,7 +376,7 @@ export default function Navbar() {
                       className={styles.mobileLink}
                       onClick={() => setMobileOpen(false)}
                     >
-                      <span className={styles.navEmoji}>{item.emoji}</span> {item.label}
+                      <span className={styles.navEmoji}><item.Icon size={18} strokeWidth={2.2} /></span> {item.label}
                     </Link>
                   )}
 
@@ -346,12 +398,12 @@ export default function Navbar() {
                             const isSecretarias = item.label === 'Secretarías';
                             return isSecretarias ? (
                               <Link key={child.label} href={child.href} className={styles.mobileChip} onClick={() => setMobileOpen(false)}>
-                                <span className={styles.chipEmoji}>{child.emoji}</span>
+                                <span className={styles.chipEmoji}><child.Icon size={14} strokeWidth={2.5} /></span>
                                 <span className={styles.chipText}>{child.fullLabel || child.label}</span>
                               </Link>
                             ) : (
                               <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
-                                <span className={styles.navEmoji}>{child.emoji}</span> {child.label}
+                                <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
                               </Link>
                             );
                           })}
