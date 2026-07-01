@@ -7,6 +7,9 @@ import Link from 'next/link';
 import { uploadFile, deleteFile } from '@/lib/supabase/storage';
 import FileUpload from '@/components/admin/FileUpload/FileUpload';
 
+// Add import at the top
+import PoaManager from './PoaManager';
+
 export default function EditarSecretariaPage({ params }) {
   const router = useRouter();
   const supabase = createClient();
@@ -19,7 +22,7 @@ export default function EditarSecretariaPage({ params }) {
     nombre: '', nombre_corto: '', descripcion: '', mision: '', vision: '',
     secretario_nombre: '', secretario_cargo: 'Secretario/a Departamental',
     secretario_bio: '', color_acento: '#8B0000', icono: '🏛️',
-    telefono: '', email: '', direccion: '', horario: 'Lunes a Viernes: 8:00 - 16:00'
+    telefono: '', email: '', direccion: '', horario: 'Lunes a Viernes: 8:00 - 16:00', slug: ''
   });
   const [fotoUrl, setFotoUrl] = useState('');
   const [bannerUrl, setBannerUrl] = useState('');
@@ -37,7 +40,7 @@ export default function EditarSecretariaPage({ params }) {
           secretario_bio: data.secretario_bio || '', color_acento: data.color_acento || '#8B0000',
           icono: data.icono || '🏛️', telefono: data.telefono || '',
           email: data.email || '', direccion: data.direccion || '',
-          horario: data.horario || 'Lunes a Viernes: 8:00 - 16:00'
+          horario: data.horario || 'Lunes a Viernes: 8:00 - 16:00', slug: data.slug || ''
         });
         setFotoUrl(data.secretario_foto_url || '');
         setBannerUrl(data.banner_url || '');
@@ -58,8 +61,10 @@ export default function EditarSecretariaPage({ params }) {
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
+    // Extraemos slug para no intentar guardarlo si no existe en la base (aunque asumo que sí)
+    const { slug, ...saveData } = formData;
     const { error } = await supabase.from('secretarias').update({
-      ...formData, secretario_foto_url: fotoUrl, banner_url: bannerUrl, video_url: videoUrl, updated_at: new Date()
+      ...saveData, secretario_foto_url: fotoUrl, banner_url: bannerUrl, video_url: videoUrl, updated_at: new Date()
     }).eq('id', id);
     setSaving(false);
     if (error) { alert('Error guardando los cambios: ' + error.message); }
@@ -138,6 +143,8 @@ export default function EditarSecretariaPage({ params }) {
     transition: 'all 0.2s', fontFamily: 'Outfit, sans-serif', fontSize: '0.875rem', whiteSpace: 'nowrap',
   });
 
+  const isPlanificacion = formData.slug && formData.slug.includes('planificacion');
+
   return (
     <div style={{ maxWidth: '1100px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div>
@@ -159,9 +166,16 @@ export default function EditarSecretariaPage({ params }) {
           <button type="button" onClick={() => setActiveTab('identidad')} style={tabStyle('identidad')}>🎨 Identidad</button>
           <button type="button" onClick={() => setActiveTab('autoridad')} style={tabStyle('autoridad')}>👔 Autoridad</button>
           <button type="button" onClick={() => setActiveTab('contacto')} style={tabStyle('contacto')}>📞 Contacto</button>
+          {isPlanificacion && (
+            <button type="button" onClick={() => setActiveTab('poa')} style={tabStyle('poa')}>📄 Documentos POA</button>
+          )}
         </div>
 
         <div style={{ padding: '2rem' }}>
+
+          {activeTab === 'poa' && isPlanificacion && (
+            <PoaManager secretariaId={id} />
+          )}
 
           {activeTab === 'identidad' && (
             <div>

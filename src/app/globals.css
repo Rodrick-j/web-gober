@@ -447,7 +447,9 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 0 !important;
 }
 
-.goog-logo-link {
+.goog-logo-link,
+.goog-te-gadget-icon,
+.goog-te-gadget img {
   display: none !important;
 }
 

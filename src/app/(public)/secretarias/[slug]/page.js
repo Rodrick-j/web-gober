@@ -70,6 +70,11 @@ export default async function SecretariaDetailPage({ params }) {
     sec.banner_url = '/banner-mineria.png';
   }
 
+  // Override para secretaría de planificación
+  if (slug.includes('planificacion')) {
+    sec.video_url = '/video-planificacion.mp4';
+  }
+
   const acento = sec.color_acento || '#8B0000';
   
   const hasSpecificVideo = sec.video_url && sec.video_url.trim() !== '';
@@ -197,7 +202,7 @@ export default async function SecretariaDetailPage({ params }) {
 
             {slug.includes('planificacion') && (
               <div style={{ marginTop: '40px' }}>
-                <PlanificacionSection />
+                <PlanificacionSection secretariaId={sec.id} />
                 <div style={{ marginTop: '3rem' }}>
                   <EstadisticasChartWrapper />
                 </div>

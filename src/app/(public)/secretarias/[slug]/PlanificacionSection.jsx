@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download } from 'lucide-react';
 import styles from './SecretariaDetail.module.css'; // Reusing styles from the page
+import { createClient } from '@/lib/supabase/client';
 
 const provinciasOruro = [
   { nombre: "Cercado", municipios: ["Oruro", "Caracollo", "El Choro", "Soracachi (Paria)"] },
@@ -23,11 +24,46 @@ const provinciasOruro = [
   { nombre: "Tomás Barrón", municipios: ["Eucaliptus"] }
 ];
 
-export default function PlanificacionSection() {
+export default function PlanificacionSection({ secretariaId }) {
   const [activeTab, setActiveTab] = useState('sistemas');
   const [openProvincia, setOpenProvincia] = useState(null);
   const [viewMode, setViewMode] = useState('cards'); // 'cards', 'poa', 'sisin'
-  const [poaYear, setPoaYear] = useState('2024');
+  const [poaYear, setPoaYear] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [poaDocs, setPoaDocs] = useState([]);
+  const supabase = useMemo(() => createClient(), []);
+
+  useEffect(() => {
+    if (secretariaId) {
+      async function fetchPoaDocs() {
+        const { data, error } = await supabase
+          .from('poa_documents')
+          .select('*')
+          .eq('secretaria_id', secretariaId)
+          .order('created_at', { ascending: false });
+        if (data) {
+          setPoaDocs(data);
+          // Set default year to the most recent one available
+          const years = [...new Set(data.map(d => d.gestion))].sort((a, b) => b - a);
+          if (years.length > 0) {
+            setPoaYear(years[0].toString());
+          } else {
+            setPoaYear(new Date().getFullYear().toString());
+          }
+        }
+      }
+      fetchPoaDocs();
+    }
+  }, [secretariaId, supabase]);
+
+  const availableYears = [...new Set(poaDocs.map(d => d.gestion))].sort((a, b) => b - a);
+  if (availableYears.length === 0) availableYears.push(new Date().getFullYear());
+
+  const filteredDocs = poaDocs.filter(doc => {
+    const matchesYear = doc.gestion.toString() === poaYear;
+    const matchesSearch = doc.nombre.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesYear && matchesSearch;
+  });
 
   return (
     <div style={{ marginTop: '3rem' }}>
@@ -138,6 +174,8 @@ export default function PlanificacionSection() {
                     <input 
                       type="text" 
                       placeholder="Buscar documento por nombre..." 
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                       style={{ width: '100%', padding: '0.75rem 1rem 0.75rem 2.5rem', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem' }}
                     />
                   </div>
@@ -146,30 +184,33 @@ export default function PlanificacionSection() {
                     onChange={(e) => setPoaYear(e.target.value)}
                     style={{ padding: '0.75rem 1rem', borderRadius: '8px', border: '1px solid #ddd', fontSize: '1rem', fontWeight: '600', color: '#1a1a2e', background: '#f9f9f9', minWidth: '150px' }}
                   >
-                    <option value="2025">Gestión 2025</option>
-                    <option value="2024">Gestión 2024</option>
-                    <option value="2023">Gestión 2023</option>
-                    <option value="2022">Gestión 2022</option>
+                    {availableYears.map(year => (
+                      <option key={year} value={year}>Gestión {year}</option>
+                    ))}
                   </select>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {[1, 2, 3].map((item) => (
-                    <div key={item} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem', border: '1px solid #eee', borderRadius: '8px', transition: 'background 0.2s', cursor: 'pointer' }} className={styles.poaItemHover}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <div style={{ background: '#ffefef', color: '#9c0720', padding: '0.75rem', borderRadius: '8px' }}>
-                          <FileText size={24} />
+                  {filteredDocs.length === 0 ? (
+                    <p style={{ color: '#888', fontStyle: 'italic', textAlign: 'center', padding: '2rem' }}>No se encontraron documentos para esta gestión.</p>
+                  ) : (
+                    filteredDocs.map((doc) => (
+                      <div key={doc.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem', border: '1px solid #eee', borderRadius: '8px', transition: 'background 0.2s', cursor: 'pointer' }} className={styles.poaItemHover}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                          <div style={{ background: '#ffefef', color: '#9c0720', padding: '0.75rem', borderRadius: '8px' }}>
+                            <FileText size={24} />
+                          </div>
+                          <div>
+                            <h4 style={{ margin: '0 0 0.25rem 0', fontSize: '1.1rem', color: '#1a1a2e' }}>{doc.nombre}</h4>
+                            <span style={{ fontSize: '0.85rem', color: '#888' }}>PDF Document • {doc.tamano_mb} MB • Publicado {new Date(doc.created_at).toLocaleDateString()}</span>
+                          </div>
                         </div>
-                        <div>
-                          <h4 style={{ margin: '0 0 0.25rem 0', fontSize: '1.1rem', color: '#1a1a2e' }}>POA Inicial - Gestión {poaYear} (Parte {item})</h4>
-                          <span style={{ fontSize: '0.85rem', color: '#888' }}>PDF Document • 2.{item} MB • Publicado recientemente</span>
-                        </div>
+                        <a href={doc.archivo_url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', background: 'transparent', border: '1px solid #9c0720', color: '#9c0720', padding: '0.5rem 1rem', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', cursor: 'pointer' }}>
+                          <Download size={16} /> Descargar
+                        </a>
                       </div>
-                      <button style={{ background: 'transparent', border: '1px solid #9c0720', color: '#9c0720', padding: '0.5rem 1rem', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', cursor: 'pointer' }}>
-                        <Download size={16} /> Descargar
-                      </button>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </motion.div>
             )}
