@@ -1,8 +1,6 @@
 import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
-
-// Cloudflare Workers requiere Edge Runtime en todas las rutas
-
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' });
@@ -27,6 +25,14 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {children}
+        <Script id="google-translate-init" strategy="afterInteractive">
+          {`
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'es,qu,en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+            }
+          `}
+        </Script>
+        <Script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" strategy="afterInteractive" />
       </body>
     </html>
   );

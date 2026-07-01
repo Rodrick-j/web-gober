@@ -54,7 +54,7 @@ export default function PlanificacionSection() {
             transition: 'all 0.2s'
           }}
         >
-          <Database size={20} /> Sistemas POA y SISIN
+          <FileText size={20} /> Presupuesto Institucional
         </button>
         <button
           onClick={() => setActiveTab('territorio')}
@@ -91,15 +91,15 @@ export default function PlanificacionSection() {
                 {/* Card POA */}
                 <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1.75rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
                   {/* Decorative background element */}
-                  <div style={{ position: 'absolute', right: '-20px', top: '-20px', opacity: 0.1, transform: 'scale(2)' }}>
-                    <FileText size={150} />
+                  <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '60%', opacity: 0.4, mixBlendMode: 'screen', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
+                    <img src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                   </div>
                   
                   <div style={{ position: 'relative', zIndex: 1 }}>
                     <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '50px', height: '50px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '1.25rem' }}>
                       <FileText size={24} />
                     </div>
-                    <h3 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.75rem' }}>Plan Operativo Anual (POA)</h3>
+                    <h3 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.75rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
                     <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.95rem', marginBottom: '1.75rem', lineHeight: '1.5' }}>
                       Acceda a los documentos e instrumentos de planificación anual del Gobierno Autónomo Departamental de Oruro.
                     </p>
@@ -112,26 +112,7 @@ export default function PlanificacionSection() {
                   </div>
                 </div>
 
-                {/* Card SISIN */}
-                <div style={{ background: 'linear-gradient(135deg, #67181a 0%, #4a1012 100%)', border: 'none', borderRadius: '12px', padding: '1.75rem', boxShadow: '0 8px 16px rgba(103, 24, 26, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
-                  {/* Decorative background element */}
-                  <div style={{ position: 'absolute', right: '-20px', top: '-20px', opacity: 0.1, transform: 'scale(2)' }}>
-                    <Database size={150} />
-                  </div>
-                  
-                  <div style={{ position: 'relative', zIndex: 1 }}>
-                    <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '50px', height: '50px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '1.25rem' }}>
-                      <Database size={24} />
-                    </div>
-                    <h3 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.75rem' }}>Sistema de Información (SISIN)</h3>
-                    <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.95rem', marginBottom: '1.75rem', lineHeight: '1.5' }}>
-                      Plataforma de seguimiento y evaluación de proyectos de inversión pública del departamento.
-                    </p>
-                    <a href="#" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#ffb843', color: '#1a1a2e', padding: '0.75rem 1.5rem', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.95rem', textDecoration: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-                      Ingresar al SISIN
-                    </a>
-                  </div>
-                </div>
+
               </div>
             )}
 

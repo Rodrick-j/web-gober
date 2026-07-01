@@ -151,7 +151,7 @@ export default async function NoticiaDetailPage({ params }) {
                     maxWidth: '100%',
                     display: 'block',
                   }}
-                  dangerouslySetInnerHTML={{ __html: noticia.contenido ? noticia.contenido.replace(/&nbsp;/g, ' ') : '' }}
+                  dangerouslySetInnerHTML={{ __html: noticia.contenido ? noticia.contenido.replace(/&nbsp;/g, ' ').replace(/(background(-color)?|color)\s*:[^;"]+;?/gi, '') : '' }}
                 />
               </div>
             </article>
@@ -240,13 +240,13 @@ export default async function NoticiaDetailPage({ params }) {
                           <Image 
                             src={rel.imagen_portada_url} 
                             alt={rel.titulo} 
-                            width={80}
-                            height={80}
+                            width={300}
+                            height={160}
                             className={styles.relatedImage} 
                             quality={100}
                           />
                         ) : (
-                          <div className={styles.relatedImage} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', opacity: 0.5 }}>
+                          <div className={styles.relatedImage} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', opacity: 0.5 }}>
                             📰
                           </div>
                         )}

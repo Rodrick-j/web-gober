@@ -1,76 +1,42 @@
 .footer {
-  background-color: #f8fafc; /* Fondo brillante y claro */
-  color: #334155;
+  background-color: #0f1219; /* Fondo oscuro muy elegante */
+  color: #f1f5f9;
   font-family: 'Inter', sans-serif;
   position: relative;
   overflow: hidden;
+  border-top: 4px solid #c1272d;
 }
 
-.topBand {
-  background: linear-gradient(135deg, #a3161c 0%, #d82b33 50%, #8b0000 100%);
-  padding: 1.5rem 0;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(163, 22, 28, 0.4);
-  z-index: 2;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.topBandInner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.brandColumn {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
-.brandBlock {
+.socialIconsRow {
   display: flex;
-  align-items: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
+  margin-top: 1rem;
 }
 
-.brandLogo {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  overflow: hidden;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  background: white;
+.socialIconsRow a {
+  color: #cbd5e1;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
-}
-
-.brandLogo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 50%;
 }
 
-.brandName {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 800;
+.socialIconsRow a:hover {
   color: #ffffff;
-  letter-spacing: -0.5px;
-  line-height: 1.2;
+  background: #c1272d;
+  transform: translateY(-3px);
 }
 
-.brandSub {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-
-
-
+/* Antiguos estilos de topBand removidos porque ahora el logo está en la grilla */
 .linksGrid {
   max-width: 1280px;
   margin: 0 auto;
@@ -86,7 +52,7 @@
   font-family: 'Outfit', sans-serif;
   font-size: 0.95rem; /* Título más pequeño */
   font-weight: 800;
-  color: #0f172a; /* Slate oscuro para contraste en fondo claro */
+  color: #ffffff; /* Blanco brillante para títulos en fondo oscuro */
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 1rem;
@@ -151,7 +117,7 @@
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  color: #475569; /* Slate grey */
+  color: #cbd5e1; /* Gris claro */
   font-size: 0.95rem;
   font-weight: 500;
   line-height: 1.5;
@@ -159,7 +125,7 @@
 }
 
 .contactItem:hover {
-  color: #1e293b;
+  color: #ffffff;
 }
 
 .contactIcon {

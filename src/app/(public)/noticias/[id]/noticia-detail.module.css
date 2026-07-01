@@ -309,16 +309,28 @@
 
 .relatedCard {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0;
   text-decoration: none;
   color: inherit;
-  group: hover;
+  background: #ffffff;
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.relatedCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border-color: rgba(139, 0, 0, 0.2);
 }
 
 .relatedImage {
-  width: 80px;
-  height: 80px;
-  border-radius: 8px;
+  width: 100%;
+  height: 150px;
+  border-radius: 0;
   object-fit: cover;
   flex-shrink: 0;
   background: var(--color-surface-2);
@@ -328,16 +340,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: 1rem;
 }
 
 .relatedTitle {
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.3;
-  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
   color: var(--color-text);
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   transition: color 0.2s ease;
@@ -348,6 +361,7 @@
 }
 
 .relatedDate {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   color: var(--color-text-muted);
+  font-weight: 500;
 }

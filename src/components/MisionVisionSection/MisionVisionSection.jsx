@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 // SVG Icons
 const MissionIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--acento, #8B0000)' }}>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--acento, #8B0000)' }}>
     <circle cx="12" cy="12" r="10"></circle>
     <circle cx="12" cy="12" r="6"></circle>
     <circle cx="12" cy="12" r="2"></circle>
@@ -13,7 +12,7 @@ const MissionIcon = () => (
 );
 
 const VisionIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--acento, #8B0000)' }}>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--acento, #8B0000)' }}>
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
     <circle cx="12" cy="12" r="3"></circle>
   </svg>
@@ -21,9 +20,9 @@ const VisionIcon = () => (
 
 export default function MisionVisionSection({ mision, vision, titleClass, textClass }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', margin: '3rem 0' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', margin: '3rem 0' }}>
       {mision && (
-        <FlipCard 
+        <InfoCard 
           title="Nuestra Misión" 
           text={mision} 
           Icon={MissionIcon} 
@@ -32,7 +31,7 @@ export default function MisionVisionSection({ mision, vision, titleClass, textCl
         />
       )}
       {vision && (
-        <FlipCard 
+        <InfoCard 
           title="Nuestra Visión" 
           text={vision} 
           Icon={VisionIcon} 
@@ -44,114 +43,46 @@ export default function MisionVisionSection({ mision, vision, titleClass, textCl
   );
 }
 
-function FlipCard({ title, text, Icon, titleClass, textClass }) {
-  const [isFlipped, setIsFlipped] = useState(false);
-
+function InfoCard({ title, text, Icon, titleClass, textClass }) {
   return (
     <motion.div 
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
       variants={{
-        hidden: { opacity: 0, y: 50 },
+        hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, type: "spring" } }
       }}
-      className="flip-card-container"
+      whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
       style={{
-        perspective: '1000px',
-        width: '100%',
-        minHeight: '250px',
-        cursor: 'pointer'
+        background: '#ffffff',
+        padding: '2.5rem',
+        borderRadius: '16px',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
+        border: '1px solid rgba(0,0,0,0.03)',
+        borderLeft: '5px solid var(--acento, #8B0000)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1.25rem',
+        transition: 'box-shadow 0.3s ease'
       }}
-      onHoverStart={() => setIsFlipped(true)}
-      onHoverEnd={() => setIsFlipped(false)}
-      onTap={() => setIsFlipped(!isFlipped)}
     >
-      <motion.div
-        className="flip-card-inner"
-        initial={false}
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        style={{
-          display: 'grid',
-          width: '100%',
-          transformStyle: 'preserve-3d',
-          transition: 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-        }}
-      >
-        {/* FRONT FACE */}
-        <div 
-          style={{
-            gridArea: '1 / 1',
-            backfaceVisibility: 'hidden',
-            background: 'linear-gradient(135deg, #fff 0%, #f9f9f9 100%)',
-            padding: '2rem',
-            borderRadius: '20px',
-            boxShadow: '0 15px 35px rgba(0,0,0,0.1)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            border: '1px solid rgba(0,0,0,0.05)',
-            borderBottom: '5px solid var(--acento, #8B0000)'
-          }}
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, type: 'spring' }}
-            viewport={{ once: true }}
-            style={{ marginBottom: '1.5rem', transform: 'scale(1.5)' }}
-          >
-            <Icon />
-          </motion.div>
-          <h2 className={titleClass} style={{ margin: 0, border: 'none', padding: 0, fontSize: '1.8rem', textAlign: 'center' }}>
-            {title}
-          </h2>
-          <p style={{ marginTop: '1rem', color: '#888', fontStyle: 'italic', fontSize: '0.9rem', textAlign: 'center' }}>Pasa el cursor (o toca) para voltear</p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+        <div style={{ background: 'rgba(139, 0, 0, 0.05)', padding: '1rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Icon />
         </div>
-
-        {/* BACK FACE */}
-        <div 
-          style={{
-            gridArea: '1 / 1',
-            backfaceVisibility: 'hidden',
-            transform: 'rotateY(180deg)',
-            background: 'var(--acento, #8B0000)',
-            color: '#fff',
-            padding: '2rem',
-            borderRadius: '20px',
-            boxShadow: '0 15px 35px rgba(0,0,0,0.2)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            textAlign: 'center',
-            gap: '0.8rem'
-          }}
-        >
-          <h3 style={{ 
-            margin: 0, 
-            fontSize: '1.3rem', 
-            fontWeight: 'bold', 
-            color: 'rgba(255,255,255,0.95)', 
-            borderBottom: '1px solid rgba(255,255,255,0.2)', 
-            paddingBottom: '0.4rem',
-            width: '100%'
-          }}>
-            {title}
-          </h3>
-          <div className={textClass} style={{ 
-            whiteSpace: 'pre-wrap', 
-            color: '#fff', 
-            fontSize: '0.95rem', 
-            lineHeight: '1.6',
-            textShadow: '0 1px 2px rgba(0,0,0,0.2)',
-            textAlign: 'center'
-          }}>
-            {text}
-          </div>
-        </div>
-      </motion.div>
+        <h2 className={titleClass} style={{ margin: 0, padding: 0, fontSize: '1.5rem', color: '#1a1a2e', fontWeight: 'bold' }}>
+          {title}
+        </h2>
+      </div>
+      <div className={textClass} style={{ 
+        whiteSpace: 'pre-wrap', 
+        color: '#475569', 
+        fontSize: '1.05rem', 
+        lineHeight: '1.7',
+      }}>
+        {text}
+      </div>
     </motion.div>
   );
 }

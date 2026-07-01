@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import { createClient } from '@/lib/supabase/client';
 import { 
   Home, 
@@ -181,6 +182,7 @@ export default function Navbar() {
             <a href="#">Portal Ciudadano</a>
             <a href="#">Transparencia</a>
             <a href="#">Contacto</a>
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
@@ -235,9 +237,9 @@ export default function Navbar() {
                   <Image
                     src="/imagotipo_gador_2026.png"
                     alt="Gobierno Autónomo Departamental de Oruro"
-                    height={64}
-                    width={280}
-                    style={{ objectFit: 'contain', width: 'auto', height: '62px' }}
+                    height={90}
+                    width={180}
+                    style={{ objectFit: 'contain', width: 'auto', height: '64px' }}
                     priority
                   />
               </motion.div>

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // output: 'export', // Comentado temporalmente por i18n middleware
   // Permitir archivos grandes (hasta 50MB) en Server Actions y API Routes
   experimental: {
     serverActions: {
@@ -8,6 +8,7 @@ const nextConfig = {
     },
   },
   images: {
+    qualities: [60, 75, 80, 90, 100],
     // Dominios remotos permitidos
     remotePatterns: [
       {
@@ -28,6 +29,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-
-
-
