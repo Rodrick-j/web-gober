@@ -379,16 +379,17 @@
 @media (max-width: 768px) {
   .floatingSocials {
     position: absolute;
-    bottom: 12px;
+    bottom: 55px; /* Arriba de los puntos de paginación para no solapar */
     right: 15px;
     top: auto;
     transform: none;
     flex-direction: row;
-    gap: 8px;
+    gap: 6px;
+    z-index: 40;
   }
   .socialIcon {
-    width: 30px;
-    height: 30px;
-    font-size: 0.85rem;
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
   }
 }

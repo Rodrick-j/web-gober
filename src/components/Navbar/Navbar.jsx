@@ -177,7 +177,9 @@ export default function Navbar() {
       {/* Top Bar */}
       <div className={styles.topBar}>
         <div className={styles.topBarInner}>
-          <span>🇧🇴 Bolivia — Departamento de Oruro</span>
+          <span className={styles.topBarTitle}>
+            🇧🇴 Bolivia — <span className={styles.topBarLong}>Departamento de Oruro</span><span className={styles.topBarShort}>Oruro</span>
+          </span>
           <div className={styles.topBarLinks}>
             <a href="#">Portal Ciudadano</a>
             <a href="#">Transparencia</a>

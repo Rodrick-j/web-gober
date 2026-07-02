@@ -68,68 +68,68 @@ export default function PlanificacionSection({ secretariaId }) {
 
   return (
     <div style={{ marginTop: '3rem' }}>
-      <h2 style={{ fontSize: '1.75rem', color: '#1a1a2e', marginBottom: '1.5rem', fontWeight: '800' }}>
+      <h2 style={{ fontSize: 'clamp(1.3rem, 4vw, 1.75rem)', color: '#1a1a2e', marginBottom: '1.5rem', fontWeight: '800' }}>
         Planificación Departamental
       </h2>
       
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '2px solid #eee' }}>
+      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', borderBottom: '2px solid #eee', flexWrap: 'wrap' }}>
         <button
           onClick={() => { setActiveTab('sistemas'); setViewMode('cards'); }}
           style={{
-            padding: '0.75rem 1.5rem',
+            padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)',
             background: 'transparent',
             border: 'none',
             borderBottom: activeTab === 'sistemas' ? '3px solid #9c0720' : '3px solid transparent',
             color: activeTab === 'sistemas' ? '#9c0720' : '#666',
             fontWeight: 'bold',
-            fontSize: '1rem',
+            fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
+            gap: '0.4rem',
             transition: 'all 0.2s'
           }}
         >
-          <FileText size={20} /> Presupuesto Institucional
+          <FileText size={18} /> Presupuesto Institucional
         </button>
         <button
           onClick={() => setActiveTab('territorio')}
           style={{
-            padding: '0.75rem 1.5rem',
+            padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)',
             background: 'transparent',
             border: 'none',
             borderBottom: activeTab === 'territorio' ? '3px solid #9c0720' : '3px solid transparent',
             color: activeTab === 'territorio' ? '#9c0720' : '#666',
             fontWeight: 'bold',
-            fontSize: '1rem',
+            fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
+            gap: '0.4rem',
             transition: 'all 0.2s'
           }}
         >
-          <MapPin size={20} /> División Territorial
+          <MapPin size={18} /> División Territorial
         </button>
         <button
           onClick={() => setActiveTab('electoral')}
           style={{
-            padding: '0.75rem 1.5rem',
+            padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)',
             background: 'transparent',
             border: 'none',
             borderBottom: activeTab === 'electoral' ? '3px solid #9c0720' : '3px solid transparent',
             color: activeTab === 'electoral' ? '#9c0720' : '#666',
             fontWeight: 'bold',
-            fontSize: '1rem',
+            fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem',
+            gap: '0.4rem',
             transition: 'all 0.2s'
           }}
         >
-          <Database size={20} /> Geografía Electoral
+          <Database size={18} /> Geografía Electoral
         </button>
       </div>
 

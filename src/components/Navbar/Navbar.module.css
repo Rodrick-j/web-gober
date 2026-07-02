@@ -22,8 +22,20 @@
   align-items: center;
 }
 
+.topBarTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  white-space: nowrap;
+}
+
+.topBarShort {
+  display: none;
+}
+
 .topBarLinks {
   display: flex;
+  align-items: center;
   gap: 1.5rem;
 }
 
@@ -447,7 +459,14 @@
 @media (max-width: 900px) {
   .desktopNav { display: none; }
   .mobileToggle { display: flex; }
-  .topBarLinks { display: none; }
+  .topBarLinks a { display: none; } /* Ocultar enlaces de texto extra para ahorrar espacio */
+  .topBarLinks { display: flex; gap: 0.5rem; } /* Mantiene visible el LanguageSwitcher */
+}
+
+@media (max-width: 480px) {
+  .topBarInner { padding: 0 0.75rem; font-size: 0.68rem; }
+  .topBarLong { display: none; }
+  .topBarShort { display: inline; }
 }
 
 /* =====================================================
