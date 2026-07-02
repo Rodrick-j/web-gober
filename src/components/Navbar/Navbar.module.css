@@ -294,16 +294,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-md);
-  color: var(--color-text-muted);
-  transition: all var(--transition-fast);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(156, 7, 32, 0.08) 0%, rgba(255, 184, 67, 0.1) 100%);
+  border: 1.5px solid rgba(156, 7, 32, 0.22);
+  color: #9c0720;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 2px 6px rgba(156, 7, 32, 0.08);
 }
 
 .searchBtn:hover {
-  background: var(--color-bg-alt);
-  color: var(--color-primary);
+  background: linear-gradient(135deg, #9c0720 0%, #d61432 100%);
+  border-color: #9c0720;
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 0 6px 16px rgba(156, 7, 32, 0.35);
 }
 
 /* Mobile Toggle */
@@ -312,20 +319,30 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(156, 7, 32, 0.06) 0%, rgba(255, 184, 67, 0.12) 100%);
+  border: 1.5px solid rgba(156, 7, 32, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mobileToggle:hover {
+  background: rgba(156, 7, 32, 0.12);
+  border-color: rgba(156, 7, 32, 0.4);
+  transform: scale(1.05);
 }
 
 .hamburger,
 .hamburger::before,
 .hamburger::after {
   display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--color-text);
-  border-radius: 2px;
-  transition: all 0.3s;
+  width: 24px;
+  height: 2.8px;
+  background: linear-gradient(90deg, #9c0720 0%, #67181a 100%);
+  border-radius: 4px;
+  transition: all 0.35s cubic-bezier(0.68, -0.6, 0.32, 1.6);
   position: relative;
 }
 
@@ -333,12 +350,29 @@
 .hamburger::after {
   content: '';
   position: absolute;
+  left: 0;
 }
 
-.hamburger::before { top: -7px; }
-.hamburger::after  { top: 7px; }
+.hamburger::before { top: -7.5px; width: 24px; }
+.hamburger::after  { top: 7.5px; width: 18px; background: linear-gradient(90deg, #ffb843 0%, #9c0720 100%); }
 
-.hamburger.open { background: transparent; }
+.mobileToggle:hover .hamburger::after {
+  width: 24px;
+}
+
+.hamburger.open { background: transparent !important; }
+.hamburger.open::before {
+  top: 0;
+  transform: rotate(45deg);
+  width: 24px;
+  background: #9c0720;
+}
+.hamburger.open::after {
+  top: 0;
+  transform: rotate(-45deg);
+  width: 24px;
+  background: #9c0720;
+}
 .mobileMenu {
   position: absolute;
   top: 100%;
