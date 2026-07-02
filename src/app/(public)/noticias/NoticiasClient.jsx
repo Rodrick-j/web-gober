@@ -8,6 +8,12 @@ import styles from './noticias.module.css';
 
 const CATEGORIES = ['Todas', 'Gobernador', 'Salud', 'Obras Públicas', 'Educación', 'Cultura y Turismo', 'Deportes'];
 
+function formatFecha(fechaStr, opts = { day: 'numeric', month: 'long', year: 'numeric' }) {
+  if (!fechaStr) return '';
+  const dateOnly = fechaStr.split('T')[0];
+  return new Date(dateOnly + 'T00:00:00').toLocaleDateString('es-ES', opts);
+}
+
 export default function NoticiasClient() {
   const [allNoticias, setAllNoticias] = useState([]);
   const [comunicados, setComunicados] = useState([]);
@@ -115,7 +121,7 @@ export default function NoticiasClient() {
                 <div className={styles.featuredContent}>
                   <div className={styles.cardMeta}>
                     <span className="badge badge-red">{featured.categoria !== 'Todas' ? featured.categoria : (featured.secretarias?.nombre_corto || 'Institucional')}</span>
-                    <span className={styles.cardDate}>{new Date(featured.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                    <span className={styles.cardDate}>{formatFecha(featured.fecha_publicacion)}</span>
                   </div>
                   <h2 className={styles.featuredTitle}>{featured.titulo}</h2>
                   <p className={styles.featuredExcerpt}>{featured.resumen}</p>
@@ -139,7 +145,7 @@ export default function NoticiasClient() {
                     <div className={styles.cardBody}>
                       <div className={styles.cardMeta}>
                         <span className="badge badge-gray">{noticia.categoria !== 'Todas' ? noticia.categoria : (noticia.secretarias?.nombre_corto || 'Institucional')}</span>
-                        <span className={styles.cardDate}>{new Date(noticia.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+                        <span className={styles.cardDate}>{formatFecha(noticia.fecha_publicacion, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                       </div>
                       <h3 className={styles.cardTitle}>{noticia.titulo}</h3>
                       <p className={styles.cardExcerpt}>{noticia.resumen}</p>
@@ -168,7 +174,7 @@ export default function NoticiasClient() {
                 {comunicados.length > 0 ? (
                   comunicados.map((comunicado) => (
                     <Link href={`/noticias/${comunicado.id}`} key={comunicado.id} className={styles.comunicadoItem}>
-                      <span className={styles.comunicadoDate}>{new Date(comunicado.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}</span>
+                      <span className={styles.comunicadoDate}>{formatFecha(comunicado.fecha_publicacion, { day: 'numeric', month: 'short' })}</span>
                       <h4 className={styles.comunicadoTitle}>{comunicado.titulo}</h4>
                     </Link>
                   ))

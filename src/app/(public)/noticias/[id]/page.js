@@ -50,6 +50,12 @@ function sanitizeHtml(html) {
     .replace(/(background(-color)?|color)\s*:[^;"]+;?/gi, '');
 }
 
+function formatFecha(fechaStr, opts = { day: 'numeric', month: 'long', year: 'numeric' }) {
+  if (!fechaStr) return '';
+  const dateOnly = fechaStr.split('T')[0];
+  return new Date(dateOnly + 'T00:00:00').toLocaleDateString('es-ES', opts);
+}
+
 export default async function NoticiaDetailPage({ params }) {
   const { id } = await params;
   const supabase = createClient();
@@ -85,8 +91,7 @@ export default async function NoticiaDetailPage({ params }) {
     .order('fecha_publicacion', { ascending: false })
     .limit(3);
 
-  // Parse Date
-  const fechaStr = new Date(noticia.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', {
+  const fechaStr = formatFecha(noticia.fecha_publicacion, {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -263,7 +268,7 @@ export default async function NoticiaDetailPage({ params }) {
                         <div className={styles.relatedContent}>
                           <h4 className={styles.relatedTitle}>{rel.titulo}</h4>
                           <span className={styles.relatedDate}>
-                            {new Date(rel.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                            {formatFecha(rel.fecha_publicacion, { day: 'numeric', month: 'short' })}
                           </span>
                         </div>
                       </Link>

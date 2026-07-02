@@ -19,6 +19,12 @@ const TIPO_LABELS = {
   otro: { label: 'Otros', emoji: '📦', color: '#6b7280' },
 };
 
+function formatFecha(fechaStr) {
+  if (!fechaStr) return '';
+  const dateOnly = fechaStr.split('T')[0];
+  return new Date(dateOnly + 'T00:00:00').toLocaleDateString('es-BO');
+}
+
 export default async function GacetaPage() {
   const supabase = await createClient();
   
@@ -125,7 +131,7 @@ export default async function GacetaPage() {
                         <td><strong style={{ color: config.color }}>{doc.numero}</strong></td>
                         <td style={{ maxWidth: '280px' }}>{doc.titulo}</td>
                         <td style={{ whiteSpace: 'nowrap' }}>
-                          {new Date(doc.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-BO')}
+                          {formatFecha(doc.fecha_publicacion)}
                         </td>
                         <td>
                           <span className={`badge ${doc.es_publico ? 'badgeSuccess' : 'badgeWarning'}`}>

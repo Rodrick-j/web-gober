@@ -2,6 +2,12 @@
 import { useState, useMemo } from 'react';
 import styles from './gaceta.module.css';
 
+function formatFecha(fechaStr, opts = { day: 'numeric', month: 'long', year: 'numeric' }) {
+  if (!fechaStr) return '';
+  const dateOnly = fechaStr.split('T')[0];
+  return new Date(dateOnly + 'T00:00:00').toLocaleDateString('es-ES', opts);
+}
+
 export default function GacetaClient({ documentos, tipoLabel, icon }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedYear, setSelectedYear] = useState('Todos');
@@ -127,7 +133,7 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
                       <h4 className={styles.docTitle}>{doc.titulo}</h4>
                       {doc.descripcion && <p className={styles.docDesc}>{doc.descripcion}</p>}
                       <span className={styles.docDate}>
-                        Publicado el {new Date(doc.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        Publicado el {formatFecha(doc.fecha_publicacion)}
                       </span>
                     </div>
                   </div>
