@@ -1,26 +1,40 @@
 .container {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
+  gap: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
   color: white;
-  margin-left: 1rem;
-}
-
-.select {
-  background: transparent;
-  color: inherit;
-  border: none;
-  font-family: inherit;
-  font-size: 0.85rem;
-  font-weight: 500;
+  margin-left: 0.5rem;
   cursor: pointer;
-  outline: none;
+  transition: all 0.25s ease;
 }
 
-.select option {
-  background: #2b040a;
-  color: white;
+.container:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.03);
+}
+
+.planetBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  transition: transform 0.3s ease;
+}
+
+.container:hover .planetBtn {
+  transform: rotate(30deg);
+}
+
+.translatorWrapper {
+  display: flex;
+  align-items: center;
+  min-width: 90px;
 }

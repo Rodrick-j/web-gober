@@ -435,8 +435,9 @@ h1, h2, h3, h4, h5, h6 {
 #google_translate_element {
   display: flex;
   align-items: center;
-  overflow: hidden;
-  height: 26px;
+  overflow: visible;
+  height: auto;
+  min-width: 85px;
 }
 
 /* Esconder el texto "Powered by" y el logo */
@@ -445,6 +446,8 @@ h1, h2, h3, h4, h5, h6 {
   color: transparent !important;
   font-size: 0 !important;
   line-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .goog-logo-link,
@@ -460,15 +463,18 @@ h1, h2, h3, h4, h5, h6 {
 /* Estilizar el select para que se vea nativo y elegante */
 .goog-te-gadget .goog-te-combo {
   margin: 0 !important;
-  padding: 0px 5px !important;
-  border-radius: 4px !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 2px 6px !important;
+  border-radius: 6px !important;
+  border: none !important;
   background-color: transparent !important;
   color: white !important;
   font-size: 0.85rem !important;
+  font-weight: 600 !important;
   font-family: inherit !important;
   outline: none !important;
-  height: 24px !important;
+  height: 26px !important;
+  min-width: 85px !important;
+  cursor: pointer !important;
 }
 
 .goog-te-gadget .goog-te-combo option {

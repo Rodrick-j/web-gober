@@ -157,10 +157,8 @@
   100% { opacity: 0; transform: translateY(20px); }
 }
 
-@media (min-width: 992px) {
-  .featuredImage::after {
-    animation: autoFadeOverlay 7s infinite;
-  }
+.featuredImage::after {
+  animation: autoFadeOverlay 7s infinite;
 }
 
 .featuredImage img {
@@ -191,12 +189,15 @@
   justify-content: flex-end;
 }
 
+.featuredContent {
+  animation: autoFadeText 7s infinite;
+}
+
 @media (min-width: 992px) {
   .featuredContent {
     padding: 3rem;
-    padding-bottom: 1.5rem; /* Más cerca del borde inferior en PC */
+    padding-bottom: 1.5rem;
     width: 75%;
-    animation: autoFadeText 7s infinite;
   }
 }
 
@@ -337,10 +338,8 @@
   z-index: 1;
 }
 
-@media (min-width: 992px) {
-  .cardImageWrapper::after {
-    animation: autoFadeOverlay 7s infinite;
-  }
+.cardImageWrapper::after {
+  animation: autoFadeOverlay 7s infinite;
 }
 
 .cardImage {
@@ -368,10 +367,8 @@
   justify-content: flex-end;
 }
 
-@media (min-width: 992px) {
-  .cardBody {
-    animation: autoFadeText 7s infinite;
-  }
+.cardBody {
+  animation: autoFadeText 7s infinite;
 }
 
 .cardTitle {
