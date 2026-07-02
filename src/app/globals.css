@@ -431,55 +431,18 @@ h1, h2, h3, h4, h5, h6 {
    GOOGLE TRANSLATE WIDGET FIXES
    ===================================================== */
 
-/* Contenedor principal: evitar que empuje el layout */
+/* Ocultar completamente el DOM inyectado por Google Translate para usar nuestro selector personalizado limpio */
 #google_translate_element {
-  display: flex;
-  align-items: center;
-  overflow: visible;
-  height: auto;
-  min-width: 85px;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
-/* Esconder el texto "Powered by" y el logo */
 .goog-te-gadget {
-  font-family: inherit !important;
-  color: transparent !important;
-  font-size: 0 !important;
-  line-height: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-}
-
-.goog-logo-link,
-.goog-te-gadget-icon,
-.goog-te-gadget img {
   display: none !important;
-}
-
-.goog-te-gadget span {
-  display: none !important;
-}
-
-/* Estilizar el select para que se vea nativo y elegante */
-.goog-te-gadget .goog-te-combo {
-  margin: 0 !important;
-  padding: 2px 6px !important;
-  border-radius: 6px !important;
-  border: none !important;
-  background-color: transparent !important;
-  color: white !important;
-  font-size: 0.85rem !important;
-  font-weight: 600 !important;
-  font-family: inherit !important;
-  outline: none !important;
-  height: 26px !important;
-  min-width: 85px !important;
-  cursor: pointer !important;
-}
-
-.goog-te-gadget .goog-te-combo option {
-  background-color: var(--color-primary-dark) !important;
-  color: white !important;
 }
 
 /* Ocultar el molesto banner flotante superior de Google Translate */
