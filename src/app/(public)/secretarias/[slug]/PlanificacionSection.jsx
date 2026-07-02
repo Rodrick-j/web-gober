@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download } from 'lucide-react';
+import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download, Eye, X } from 'lucide-react';
 import styles from './SecretariaDetail.module.css'; // Reusing styles from the page
 import { createClient } from '@/lib/supabase/client';
 
@@ -31,6 +31,7 @@ export default function PlanificacionSection({ secretariaId }) {
   const [poaYear, setPoaYear] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [poaDocs, setPoaDocs] = useState([]);
+  const [previewDoc, setPreviewDoc] = useState(null);
   const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
@@ -195,25 +196,89 @@ export default function PlanificacionSection({ secretariaId }) {
                     <p style={{ color: '#888', fontStyle: 'italic', textAlign: 'center', padding: '2rem' }}>No se encontraron documentos para esta gestión.</p>
                   ) : (
                     filteredDocs.map((doc) => (
-                      <div key={doc.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem', border: '1px solid #eee', borderRadius: '8px', transition: 'background 0.2s', cursor: 'pointer' }} className={styles.poaItemHover}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                          <div style={{ background: '#ffefef', color: '#9c0720', padding: '0.75rem', borderRadius: '8px' }}>
-                            <FileText size={24} />
+                      <div key={doc.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem', border: '1px solid #eaeaea', borderRadius: '12px', transition: 'all 0.2s', cursor: 'pointer', background: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }} 
+                        onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 16px rgba(156,7,32,0.08)'; e.currentTarget.style.borderColor = '#ffefef'; e.currentTarget.style.transform = 'translateY(-2px)' }} 
+                        onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; e.currentTarget.style.borderColor = '#eaeaea'; e.currentTarget.style.transform = 'translateY(0)' }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                          <div style={{ background: 'linear-gradient(135deg, #ffefef 0%, #ffe0e0 100%)', color: '#9c0720', padding: '1rem', borderRadius: '10px' }}>
+                            <FileText size={26} />
                           </div>
                           <div>
-                            <h4 style={{ margin: '0 0 0.25rem 0', fontSize: '1.1rem', color: '#1a1a2e' }}>{doc.nombre}</h4>
-                            <span style={{ fontSize: '0.85rem', color: '#888' }}>PDF Document • {doc.tamano_mb} MB • Publicado {new Date(doc.created_at).toLocaleDateString()}</span>
+                            <h4 style={{ margin: '0 0 0.35rem 0', fontSize: '1.15rem', color: '#1a1a2e', fontWeight: '700' }}>{doc.nombre}</h4>
+                            <span style={{ fontSize: '0.85rem', color: '#666', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              <span style={{ background: '#f0f0f0', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: '600' }}>PDF</span>
+                              • {doc.tamano_mb} MB • Publicado {new Date(doc.created_at).toLocaleDateString()}
+                            </span>
                           </div>
                         </div>
-                        <a href={doc.archivo_url} target="_blank" rel="noreferrer" style={{ textDecoration: 'none', background: 'transparent', border: '1px solid #9c0720', color: '#9c0720', padding: '0.5rem 1rem', borderRadius: '6px', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', cursor: 'pointer' }}>
-                          <Download size={16} /> Descargar
-                        </a>
+                        <div style={{ display: 'flex', gap: '0.75rem' }}>
+                          <button 
+                            onClick={() => setPreviewDoc(doc)} 
+                            style={{ background: '#f5f5f5', border: 'none', color: '#444', padding: '0.6rem 1rem', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }} 
+                            onMouseEnter={(e) => { e.currentTarget.style.background = '#e0e0e0'; e.currentTarget.style.color = '#1a1a2e' }} 
+                            onMouseLeave={(e) => { e.currentTarget.style.background = '#f5f5f5'; e.currentTarget.style.color = '#444' }}
+                          >
+                            <Eye size={18} /> Vista Previa
+                          </button>
+                          <a 
+                            href={`${doc.archivo_url}?download=`} 
+                            download 
+                            target="_blank" 
+                            rel="noreferrer" 
+                            style={{ textDecoration: 'none', background: '#9c0720', border: '1px solid #9c0720', color: '#fff', padding: '0.6rem 1.25rem', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 6px rgba(156,7,32,0.2)' }} 
+                            onMouseEnter={(e) => { e.currentTarget.style.background = '#7a0518'; e.currentTarget.style.transform = 'translateY(-1px)' }} 
+                            onMouseLeave={(e) => { e.currentTarget.style.background = '#9c0720'; e.currentTarget.style.transform = 'translateY(0)' }}
+                          >
+                            <Download size={18} /> Descargar
+                          </a>
+                        </div>
                       </div>
                     ))
                   )}
                 </div>
               </motion.div>
             )}
+
+            {/* Preview Modal */}
+            <AnimatePresence>
+              {previewDoc && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0,0,0,0.85)', zIndex: 9999, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}
+                >
+                  <motion.div
+                    initial={{ y: 50, opacity: 0, scale: 0.95 }}
+                    animate={{ y: 0, opacity: 1, scale: 1 }}
+                    exit={{ y: 20, opacity: 0, scale: 0.95 }}
+                    style={{ width: '100%', maxWidth: '1000px', height: '100%', maxHeight: '90vh', background: '#fff', borderRadius: '16px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)' }}
+                  >
+                    <div style={{ padding: '1.25rem 2rem', background: '#f8f9fa', borderBottom: '1px solid #eaeaea', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div style={{ background: '#ffefef', color: '#9c0720', padding: '0.5rem', borderRadius: '8px' }}>
+                          <FileText size={20} />
+                        </div>
+                        <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#1a1a2e', fontWeight: '700' }}>{previewDoc.nombre}</h3>
+                      </div>
+                      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                        <a href={`${previewDoc.archivo_url}?download=`} download target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#9c0720', fontWeight: '600', fontSize: '0.9rem' }}>
+                          <Download size={16} /> Descargar Archivo
+                        </a>
+                        <div style={{ width: '1px', height: '24px', background: '#ddd' }}></div>
+                        <button onClick={() => setPreviewDoc(null)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#666', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem', borderRadius: '50%', transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#eaeaea'; e.currentTarget.style.color = '#1a1a2e' }} onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#666' }}>
+                          <X size={24} />
+                        </button>
+                      </div>
+                    </div>
+                    <div style={{ flex: 1, position: 'relative', background: '#e0e0e0' }}>
+                      <iframe src={`${previewDoc.archivo_url}#toolbar=0`} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} title={previewDoc.nombre} />
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
 

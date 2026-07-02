@@ -30,9 +30,9 @@ export default function PoaManager({ secretariaId }) {
   };
 
   const handleUpload = async (file) => {
-    if (!formData.nombre) {
-      alert('Por favor ingresa un nombre para el documento.');
-      return;
+    let finalNombre = formData.nombre;
+    if (!finalNombre) {
+      finalNombre = file.name.replace(/\.[^/.]+$/, ""); // strip extension
     }
     
     try {
@@ -44,7 +44,7 @@ export default function PoaManager({ secretariaId }) {
 
       const { error: dbError } = await supabase.from('poa_documents').insert([{
         secretaria_id: secretariaId,
-        nombre: formData.nombre,
+        nombre: finalNombre,
         archivo_url: publicUrl,
         gestion: parseInt(formData.gestion),
         tamano_mb: parseFloat(sizeMb)

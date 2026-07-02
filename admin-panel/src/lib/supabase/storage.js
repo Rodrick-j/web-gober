@@ -15,7 +15,7 @@ export async function uploadFile(file, folder = 'general') {
     const supabase = createClient();
     
     // Determinar el bucket según la carpeta
-    const BUCKET_NAME = folder === 'documentos' ? 'documento-pdf' : 'imagenes';
+    const BUCKET_NAME = folder === 'documentos' ? 'documentos-pdf' : 'imagenes';
     
     // Crear un nombre único para el archivo (para no sobreescribir)
     const fileExt = file.name.split('.').pop();
@@ -63,7 +63,7 @@ export async function deleteFile(fileUrl) {
     let pathParts = fileUrl.split(`${bucketName}/`);
     
     if (pathParts.length !== 2) {
-      bucketName = 'documento-pdf';
+      bucketName = 'documentos-pdf';
       pathParts = fileUrl.split(`${bucketName}/`);
     }
 

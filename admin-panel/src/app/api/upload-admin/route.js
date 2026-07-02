@@ -22,7 +22,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'No se encontró ningún archivo.' }, { status: 400 });
     }
 
-    const BUCKET_NAME = folder === 'documentos' ? 'documento-pdf' : 'imagenes';
+    const BUCKET_NAME = folder === 'documentos' ? 'documentos-pdf' : 'imagenes';
     const fileExt = file.name.split('.').pop();
     const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
     const filePath = `${folder}/${fileName}`;

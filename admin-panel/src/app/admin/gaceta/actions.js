@@ -18,7 +18,7 @@ export async function getSignedUploadUrl(fileName) {
   const filePath = `documentos/${uniqueName}`;
 
   const { data, error } = await supabaseAdmin.storage
-    .from('documento-pdf')
+    .from('documentos-pdf')
     .createSignedUploadUrl(filePath);
 
   if (error) {
@@ -27,7 +27,7 @@ export async function getSignedUploadUrl(fileName) {
   }
 
   // Construir la URL pública que tendrá el archivo una vez subido
-  const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/documento-pdf/${filePath}`;
+  const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/documentos-pdf/${filePath}`;
 
   return {
     signedUrl: data.signedUrl,
