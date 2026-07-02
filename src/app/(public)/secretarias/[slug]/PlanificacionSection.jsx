@@ -112,6 +112,25 @@ export default function PlanificacionSection({ secretariaId }) {
         >
           <MapPin size={20} /> División Territorial
         </button>
+        <button
+          onClick={() => setActiveTab('electoral')}
+          style={{
+            padding: '0.75rem 1.5rem',
+            background: 'transparent',
+            border: 'none',
+            borderBottom: activeTab === 'electoral' ? '3px solid #9c0720' : '3px solid transparent',
+            color: activeTab === 'electoral' ? '#9c0720' : '#666',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            transition: 'all 0.2s'
+          }}
+        >
+          <Database size={20} /> Geografía Electoral
+        </button>
       </div>
 
       {/* Tab Content */}
@@ -196,23 +215,23 @@ export default function PlanificacionSection({ secretariaId }) {
                     <p style={{ color: '#888', fontStyle: 'italic', textAlign: 'center', padding: '2rem' }}>No se encontraron documentos para esta gestión.</p>
                   ) : (
                     filteredDocs.map((doc) => (
-                      <div key={doc.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem', border: '1px solid #eaeaea', borderRadius: '12px', transition: 'all 0.2s', cursor: 'pointer', background: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }} 
+                      <div key={doc.id} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem', border: '1px solid #eaeaea', borderRadius: '12px', transition: 'all 0.2s', cursor: 'pointer', background: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }} 
                         onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 16px rgba(156,7,32,0.08)'; e.currentTarget.style.borderColor = '#ffefef'; e.currentTarget.style.transform = 'translateY(-2px)' }} 
                         onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; e.currentTarget.style.borderColor = '#eaeaea'; e.currentTarget.style.transform = 'translateY(0)' }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flex: '1 1 auto', minWidth: '250px' }}>
                           <div style={{ background: 'linear-gradient(135deg, #ffefef 0%, #ffe0e0 100%)', color: '#9c0720', padding: '1rem', borderRadius: '10px' }}>
                             <FileText size={26} />
                           </div>
                           <div>
                             <h4 style={{ margin: '0 0 0.35rem 0', fontSize: '1.15rem', color: '#1a1a2e', fontWeight: '700' }}>{doc.nombre}</h4>
-                            <span style={{ fontSize: '0.85rem', color: '#666', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <span style={{ fontSize: '0.85rem', color: '#666', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                               <span style={{ background: '#f0f0f0', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: '600' }}>PDF</span>
                               • {doc.tamano_mb} MB • Publicado {new Date(doc.created_at).toLocaleDateString()}
                             </span>
                           </div>
                         </div>
-                        <div style={{ display: 'flex', gap: '0.75rem' }}>
+                        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                           <button 
                             onClick={() => setPreviewDoc(doc)} 
                             style={{ background: '#f5f5f5', border: 'none', color: '#444', padding: '0.6rem 1rem', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s' }} 
@@ -341,6 +360,46 @@ export default function PlanificacionSection({ secretariaId }) {
                   </AnimatePresence>
                 </div>
               ))}
+            </div>
+          </motion.div>
+        )}
+
+        {activeTab === 'electoral' && (
+          <motion.div
+            key="electoral"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
+            <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #eaeaea', padding: '2rem', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}>
+              <h3 style={{ fontSize: '1.4rem', color: '#1a1a2e', fontWeight: '800', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <MapPin color="#9c0720" /> Circunscripciones Uninominales del Departamento de Oruro
+              </h3>
+              <p style={{ color: '#555', marginBottom: '2rem', lineHeight: '1.6' }}>
+                A continuación puede visualizar o descargar el mapa oficial del Órgano Electoral Plurinacional con la distribución de las circunscripciones uninominales y los municipios correspondientes al departamento de Oruro.
+              </p>
+              
+              <div style={{ width: '100%', height: '75vh', minHeight: '600px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #ddd', background: '#f5f5f5' }}>
+                <iframe 
+                  src="/documents/Circunscripciones_Uninominales_Oruro.pdf#zoom=FitH" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 'none' }}
+                  title="Mapa de Circunscripciones de Oruro"
+                />
+              </div>
+
+              <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+                <a 
+                  href="/documents/Circunscripciones_Uninominales_Oruro.pdf" 
+                  download 
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#9c0720', color: '#fff', padding: '0.75rem 2rem', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', transition: 'background 0.2s', boxShadow: '0 4px 6px rgba(156,7,32,0.2)' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = '#7a0518'; e.currentTarget.style.transform = 'translateY(-2px)' }} 
+                  onMouseLeave={(e) => { e.currentTarget.style.background = '#9c0720'; e.currentTarget.style.transform = 'translateY(0)' }}
+                >
+                  <Download size={18} /> Descargar PDF Completo
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

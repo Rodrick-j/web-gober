@@ -1,5 +1,6 @@
 'use server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminSession } from '@/lib/auth';
 
 /**
  * Genera una URL firmada (signed URL) para que el navegador suba
@@ -7,6 +8,11 @@ import { createClient } from '@supabase/supabase-js';
  * Usa la llave maestra del servidor para crear la URL segura.
  */
 export async function getSignedUploadUrl(fileName) {
+  const session = await verifyAdminSession();
+  if (!session) {
+    throw new Error('No autorizado para subir documentos.');
+  }
+
   const supabaseAdmin = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.SUPABASE_SERVICE_ROLE_KEY,

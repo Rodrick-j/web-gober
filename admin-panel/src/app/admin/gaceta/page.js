@@ -125,7 +125,7 @@ export default async function GacetaPage() {
                         <td><strong style={{ color: config.color }}>{doc.numero}</strong></td>
                         <td style={{ maxWidth: '280px' }}>{doc.titulo}</td>
                         <td style={{ whiteSpace: 'nowrap' }}>
-                          {new Date(doc.fecha_publicacion).toLocaleDateString('es-BO')}
+                          {new Date(doc.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-BO')}
                         </td>
                         <td>
                           <span className={`badge ${doc.es_publico ? 'badgeSuccess' : 'badgeWarning'}`}>

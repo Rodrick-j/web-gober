@@ -16,6 +16,7 @@ export default function CrearDocumentoPage() {
   const [titulo, setTitulo] = useState('');
   const [esPublico, setEsPublico] = useState(true);
   const [archivo, setArchivo] = useState(null);
+  const [fechaPublicacion, setFechaPublicacion] = useState(() => new Date().toISOString().split('T')[0]);
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -67,7 +68,7 @@ export default function CrearDocumentoPage() {
           archivo_url: publicUrl,
           es_publico: esPublico,
           es_gaceta_oficial: esPublico, // Mostrar en sección Gaceta de la web pública
-          fecha_publicacion: new Date().toISOString().split('T')[0] // Solo la fecha (DATE)
+          fecha_publicacion: fechaPublicacion || new Date().toISOString().split('T')[0]
         });
 
       if (insertError) throw insertError;
@@ -203,6 +204,21 @@ export default function CrearDocumentoPage() {
                   <option value="publico">Público (Visible en la web)</option>
                   <option value="oculto">Oculto (Borrador interno)</option>
                 </select>
+              </div>
+
+              <div className="formGroup">
+                <label className="formLabel">Fecha de Publicación</label>
+                <input
+                  type="date"
+                  className="formInput"
+                  value={fechaPublicacion}
+                  onChange={(e) => setFechaPublicacion(e.target.value)}
+                  disabled={isSubmitting}
+                  id="gaceta-fecha-publicacion"
+                />
+                <p style={{ fontSize: '0.78rem', color: 'var(--admin-text-muted)', marginTop: '0.25rem' }}>
+                  Por defecto usa la fecha actual. Cámbiala si el documento es de otra fecha.
+                </p>
               </div>
 
               <button 

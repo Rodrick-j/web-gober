@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import Link from 'next/link';
 import Image from 'next/image';
 import DeleteBannerBtn from './DeleteBannerBtn';
+import { verifyAdminSession } from '@/lib/auth';
 
 export const metadata = {
   title: 'Carrusel Inicio — Admin GADOR',
@@ -11,6 +12,9 @@ export const metadata = {
 // Server Actions para reordenar y ocultar/mostrar
 async function toggleBanner(id, currentState) {
   'use server';
+  const session = await verifyAdminSession();
+  if (!session) throw new Error('No autorizado');
+
   const supabase = await createClient();
   await supabase.from('banners_inicio').update({ activo: !currentState }).eq('id', id);
   revalidatePath('/admin/carrusel');
@@ -19,6 +23,9 @@ async function toggleBanner(id, currentState) {
 
 async function moveBanner(id, currentOrder, direction, allBanners) {
   'use server';
+  const session = await verifyAdminSession();
+  if (!session) throw new Error('No autorizado');
+
   const supabase = await createClient();
   
   // Find the banner to swap with

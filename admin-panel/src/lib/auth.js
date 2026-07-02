@@ -85,3 +85,28 @@ export async function requireAccesoSecretaria(secretariaId) {
 
   return { user, perfil };
 }
+
+/**
+ * Verifica la sesión de administrador sin redirigir (ideal para API Routes y Server Actions).
+ * Devuelve { user, perfil } o null si no está autenticado o activo.
+ */
+export async function verifyAdminSession() {
+  try {
+    const supabase = await createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) return null;
+
+    const { data: perfil, error: perfilError } = await supabase
+      .from('usuarios_admin')
+      .select('id, rol, secretaria_id, activo')
+      .eq('auth_user_id', user.id)
+      .eq('activo', true)
+      .single();
+
+    if (perfilError || !perfil) return null;
+    return { user, perfil };
+  } catch {
+    return null;
+  }
+}
+

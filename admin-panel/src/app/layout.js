@@ -11,6 +11,11 @@ export const metadata = {
   title: 'Gobierno Autónomo Departamental de Oruro',
   description: 'Portal oficial del Gobierno Autónomo Departamental de Oruro. Noticias, trámites, leyes y servicios para los ciudadanos del Departamento de Oruro, Bolivia.',
   keywords: 'Oruro, Gobernación, Bolivia, Gobierno Departamental, Trámites, Gaceta Oficial',
+  icons: {
+    icon: '/favicon-gador.png',
+    shortcut: '/favicon-gador.png',
+    apple: '/favicon-gador.png',
+  },
   openGraph: {
     title: 'Gobierno Autónomo Departamental de Oruro',
     description: 'Portal oficial del Gobierno Autónomo Departamental de Oruro',

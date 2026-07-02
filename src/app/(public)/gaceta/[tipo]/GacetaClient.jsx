@@ -127,7 +127,7 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
                       <h4 className={styles.docTitle}>{doc.titulo}</h4>
                       {doc.descripcion && <p className={styles.docDesc}>{doc.descripcion}</p>}
                       <span className={styles.docDate}>
-                        Publicado el {new Date(doc.fecha_publicacion).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        Publicado el {new Date(doc.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' })}
                       </span>
                     </div>
                   </div>

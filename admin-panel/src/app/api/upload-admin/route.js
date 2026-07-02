@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
+import { verifyAdminSession } from '@/lib/auth';
 
 // Esta ruta usa la llave MAESTRA (service role) del servidor.
 export const runtime = 'edge';
@@ -7,6 +8,11 @@ export const runtime = 'edge';
 // Jamás se expone al navegador. Salta todas las restricciones de seguridad (RLS).
 export async function POST(request) {
   try {
+    const session = await verifyAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+    }
+
     const supabaseAdmin = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
       process.env.SUPABASE_SERVICE_ROLE_KEY,

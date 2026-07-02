@@ -100,22 +100,24 @@
 
 /* Featured Card */
 .featuredCard {
-  display: grid;
-  grid-template-columns: 1fr;
-  background: #ffffff;
-  border: 1px solid var(--color-border);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: #000;
   border-radius: 12px;
   overflow: hidden;
   text-decoration: none;
-  color: inherit;
+  color: white;
   transition: all 0.3s ease;
   margin-bottom: 3rem;
   box-shadow: var(--shadow-md);
+  min-height: 400px;
 }
 
 @media (min-width: 992px) {
   .featuredCard {
-    grid-template-columns: 3fr 2fr;
+    min-height: 450px;
   }
 }
 
@@ -126,20 +128,38 @@
 }
 
 .featuredImage {
-  position: relative;
-  height: 260px; /* Más espacio para que la imagen principal no se recorte feo */
-  background: var(--color-surface-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.featuredImage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Degradado más oscuro para asegurar que el texto blanco nunca se pierda por contraste */
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.3) 100%);
+  z-index: 1;
+}
+
+@keyframes autoFadeOverlay {
+  0%, 40% { opacity: 0; }
+  50%, 90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes autoFadeText {
+  0%, 40% { opacity: 0; transform: translateY(20px); }
+  50%, 90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(20px); }
 }
 
 @media (min-width: 992px) {
-  .featuredImage {
-    height: 100%;
-    aspect-ratio: auto;
-    min-height: 400px;
+  .featuredImage::after {
+    animation: autoFadeOverlay 7s infinite;
   }
 }
 
@@ -162,15 +182,21 @@
 }
 
 .featuredContent {
-  padding: 1rem; /* Menos padding en celular para aprovechar espacio */
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem;
+  padding-bottom: 1rem; /* Más abajo */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 @media (min-width: 992px) {
   .featuredContent {
     padding: 3rem;
+    padding-bottom: 1.5rem; /* Más cerca del borde inferior en PC */
+    width: 75%;
+    animation: autoFadeText 7s infinite;
   }
 }
 
@@ -188,34 +214,38 @@
   font-weight: 500;
 }
 
+.featuredCard .cardDate,
+.newsCard .cardDate {
+  color: rgba(255, 255, 255, 0.9); /* Fecha visible sobre fondo oscuro */
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
 .featuredTitle {
   font-family: var(--font-heading);
-  font-size: 1.05rem; /* Texto más pequeño */
+  font-size: 1.2rem;
   font-weight: 900;
-  color: var(--color-primary-dark);
+  color: white;
   line-height: 1.25;
   margin-bottom: 0.75rem;
-  /* Profesional Gradient for Title */
-  background: linear-gradient(135deg, #a80a15 0%, #1a1a1a 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
 @media (min-width: 992px) {
   .featuredTitle {
-    font-size: 2.25rem;
+    font-size: 1.5rem; /* Aún más pequeño */
   }
 }
 
 .featuredExcerpt {
-  font-size: 0.85rem; /* Letra más pequeña */
-  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin-bottom: 1.5rem;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Menos texto en celular */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
 @media (min-width: 992px) {
@@ -227,7 +257,7 @@
 }
 
 .readMore {
-  color: var(--color-primary);
+  color: #ffcccc;
   font-weight: 700;
   font-size: 1rem;
   display: inline-flex;
@@ -260,22 +290,25 @@
 }
 
 .newsCard {
+  position: relative;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border: 1px solid var(--color-border);
+  justify-content: flex-end;
+  background: #000;
   border-radius: 12px;
   overflow: hidden;
   text-decoration: none;
-  color: inherit;
+  color: white;
   transition: all 0.3s ease;
   height: 100%;
   box-shadow: var(--shadow-sm);
+  min-height: 280px; /* Asegura altura para la tarjeta con imagen completa */
 }
 
 @media (min-width: 768px) {
   .newsCard {
     border-radius: 16px;
+    min-height: 280px; /* Un poco más grande para evitar que los textos choquen */
   }
 }
 
@@ -286,19 +319,27 @@
 }
 
 .cardImageWrapper {
-  position: relative;
-  height: 120px; /* Reducido drásticamente para caber 2 en celular */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
   background: var(--color-surface-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-bottom: 1px solid var(--color-border);
 }
 
-@media (min-width: 768px) {
-  .cardImageWrapper {
-    height: 200px;
+.cardImageWrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Degradado más fuerte para asegurar el contraste de las letras blancas */
+  background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.3) 100%);
+  z-index: 1;
+}
+
+@media (min-width: 992px) {
+  .cardImageWrapper::after {
+    animation: autoFadeOverlay 7s infinite;
   }
 }
 
@@ -319,42 +360,43 @@
 }
 
 .cardBody {
-  padding: 0.75rem; /* Aún menos padding para acomodar 2 columnas en celular */
+  position: relative;
+  z-index: 2;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  justify-content: flex-end;
+}
+
+@media (min-width: 992px) {
+  .cardBody {
+    animation: autoFadeText 7s infinite;
+  }
 }
 
 .cardTitle {
   font-family: var(--font-heading);
-  font-size: 0.9rem; /* Mucho más pequeño para 2 columnas */
+  font-size: 0.95rem;
   font-weight: 700;
-  color: var(--color-text);
-  line-height: 1.2;
+  color: white;
+  line-height: 1.25;
   margin-bottom: 0.75rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
 .cardExcerpt {
-  font-size: 0.8rem; /* Letra de resumen más pequeña */
-  color: var(--color-text-muted);
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  margin-bottom: 0.75rem;
-  flex: 1;
+  display: none; /* Ocultamos el extracto en las tarjetas pequeñas para que respire el diseño y no choque con el título */
 }
 
 .cardAction {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  color: var(--color-primary);
+  color: #ffcccc;
   font-weight: 700;
   font-size: 0.85rem;
   margin-top: auto;

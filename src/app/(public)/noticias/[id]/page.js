@@ -40,6 +40,16 @@ export async function generateMetadata({ params }) {
   };
 }
 
+function sanitizeHtml(html) {
+  if (!html) return '';
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/\b(on[a-z]+)\s*=\s*(?:['"][^'"]*['"]|[^\s>]+)/gi, '')
+    .replace(/href\s*=\s*(?:['"]\s*(?:javascript|data):[^'"]*['"]|[^\s>]+)/gi, 'href="#"')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/(background(-color)?|color)\s*:[^;"]+;?/gi, '');
+}
+
 export default async function NoticiaDetailPage({ params }) {
   const { id } = await params;
   const supabase = createClient();
@@ -76,7 +86,7 @@ export default async function NoticiaDetailPage({ params }) {
     .limit(3);
 
   // Parse Date
-  const fechaStr = new Date(noticia.fecha_publicacion).toLocaleDateString('es-ES', {
+  const fechaStr = new Date(noticia.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -151,7 +161,7 @@ export default async function NoticiaDetailPage({ params }) {
                     maxWidth: '100%',
                     display: 'block',
                   }}
-                  dangerouslySetInnerHTML={{ __html: noticia.contenido ? noticia.contenido.replace(/&nbsp;/g, ' ').replace(/(background(-color)?|color)\s*:[^;"]+;?/gi, '') : '' }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(noticia.contenido) }}
                 />
               </div>
             </article>
@@ -253,7 +263,7 @@ export default async function NoticiaDetailPage({ params }) {
                         <div className={styles.relatedContent}>
                           <h4 className={styles.relatedTitle}>{rel.titulo}</h4>
                           <span className={styles.relatedDate}>
-                            {new Date(rel.fecha_publicacion).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                            {new Date(rel.fecha_publicacion + 'T00:00:00').toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
                           </span>
                         </div>
                       </Link>
