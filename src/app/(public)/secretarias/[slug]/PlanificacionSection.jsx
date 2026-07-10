@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download, Eye, X } from 'lucide-react';
+import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download, Eye, X, PieChart } from 'lucide-react';
 import styles from './SecretariaDetail.module.css'; // Reusing styles from the page
 import { createClient } from '@/lib/supabase/client';
-
+import BudgetDashboard from './BudgetDashboard';
 const provinciasOruro = [
   { nombre: "Cercado", municipios: ["Oruro", "Caracollo", "El Choro", "Soracachi (Paria)"] },
   { nombre: "Abaroa", municipios: ["Challapata", "Quillacas"] },
@@ -27,7 +27,8 @@ const provinciasOruro = [
 export default function PlanificacionSection({ secretariaId }) {
   const [activeTab, setActiveTab] = useState('sistemas');
   const [openProvincia, setOpenProvincia] = useState(null);
-  const [viewMode, setViewMode] = useState('cards'); // 'cards', 'poa', 'sisin'
+  const [viewMode, setViewMode] = useState('dashboard'); // 'dashboard', 'cards', 'poa', 'sisin'
+  const [mapTab, setMapTab] = useState('territorio');
   const [poaYear, setPoaYear] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [poaDocs, setPoaDocs] = useState([]);
@@ -67,70 +68,31 @@ export default function PlanificacionSection({ secretariaId }) {
   });
 
   return (
-    <div style={{ marginTop: '3rem' }}>
-      <h2 style={{ fontSize: 'clamp(1.3rem, 4vw, 1.75rem)', color: '#1a1a2e', marginBottom: '1.5rem', fontWeight: '800' }}>
-        Planificación Departamental
-      </h2>
-      
-      {/* Tabs */}
-      <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', borderBottom: '2px solid #eee', flexWrap: 'wrap' }}>
-        <button
-          onClick={() => { setActiveTab('sistemas'); setViewMode('cards'); }}
-          style={{
-            padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)',
-            background: 'transparent',
-            border: 'none',
-            borderBottom: activeTab === 'sistemas' ? '3px solid #9c0720' : '3px solid transparent',
-            color: activeTab === 'sistemas' ? '#9c0720' : '#666',
-            fontWeight: 'bold',
-            fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-            transition: 'all 0.2s'
-          }}
-        >
-          <FileText size={18} /> Presupuesto Institucional
-        </button>
-        <button
-          onClick={() => setActiveTab('territorio')}
-          style={{
-            padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)',
-            background: 'transparent',
-            border: 'none',
-            borderBottom: activeTab === 'territorio' ? '3px solid #9c0720' : '3px solid transparent',
-            color: activeTab === 'territorio' ? '#9c0720' : '#666',
-            fontWeight: 'bold',
-            fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-            transition: 'all 0.2s'
-          }}
-        >
-          <MapPin size={18} /> División Territorial
-        </button>
-        <button
-          onClick={() => setActiveTab('electoral')}
-          style={{
-            padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(0.75rem, 3vw, 1.5rem)',
-            background: 'transparent',
-            border: 'none',
-            borderBottom: activeTab === 'electoral' ? '3px solid #9c0720' : '3px solid transparent',
-            color: activeTab === 'electoral' ? '#9c0720' : '#666',
-            fontWeight: 'bold',
-            fontSize: 'clamp(0.85rem, 2.5vw, 1rem)',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-            transition: 'all 0.2s'
-          }}
-        >
-          <Database size={18} /> Geografía Electoral
-        </button>
+    <div style={{ marginTop: '0' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+        <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', color: '#1a1a2e', fontWeight: '900', margin: 0 }}>
+          Planificación Departamental
+        </h2>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button
+            onClick={() => setActiveTab(activeTab === 'sistemas' ? 'territorio' : 'sistemas')}
+            style={{
+              padding: '0.6rem 1.25rem',
+              background: activeTab !== 'sistemas' ? '#9c0720' : '#f5f5f5',
+              color: activeTab !== 'sistemas' ? '#fff' : '#444',
+              border: 'none',
+              borderRadius: '8px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              transition: 'all 0.2s'
+            }}
+          >
+            <MapPin size={18} /> {activeTab !== 'sistemas' ? 'Cerrar Mapas' : 'Ver Mapas y Territorio'}
+          </button>
+        </div>
       </div>
 
       {/* Tab Content */}
@@ -142,6 +104,33 @@ export default function PlanificacionSection({ secretariaId }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
+            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+              <button
+                onClick={() => setViewMode('dashboard')}
+                style={{
+                  background: viewMode === 'dashboard' ? '#9c0720' : '#f5f5f5',
+                  color: viewMode === 'dashboard' ? '#fff' : '#444',
+                  border: 'none', padding: '0.6rem 1.25rem', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.5rem'
+                }}
+              >
+                <PieChart size={18} /> Vista Interactiva
+              </button>
+              <button
+                onClick={() => setViewMode('cards')}
+                style={{
+                  background: viewMode === 'cards' ? '#9c0720' : '#f5f5f5',
+                  color: viewMode === 'cards' ? '#fff' : '#444',
+                  border: 'none', padding: '0.6rem 1.25rem', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.5rem'
+                }}
+              >
+                <FileText size={18} /> Documentos (PDF)
+              </button>
+            </div>
+
+            {viewMode === 'dashboard' && (
+              <BudgetDashboard />
+            )}
+
             {viewMode === 'cards' && (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
                 {/* Card POA */}
@@ -307,100 +296,122 @@ export default function PlanificacionSection({ secretariaId }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
+            style={{ marginTop: '2rem' }}
           >
-            <p style={{ color: '#4a4848', marginBottom: '1.5rem', lineHeight: '1.6', fontSize: '1rem' }}>
-              El departamento de Oruro (Bolivia) se divide administrativamente en <strong>16 provincias</strong> y <strong>35 municipios</strong>. La capital departamental es la ciudad de Oruro.
-            </p>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {provinciasOruro.map((prov, index) => (
-                <div key={index} style={{ border: '1px solid #eaeaea', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
-                  <button
-                    onClick={() => setOpenProvincia(openProvincia === index ? null : index)}
-                    style={{
-                      width: '100%',
-                      padding: '1rem 1.5rem',
-                      background: openProvincia === index ? 'rgba(156, 7, 32, 0.03)' : '#fff',
-                      border: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      cursor: 'pointer',
-                      fontWeight: 'bold',
-                      color: openProvincia === index ? '#9c0720' : '#1a1a2e',
-                      fontSize: '1rem'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <MapPin size={18} color={openProvincia === index ? '#9c0720' : '#888'} />
-                      Provincia {prov.nombre}
-                    </div>
-                    <ChevronDown size={20} style={{ transform: openProvincia === index ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }} />
-                  </button>
-                  <AnimatePresence>
-                    {openProvincia === index && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        style={{ overflow: 'hidden' }}
+            {/* Map Tabs */}
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem', borderBottom: '2px solid #eee', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => setMapTab('territorio')}
+                style={{
+                  padding: '0.5rem 1rem',
+                  background: 'transparent',
+                  border: 'none',
+                  borderBottom: mapTab === 'territorio' ? '3px solid #9c0720' : '3px solid transparent',
+                  color: mapTab === 'territorio' ? '#9c0720' : '#666',
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <MapPin size={18} /> División Territorial
+              </button>
+              <button
+                onClick={() => setMapTab('electoral')}
+                style={{
+                  padding: '0.5rem 1rem',
+                  background: 'transparent',
+                  border: 'none',
+                  borderBottom: mapTab === 'electoral' ? '3px solid #9c0720' : '3px solid transparent',
+                  color: mapTab === 'electoral' ? '#9c0720' : '#666',
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Database size={18} /> Geografía Electoral
+              </button>
+            </div>
+
+            {mapTab === 'territorio' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <p style={{ color: '#4a4848', marginBottom: '1.5rem', lineHeight: '1.6', fontSize: '1rem' }}>
+                  El departamento de Oruro (Bolivia) se divide administrativamente en <strong>16 provincias</strong> y <strong>35 municipios</strong>. La capital departamental es la ciudad de Oruro.
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {provinciasOruro.map((prov, index) => (
+                    <div key={index} style={{ border: '1px solid #eaeaea', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
+                      <button
+                        onClick={() => setOpenProvincia(openProvincia === index ? null : index)}
+                        style={{
+                          width: '100%', padding: '1rem 1.5rem', background: openProvincia === index ? 'rgba(156, 7, 32, 0.03)' : '#fff',
+                          border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer',
+                          fontWeight: 'bold', color: openProvincia === index ? '#9c0720' : '#1a1a2e', fontSize: '1rem'
+                        }}
                       >
-                        <div style={{ padding: '0 1.5rem 1rem 3.5rem' }}>
-                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem' }}>
-                            {prov.municipios.map((mun, i) => (
-                              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#4a4848', fontSize: '0.9rem' }}>
-                                <Building size={14} color="#ccc" />
-                                {mun}
-                              </div>
-                            ))}
-                          </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                          <MapPin size={18} color={openProvincia === index ? '#9c0720' : '#888'} /> Provincia {prov.nombre}
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        <ChevronDown size={20} style={{ transform: openProvincia === index ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.3s' }} />
+                      </button>
+                      <AnimatePresence>
+                        {openProvincia === index && (
+                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} style={{ overflow: 'hidden' }}>
+                            <div style={{ padding: '0 1.5rem 1rem 3.5rem' }}>
+                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.75rem' }}>
+                                {prov.municipios.map((mun, i) => (
+                                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#4a4848', fontSize: '0.9rem' }}>
+                                    <Building size={14} color="#ccc" /> {mun}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </motion.div>
-        )}
+              </motion.div>
+            )}
 
-        {activeTab === 'electoral' && (
-          <motion.div
-            key="electoral"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-          >
-            <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #eaeaea', padding: '2rem', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}>
-              <h3 style={{ fontSize: '1.4rem', color: '#1a1a2e', fontWeight: '800', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <MapPin color="#9c0720" /> Circunscripciones Uninominales del Departamento de Oruro
-              </h3>
-              <p style={{ color: '#555', marginBottom: '2rem', lineHeight: '1.6' }}>
-                A continuación puede visualizar o descargar el mapa oficial del Órgano Electoral Plurinacional con la distribución de las circunscripciones uninominales y los municipios correspondientes al departamento de Oruro.
-              </p>
-              
-              <div style={{ width: '100%', height: '75vh', minHeight: '600px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #ddd', background: '#f5f5f5' }}>
-                <iframe 
-                  src="/documents/Circunscripciones_Uninominales_Oruro.pdf#zoom=FitH" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 'none' }}
-                  title="Mapa de Circunscripciones de Oruro"
-                />
-              </div>
+            {mapTab === 'electoral' && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div style={{ background: '#fff', borderRadius: '16px', border: '1px solid #eaeaea', padding: '2rem', boxShadow: '0 10px 40px rgba(0,0,0,0.04)' }}>
+                  <h3 style={{ fontSize: '1.4rem', color: '#1a1a2e', fontWeight: '800', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <MapPin color="#9c0720" /> Circunscripciones Uninominales del Departamento de Oruro
+                  </h3>
+                  <p style={{ color: '#555', marginBottom: '2rem', lineHeight: '1.6' }}>
+                    A continuación puede visualizar o descargar el mapa oficial del Órgano Electoral Plurinacional con la distribución de las circunscripciones uninominales y los municipios correspondientes al departamento de Oruro.
+                  </p>
+                  
+                  <div style={{ width: '100%', height: '75vh', minHeight: '600px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #ddd', background: '#f5f5f5' }}>
+                    <iframe 
+                      src="/documents/Circunscripciones_Uninominales_Oruro.pdf#zoom=FitH" 
+                      width="100%" height="100%" style={{ border: 'none' }} title="Mapa de Circunscripciones de Oruro"
+                    />
+                  </div>
 
-              <div style={{ marginTop: '2rem', textAlign: 'center' }}>
-                <a 
-                  href="/documents/Circunscripciones_Uninominales_Oruro.pdf" 
-                  download 
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#9c0720', color: '#fff', padding: '0.75rem 2rem', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', transition: 'background 0.2s', boxShadow: '0 4px 6px rgba(156,7,32,0.2)' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.background = '#7a0518'; e.currentTarget.style.transform = 'translateY(-2px)' }} 
-                  onMouseLeave={(e) => { e.currentTarget.style.background = '#9c0720'; e.currentTarget.style.transform = 'translateY(0)' }}
-                >
-                  <Download size={18} /> Descargar PDF Completo
-                </a>
-              </div>
-            </div>
+                  <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+                    <a 
+                      href="/documents/Circunscripciones_Uninominales_Oruro.pdf" download 
+                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#9c0720', color: '#fff', padding: '0.75rem 2rem', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', transition: 'background 0.2s', boxShadow: '0 4px 6px rgba(156,7,32,0.2)' }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = '#7a0518'; e.currentTarget.style.transform = 'translateY(-2px)' }} 
+                      onMouseLeave={(e) => { e.currentTarget.style.background = '#9c0720'; e.currentTarget.style.transform = 'translateY(0)' }}
+                    >
+                      <Download size={18} /> Descargar PDF Completo
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

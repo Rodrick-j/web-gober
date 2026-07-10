@@ -159,6 +159,7 @@ export default async function SecretariaDetailPage({ params }) {
             src={sec.banner_url || '/secretaria_default_banner.png'} 
             alt={`Banner ${sec.nombre}`} 
             fill
+            priority={true}
             className={styles.heroImage} 
             style={{ objectFit: 'cover', objectPosition: 'center' }}
             sizes="100vw"
@@ -200,14 +201,7 @@ export default async function SecretariaDetailPage({ params }) {
               </p>
             )}
 
-            {slug.includes('planificacion') && (
-              <div style={{ marginTop: '40px' }}>
-                <PlanificacionSection secretariaId={sec.id} />
-                <div style={{ marginTop: '3rem' }}>
-                  <EstadisticasChartWrapper />
-                </div>
-              </div>
-            )}
+
           </div>
         </div>
 
@@ -296,6 +290,12 @@ export default async function SecretariaDetailPage({ params }) {
         </div>
       </div>
       </div>
+
+      {slug.includes('planificacion') && (
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1.5rem 4rem 1.5rem', width: '100%' }}>
+          <PlanificacionSection secretariaId={sec.id} />
+        </div>
+      )}
 
     </>
   );

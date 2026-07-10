@@ -8,7 +8,7 @@ const nextConfig = {
     },
   },
   images: {
-    qualities: [60, 75, 80, 90, 100],
+    qualities: [30, 60, 75, 80, 90, 100],
     // Dominios remotos permitidos
     remotePatterns: [
       {

@@ -14,6 +14,13 @@ export default function IntroAnimation({ isSeen }) {
   };
 
   useEffect(() => {
+    // Solo mostrar la intro una vez por sesión
+    if (sessionStorage.getItem('intro-seen')) {
+      setShow(false);
+      return;
+    }
+    
+    sessionStorage.setItem('intro-seen', 'true');
     setShow(true);
     document.body.style.overflow = 'hidden';
     
@@ -52,7 +59,6 @@ export default function IntroAnimation({ isSeen }) {
           exit={{ 
             opacity: 0, 
             scale: 1.1,
-            filter: 'blur(20px)', 
             transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] } 
           }}
         >
@@ -90,8 +96,8 @@ export default function IntroAnimation({ isSeen }) {
             <div className="intro-text-wrapper">
               <motion.h2
                 className="intro-gov-text"
-                initial={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
               >
                 Gobierno Autónomo Departamental de
@@ -103,8 +109,8 @@ export default function IntroAnimation({ isSeen }) {
                 <motion.span
                   key={index}
                   className="intro-title-letter"
-                  initial={{ opacity: 0, y: 40, rotateX: -90, filter: 'blur(10px)' }}
-                  animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+                  initial={{ opacity: 0, y: 40, rotateX: -90 }}
+                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
                   transition={{ 
                     duration: 1.2, 
                     delay: 0.6 + (index * 0.15), 
@@ -133,8 +139,8 @@ export default function IntroAnimation({ isSeen }) {
                 src="/images/marca_gobierno_blanco.png"
                 alt="Marca Gobierno"
                 className="intro-marca-img"
-                initial={{ opacity: 0, scale: 0.9, filter: 'blur(15px)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1.8, delay: 1.8, ease: "easeOut" }}
               />
             </div>

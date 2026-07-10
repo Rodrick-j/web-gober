@@ -2,6 +2,8 @@ import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
 import Script from 'next/script';
 
+import ConsoleSuppressor from '../components/ConsoleSuppressor';
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' });
 
@@ -29,6 +31,7 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
+        <ConsoleSuppressor />
         {children}
         <Script id="google-translate-init" strategy="afterInteractive">
           {`

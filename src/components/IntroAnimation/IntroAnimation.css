@@ -39,7 +39,6 @@
 .intro-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px);
   z-index: 1;
 }
 
