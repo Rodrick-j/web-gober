@@ -1,10 +1,11 @@
 .footer {
-  background-color: #0f1219; /* Fondo oscuro muy elegante */
-  color: #f1f5f9;
+  background: linear-gradient(135deg, #8B0000 0%, #9c0720 50%, #680010 100%) !important; /* Rojo carmesí oficial del GADOR en todo el fondo */
+  color: #ffffff !important;
   font-family: 'Inter', sans-serif;
   position: relative;
   overflow: hidden;
-  border-top: 4px solid #c1272d;
+  border-top: 4px solid #ffd27a !important; /* Borde superior en dorado imperial */
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
 }
 
 .brandColumn {
@@ -20,27 +21,30 @@
 }
 
 .socialIconsRow a {
-  color: #cbd5e1;
+  color: #ffffff;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
 }
 
 .socialIconsRow a:hover {
-  color: #ffffff;
-  background: #c1272d;
+  color: #9c0720;
+  background: #ffd27a;
+  border-color: #ffd27a;
   transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(255, 210, 122, 0.4);
 }
 
 /* Antiguos estilos de topBand removidos porque ahora el logo está en la grilla */
 .linksGrid {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 3rem 1.5rem; /* Menos relleno para no desperdiciar espacio */
+  padding: 3.5rem 1.5rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
@@ -50,14 +54,15 @@
 
 .colTitle {
   font-family: 'Outfit', sans-serif;
-  font-size: 0.95rem; /* Título más pequeño */
+  font-size: 0.98rem;
   font-weight: 800;
-  color: #ffffff; /* Blanco brillante para títulos en fondo oscuro */
+  color: #ffffff !important;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1rem;
+  letter-spacing: 1.2px;
+  margin-bottom: 1.25rem;
   position: relative;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.6rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .colTitle::after {
@@ -65,15 +70,15 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 40px;
+  width: 45px;
   height: 3px;
-  background-color: #c1272d;
+  background-color: #ffd27a; /* Dorado imperial */
   border-radius: 2px;
   transition: width 0.3s ease;
 }
 
 .linksGrid div:hover .colTitle::after {
-  width: 60px;
+  width: 70px;
 }
 
 .linksGrid ul {
@@ -82,29 +87,30 @@
   margin: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .footerLink {
-  color: #ffffff; /* Texto blanco */
-  background: var(--color-primary, #c1272d); /* Fondo rojo corporativo */
-  border: 1px solid var(--color-primary, #c1272d);
-  padding: 0.35rem 0.6rem;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12) !important; /* Cápsulas translúcidas en el fondo carmesí */
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  padding: 0.4rem 0.7rem;
   border-radius: 6px;
   text-decoration: none;
-  font-size: 0.75rem; /* Texto más pequeño */
+  font-size: 0.78rem;
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
+  backdrop-filter: blur(6px);
 }
 
 .footerLink:hover {
-  color: var(--color-primary, #c1272d); /* Texto rojo al hacer hover */
-  background: #ffffff; /* Fondo blanco al hacer hover */
-  border-color: var(--color-primary, #c1272d);
+  color: #9c0720 !important;
+  background: #ffffff !important; /* Iluminación en blanco al hacer hover */
+  border-color: #ffffff !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(193, 39, 45, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .contactInfo {
@@ -117,30 +123,30 @@
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  color: #cbd5e1; /* Gris claro */
+  color: rgba(255, 255, 255, 0.92);
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.5;
   transition: color 0.3s ease;
 }
 
 .contactItem:hover {
-  color: #ffffff;
+  color: #ffd27a;
 }
 
 .contactIcon {
-  color: #c1272d;
-  font-size: 1.2rem;
+  color: #ffd27a;
+  font-size: 1.25rem;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .bottomBar {
-  border-top: 1px solid rgba(0,0,0,0.1);
-  background: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.22);
   padding: 1.5rem 2rem;
   font-size: 0.85rem;
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.82);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -159,14 +165,14 @@
 }
 
 .bottomLinks a {
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   transition: color 0.2s;
   font-weight: 600;
 }
 
 .bottomLinks a:hover {
-  color: #1e293b;
+  color: #ffd27a;
 }
 
 @media (max-width: 768px) {

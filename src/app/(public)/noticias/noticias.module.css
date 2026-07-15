@@ -140,25 +140,20 @@
   content: '';
   position: absolute;
   inset: 0;
-  /* Degradado más oscuro para asegurar que el texto blanco nunca se pierda por contraste */
-  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.3) 100%);
+  /* Sombra suave solo en el 45% inferior para legibilidad cuando aparezca el texto; el resto de la imagen superior queda 100% en su color original sin sombra */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.55) 45%, transparent 75%);
   z-index: 1;
+  animation: autoFadeLoop 9s infinite ease-in-out;
 }
 
-@keyframes autoFadeOverlay {
-  0%, 40% { opacity: 0; }
-  50%, 90% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-@keyframes autoFadeText {
-  0%, 40% { opacity: 0; transform: translateY(20px); }
-  50%, 90% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(20px); }
-}
-
-.featuredImage::after {
-  animation: autoFadeOverlay 7s infinite;
+@keyframes autoFadeLoop {
+  /* 0s a 6s (~66% de 9s): TEXTO Y FONDO INFERIOR VISIBLES POR 6 SEGUNDOS EXACTOS */
+  0% { opacity: 0; transform: translateY(15px); }
+  8% { opacity: 1; transform: translateY(0); }
+  60% { opacity: 1; transform: translateY(0); }
+  68% { opacity: 0; transform: translateY(15px); }
+  /* 6s a 9s (~34% de 9s, exactamente 3 segundos): TOTALMENTE OCULTO PARA APRECIAR LA IMAGEN 100% LIMPIA Y EN SU COLOR ORIGINAL SIN NINGUNA SOMBRA NI TEXTO */
+  100% { opacity: 0; transform: translateY(15px); }
 }
 
 .featuredImage img {
@@ -183,20 +178,17 @@
   position: relative;
   z-index: 2;
   padding: 1.5rem;
-  padding-bottom: 1rem; /* Más abajo */
+  padding-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-}
-
-.featuredContent {
-  animation: autoFadeText 7s infinite;
+  animation: autoFadeLoop 9s infinite ease-in-out;
 }
 
 @media (min-width: 992px) {
   .featuredContent {
     padding: 3rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 2rem;
     width: 75%;
   }
 }
@@ -209,44 +201,55 @@
   flex-wrap: wrap;
 }
 
-.cardDate {
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-  font-weight: 500;
+/* Cápsulas y etiquetas ultra visibles (adiós al gris transparente) */
+.featuredCard :global(.badge),
+.newsCard :global(.badge) {
+  background: #9c0720 !important; /* Rojo carmesí de alta legibilidad */
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  font-size: 0.78rem !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  opacity: 1 !important;
 }
 
-.featuredCard .cardDate,
-.newsCard .cardDate {
-  color: rgba(255, 255, 255, 0.9); /* Fecha visible sobre fondo oscuro */
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+.cardDate {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
 }
 
 .featuredTitle {
   font-family: var(--font-heading);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 900;
-  color: white;
+  color: #ffffff;
   line-height: 1.25;
   margin-bottom: 0.75rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
 }
 
 @media (min-width: 992px) {
   .featuredTitle {
-    font-size: 1.5rem; /* Aún más pequeño */
+    font-size: 1.6rem;
   }
 }
 
 .featuredExcerpt {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.92);
   line-height: 1.6;
   margin-bottom: 1.5rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
 }
 
 @media (min-width: 992px) {
@@ -258,12 +261,13 @@
 }
 
 .readMore {
-  color: #ffcccc;
-  font-weight: 700;
+  color: #ffd27a; /* Dorado imperial para resaltar */
+  font-weight: 800;
   font-size: 1rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .featuredCard:hover .readMore {
@@ -272,8 +276,8 @@
 
 .newsGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 columnas en celular */
-  gap: 1rem; /* Menos espacio en celular para que quepan bien 2 columnas */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -285,7 +289,7 @@
 
 @media (min-width: 1200px) {
   .newsGrid {
-    grid-template-columns: repeat(4, 1fr); /* 4 columnas en PC */
+    grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
   }
 }
@@ -303,20 +307,20 @@
   transition: all 0.3s ease;
   height: 100%;
   box-shadow: var(--shadow-sm);
-  min-height: 280px; /* Asegura altura para la tarjeta con imagen completa */
+  min-height: 280px;
 }
 
 @media (min-width: 768px) {
   .newsCard {
     border-radius: 16px;
-    min-height: 280px; /* Un poco más grande para evitar que los textos choquen */
+    min-height: 280px;
   }
 }
 
 .newsCard:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow-md);
-  border-color: var(--color-primary);
+  border-color: #ffd27a !important;
 }
 
 .cardImageWrapper {
@@ -329,17 +333,13 @@
   background: var(--color-surface-2);
 }
 
+/* En las demás noticias: imagen con color original en la parte superior y fondo inferior fijo para que el texto NO parpadee ni sea transparente */
 .cardImageWrapper::after {
   content: '';
   position: absolute;
   inset: 0;
-  /* Degradado más fuerte para asegurar el contraste de las letras blancas */
-  background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.3) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.65) 45%, transparent 75%);
   z-index: 1;
-}
-
-.cardImageWrapper::after {
-  animation: autoFadeOverlay 7s infinite;
 }
 
 .cardImage {
@@ -358,50 +358,49 @@
   opacity: 0.3;
 }
 
+/* Texto de las demás noticias siempre visible, nítido y en alto contraste */
 .cardBody {
   position: relative;
   z-index: 2;
-  padding: 1rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-}
-
-.cardBody {
-  animation: autoFadeText 7s infinite;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .cardTitle {
   font-family: var(--font-heading);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: white;
-  line-height: 1.25;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.3;
   margin-bottom: 0.75rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
 .cardExcerpt {
-  display: none; /* Ocultamos el extracto en las tarjetas pequeñas para que respire el diseño y no choque con el título */
+  display: none;
 }
 
 .cardAction {
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  color: #ffcccc;
-  font-weight: 700;
-  font-size: 0.85rem;
+  gap: 0.3rem;
+  color: #ffd27a; /* Dorado para legibilidad total */
+  font-weight: 800;
+  font-size: 0.88rem;
   margin-top: auto;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 @media (min-width: 768px) {
   .cardTitle { font-size: 1.1rem; }
-  .cardExcerpt { font-size: 0.95rem; margin-bottom: 1rem; }
   .cardAction { font-size: 0.95rem; }
 }
 
