@@ -34,13 +34,17 @@ export default async function AdminDashboard() {
     .from('noticias')
     .select('id, titulo, estado, fecha_publicacion, secretaria_id, secretarias(nombre_corto)')
     .order('created_at', { ascending: false })
-    .limit(8);
+    .limit(10);
 
   if (perfil.rol !== 'super_admin' && perfil.secretaria_id) {
     queryReciente.eq('secretaria_id', perfil.secretaria_id);
   }
 
   const { data: actividadReciente } = await queryReciente;
+
+  // Dividir lo más actual (las primeras 4) de lo anterior/historial (las siguientes 6)
+  const noticiasActuales = actividadReciente?.slice(0, 4) || [];
+  const noticiasPasadas = actividadReciente?.slice(4, 10) || [];
 
   const hora = new Date().getHours();
   const saludo = hora < 12 ? 'Buenos días' : hora < 18 ? 'Buenas tardes' : 'Buenas noches';
@@ -155,72 +159,116 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
-      {/* ── NOTICIAS RECIENTES ── */}
-      <div className="tableCard">
-        <div className="tableHeader">
-          <h2 className="tableTitle">Noticias Recientes</h2>
-          <Link href="/admin/noticias" className="btnSecondary" style={{ padding: '0.5rem 1rem', fontSize: '0.8rem' }}>
-            Ver todas →
-          </Link>
-        </div>
-        <div style={{ overflowX: 'auto' }}>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Título</th>
-                {perfil.rol === 'super_admin' && <th>Secretaría</th>}
-                <th>Estado</th>
-                <th>Fecha</th>
-                <th>Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              {actividadReciente && actividadReciente.length > 0 ? (
-                actividadReciente.map((n) => (
-                  <tr key={n.id}>
-                    <td style={{ fontWeight: 500, maxWidth: '380px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: '0.85rem' }}>
-                      {n.titulo}
-                    </td>
-                    {perfil.rol === 'super_admin' && (
-                      <td>
-                        <span className="badge" style={{ background: 'var(--admin-surface-2)', color: 'var(--admin-text-muted)', border: '1px solid var(--admin-border)', fontSize: '0.68rem' }}>
-                          {n.secretarias?.nombre_corto || '—'}
+      {/* ── SECCIÓN DIVIDIDA: ACTUALIDAD VS HISTORIAL ── */}
+      <div className={styles.dashboardSplit}>
+        
+        {/* COLUMNA IZQUIERDA: LO MÁS ACTUAL */}
+        <div className={styles.splitSection}>
+          <div className={styles.sectionHeader}>
+            <div className={styles.sectionTitleWrap}>
+              <span className={styles.sectionPulse} />
+              <h2 className={styles.splitTitle}>Lo Más Actual</h2>
+            </div>
+            <span className={styles.sectionLabel}>En Vivo</span>
+          </div>
+
+          <div className={styles.feedList}>
+            {noticiasActuales.length > 0 ? (
+              noticiasActuales.map((n) => {
+                const isPublished = n.estado === 'publicado';
+                const feedColor = isPublished ? 'var(--admin-success)' : 'var(--admin-warning)';
+                return (
+                  <div key={n.id} className={styles.newsFeedCard} style={{ '--feed-color': feedColor }}>
+                    <div className={styles.newsFeedContent}>
+                      <div className={styles.newsFeedTitle} title={n.titulo}>
+                        {n.titulo}
+                      </div>
+                      <div className={styles.newsFeedMeta}>
+                        <span className={`badge ${isPublished ? 'badgeSuccess' : 'badgeWarning'}`} style={{ fontSize: '0.65rem', padding: '0.15rem 0.5rem' }}>
+                          {isPublished ? '● Publicado' : '● Borrador'}
                         </span>
-                      </td>
-                    )}
-                    <td>
-                      <span className={`badge ${n.estado === 'publicado' ? 'badgeSuccess' : 'badgeWarning'}`}>
-                        {n.estado === 'publicado' ? '● Publicado' : '● Borrador'}
-                      </span>
-                    </td>
-                    <td style={{ color: 'var(--admin-text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
-                      {n.fecha_publicacion ? new Date(n.fecha_publicacion).toLocaleDateString('es-BO') : '—'}
-                    </td>
-                    <td>
-                      <Link
-                        href={`/admin/noticias/editar/${n.id}`}
-                        className="btnSecondary"
-                        style={{ padding: '0.4rem 0.875rem', fontSize: '0.78rem' }}
-                        id={`edit-news-${n.id}`}
-                      >
-                        Editar
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={perfil.rol === 'super_admin' ? 5 : 4} style={{ textAlign: 'center', padding: '3rem', color: 'var(--admin-text-muted)', fontSize: '0.9rem' }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
-                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ opacity: 0.3 }}><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
-                      No hay noticias recientes todavía.
+                        {n.secretarias?.nombre_corto && (
+                          <span className={styles.feedSecretariaBadge}>
+                            {n.secretarias.nombre_corto}
+                          </span>
+                        )}
+                        <span className={styles.feedTime}>
+                          {n.fecha_publicacion ? new Date(n.fecha_publicacion).toLocaleDateString('es-BO', { day: 'numeric', month: 'short' }) : '—'}
+                        </span>
+                      </div>
                     </div>
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                    <Link
+                      href={`/admin/noticias/editar/${n.id}`}
+                      className={styles.feedEditBtn}
+                      id={`edit-feed-${n.id}`}
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                    </Link>
+                  </div>
+                );
+              })
+            ) : (
+              <div className={styles.emptyFeed}>No hay publicaciones recientes.</div>
+            )}
+          </div>
         </div>
+
+        {/* COLUMNA DERECHA: HISTORIAL Y ARCHIVO */}
+        <div className={styles.splitSection}>
+          <div className={styles.sectionHeader}>
+            <div className={styles.sectionTitleWrap}>
+              <span className={styles.sectionArchiveIcon}>📂</span>
+              <h2 className={styles.splitTitle}>Historial y Archivo</h2>
+            </div>
+            <Link href="/admin/noticias" className={styles.viewAllLink}>
+              Ver todas →
+            </Link>
+          </div>
+
+          <div className={styles.archiveList}>
+            {noticiasPasadas.length > 0 ? (
+              <div className={styles.archiveTableWrap}>
+                <table className={styles.archiveTable}>
+                  <thead>
+                    <tr>
+                      <th>Título</th>
+                      <th>Estado</th>
+                      <th>Fecha</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {noticiasPasadas.map((n) => (
+                      <tr key={n.id}>
+                        <td className={styles.archiveTitleCell} title={n.titulo}>
+                          {n.titulo}
+                        </td>
+                        <td>
+                          <span className={`badge ${n.estado === 'publicado' ? 'badgeSuccess' : 'badgeWarning'}`} style={{ fontSize: '0.6rem', padding: '0.12rem 0.4rem' }}>
+                            {n.estado === 'publicado' ? 'Publicado' : 'Borrador'}
+                          </span>
+                        </td>
+                        <td className={styles.archiveDateCell}>
+                          {n.fecha_publicacion ? new Date(n.fecha_publicacion).toLocaleDateString('es-BO', { day: 'numeric', month: 'numeric' }) : '—'}
+                        </td>
+                        <td>
+                          <Link href={`/admin/noticias/editar/${n.id}`} className={styles.archiveEditBtn} id={`edit-archive-${n.id}`}>
+                            Editar
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className={styles.emptyArchive}>
+                <span>No hay registros anteriores en la vista rápida.</span>
+              </div>
+            )}
+          </div>
+        </div>
+
       </div>
     </div>
   );

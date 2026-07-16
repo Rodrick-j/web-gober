@@ -84,3 +84,279 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ── Dashboard Split layout ── */
+.dashboardSplit {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.5rem;
+  animation: fadeInUp 0.45s ease 0.2s forwards;
+  opacity: 0;
+  margin-top: 0.5rem;
+}
+
+.splitSection {
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-border);
+  border-radius: 18px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.splitSection:hover {
+  border-color: var(--admin-border-hover);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sectionTitleWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.sectionPulse {
+  width: 8px;
+  height: 8px;
+  background-color: var(--admin-success);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--admin-success);
+  animation: pulseGlow 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.35; }
+  50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 12px var(--admin-success); }
+}
+
+.sectionArchiveIcon {
+  font-size: 1.1rem;
+}
+
+.splitTitle {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  letter-spacing: -0.3px;
+}
+
+.sectionLabel {
+  font-size: 0.72rem;
+  color: var(--admin-text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.viewAllLink {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--admin-primary);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.viewAllLink:hover {
+  color: var(--admin-primary-hover);
+  text-decoration: underline;
+}
+
+/* ── Feed List (Lo más actual) ── */
+.feedList {
+  display: flex;
+  flex-direction: column;
+}
+
+.newsFeedCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--admin-surface-2);
+  border: 1px solid var(--admin-border);
+  border-left: 4px solid var(--feed-color, var(--admin-primary));
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  margin-bottom: 0.75rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.newsFeedCard:last-child {
+  margin-bottom: 0;
+}
+
+.newsFeedCard:hover {
+  transform: translateX(4px) translateY(-1px);
+  background: var(--admin-surface-3);
+  border-color: var(--admin-border-hover);
+  box-shadow: 
+    0 8px 20px rgba(0,0,0,0.15),
+    0 0 0 1px var(--admin-border);
+}
+
+.newsFeedContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.newsFeedTitle {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--admin-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 0.75rem;
+}
+
+.newsFeedMeta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  font-size: 0.72rem;
+}
+
+.feedSecretariaBadge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--admin-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  color: var(--admin-text-muted);
+  font-weight: 500;
+}
+
+.feedTime {
+  color: var(--admin-text-muted);
+}
+
+.feedEditBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--admin-surface-3);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text-muted);
+  transition: all 0.2s;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.feedEditBtn:hover {
+  background: var(--admin-primary);
+  border-color: var(--admin-primary);
+  color: #FFFFFF;
+  transform: scale(1.08);
+}
+
+.emptyFeed, .emptyArchive {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  color: var(--admin-text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  border: 1px dashed var(--admin-border);
+  border-radius: 12px;
+  background: var(--admin-surface-2);
+}
+
+/* ── Archive List (Lo del pasado) ── */
+.archiveList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.archiveTableWrap {
+  overflow-x: auto;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  background: var(--admin-surface-2);
+}
+
+.archiveTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.archiveTable th {
+  text-align: left;
+  padding: 0.65rem 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  letter-spacing: 0.5px;
+  color: var(--admin-text-muted);
+  border-bottom: 1px solid var(--admin-border);
+  background: var(--admin-surface-3);
+}
+
+.archiveTable td {
+  padding: 0.8rem 0.85rem;
+  border-bottom: 1px solid var(--admin-border);
+  color: var(--admin-text);
+  vertical-align: middle;
+}
+
+.archiveTable tr:last-child td {
+  border-bottom: none;
+}
+
+.archiveTable tbody tr {
+  transition: background 0.15s;
+}
+
+.archiveTable tbody tr:hover td {
+  background: var(--admin-surface-3);
+}
+
+.archiveTitleCell {
+  font-weight: 600;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.archiveDateCell {
+  color: var(--admin-text-muted);
+  white-space: nowrap;
+}
+
+.archiveEditBtn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--admin-primary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.archiveEditBtn:hover {
+  color: var(--admin-primary-hover);
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .dashboardSplit {
+    grid-template-columns: 1fr;
+  }
+}

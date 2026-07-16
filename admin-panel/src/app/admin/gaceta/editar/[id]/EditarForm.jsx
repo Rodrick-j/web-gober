@@ -94,7 +94,6 @@ export default function EditarForm({ documento }) {
               placeholder="Ej: N° 123/2026"
               value={numero}
               onChange={(e) => setNumero(e.target.value)}
-              maxLength={50}
               required
               disabled={isSubmitting}
             />

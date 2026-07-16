@@ -71,10 +71,7 @@ export default function AdminLogin() {
         {/* Header */}
         <div className={styles.loginHeader}>
           <div className={styles.logoIcon}>
-            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
-              <circle cx="18" cy="18" r="18" fill="#8B0000"/>
-              <path d="M18 6L22 14H30L24 19L26 27L18 22L10 27L12 19L6 14H14L18 6Z" fill="#D4A017"/>
-            </svg>
+            <img src="/favicon-gador.png" alt="GADOR Logo" className={styles.logoImg} />
           </div>
           <div className={styles.loginTitle}>Panel Administrativo</div>
           <div className={styles.loginSubtitle}>

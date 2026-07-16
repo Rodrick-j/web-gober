@@ -1,7 +1,7 @@
 .sliderSection {
   width: 100%;
   padding: 0;
-  background-color: var(--color-bg-alt); /* O un color de fondo sutil */
+  background-color: #0d0d11;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,16 +10,15 @@
 .sliderFrame {
   position: relative;
   width: 100%;
-  /* Usar casi toda la pantalla menos el header para que las fotos se vean inmensas y completas */
   height: calc(100vh - 120px);
   max-height: 900px;
-  min-height: 500px;
+  min-height: 550px;
+  overflow: hidden;
 }
 
 .swiperRoot {
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .slideInner {
@@ -28,15 +27,17 @@
   height: 100%;
 }
 
+/* Background blur to avoid black borders */
 .bgBlur {
   position: absolute;
   top: -10%;
   left: -10%;
   width: 120%;
   height: 120%;
-  filter: blur(20px);
+  filter: blur(30px) saturate(120%);
   z-index: 0;
-  opacity: 0.8;
+  opacity: 0.55;
+  transform: scale(1.1);
 }
 
 .bgOverlay {
@@ -45,7 +46,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4); /* Oscurece el fondo desenfocado */
+  background: rgba(8, 8, 12, 0.6);
   z-index: 1;
 }
 
@@ -59,8 +60,9 @@
 }
 
 .mainImage {
-  object-fit: cover; /* Llena TODO el espacio sin dejar bordes a los lados */
-  object-position: top center; /* Ancla la imagen arriba para no cortar las cabezas */
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .hideOnMobile {
@@ -71,10 +73,9 @@
   display: none !important;
 }
 
-/* Cuando el slide está activo, hacemos un ligero zoom in */
+/* Active slide zoom animation */
 :global(.swiper-slide-active) .mainImage {
-  transform: scale(1.05);
-  transition: transform 6s linear;
+  transform: scale(1.04);
 }
 
 .gradientOverlay {
@@ -83,111 +84,231 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* Sombra/Tinte Rojo Institucional que cubre TODA la imagen - Reducida en intensidad */
-  background: rgba(120, 15, 25, 0.35); 
+  /* Gradient darkening towards the bottom and left for text contrast */
+  background: linear-gradient(135deg, rgba(8, 8, 12, 0.75) 0%, rgba(8, 8, 12, 0.3) 50%, rgba(8, 8, 12, 0.8) 100%);
   z-index: 3;
   pointer-events: none;
-  mix-blend-mode: multiply; /* Efecto fotográfico que se fusiona con la imagen */
 }
 
-.slideContent {
+.lightLeakOverlay {
   position: absolute;
-  bottom: 25%; /* Much higher than before to avoid bullets */
-  left: 8%; /* Indented from left */
-  max-width: 800px;
-  z-index: 20; /* Asegurar que quede por encima del overlay rojo */
-  color: #ffffff !important; /* Force white color */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Sutil filtro de luz de la marca */
+  background: radial-gradient(circle at 10% 20%, rgba(156, 7, 32, 0.15) 0%, transparent 60%);
+  z-index: 4;
+  pointer-events: none;
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
+/* Slide Content Wrapper - Acomodado a la esquina inferior izquierda */
+.slideContentWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end; /* Acomodar abajo */
+  justify-content: flex-start; /* Acomodar a la izquierda */
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 75px; /* Altura suficiente para no solapar los indicadores del swiper */
+  pointer-events: none;
+}
+
+/* Glassmorphic content card más compacto para Silicon Valley style */
+.slideContentCard {
+  background: rgba(10, 10, 14, 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 4px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  padding: 1.75rem 2.25rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  max-width: 480px; /* Más compacto para liberar el centro y los escudos */
+  width: 100%;
+  pointer-events: auto;
+}
+
+/* Card Header elements */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.tagLine {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  letter-spacing: 0.25em;
+}
+
+.activeIndicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary-light);
+  box-shadow: 0 0 10px var(--color-primary-light);
+  position: relative;
+}
+
+/* Text elements más pequeños y estilizados */
+.slideTitle {
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slideDesc {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Action button and link */
+.actionWrapper {
+  display: flex;
+}
+
+.slideLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.75rem;
+  background: var(--color-gold);
+  color: var(--color-primary-dark);
+  font-weight: 800;
+  font-size: 0.9rem;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 184, 67, 0.15);
+}
+
+.slideLink:hover {
+  background: var(--color-gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 184, 67, 0.3);
+}
+
+.slideLink:active {
+  transform: translateY(0);
+}
+
+.linkArrow {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.slideLink:hover .linkArrow {
+  transform: translateX(4px);
+}
+
+/* Slide Text Animations */
+.slideContentCard {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+:global(.swiper-slide-active) .slideContentCard {
+  animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes slideInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.slideTitle {
-  font-family: var(--font-heading);
-  font-size: 3.5rem;
-  font-weight: 900;
-  margin-bottom: 1.5rem;
-  color: #ffffff !important;
-  text-transform: uppercase;
-  /* Very strong shadow for readability on any background */
-  text-shadow: 0px 4px 15px rgba(0,0,0,0.9), 0px 0px 30px rgba(0,0,0,0.7), 2px 2px 0px rgba(0,0,0,0.5);
-  line-height: 1.1;
+/* Custom Navigation buttons */
+.customNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 40;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.slideLink {
-  display: inline-block;
-  padding: 0.8rem 2rem;
-  background-color: var(--color-gold);
-  color: var(--color-primary-dark);
-  font-weight: 700;
-  border-radius: 30px;
-  text-decoration: none;
-  transition: transform 0.3s, background-color 0.3s;
+.customNav:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
-.slideLink:hover {
-  background-color: var(--color-gold-light);
-  transform: translateY(-2px);
+.customNav:active {
+  transform: translateY(-50%) scale(0.96);
 }
 
-/* Paginación (Puntos) */
+.customNav svg {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+}
+
+.navPrev {
+  left: 30px;
+}
+.navPrev:hover svg {
+  transform: translateX(-2px);
+}
+
+.navNext {
+  right: 30px;
+}
+.navNext:hover svg {
+  transform: translateX(2px);
+}
+
+/* Custom Bullets Pagination */
 .customBullet {
-  width: 12px !important;
-  height: 12px !important;
-  background: rgba(255, 255, 255, 0.5) !important;
+  width: 24px !important;
+  height: 4px !important;
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-radius: 2px !important;
   opacity: 1 !important;
-  border-radius: 50% !important;
-  transition: all 0.3s !important;
+  margin: 0 4px !important;
+  transition: all 0.3s ease !important;
+  display: inline-block;
+  cursor: pointer;
 }
 
 .customBulletActive {
-  width: 30px !important;
-  border-radius: 10px !important;
-  background: white !important;
+  background: var(--color-gold) !important;
+  width: 48px !important;
 }
 
-/* Flechas de Navegación Nativas de Swiper */
-:global(.swiper-button-prev),
-:global(.swiper-button-next) {
-  width: 50px;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 50%;
-  color: white !important;
-  transition: all 0.3s;
-}
-
-:global(.swiper-button-prev::after),
-:global(.swiper-button-next::after) {
-  font-size: 1.5rem !important;
-  font-weight: bold;
-}
-
-:global(.swiper-button-prev):hover,
-:global(.swiper-button-next):hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
-}
-
-:global(.swiper-button-prev) {
-  left: 20px !important;
-}
-
-:global(.swiper-button-next) {
-  right: 20px !important;
-}
-
-/* Fallback si no hay fotos */
+/* Fallback if no images loaded */
 .heroFallback {
   position: relative;
   width: 100%;
@@ -212,184 +333,119 @@
   opacity: 0.9;
 }
 
-@media (max-width: 768px) {
-  .sliderSection {
-    padding: 0;
-  }
-  .sliderFrame {
-    aspect-ratio: auto;
-    height: 80vh;
-    min-height: 520px;
-    max-height: none;
-  }
-  .slideContent {
-    bottom: 15%;
-    left: 5%;
-    right: 5%;
-  }
-  .slideTitle {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
-    margin-bottom: 0.8rem;
-  }
-  .slideLink {
-    padding: 0.6rem 1.5rem;
-    font-size: 0.9rem;
-  }
-  .mainImage {
-    object-fit: cover;
-  }
-  .hideOnMobile {
-    display: none !important;
-  }
-  .showOnlyOnMobile {
-    display: block !important;
-  }
-  :global(.swiper-button-prev),
-  :global(.swiper-button-next) {
-    display: flex !important;
-    width: 38px;
-    height: 38px;
-    background: rgba(15, 23, 42, 0.5);
-  }
-  :global(.swiper-button-prev::after),
-  :global(.swiper-button-next::after) {
-    font-size: 1.1rem !important;
-  }
-  :global(.swiper-button-prev) {
-    left: 10px !important;
-  }
-  :global(.swiper-button-next) {
-    right: 10px !important;
-  }
-}
-
-/* Floating Social Networks */
+/* Floating Social Sidebar */
 .floatingSocials {
   position: absolute;
-  bottom: 20px;
-  right: 30px;
-  top: auto;
-  transform: none;
+  bottom: 30px;
+  right: 40px;
   display: flex;
-  flex-direction: row;
-  gap: 10px;
+  gap: 0.75rem;
   z-index: 30;
 }
 
 .socialIcon {
-  width: 34px;
-  height: 34px;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(8px);
+  width: 40px;
+  height: 40px;
+  background: rgba(10, 10, 14, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.1rem;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
-.staticOverlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999; /* Asegurar que esté por encima de TODO */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 90%;
-  pointer-events: none;
-}
-
-.staticSubtitle {
-  font-family: var(--font-body);
-  font-size: clamp(0.7rem, 2vw, 1.2rem);
-  font-weight: 600;
-  letter-spacing: 0.3em;
-  color: #ffffff;
-  text-transform: uppercase;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-}
-
-.staticTitle {
-  font-family: var(--font-heading);
-  font-size: clamp(4rem, 10vw, 8rem);
-  font-weight: 900;
-  color: #ffffff;
-  line-height: 1;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-  margin-bottom: 1rem;
-}
-
-.staticImageWrapper {
-  width: 100%;
-  max-width: 650px;
-  filter: drop-shadow(0 4px 15px rgba(255, 255, 255, 0.4));
-}
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUpMarca {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@media (max-width: 768px) {
-  .staticImageWrapper {
-    max-width: 250px;
-  }
+.socialIcon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .socialIcon:hover {
-  transform: scale(1.15) translateX(-5px);
-  background: rgba(255, 255, 255, 0.9);
-  color: #a80a15;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+  color: white;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* Redes Sociales Colores de Marca al Hover */
-.socialIcon.fb:hover { background: #1877f2; color: white; border-color: transparent; }
-.socialIcon.tw:hover { background: #000000; color: white; border-color: transparent; }
-.socialIcon.ig:hover { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; border-color: transparent; }
-.socialIcon.tk:hover { background: #000000; color: #ff0050; border-color: transparent; text-shadow: 1px 1px 0px #00f2fe; }
-.socialIcon.yt:hover { background: #ff0000; color: white; border-color: transparent; }
+/* Brand hover colors */
+.socialIcon.fb:hover { background: #1877f2; border-color: transparent; }
+.socialIcon.ig:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); border-color: transparent; }
+.socialIcon.tk:hover { background: #000000; border-color: rgba(255,255,255,0.2); }
+.socialIcon.yt:hover { background: #ff0000; border-color: transparent; }
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .slideContentWrapper {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+  .slideContentCard {
+    max-width: 400px;
+    padding: 1.5rem 2rem;
+  }
+  .slideTitle {
+    font-size: 1.6rem;
+  }
+}
 
 @media (max-width: 768px) {
-  .floatingSocials {
-    position: absolute;
-    bottom: 55px; /* Arriba de los puntos de paginación para no solapar */
-    right: 15px;
-    top: auto;
-    transform: none;
-    flex-direction: row;
-    gap: 6px;
-    z-index: 40;
+  .sliderFrame {
+    height: 75vh;
+    min-height: 500px;
   }
+  
+  .slideContentWrapper {
+    padding-left: 5%;
+    padding-right: 5%;
+    align-items: flex-end;
+    padding-bottom: 80px; /* Leave space for pagination */
+  }
+
+  .slideContentCard {
+    max-width: 100%;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+  }
+
+  .slideTitle {
+    font-size: 1.5rem;
+  }
+
+  .slideDesc {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .customNav {
+    display: none; /* Hide navigation arrows on mobile */
+  }
+
+  .floatingSocials {
+    bottom: 20px;
+    right: 50%;
+    transform: translateX(50%);
+    gap: 0.5rem;
+  }
+
   .socialIcon {
-    width: 28px;
-    height: 28px;
-    font-size: 0.8rem;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .socialIcon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .hideOnMobile {
+    display: none !important;
+  }
+
+  .showOnlyOnMobile {
+    display: block !important;
   }
 }

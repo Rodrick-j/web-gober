@@ -174,30 +174,6 @@ export default async function SecretariaDetailPage({ params }) {
           />
         )}
         <div className={styles.heroOverlay}></div>
-        <div className={styles.heroContent} style={isCompactVideo ? { maxWidth: '520px', paddingBottom: '0.5rem' } : (hasVideo ? { maxWidth: '680px' } : {})}>
-          <h1 className={styles.heroTitle} style={isCompactVideo ? { marginBottom: '0.4rem', gap: '0.1rem' } : {}}>
-            {titlePrefix && (
-              <span 
-                className={styles.heroTitlePrefix} 
-                style={isCompactVideo ? { fontSize: '0.8rem', letterSpacing: '1.2px', opacity: '0.95' } : (hasVideo ? { fontSize: '1rem' } : {})}
-              >
-                {titlePrefix}
-              </span>
-            )}
-            <span 
-              className={styles.heroTitleSuffix} 
-              style={isCompactVideo ? { fontSize: 'clamp(1.25rem, 1.8vw, 1.65rem)', fontWeight: '900', lineHeight: '1.15', textShadow: '0 3px 12px rgba(0,0,0,0.95)' } : (hasVideo ? { fontSize: 'clamp(1.6rem, 2.6vw, 2.2rem)' } : {})}
-            >
-              {titleSuffix}
-            </span>
-          </h1>
-          <p 
-            className={styles.heroSubtitle} 
-            style={isCompactVideo ? { fontSize: '0.78rem', marginTop: '0.4rem', letterSpacing: '1px', textShadow: '0 2px 8px rgba(0,0,0,0.9)' } : (hasVideo ? { fontSize: '0.95rem' } : {})}
-          >
-            Gobierno Autónomo Departamental de Oruro
-          </p>
-        </div>
       </div>
 
       <div className={styles.mainContainer}>

@@ -1,60 +1,67 @@
 .quickAccess {
-  background: var(--color-bg-alt);
+  background-color: #f8f9fc;
+  position: relative;
+  overflow: hidden;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 1.5rem;
+  padding: 10px 0;
 }
 
-/* Card */
+/* Quick Access Card */
 .card {
   --mx: -999px;
   --my: -999px;
-  --accent-rgb: 139, 0, 0;
+  --accent-rgb: 156, 7, 32;
 
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1.25rem 1.5rem;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  gap: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-md);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   position: relative;
   overflow: hidden;
   isolation: isolate;
   text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.015);
 }
 
-/* Left accent bar */
+/* Left Accent Line */
 .card::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  width: 3px;
+  width: 4px;
   background: rgb(var(--accent-rgb));
   transform: scaleY(0);
   transform-origin: bottom;
-  transition: transform 0.28s ease;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 1;
 }
 
+/* Hover effects */
 .card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(var(--accent-rgb), 0.2), 0 5px 15px rgba(var(--accent-rgb), 0.1);
-  border-color: rgba(var(--accent-rgb), 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(var(--accent-rgb), 0.12), 0 5px 15px rgba(var(--accent-rgb), 0.04);
+  border-color: rgba(var(--accent-rgb), 0.25);
 }
 
 .card:hover::before {
   transform: scaleY(1);
 }
 
-/* ── Aceternity-style radial shine (follows cursor) ── */
+/* Mouse-tracking shine glow */
 .cardShine {
   position: absolute;
   inset: 0;
@@ -62,11 +69,11 @@
   pointer-events: none;
   z-index: 0;
   background: radial-gradient(
-    280px circle at var(--mx) var(--my),
-    rgba(var(--accent-rgb), 0.10) 0%,
+    250px circle at var(--mx) var(--my),
+    rgba(var(--accent-rgb), 0.06) 0%,
     transparent 70%
   );
-  transition: opacity 0.2s;
+  transition: opacity 0.3s ease;
   opacity: 0;
 }
 
@@ -74,56 +81,71 @@
   opacity: 1;
 }
 
-/* Icon */
+/* Icon wrap styling */
 .iconWrap {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-md);
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  border: 1px solid transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.25s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              background-color 0.3s ease, 
+              border-color 0.3s ease;
   position: relative;
   z-index: 1;
 }
 
 .card:hover .iconWrap {
-  transform: scale(1.12) rotate(-4deg);
+  transform: scale(1.08) rotate(-3deg);
+  background-color: rgba(var(--accent-rgb), 0.12) !important;
+  border-color: rgba(var(--accent-rgb), 0.2) !important;
 }
 
 .icon {
-  font-size: 1.5rem;
+  transition: transform 0.3s ease;
 }
 
-/* Content */
+/* Card content */
 .cardContent {
   flex: 1;
   position: relative;
   z-index: 1;
+  text-align: left;
 }
 
 .cardTitle {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: 0.2rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1a1a2e;
+  margin-bottom: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.card:hover .cardTitle {
+  color: rgb(var(--accent-rgb));
 }
 
 .cardDesc {
-  font-size: 0.78rem;
-  color: var(--color-text-muted);
-  line-height: 1.4;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.45;
 }
 
-/* Arrow */
+/* Arrow element sliding into view */
 .arrow {
   opacity: 0;
-  transform: translateX(-8px);
-  transition: all 0.25s ease;
+  transform: translateX(-10px);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: center;
 }
 
 .card:hover .arrow {
@@ -131,11 +153,34 @@
   transform: translateX(0);
 }
 
-/* Responsive */
-@media (max-width: 900px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1.25rem;
+  }
 }
 
-@media (max-width: 550px) {
-  .grid { grid-template-columns: 1fr; }
+@media (max-width: 640px) {
+  .grid { 
+    grid-template-columns: 1fr; 
+    gap: 1rem;
+  }
+  
+  .card {
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .iconWrap {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .cardTitle {
+    font-size: 0.98rem;
+  }
+  
+  .cardDesc {
+    font-size: 0.78rem;
+  }
 }

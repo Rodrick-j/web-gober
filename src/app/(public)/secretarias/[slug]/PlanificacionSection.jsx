@@ -6,6 +6,7 @@ import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, D
 import styles from './SecretariaDetail.module.css'; // Reusing styles from the page
 import { createClient } from '@/lib/supabase/client';
 import BudgetDashboard from './BudgetDashboard';
+import BudgetExcelExplorer from './BudgetExcelExplorer';
 const provinciasOruro = [
   { nombre: "Cercado", municipios: ["Oruro", "Caracollo", "El Choro", "Soracachi (Paria)"] },
   { nombre: "Abaroa", municipios: ["Challapata", "Quillacas"] },
@@ -42,7 +43,7 @@ export default function PlanificacionSection({ secretariaId }) {
           .from('poa_documents')
           .select('*')
           .eq('secretaria_id', secretariaId)
-          .order('created_at', { ascending: false });
+          .order('nombre', { ascending: true });
         if (data) {
           setPoaDocs(data);
           // Set default year to the most recent one available
@@ -104,7 +105,7 @@ export default function PlanificacionSection({ secretariaId }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
               <button
                 onClick={() => setViewMode('dashboard')}
                 style={{
@@ -114,6 +115,16 @@ export default function PlanificacionSection({ secretariaId }) {
                 }}
               >
                 <PieChart size={18} /> Vista Interactiva
+              </button>
+              <button
+                onClick={() => setViewMode('excel')}
+                style={{
+                  background: viewMode === 'excel' ? '#9c0720' : '#f5f5f5',
+                  color: viewMode === 'excel' ? '#fff' : '#444',
+                  border: 'none', padding: '0.6rem 1.25rem', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.5rem'
+                }}
+              >
+                <Database size={18} /> Planilla Excel POA
               </button>
               <button
                 onClick={() => setViewMode('cards')}
@@ -129,6 +140,10 @@ export default function PlanificacionSection({ secretariaId }) {
 
             {viewMode === 'dashboard' && (
               <BudgetDashboard />
+            )}
+
+            {viewMode === 'excel' && (
+              <BudgetExcelExplorer />
             )}
 
             {viewMode === 'cards' && (
@@ -203,7 +218,7 @@ export default function PlanificacionSection({ secretariaId }) {
                   {filteredDocs.length === 0 ? (
                     <p style={{ color: '#888', fontStyle: 'italic', textAlign: 'center', padding: '2rem' }}>No se encontraron documentos para esta gestión.</p>
                   ) : (
-                    filteredDocs.map((doc) => (
+                    filteredDocs.map((doc, index) => (
                       <div key={doc.id} style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', justifyContent: 'space-between', padding: '1.25rem 1.5rem', border: '1px solid #eaeaea', borderRadius: '12px', transition: 'all 0.2s', cursor: 'pointer', background: '#fff', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }} 
                         onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '0 8px 16px rgba(156,7,32,0.08)'; e.currentTarget.style.borderColor = '#ffefef'; e.currentTarget.style.transform = 'translateY(-2px)' }} 
                         onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '0 2px 4px rgba(0,0,0,0.02)'; e.currentTarget.style.borderColor = '#eaeaea'; e.currentTarget.style.transform = 'translateY(0)' }}
@@ -213,7 +228,7 @@ export default function PlanificacionSection({ secretariaId }) {
                             <FileText size={26} />
                           </div>
                           <div>
-                            <h4 style={{ margin: '0 0 0.35rem 0', fontSize: '1.15rem', color: '#1a1a2e', fontWeight: '700' }}>{doc.nombre}</h4>
+                            <h4 style={{ margin: '0 0 0.35rem 0', fontSize: '1.15rem', color: '#1a1a2e', fontWeight: '700' }}>{index + 1}. {doc.nombre}</h4>
                             <span style={{ fontSize: '0.85rem', color: '#666', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                               <span style={{ background: '#f0f0f0', padding: '0.15rem 0.5rem', borderRadius: '4px', fontWeight: '600' }}>PDF</span>
                               • {doc.tamano_mb} MB • Publicado {new Date(doc.created_at).toLocaleDateString()}

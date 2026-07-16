@@ -1,21 +1,80 @@
 'use client';
+
 import { useRef } from 'react';
 import Link from 'next/link';
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal';
+import { 
+  FileText, 
+  ClipboardList, 
+  Eye, 
+  Building2, 
+  Compass, 
+  PhoneCall, 
+  ArrowRight 
+} from 'lucide-react';
 import styles from './QuickAccess.module.css';
 
 const services = [
-  { id: 'gaceta',         icon: '📜', title: 'Gaceta Oficial',       desc: 'Leyes, Decretos y Resoluciones',               href: '/gaceta',                       color: '#8B0000', rgb: '139,0,0'    },
-  { id: 'tramites',       icon: '📋', title: 'Trámites en Línea',    desc: 'Gestiona tus trámites sin salir de casa',       href: '/tramites',                     color: '#1D4ED8', rgb: '29,78,216'  },
-  { id: 'transparencia',  icon: '🔍', title: 'Transparencia',        desc: 'Presupuestos y rendición de cuentas',           href: '/transparencia',                color: '#047857', rgb: '4,120,87'   },
-  { id: 'secretarias',    icon: '🏛️', title: 'Secretarías',          desc: 'Conoce nuestras secretarías departamentales',   href: '/secretarias',                  color: '#7C3AED', rgb: '124,58,237' },
-  { id: 'cultura',        icon: '🎭', title: 'Cultura y Turismo',    desc: 'Patrimonio, eventos y atracciones de Oruro',    href: '/secretarias/cultura-turismo',  color: '#B45309', rgb: '180,83,9'   },
-  { id: 'contacto',       icon: '📞', title: 'Contacto',             desc: 'Comunícate con las autoridades departamentales',href: '/contacto',                     color: '#0369A1', rgb: '3,105,161'  },
+  { 
+    id: 'gaceta', 
+    Icon: FileText, 
+    title: 'Gaceta Oficial', 
+    desc: 'Leyes, Decretos y Resoluciones del Departamento.', 
+    href: '/gaceta', 
+    color: '#9c0720', 
+    rgb: '156,7,32' 
+  },
+  { 
+    id: 'tramites', 
+    Icon: ClipboardList, 
+    title: 'Trámites en Línea', 
+    desc: 'Gestiona tus trámites administrativos sin salir de casa.', 
+    href: '/tramites', 
+    color: '#0369a1', 
+    rgb: '3,105,161' 
+  },
+  { 
+    id: 'transparencia', 
+    Icon: Eye, 
+    title: 'Transparencia', 
+    desc: 'Presupuestos oficiales y rendición de cuentas públicas.', 
+    href: '/transparencia', 
+    color: '#047857', 
+    rgb: '4,120,87' 
+  },
+  { 
+    id: 'secretarias', 
+    Icon: Building2, 
+    title: 'Secretarías', 
+    desc: 'Conoce nuestras secretarías y áreas de gestión.', 
+    href: '/secretarias', 
+    color: '#7c3aed', 
+    rgb: '124,58,237' 
+  },
+  { 
+    id: 'cultura', 
+    Icon: Compass, 
+    title: 'Cultura y Turismo', 
+    desc: 'Patrimonio histórico, festividades y turismo regional.', 
+    href: '/secretarias/cultura-turismo', 
+    color: '#b45309', 
+    rgb: '180,83,9' 
+  },
+  { 
+    id: 'contacto', 
+    Icon: PhoneCall, 
+    title: 'Contacto Oficial', 
+    desc: 'Comunícate directamente con nuestras oficinas centrales.', 
+    href: '/contacto', 
+    color: '#0284c7', 
+    rgb: '2,132,199' 
+  },
 ];
 
-/* Individual card with mouse-tracking shine effect (Aceternity-style) */
+/* Individual card with mouse-tracking shine effect */
 function ShineCard({ service }) {
   const cardRef = useRef(null);
+  const { Icon } = service;
 
   const handleMouseMove = (e) => {
     const card = cardRef.current;
@@ -47,11 +106,16 @@ function ShineCard({ service }) {
       {/* Radial shine follows the cursor */}
       <div className={styles.cardShine} />
 
+      {/* Styled Icon wrapper */}
       <div
         className={styles.iconWrap}
-        style={{ background: `${service.color}18`, color: service.color }}
+        style={{ 
+          background: `rgba(${service.rgb}, 0.08)`, 
+          color: service.color,
+          borderColor: `rgba(${service.rgb}, 0.15)`
+        }}
       >
-        <span className={styles.icon}>{service.icon}</span>
+        <Icon size={24} strokeWidth={2.2} className={styles.icon} />
       </div>
 
       <div className={styles.cardContent}>
@@ -59,10 +123,9 @@ function ShineCard({ service }) {
         <p className={styles.cardDesc}>{service.desc}</p>
       </div>
 
+      {/* Slide-in arrow indicator */}
       <div className={styles.arrow} style={{ color: service.color }}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
+        <ArrowRight size={18} strokeWidth={2.5} />
       </div>
     </Link>
   );
@@ -84,7 +147,7 @@ export default function QuickAccess() {
         </ScrollReveal>
 
         {/* Grid — children staggered */}
-        <ScrollReveal direction="up" wrapChildren stagger={0.09} className={styles.grid}>
+        <ScrollReveal direction="up" wrapChildren stagger={0.07} className={styles.grid}>
           {services.map((service) => (
             <ShineCard key={service.id} service={service} />
           ))}
