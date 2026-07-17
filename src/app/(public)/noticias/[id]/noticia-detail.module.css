@@ -145,7 +145,7 @@
 
 .richTextContent {
   font-size: 1.0625rem;
-  line-height: 1.4; /* Aún más apegado, un interlineado estándar y compacto */
+  line-height: 1.45 !important;
   color: var(--color-text);
   text-align: justify;
   word-break: normal;
@@ -153,9 +153,15 @@
   -webkit-hyphens: none;
 }
 
-.richTextContent p {
-  margin-top: 0;
-  margin-bottom: 0.5rem; /* Mucho más juntos los párrafos */
+.richTextContent p,
+.richTextContent div {
+  margin-top: 0 !important;
+  margin-bottom: 0.55rem !important;
+  line-height: 1.45 !important;
+}
+
+.richTextContent br + br {
+  display: none !important;
 }
 
 .richTextContent h2, .richTextContent h3, .richTextContent h4 {

@@ -146,7 +146,7 @@ export default function NewsSection({ noticias = [] }) {
                     <iframe 
                       src={v.video_youtube_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/').replace('/shorts/', '/embed/')}
                       title="YouTube video player" 
-                      frameBorder="0" 
+                      style={{ border: 0 }} 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                       allowFullScreen
                       loading="lazy"

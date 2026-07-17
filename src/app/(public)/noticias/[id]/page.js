@@ -42,12 +42,26 @@ export async function generateMetadata({ params }) {
 
 function sanitizeHtml(html) {
   if (!html) return '';
-  return html
+  let cleaned = html
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
     .replace(/\b(on[a-z]+)\s*=\s*(?:['"][^'"]*['"]|[^\s>]+)/gi, '')
     .replace(/href\s*=\s*(?:['"]\s*(?:javascript|data):[^'"]*['"]|[^\s>]+)/gi, 'href="#"')
     .replace(/&nbsp;/g, ' ')
-    .replace(/(background(-color)?|color)\s*:[^;"]+;?/gi, '');
+    .replace(/(background(-color)?|color)\s*:[^;"]+;?/gi, '')
+    // Eliminar párrafos vacíos o con solo saltos/espacios que crean grandes huecos blancos
+    .replace(/<p>\s*(?:<br\s*\/?>|\s*)*<\/p>/gi, '')
+    // Si hay múltiples saltos <br> seguidos, dejarlos como máximo un salto o párrafo
+    .replace(/(?:<br\s*\/?>\s*){3,}/gi, '<br><br>');
+
+  // Si el texto no tiene etiquetas HTML de bloque, convertir saltos de línea \n en párrafos limpios
+  if (!/<(?:p|div|br|ul|ol|table|h[1-6])/i.test(cleaned)) {
+    cleaned = cleaned
+      .split(/\r?\n\r?\n+/)
+      .filter(Boolean)
+      .map(p => `<p>${p.trim()}</p>`)
+      .join('');
+  }
+  return cleaned;
 }
 
 function formatFecha(fechaStr, opts = { day: 'numeric', month: 'long', year: 'numeric' }) {
@@ -158,9 +172,10 @@ export default async function NoticiaDetailPage({ params }) {
                 }}
               >
                 <div
+                  className={styles.richTextContent}
                   style={{
                     fontSize: '1.0625rem',
-                    lineHeight: '1.85',
+                    lineHeight: '1.45',
                     color: 'var(--color-text)',
                     width: '100%',
                     maxWidth: '100%',

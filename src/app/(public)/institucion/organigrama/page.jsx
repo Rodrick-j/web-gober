@@ -76,33 +76,33 @@ export default function OrganigramaPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
           />
 
-          {/* Selector / Filtro de Secretarías */}
+          {/* Selector visual de Secretarías — chips con color de acento */}
           {!loading && secretarias.length > 0 && (
-            <motion.div 
+            <motion.div
               className={styles.filterSection}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <label className={styles.filterLabel} htmlFor="sec-select">
-                Seleccione una Secretaría Departamental:
-              </label>
-              <div className={styles.selectWrapper}>
-                <select 
-                  id="sec-select"
-                  className={styles.selectBox} 
-                  value={selectedSec?.slug || ''}
-                  onChange={handleSecChange}
-                >
-                  {secretarias.map((s) => (
-                    <option key={s.id} value={s.slug}>
-                      {s.nombre_corto}
-                    </option>
-                  ))}
-                </select>
-                <div className={styles.selectIcon}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="m6 9 6 6 6-6"/></svg>
-                </div>
+              <p className={styles.filterLabel}>Seleccione una Secretaría Departamental</p>
+              <div className={styles.chipsRow}>
+                {secretarias.map((s) => (
+                  <button
+                    key={s.id}
+                    className={`${styles.secChip}${selectedSec?.id === s.id ? ` ${styles.secChipActive}` : ''}`}
+                    style={{
+                      '--chip-color': s.color_acento || '#8B0000',
+                    }}
+                    onClick={() => setSelectedSec(s)}
+                    id={`chip-${s.slug}`}
+                  >
+                    <span
+                      className={styles.chipDot}
+                      style={{ background: s.color_acento || '#8B0000' }}
+                    />
+                    {s.nombre_corto}
+                  </button>
+                ))}
               </div>
             </motion.div>
           )}
@@ -301,7 +301,6 @@ export default function OrganigramaPage() {
                       {/* Main Secretario Card */}
                       <motion.div 
                         className={`${styles.nodeCard} ${styles.secretaryNode}`}
-                        style={{ background: `linear-gradient(135deg, ${accentColor} 0%, #1e293b 100%)`, borderColor: accentColor }}
                         whileHover={{ scale: 1.04, translateY: -2 }}
                         transition={{ type: 'spring', stiffness: 350, damping: 18 }}
                       >
@@ -325,7 +324,6 @@ export default function OrganigramaPage() {
                     <div className={styles.levelGroupCentered}>
                       <motion.div 
                         className={`${styles.nodeCard} ${styles.jefeNode}`}
-                        style={{ background: `linear-gradient(135deg, ${accentColor} 0%, #334155 100%)` }}
                         whileHover={{ scale: 1.04, translateY: -2 }}
                         transition={{ type: 'spring', stiffness: 350, damping: 18 }}
                       >

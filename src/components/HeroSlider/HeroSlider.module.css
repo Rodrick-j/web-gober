@@ -1,7 +1,12 @@
+/* =============================================
+   HERO SLIDER – Rediseño Premium
+   Más luminoso, moderno y con animaciones suaves
+   ============================================= */
+
 .sliderSection {
   width: 100%;
   padding: 0;
-  background-color: #0d0d11;
+  background-color: #080c14;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,8 +16,8 @@
   position: relative;
   width: 100%;
   height: calc(100vh - 120px);
-  max-height: 900px;
-  min-height: 550px;
+  max-height: 920px;
+  min-height: 560px;
   overflow: hidden;
 }
 
@@ -27,35 +32,30 @@
   height: 100%;
 }
 
-/* Background blur to avoid black borders */
+/* ── Fondo desenfocado para evitar bordes negros — más sutil */
 .bgBlur {
   position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  filter: blur(30px) saturate(120%);
+  top: -8%;
+  left: -8%;
+  width: 116%;
+  height: 116%;
+  filter: blur(22px) brightness(1.05);
   z-index: 0;
   opacity: 0.55;
-  transform: scale(1.1);
+  transform: scale(1.04);
 }
 
+/* Overlay eliminado — transparente para mostrar color natural */
 .bgOverlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(8, 8, 12, 0.6);
+  inset: 0;
+  background: transparent;
   z-index: 1;
 }
 
 .bgImage {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: 2;
 }
 
@@ -63,190 +63,229 @@
   object-fit: cover;
   object-position: center 20%;
   transition: transform 7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Imagen con color natural + brillo extra */
+  filter: brightness(1.08) saturate(1.15) contrast(1.04);
 }
 
-.hideOnMobile {
-  display: block;
-}
-
-.showOnlyOnMobile {
-  display: none !important;
-}
-
-/* Active slide zoom animation */
+/* Zoom sutil al slide activo */
 :global(.swiper-slide-active) .mainImage {
   transform: scale(1.04);
 }
 
+.hideOnMobile  { display: block; }
+.showOnlyOnMobile { display: none !important; }
+
+/* ── Gradientes de luz – más sutiles y direccionales ── */
+/* Viñetado muy sutil — solo en los bordes para que el texto sea legible */
 .gradientOverlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* Gradient darkening towards the bottom and left for text contrast */
-  background: linear-gradient(135deg, rgba(8, 8, 12, 0.75) 0%, rgba(8, 8, 12, 0.3) 50%, rgba(8, 8, 12, 0.8) 100%);
+  inset: 0;
+  background:
+    linear-gradient(to right,  rgba(0,0,0,0.38) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.18) 100%),
+    linear-gradient(to top,    rgba(0,0,0,0.45) 0%, transparent 38%);
   z-index: 3;
   pointer-events: none;
 }
 
+/* Halo de color de marca muy tenue — casi invisible */
 .lightLeakOverlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* Sutil filtro de luz de la marca */
-  background: radial-gradient(circle at 10% 20%, rgba(156, 7, 32, 0.15) 0%, transparent 60%);
+  inset: 0;
+  background: radial-gradient(ellipse at 5% 10%, rgba(156,7,32,0.06) 0%, transparent 45%);
   z-index: 4;
   pointer-events: none;
 }
 
-/* Slide Content Wrapper - Acomodado a la esquina inferior izquierda */
+/* Línea decorativa luminosa lateral */
+.slideInner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 15%;
+  height: 70%;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent 0%, var(--color-gold) 40%, var(--color-primary-light) 60%, transparent 100%);
+  z-index: 11;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  border-radius: 2px;
+}
+:global(.swiper-slide-active) .slideInner::before {
+  opacity: 1;
+}
+
+/* ── Contenido del slide ── */
 .slideContentWrapper {
   position: absolute;
   inset: 0;
   z-index: 10;
   display: flex;
-  align-items: flex-end; /* Acomodar abajo */
-  justify-content: flex-start; /* Acomodar a la izquierda */
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-bottom: 75px; /* Altura suficiente para no solapar los indicadores del swiper */
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0 5% 80px;
   pointer-events: none;
 }
 
-/* Glassmorphic content card más compacto para Silicon Valley style */
+/* Card glassmorphism más luminosa */
 .slideContentCard {
-  background: rgba(10, 10, 14, 0.55);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 4px solid var(--color-gold);
-  border-radius: var(--radius-md);
-  padding: 1.75rem 2.25rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  max-width: 480px; /* Más compacto para liberar el centro y los escudos */
+  background: rgba(8, 12, 24, 0.45);
+  backdrop-filter: blur(24px) saturate(150%) brightness(1.1);
+  -webkit-backdrop-filter: blur(24px) saturate(150%) brightness(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 3px solid var(--color-gold);
+  border-radius: 14px;
+  padding: 1.8rem 2.25rem;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 1px 0 rgba(255,255,255,0.08) inset;
+  max-width: 490px;
   width: 100%;
   pointer-events: auto;
-}
 
-/* Card Header elements */
-.cardHeader {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-
-.tagLine {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--color-gold);
-  letter-spacing: 0.25em;
-}
-
-.activeIndicator {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--color-primary-light);
-  box-shadow: 0 0 10px var(--color-primary-light);
-  position: relative;
-}
-
-/* Text elements más pequeños y estilizados */
-.slideTitle {
-  font-family: var(--font-heading);
-  font-size: 1.85rem;
-  font-weight: 800;
-  line-height: 1.25;
-  color: #ffffff;
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.01em;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-.slideDesc {
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* Action button and link */
-.actionWrapper {
-  display: flex;
-}
-
-.slideLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.75rem;
-  background: var(--color-gold);
-  color: var(--color-primary-dark);
-  font-weight: 800;
-  font-size: 0.9rem;
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 12px rgba(255, 184, 67, 0.15);
-}
-
-.slideLink:hover {
-  background: var(--color-gold-light);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 184, 67, 0.3);
-}
-
-.slideLink:active {
-  transform: translateY(0);
-}
-
-.linkArrow {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.2s ease;
-}
-
-.slideLink:hover .linkArrow {
-  transform: translateX(4px);
-}
-
-/* Slide Text Animations */
-.slideContentCard {
+  /* Estado inicial para animación */
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(28px);
 }
 
 :global(.swiper-slide-active) .slideContentCard {
-  animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: 0.2s;
+  animation: cardEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
 }
 
-@keyframes slideInUp {
+@keyframes cardEnter {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-/* Custom Navigation buttons */
+/* ── Header de la card ── */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+}
+
+.tagLine {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  letter-spacing: 0.22em;
+  opacity: 0;
+  transform: translateX(-12px);
+}
+:global(.swiper-slide-active) .tagLine {
+  animation: fadeInLeft 0.7s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+}
+
+.activeIndicator {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-primary-light);
+  box-shadow: 0 0 8px var(--color-primary-light), 0 0 18px rgba(156,7,32,0.4);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* ── Textos ── */
+.slideTitle {
+  font-family: var(--font-heading);
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.22;
+  color: #ffffff;
+  margin-bottom: 0.7rem;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+
+  opacity: 0;
+  transform: translateY(16px);
+}
+:global(.swiper-slide-active) .slideTitle {
+  animation: fadeInUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+}
+
+.slideDesc {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+
+  opacity: 0;
+  transform: translateY(12px);
+}
+:global(.swiper-slide-active) .slideDesc {
+  animation: fadeInUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;
+}
+
+/* ── Botón de acción ── */
+.actionWrapper {
+  display: flex;
+  opacity: 0;
+}
+:global(.swiper-slide-active) .actionWrapper {
+  animation: fadeInUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.58s forwards;
+}
+
+.slideLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 1.6rem;
+  background: var(--color-gold);
+  color: var(--color-primary-dark);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 16px rgba(255, 184, 67, 0.22);
+  letter-spacing: 0.01em;
+}
+.slideLink:hover {
+  background: var(--color-gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 184, 67, 0.35);
+}
+.slideLink:active { transform: translateY(0); }
+
+.linkArrow {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+.slideLink:hover .linkArrow { transform: translateX(4px); }
+
+/* ── Keyframes compartidos ── */
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Navegación custom ── */
 .customNav {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 56px;
-  height: 56px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.13);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   color: white;
@@ -256,196 +295,133 @@
   cursor: pointer;
   z-index: 40;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
-
 .customNav:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.25);
-  transform: translateY(-50%) scale(1.08);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
+.customNav:active { transform: translateY(-50%) scale(0.95); }
+.customNav svg { width: 22px; height: 22px; transition: transform 0.2s ease; }
 
-.customNav:active {
-  transform: translateY(-50%) scale(0.96);
-}
+.navPrev { left: 28px; }
+.navPrev:hover svg { transform: translateX(-2px); }
+.navNext { right: 28px; }
+.navNext:hover svg { transform: translateX(2px); }
 
-.customNav svg {
-  width: 24px;
-  height: 24px;
-  transition: transform 0.2s ease;
-}
-
-.navPrev {
-  left: 30px;
-}
-.navPrev:hover svg {
-  transform: translateX(-2px);
-}
-
-.navNext {
-  right: 30px;
-}
-.navNext:hover svg {
-  transform: translateX(2px);
-}
-
-/* Custom Bullets Pagination */
+/* ── Paginación ── */
 .customBullet {
-  width: 24px !important;
-  height: 4px !important;
-  background: rgba(255, 255, 255, 0.35) !important;
+  width: 22px !important;
+  height: 3px !important;
+  background: rgba(255, 255, 255, 0.3) !important;
   border-radius: 2px !important;
   opacity: 1 !important;
   margin: 0 4px !important;
-  transition: all 0.3s ease !important;
+  transition: all 0.35s ease !important;
   display: inline-block;
   cursor: pointer;
 }
-
 .customBulletActive {
   background: var(--color-gold) !important;
-  width: 48px !important;
+  width: 44px !important;
 }
 
-/* Fallback if no images loaded */
+/* ── Fallback ── */
 .heroFallback {
   position: relative;
   width: 100%;
   padding: 8rem 2rem;
-  background-color: var(--color-primary-dark);
+  background: linear-gradient(135deg, #080c14 0%, #0f1728 100%);
   color: white;
   text-align: center;
 }
+.heroFallback .title   { font-size: 3rem; margin-bottom: 1rem; }
+.heroFallback .highlight { color: var(--color-gold); }
+.heroFallback .subtitle { max-width: 600px; margin: 0 auto; opacity: 0.85; }
 
-.heroFallback .title {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.heroFallback .highlight {
-  color: var(--color-gold);
-}
-
-.heroFallback .subtitle {
-  max-width: 600px;
-  margin: 0 auto;
-  opacity: 0.9;
-}
-
-/* Floating Social Sidebar */
+/* ── Redes sociales flotantes ── */
 .floatingSocials {
   position: absolute;
-  bottom: 30px;
-  right: 40px;
+  bottom: 28px;
+  right: 38px;
   display: flex;
-  gap: 0.75rem;
+  gap: 0.6rem;
   z-index: 30;
+
+  opacity: 0;
+  animation: fadeInRight 0.8s cubic-bezier(0.16,1,0.3,1) 0.8s forwards;
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 .socialIcon {
-  width: 40px;
-  height: 40px;
-  background: rgba(10, 10, 14, 0.45);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
-
-.socialIcon svg {
-  width: 18px;
-  height: 18px;
-}
-
+.socialIcon svg { width: 16px; height: 16px; }
 .socialIcon:hover {
   transform: translateY(-4px);
   color: white;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
 }
 
-/* Brand hover colors */
+/* Brand colors on hover */
 .socialIcon.fb:hover { background: #1877f2; border-color: transparent; }
 .socialIcon.ig:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); border-color: transparent; }
-.socialIcon.tk:hover { background: #000000; border-color: rgba(255,255,255,0.2); }
+.socialIcon.tk:hover { background: #111; border-color: rgba(255,255,255,0.15); }
 .socialIcon.yt:hover { background: #ff0000; border-color: transparent; }
 
-/* Responsive adjustments */
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-  .slideContentWrapper {
-    padding-left: 6%;
-    padding-right: 6%;
-  }
-  .slideContentCard {
-    max-width: 400px;
-    padding: 1.5rem 2rem;
-  }
-  .slideTitle {
-    font-size: 1.6rem;
-  }
+  .slideContentWrapper { padding-left: 6%; padding-right: 6%; }
+  .slideContentCard { max-width: 410px; padding: 1.5rem 2rem; }
+  .slideTitle { font-size: 1.65rem; }
 }
 
 @media (max-width: 768px) {
-  .sliderFrame {
-    height: 75vh;
-    min-height: 500px;
-  }
-  
+  .sliderFrame { height: 75vh; min-height: 500px; }
+
   .slideContentWrapper {
     padding-left: 5%;
     padding-right: 5%;
     align-items: flex-end;
-    padding-bottom: 80px; /* Leave space for pagination */
+    padding-bottom: 85px;
   }
-
   .slideContentCard {
     max-width: 100%;
-    padding: 1.5rem;
-    border-radius: var(--radius-md);
+    padding: 1.35rem 1.5rem;
+    border-radius: 12px;
   }
+  .slideTitle  { font-size: 1.45rem; }
+  .slideDesc   { font-size: 0.83rem; margin-bottom: 1.15rem; }
 
-  .slideTitle {
-    font-size: 1.5rem;
-  }
-
-  .slideDesc {
-    font-size: 0.85rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .customNav {
-    display: none; /* Hide navigation arrows on mobile */
-  }
+  .customNav { display: none; }
 
   .floatingSocials {
-    bottom: 20px;
+    bottom: 18px;
     right: 50%;
     transform: translateX(50%);
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
+  .socialIcon { width: 34px; height: 34px; }
+  .socialIcon svg { width: 15px; height: 15px; }
 
-  .socialIcon {
-    width: 36px;
-    height: 36px;
-  }
-  
-  .socialIcon svg {
-    width: 16px;
-    height: 16px;
-  }
-
-  .hideOnMobile {
-    display: none !important;
-  }
-
-  .showOnlyOnMobile {
-    display: block !important;
-  }
+  .hideOnMobile      { display: none !important; }
+  .showOnlyOnMobile  { display: block !important; }
 }

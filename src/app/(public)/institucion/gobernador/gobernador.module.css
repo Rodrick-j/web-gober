@@ -15,57 +15,110 @@
   align-items: center;
 }
 
-/* --- IMAGE CONTAINER --- */
-.pantoneCard {
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  box-shadow: none;
+/* --- EXECUTIVE PORTRAIT CONTAINER (SIN MARCO DE FONDO) --- */
+.portraitCard {
   position: relative;
-  transition: transform 0.4s ease;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portraitCard:hover {
+  transform: translateY(-6px);
+}
+
+/* Decoración interna tras la foto oculta por pedido del usuario */
+.portraitBackground {
+  display: none;
+}
+
+/* Contenedor de foto firmemente anclado a la base */
+.portraitImageContainer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* Elimina cualquier desenfoque o máscara residual */
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
+.governorImage {
+  width: 90%;
+  height: auto;
+  max-height: 540px;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 18px 25px rgba(0, 0, 0, 0.16));
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portraitCard:hover .governorImage {
+  transform: scale(1.02);
+}
+
+/* Placa ejecutiva en la base cubriendo el corte inferior */
+.portraitFooter {
+  position: relative;
+  z-index: 3;
+  margin-top: -10px;
+  background: linear-gradient(135deg, #9c0720 0%, #67181a 100%);
+  padding: 1.3rem 1.5rem 1.2rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-top: 4px solid #D4AF37;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.pantoneCard:hover {
-  transform: translateY(-10px);
-}
-
-.imageWrapper {
-  position: relative;
-  width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  overflow: visible;
-  background-color: transparent;
-  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
-  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
-}
-
-.pantoneLabel {
-  width: 100%;
-  padding: 1rem 0;
   text-align: center;
+  box-shadow: 0 16px 32px rgba(156, 7, 32, 0.25), 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.pantoneTitle {
+.footerBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.footerFlag {
+  font-size: 1.1rem;
+}
+
+.footerRole {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #1a1a1a;
-  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #D4AF37;
   text-transform: uppercase;
-  letter-spacing: -1px;
+  letter-spacing: 2px;
 }
 
-.pantoneCode {
-  font-family: 'Inter', monospace;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #67181a;
-  margin-top: 0.25rem;
+.footerEntity {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.footerGoldLine {
+  width: 40px;
+  height: 2px;
+  background-color: #D4AF37;
+  margin-top: 0.6rem;
+  border-radius: 2px;
 }
 
 /* --- TEXT CONTENT --- */
@@ -143,8 +196,8 @@
     gap: 3rem;
   }
   
-  .pantoneCard {
-    max-width: 500px;
+  .portraitCard {
+    max-width: 480px;
     margin: 0 auto;
   }
 }
@@ -154,8 +207,8 @@
     padding: 70px 1rem 3rem 1rem;
   }
 
-  .pantoneCard {
-    margin-top: -20px;
+  .portraitCard {
+    margin-top: -10px;
   }
 
   .mainTitle {
@@ -164,10 +217,6 @@
 
   .subtitle {
     font-size: 1rem;
-  }
-
-  .pantoneTitle {
-    font-size: 1.5rem;
   }
 }
 

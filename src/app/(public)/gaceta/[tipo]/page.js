@@ -46,7 +46,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { tipo } = await params;
   const config = TYPE_CONFIG[tipo];
-  
+
   if (!config) {
     return { title: 'No encontrado' };
   }
@@ -67,7 +67,7 @@ export default async function GacetaPage({ params }) {
   }
 
   const supabase = createClient();
-  
+
   // Consultar la tabla "documentos" (donde el admin guarda los documentos)
   const { data, error } = await supabase
     .from('documentos')
@@ -95,7 +95,7 @@ export default async function GacetaPage({ params }) {
   return (
     <>
 
-      
+
       <main className={styles.portalContainer}>
         {/* Header Dinámico Premium */}
         <div className="container">
@@ -104,11 +104,11 @@ export default async function GacetaPage({ params }) {
             <h1 className={styles.headerTitle}>{config.title}</h1>
             <p className={styles.headerSubtitle}>{config.subtitle}</p>
           </header>
-          
+
           {/* Cliente para el Filtrado */}
-          <GacetaClient 
-            documentos={documentos} 
-            tipoLabel={config.title} 
+          <GacetaClient
+            documentos={documentos}
+            tipoLabel={config.title}
             icon={config.icon}
           />
         </div>

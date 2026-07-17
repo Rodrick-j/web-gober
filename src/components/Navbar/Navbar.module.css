@@ -50,9 +50,11 @@
 
 /* Main Navbar */
 .navbar {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 999;
+  width: 100%;
+  z-index: 1000;
   background: rgba(255, 255, 255, 0.98);
   border-bottom: 3px solid var(--color-primary);
   border-top: 2px solid var(--color-gold);

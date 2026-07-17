@@ -1,9 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './SocialFeeds.module.css';
 
 export default function SocialFeeds({ redes }) {
+  const [fbLikes, setFbLikes] = useState(482);
+  const [igLikes, setIgLikes] = useState(640);
+  const [tkLikes, setTkLikes] = useState(1280);
+  const [ytLikes, setYtLikes] = useState(540);
+
   // URLs por defecto si no existen
   const fbUrl = redes?.facebook && redes.facebook !== '#' ? redes.facebook : 'https://www.facebook.com/GobernacionDeOruro';
   const igUrl = redes?.instagram && redes.instagram !== '#' ? redes.instagram : 'https://www.instagram.com/infounicom.gador/';
@@ -27,10 +32,10 @@ export default function SocialFeeds({ redes }) {
       <div className={styles.bgGlow2}></div>
 
       <div className={styles.headerArea}>
-        <span className={styles.badge}>Canales Oficiales</span>
+        <span className={styles.badge}>Canales Oficiales en Tiempo Real</span>
         <h2 className={styles.title}>Nuestras Redes Sociales</h2>
         <p className={styles.subtitle}>
-          Mantente informado y conectado con todas las actividades, noticias y comunicados del Gobierno Autónomo Departamental de Oruro.
+          Mantente informado y conectado en tiempo real con todas las actividades, noticias y comunicados oficiales del Gobierno Autónomo Departamental de Oruro.
         </p>
       </div>
 
@@ -45,7 +50,7 @@ export default function SocialFeeds({ redes }) {
               </svg>
             </div>
             <div className={styles.avatarWrapper}>
-              <img src="/footer_icon.jpg" alt="Avatar GADOR" className={styles.avatar} />
+              <img src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
               <div className={`${styles.statusRing} ${styles.fbRing}`}></div>
             </div>
           </div>
@@ -59,34 +64,32 @@ export default function SocialFeeds({ redes }) {
               <span className={styles.handle}>{extractHandle(fbUrl, '@')}</span>
             </div>
 
-            <div className={styles.stats}>
-              <div className={styles.stat}>
-                <span className={styles.statVal}>120K+</span>
-                <span className={styles.statLbl}>Seguidores</span>
-              </div>
-              <div className={styles.divider}></div>
-              <div className={styles.stat}>
-                <span className={styles.statVal}>95K+</span>
-                <span className={styles.statLbl}>Me gusta</span>
-              </div>
-            </div>
-
             <div className={styles.previewContainer}>
-              <div className={styles.fbPostMock}>
-                <div className={styles.mockHeader}>
-                  <img src="/footer_icon.jpg" alt="Avatar" className={styles.mockMiniAvatar} />
-                  <div>
-                    <div className={styles.mockUser}>GAD-OR Oruro</div>
-                    <div className={styles.mockTime}>Hace 2 horas · 📌 Fijado</div>
-                  </div>
+              <div className={styles.liveNativeCard}>
+                <div className={styles.liveNativeHeader}>
+                  <span className={styles.liveStatusBadge}>
+                    <span className={styles.liveDot}></span> En Vivo · Feed Oficial
+                  </span>
+                  <span style={{ color: '#64748B', fontSize: '0.85rem', fontWeight: 600 }}>📌 Publicación Destacada</span>
                 </div>
-                <p className={styles.mockText}>
-                  El Gobierno Autónomo Departamental de Oruro realiza la entrega oficial de equipamiento y medicamentos esenciales...
-                </p>
-                <div className={styles.mockInteractions}>
-                  <span>👍 482</span>
-                  <span>💬 54</span>
-                  <span>🔄 38</span>
+                <div className={styles.liveImageBox}>
+                  <img src="/banner-mineria.png" alt="Obras Oruro" className={styles.liveImage} />
+                </div>
+                <div className={styles.liveCaptionBox}>
+                  <strong>Gobernación de Oruro:</strong> Entrega oficial de equipamiento vial e insumos prioritarios para el desarrollo de nuestras 16 provincias. ¡Trabajando por Oruro en tiempo real! 🇧🇴✨
+                </div>
+                <div className={styles.liveActionBar}>
+                  <button 
+                    type="button" 
+                    className={`${styles.liveActionBtn} ${fbLikes > 482 ? styles.liveActionBtnActiveBlue : ''}`}
+                    onClick={() => setFbLikes(l => l + 1)}
+                  >
+                    👍 Me gusta ({fbLikes})
+                  </button>
+                  <div className={styles.liveStatsPills}>
+                    <span>💬 54</span>
+                    <span>🔄 38</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -106,7 +109,7 @@ export default function SocialFeeds({ redes }) {
               </svg>
             </div>
             <div className={styles.avatarWrapper}>
-              <img src="/footer_icon.jpg" alt="Avatar GADOR" className={styles.avatar} />
+              <img src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
               <div className={`${styles.statusRing} ${styles.igRing}`}></div>
             </div>
           </div>
@@ -120,28 +123,31 @@ export default function SocialFeeds({ redes }) {
               <span className={styles.handle}>{extractHandle(igUrl, '@')}</span>
             </div>
 
-            <div className={styles.stats}>
-              <div className={styles.stat}>
-                <span className={styles.statVal}>8.5K</span>
-                <span className={styles.statLbl}>Seguidores</span>
-              </div>
-              <div className={styles.divider}></div>
-              <div className={styles.stat}>
-                <span className={styles.statVal}>1.2K</span>
-                <span className={styles.statLbl}>Publicaciones</span>
-              </div>
-            </div>
-
             <div className={styles.previewContainer}>
-              <div className={styles.igGridMock}>
-                <div className={styles.igMockItem} style={{ background: 'linear-gradient(135deg, #ffb843, #d61432)' }}>
-                  <div className={styles.igMockOverlay}>❤️ 142</div>
+              <div className={styles.liveNativeCard}>
+                <div className={styles.liveNativeHeader}>
+                  <span className={styles.liveStatusBadge}>
+                    <span className={styles.liveDot}></span> En Vivo · Instagram Oficial
+                  </span>
+                  <span style={{ color: '#64748B', fontSize: '0.85rem', fontWeight: 600 }}>📍 Oruro, Bolivia</span>
                 </div>
-                <div className={styles.igMockItem} style={{ background: 'linear-gradient(135deg, #079c81, #0052C2)' }}>
-                  <div className={styles.igMockOverlay}>❤️ 98</div>
+                <div className={styles.liveImageBox} onDoubleClick={() => setIgLikes(l => l + 1)} style={{ cursor: 'pointer' }}>
+                  <img src="/gober_oruro.jpg" alt="Gobierno Oruro" className={styles.liveImage} />
                 </div>
-                <div className={styles.igMockItem} style={{ background: 'linear-gradient(135deg, #67181a, #ffb843)' }}>
-                  <div className={styles.igMockOverlay}>❤️ 215</div>
+                <div className={styles.liveCaptionBox}>
+                  <strong>@infounicom.gador:</strong> ¡Avanzando juntos por la gestión departamental! Inspección de infraestructura, salud y obras productivas en el territorio. #Oruro2026 ✨
+                </div>
+                <div className={styles.liveActionBar}>
+                  <button 
+                    type="button" 
+                    className={`${styles.liveActionBtn} ${igLikes > 640 ? styles.liveActionBtnActive : ''}`}
+                    onClick={() => setIgLikes(l => l + 1)}
+                  >
+                    ❤️ Me gusta ({igLikes})
+                  </button>
+                  <div className={styles.liveStatsPills}>
+                    <span>💬 82 comentarios</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -161,7 +167,7 @@ export default function SocialFeeds({ redes }) {
               </svg>
             </div>
             <div className={styles.avatarWrapper}>
-              <img src="/footer_icon.jpg" alt="Avatar GADOR" className={styles.avatar} />
+              <img src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
               <div className={`${styles.statusRing} ${styles.tkRing}`}></div>
             </div>
           </div>
@@ -175,26 +181,36 @@ export default function SocialFeeds({ redes }) {
               <span className={styles.handle}>{extractHandle(tkUrl, '@')}</span>
             </div>
 
-            <div className={styles.stats}>
-              <div className={styles.stat}>
-                <span className={styles.statVal}>25.4K</span>
-                <span className={styles.statLbl}>Seguidores</span>
-              </div>
-              <div className={styles.divider}></div>
-              <div className={styles.stat}>
-                <span className={styles.statVal}>500K+</span>
-                <span className={styles.statLbl}>Me gusta</span>
-              </div>
-            </div>
-
             <div className={styles.previewContainer}>
-              <div className={styles.tkVideoMock}>
-                <div className={styles.tkVideoThumbnail}>
-                  <div className={styles.playIconWrapper}>
-                    <div className={styles.playIcon}></div>
+              <div className={`${styles.liveNativeCard} ${styles.liveNativeCardDark}`}>
+                <div className={styles.liveNativeHeader}>
+                  <span className={styles.liveStatusBadge}>
+                    <span className={styles.liveDot}></span> TikTok en Vivo
+                  </span>
+                  <span style={{ color: '#94A3B8', fontSize: '0.85rem', fontWeight: 600 }}>🎵 Sonido Original</span>
+                </div>
+                <a href={tkUrl} target="_blank" rel="noopener noreferrer" className={styles.liveImageBox} style={{ display: 'block', textDecoration: 'none' }}>
+                  <img src="/icono-planificacion.jpg" alt="Video TikTok Oruro" className={styles.liveImage} />
+                  <div className={styles.videoPlayOverlay}>
+                    <div className={styles.videoPlayCircle}>▶</div>
+                    <span className={styles.videoPlayText}>▶ 38.2K reproducciones</span>
                   </div>
-                  <span className={styles.tkViewCount}>▶ 38.2K views</span>
-                  <div className={styles.tkMockText}>¡Oruro avanza en infraestructura vial! 🚀 #Gestión #Oruro</div>
+                </a>
+                <div className={styles.liveCaptionBox}>
+                  ¡Oruro avanza en infraestructura vial y caminos de progreso! 🚀 Infraestructura para unir a nuestra gente. #Gestión #Oruro #Bolivia
+                </div>
+                <div className={styles.liveActionBar}>
+                  <button 
+                    type="button" 
+                    className={`${styles.liveActionBtn} ${tkLikes > 1280 ? styles.liveActionBtnActive : ''}`}
+                    onClick={() => setTkLikes(l => l + 1)}
+                  >
+                    ❤️ ({tkLikes})
+                  </button>
+                  <div className={styles.liveStatsPills}>
+                    <span>💬 142</span>
+                    <span>🔄 96</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -214,7 +230,7 @@ export default function SocialFeeds({ redes }) {
               </svg>
             </div>
             <div className={styles.avatarWrapper}>
-              <img src="/footer_icon.jpg" alt="Avatar GADOR" className={styles.avatar} />
+              <img src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
               <div className={`${styles.statusRing} ${styles.ytRing}`}></div>
             </div>
           </div>
@@ -228,26 +244,39 @@ export default function SocialFeeds({ redes }) {
               <span className={styles.handle}>{extractHandle(ytUrl, '@')}</span>
             </div>
 
-            <div className={styles.stats}>
-              <div className={styles.stat}>
-                <span className={styles.statVal}>10.2K</span>
-                <span className={styles.statLbl}>Suscriptores</span>
-              </div>
-              <div className={styles.divider}></div>
-              <div className={styles.stat}>
-                <span className={styles.statVal}>340</span>
-                <span className={styles.statLbl}>Videos</span>
-              </div>
-            </div>
-
             <div className={styles.previewContainer}>
-              <div className={styles.ytVideoMock}>
-                <div className={styles.ytVideoThumbnail}>
-                  <div className={styles.ytPlayBtnWrapper}>
-                    <div className={styles.ytPlayBtn}></div>
+              <div className={`${styles.liveNativeCard} ${styles.liveNativeCardDark}`}>
+                <div className={styles.liveNativeHeader}>
+                  <span className={styles.liveStatusBadge}>
+                    <span className={styles.liveDot}></span> Canal YouTube GADOR
+                  </span>
+                  <span style={{ color: '#94A3B8', fontSize: '0.85rem', fontWeight: 600 }}>🔴 HD 1080p</span>
+                </div>
+                <div style={{ width: '100%', height: '200px', borderRadius: '10px', overflow: 'hidden', background: '#000' }}>
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/J_tN0u8M3gY?rel=0&modestbranding=1" 
+                    title="Canal Oficial de YouTube GADOR en Tiempo Real" 
+                    style={{ border: 0 }} 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen={true}
+                  />
+                </div>
+                <div className={styles.liveCaptionBox} style={{ marginTop: '0.75rem' }}>
+                  <strong>Resumen Semanal:</strong> Obras públicas, proyectos de electrificación y desarrollo económico departamental — Gestión en Tiempo Real.
+                </div>
+                <div className={styles.liveActionBar}>
+                  <button 
+                    type="button" 
+                    className={`${styles.liveActionBtn} ${ytLikes > 540 ? styles.liveActionBtnActive : ''}`}
+                    onClick={() => setYtLikes(l => l + 1)}
+                  >
+                    👍 Me gusta ({ytLikes})
+                  </button>
+                  <div className={styles.liveStatsPills}>
+                    <span>👁️ 1.4K vistas</span>
                   </div>
-                  <span className={styles.ytDuration}>14:20</span>
-                  <div className={styles.ytMockTitle}>Resumen Semanal de Gestión y Obras Públicas - Oruro 2026</div>
                 </div>
               </div>
             </div>

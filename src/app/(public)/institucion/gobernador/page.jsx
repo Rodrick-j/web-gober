@@ -13,11 +13,11 @@ export default function GobernadorPage() {
       <div className={styles.pageWrapper}>
         <div className={styles.container}>
           
-          {/* Left Side: Image with Pantone Style */}
+          {/* Left Side: Executive Portrait Card */}
           <motion.div 
-            initial={{ opacity: 0, x: -50, rotate: -5 }}
-            animate={{ opacity: 1, x: 0, rotate: 0 }}
-            transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+            initial={{ opacity: 0, x: -40, y: 15 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 0.8, cubicBezier: [0.16, 1, 0.3, 1] }}
             style={{ position: 'relative' }}
           >
             {/* Esquinero Superior Izquierdo */}
@@ -25,16 +25,35 @@ export default function GobernadorPage() {
               <Image src="/motivos/motivo_10.png" alt="Motivo Cultural" fill style={{ objectFit: 'contain' }} />
             </div>
 
-            <div className={styles.pantoneCard}>
-              <div className={styles.imageWrapper}>
+            <div className={styles.portraitCard}>
+              {/* Fondo decorativo institucional con aureola sutil */}
+              <div className={styles.portraitBackground}>
+                <div className={styles.portraitBgGlow} />
+                <div className={styles.portraitBgMotif}>
+                  <Image src="/motivos/motivo_10.png" alt="Sello Cultural" width={260} height={260} style={{ objectFit: 'contain', opacity: 0.08 }} />
+                </div>
+              </div>
+
+              {/* Contenedor de la Imagen del Gobernador (anclado a la base del marco) */}
+              <div className={styles.portraitImageContainer}>
                 <Image 
                   src="/gobernador_perfil.png" 
-                  alt="Gobernador Edgar Sánchez Aguirre"
+                  alt="Gobernador Constitucional Edgar Sánchez Aguirre"
                   width={800}
                   height={1000}
-                  style={{ width: '100%', height: 'auto', objectFit: 'contain' }}
+                  className={styles.governorImage}
                   priority
                 />
+              </div>
+
+              {/* Placa Ejecutiva / Footer Oficial */}
+              <div className={styles.portraitFooter}>
+                <div className={styles.footerBadge}>
+                  <span className={styles.footerFlag}>🇧🇴</span>
+                  <span className={styles.footerRole}>Gobernador Constitucional</span>
+                </div>
+                <div className={styles.footerEntity}>Departamento de Oruro — Gestión 2026</div>
+                <div className={styles.footerGoldLine} />
               </div>
             </div>
           </motion.div>

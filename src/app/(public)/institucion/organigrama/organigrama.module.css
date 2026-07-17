@@ -33,10 +33,11 @@
 
 .accentLine {
   height: 3px;
-  background: linear-gradient(90deg, #FF2E4B, #FFC400);
+  background: linear-gradient(90deg, var(--acento-dinamico, #9c0720), #ffb843);
   border-radius: 2px;
   margin-top: 0.75rem;
   margin-bottom: 1.5rem;
+  transition: background 0.5s ease;
 }
 
 .secTitle {
@@ -93,26 +94,27 @@
   z-index: 2;
 }
 
+/* Línea vertical del grupo (Secretario → abajo) */
 .groupVerticalLine {
   position: absolute;
   top: 50%;
   bottom: -2.5rem;
   left: 50%;
   width: 2px;
-  background-color: #CBD5E1;
+  background-color: #ffb843;
   transform: translateX(-50%);
   z-index: 1;
 }
 
-/* Vertical line connecting Secretario (L1) to Jefe (L2) */
+/* Línea vertical Secretario → Jefe de Unidad */
 .verticalConnector {
   width: 2px;
   height: 2.5rem;
-  background-color: #CBD5E1;
+  background-color: #ffb843;
   z-index: 1;
 }
 
-/* Split line connecting Jefe (L2) to the 3 Columns (L3) */
+/* Bloque de bifurcación Jefe → 3 Programas */
 .verticalSplitWrapper {
   width: 100%;
   display: flex;
@@ -123,37 +125,46 @@
   z-index: 1;
 }
 
-.splitHorizontalLine {
-  width: 66.66%; /* Covers from first to third column headers */
-  height: 2px;
-  background-color: #CBD5E1;
-  position: absolute;
-  top: 1.5rem;
-}
-
-.splitVerticalConnectors {
-  width: 66.66%;
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.splitVerticalLine {
-  width: 2px;
-  height: 100%;
-  background-color: #CBD5E1;
-}
-
-/* Central vertical connection line from Jefe */
+/* Línea vertical corta del Jefe hacia la barra horizontal */
 .verticalSplitWrapper::before {
   content: '';
   position: absolute;
   top: 0;
   left: 50%;
   width: 2px;
-  height: 1.5rem;
-  background-color: #CBD5E1;
+  height: 50%;
+  background-color: #ffb843;
   transform: translateX(-50%);
+}
+
+/* Barra horizontal que conecta las 3 columnas — centrada */
+.splitHorizontalLine {
+  width: 66.66%;
+  height: 2px;
+  background-color: #ffb843;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Contenedor de las 3 líneas de bajada — centrado y alineado con la barra */
+.splitVerticalConnectors {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 66.66%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Línea vertical individual hacia cada programa */
+.splitVerticalLine {
+  width: 2px;
+  height: 100%;
+  background-color: #ffb843;
 }
 
 /* ── NODE CARDS ── */
@@ -163,8 +174,8 @@
   padding: 1.25rem;
   border-radius: 16px;
   text-align: center;
-  box-shadow: 
-    0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 2;
@@ -196,31 +207,47 @@
   opacity: 0.75;
 }
 
-/* ── SPECIFIC CARD THEMES ── */
+/* ═ TEMAS OFICIALES GADOR ═
+   #9c0720 Rojo Principal
+   #67181a Carmesí Oscuro
+   #4a4848 Gris Institucional
+   #ffb843 Dorado
+*/
 
 .secretaryNode {
-  background: linear-gradient(135deg, #8B0000 0%, #B22222 100%);
+  background: linear-gradient(140deg, #9c0720 0%, #67181a 100%);
   color: #FFFFFF;
-  border: 2px solid #FFC400;
-  box-shadow: 
-    0 12px 28px rgba(139, 0, 0, 0.25),
-    0 0 15px rgba(255, 196, 0, 0.15);
+  border: 2px solid #ffb843;
+  box-shadow:
+    0 12px 30px rgba(156, 7, 32, 0.35),
+    0 0 0 1px rgba(255, 184, 67, 0.15) inset,
+    0 0 20px rgba(255, 184, 67, 0.08);
 }
 
 .secretaryNode .nodeHeader {
-  color: #FFC400;
+  color: #ffb843;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
+.secretaryNode .nodeName {
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Jefe de Unidad: carmesí → gris institucional */
 .jefeNode {
-  background: linear-gradient(135deg, #FF2E4B 0%, #C41E3A 100%);
+  background: linear-gradient(140deg, #67181a 0%, #4a4848 100%);
   color: #FFFFFF;
-  box-shadow: 0 10px 24px rgba(255, 46, 75, 0.2);
+  box-shadow:
+    0 10px 24px rgba(74, 72, 72, 0.28),
+    0 0 0 1px rgba(255, 184, 67, 0.08) inset;
+  border: 1px solid rgba(255, 184, 67, 0.2);
 }
 
 .jefeNode .nodeHeader {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 184, 67, 0.85);
 }
 
+/* Nodos de programa: gris institucional con franja dorada superior */
 .programNode {
   min-height: 135px;
   height: auto;
@@ -229,29 +256,46 @@
   justify-content: center;
   align-items: center;
   padding: 1.25rem 1rem;
+  /* Franja superior dorada — identidad visual GADOR */
+  border-top: 3px solid #ffb843;
+  position: relative;
+  overflow: hidden;
 }
 
-.turismoNode {
-  background: linear-gradient(135deg, #00796B 0%, #009688 100%);
+/* Fondo base gris para todos los nodos de programa */
+.programNode {
+  background: linear-gradient(150deg, #4a4848 0%, #3a3838 100%);
   color: #FFFFFF;
-  box-shadow: 0 8px 20px rgba(0, 150, 136, 0.2);
+  box-shadow:
+    0 8px 20px rgba(74, 72, 72, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+.programNode .nodeHeader {
+  color: rgba(255, 184, 67, 0.75);
+  font-size: 0.65rem;
+}
+
+/* Diferenciación sutil entre columnas de programa — solo en Cultura y Turismo */
+.turismoNode {
+  background: linear-gradient(150deg, #4a4848 0%, #3e3a3a 100%);
+  border-top-color: #ffb843;
 }
 
 .fortalecimientoNode {
-  background: linear-gradient(135deg, #0288D1 0%, #03A9F4 100%);
-  color: #FFFFFF;
-  box-shadow: 0 8px 20px rgba(3, 169, 244, 0.2);
+  background: linear-gradient(150deg, #4a4848 0%, #3e3a3a 100%);
+  border-top-color: #ffb843;
 }
 
 .patrimonioNode {
-  background: linear-gradient(135deg, #7B1FA2 0%, #9C27B0 100%);
-  color: #FFFFFF;
-  box-shadow: 0 8px 20px rgba(156, 39, 176, 0.2);
+  background: linear-gradient(150deg, #4a4848 0%, #3e3a3a 100%);
+  border-top-color: #ffb843;
 }
 
 /* ── STAFF SUPPORT NODES ── */
 
-.supportColumnLeft, .supportColumnRight {
+.supportColumnLeft,
+.supportColumnRight {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -259,15 +303,17 @@
   z-index: 2;
 }
 
+/* ─ Nodos de soporte (staff lateral) ─ */
 .supportNode {
   background: #FFFFFF;
-  border: 1.5px solid rgba(0, 0, 0, 0.06);
-  border-left: 3.5px solid #FFC400; /* Gold brand color to match the Secretario */
+  border: 1.5px solid rgba(156, 7, 32, 0.1);
+  border-left: 3.5px solid #ffb843;
   border-radius: 12px;
   padding: 0.65rem 0.95rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   text-align: center;
   position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -277,9 +323,9 @@
 
 .supportNode:hover {
   transform: translateY(-2px);
-  border-color: rgba(139, 0, 0, 0.3);
-  border-left-color: #8B0000;
-  box-shadow: 0 6px 16px rgba(139, 0, 0, 0.08);
+  border-color: rgba(156, 7, 32, 0.25);
+  border-left-color: #ffb843;
+  box-shadow: 0 6px 16px rgba(156, 7, 32, 0.1);
 }
 
 .nodeRole {
@@ -302,8 +348,8 @@
   right: -calc(3.5rem + 120px);
   width: calc(3.5rem + 120px);
   height: 2px;
-  background-color: #CBD5E1;
-  z-index: 1;
+  background-color: #ffb843;
+  z-index: -1;
 }
 
 .supportLineRight {
@@ -312,8 +358,8 @@
   left: -calc(3.5rem + 120px);
   width: calc(3.5rem + 120px);
   height: 2px;
-  background-color: #CBD5E1;
-  z-index: 1;
+  background-color: #ffb843;
+  z-index: -1;
 }
 
 /* ── THREE COLUMNS GRID ── */
@@ -334,7 +380,7 @@
 .verticalBranchLine {
   width: 2px;
   height: 2rem;
-  background-color: #CBD5E1;
+  background-color: #ffb843;
   z-index: 1;
 }
 
@@ -348,33 +394,38 @@
   z-index: 2;
 }
 
+/* ─ Nodos hoja nivel 4 ─ */
 .leafNode {
   background: #FFFFFF;
-  border: 1.5px solid rgba(0, 0, 0, 0.05);
+  border: 1.5px solid rgba(156, 7, 32, 0.07);
   border-radius: 12px;
   padding: 0.75rem 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
   display: flex;
   align-items: center;
   gap: 0.5rem;
   transition: all 0.25s ease;
 }
 
+/* Columna 1 — dorado */
 .programColumn:nth-child(1) .leafNode {
-  border-left: 3.5px solid #009688; /* Match Turismo Teal */
+  border-left: 3.5px solid #ffb843;
 }
 
+/* Columna 2 — rojo principal */
 .programColumn:nth-child(2) .leafNode {
-  border-left: 3.5px solid #03A9F4; /* Match Fortalecimiento Blue */
+  border-left: 3.5px solid #9c0720;
 }
 
+/* Columna 3 — carmesí */
 .programColumn:nth-child(3) .leafNode {
-  border-left: 3.5px solid #9C27B0; /* Match Patrimonio Purple */
+  border-left: 3.5px solid #67181a;
 }
 
 .leafNode:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgba(156, 7, 32, 0.08);
+  border-color: rgba(156, 7, 32, 0.15);
 }
 
 .leafIcon {
@@ -389,67 +440,110 @@
   line-height: 1.35;
 }
 
-/* ── FILTER SECTION ── */
+/* ── FILTRO PROFESIONAL: CHIPS DE SECRETARÍAS ── */
+
 .filterSection {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   width: 100%;
-  max-width: 420px;
 }
 
 .filterLabel {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  color: #64748B;
+  color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 1.2px;
+  margin: 0;
 }
 
-.selectWrapper {
-  position: relative;
-  width: 100%;
-}
-
-.selectBox {
-  width: 100%;
-  padding: 0.8rem 2.5rem 0.8rem 1.25rem;
-  background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #1E293B;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-}
-
-.selectBox:hover {
-  border-color: var(--acento-dinamico, #8B0000);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-}
-
-.selectBox:focus {
-  border-color: var(--acento-dinamico, #8B0000);
-  box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.15);
-}
-
-.selectIcon {
-  position: absolute;
-  right: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #64748B;
-  pointer-events: none;
+/* Fila horizontal con scroll en móvil */
+.chipsRow {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  max-width: 900px;
+  width: 100%;
 }
+
+/* Chip individual */
+.secChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  background: #ffffff;
+  color: #334155;
+  border: 1.5px solid #e2e8f0;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background 0.22s ease,
+    color 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.18s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  letter-spacing: 0.01em;
+}
+
+.secChip:hover {
+  background: color-mix(in srgb, var(--chip-color, #9c0720) 8%, white);
+  border-color: var(--chip-color, #9c0720);
+  color: var(--chip-color, #9c0720);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--chip-color, #9c0720) 20%, transparent);
+}
+
+/* Estado activo — fondo lleno con color_acento */
+.secChipActive {
+  background: var(--chip-color, #9c0720) !important;
+  color: #ffffff !important;
+  border-color: var(--chip-color, #9c0720) !important;
+  box-shadow:
+    0 4px 16px color-mix(in srgb, var(--chip-color, #9c0720) 35%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--chip-color, #9c0720) 18%, transparent) !important;
+  transform: translateY(-1px);
+}
+
+/* Punto de color dentro del chip */
+.chipDot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}
+
+/* Ocultar el punto en el chip activo (ya tiene fondo) */
+.secChipActive .chipDot {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chipsRow {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .chipsRow::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 
 /* ── LOADING WRAPPER ── */
 .loadingWrapper {
@@ -473,11 +567,14 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ── RESPONSIVE DESIGN (MOBILE OVERRIDES) ── */
 @media (max-width: 1024px) {
+
   /* ── Keep horizontal tree but scale it down to micro size ── */
   .chartScrollContainer {
     padding: 2.25rem 0.25rem 1rem 0.25rem;
@@ -502,14 +599,15 @@
     padding: 0.2rem 0.6rem;
     border-radius: 20px;
     border: 1px solid #E2E8F0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     white-space: nowrap;
     z-index: 10;
     pointer-events: none;
   }
 
   .chartContainer {
-    min-width: 440px; /* Reduced min-width to match micro size */
+    min-width: 440px;
+    /* Reduced min-width to match micro size */
     padding: 0.75rem 0.5rem 0 0.5rem;
     display: flex;
     flex-direction: column;
@@ -521,7 +619,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 1.25rem; /* Reduced gap */
+    gap: 1.25rem;
+    /* Reduced gap */
     position: relative;
     width: 100%;
   }
@@ -532,15 +631,15 @@
     bottom: -1.25rem;
     left: 50%;
     width: 2px;
-    background-color: #CBD5E1;
+    background-color: #ffb843;
     transform: translateX(-50%);
     z-index: 1;
   }
 
   .verticalConnector {
     width: 2px;
-    height: 1.25rem; /* Reduced height */
-    background-color: #CBD5E1;
+    height: 1.25rem;
+    background-color: #ffb843;
     z-index: 1;
   }
 
@@ -550,29 +649,8 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    height: 1.75rem; /* Reduced height */
+    height: 1.75rem;
     z-index: 1;
-  }
-
-  .splitHorizontalLine {
-    width: 66.66%;
-    height: 2px;
-    background-color: #CBD5E1;
-    position: absolute;
-    top: 0.85rem;
-  }
-
-  .splitVerticalConnectors {
-    width: 66.66%;
-    display: flex;
-    justify-content: space-between;
-    height: 100%;
-  }
-
-  .splitVerticalLine {
-    width: 2px;
-    height: 100%;
-    background-color: #CBD5E1;
   }
 
   .verticalSplitWrapper::before {
@@ -581,14 +659,42 @@
     top: 0;
     left: 50%;
     width: 2px;
-    height: 0.85rem;
-    background-color: #CBD5E1;
+    height: 50%;
+    background-color: #ffb843;
     transform: translateX(-50%);
+  }
+
+  .splitHorizontalLine {
+    width: 66.66%;
+    height: 2px;
+    background-color: #ffb843;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .splitVerticalConnectors {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 66.66%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .splitVerticalLine {
+    width: 2px;
+    height: 100%;
+    background-color: #ffb843;
   }
 
   /* ── MICRO NODE CARDS FOR MOBILE ── */
   .nodeCard {
-    width: 130px; /* Micro size */
+    width: 130px;
+    /* Micro size */
     padding: 0.5rem 0.3rem;
     border-radius: 10px;
   }
@@ -611,17 +717,20 @@
   }
 
   .programNode {
-    min-height: 110px; /* Reduced min-height */
+    min-height: 110px;
+    /* Reduced min-height */
     height: auto;
     padding: 0.5rem 0.25rem;
   }
 
   /* ── MICRO STAFF NODES ── */
-  .supportColumnLeft, .supportColumnRight {
+  .supportColumnLeft,
+  .supportColumnRight {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    width: 105px; /* Micro staff card width */
+    width: 105px;
+    /* Micro staff card width */
   }
 
   .supportNode {
@@ -629,6 +738,9 @@
     padding: 0.35rem 0.25rem;
     border-radius: 6px;
     border-left-width: 2.5px;
+    position: relative;
+    z-index: 2;
+    background: #FFFFFF;
   }
 
   .nodeRole {
@@ -649,8 +761,8 @@
     right: -calc(1.25rem + 65px);
     width: calc(1.25rem + 65px);
     height: 2px;
-    background-color: #CBD5E1;
-    z-index: 1;
+    background-color: #ffb843;
+    z-index: -1;
   }
 
   .supportLineRight {
@@ -659,15 +771,16 @@
     left: -calc(1.25rem + 65px);
     width: calc(1.25rem + 65px);
     height: 2px;
-    background-color: #CBD5E1;
-    z-index: 1;
+    background-color: #ffb843;
+    z-index: -1;
   }
 
   /* ── THREE COLUMNS GRID ── */
   .threeColumnsGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem; /* Micro gap */
+    gap: 0.75rem;
+    /* Micro gap */
     width: 100%;
   }
 
@@ -680,7 +793,7 @@
   .verticalBranchLine {
     width: 2px;
     height: 1rem;
-    background-color: #CBD5E1;
+    background-color: #ffb843;
     z-index: 1;
   }
 
@@ -689,7 +802,8 @@
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    width: 130px; /* Matches micro program card width */
+    width: 130px;
+    /* Matches micro program card width */
   }
 
   .leafNode {
