@@ -3,44 +3,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Script from 'next/script';
 
-// Declaración global para el SDK de Facebook (window.FB)
-declare global {
-  interface Window {
-    FB?: {
-      init: (params: { xfbml: boolean; version: string }) => void;
-      XFBML: {
-        parse: (element?: HTMLElement | null) => void;
-      };
-    };
-    fbAsyncInit?: () => void;
-  }
-}
-
-export interface FacebookPageFeedProps {
-  /** URL completa de la página oficial de Facebook */
-  pageUrl: string;
-  /** Pestañas a mostrar: 'timeline', 'events', 'messages' o combinaciones separadas por coma */
-  tabs?: string;
-  /** Ancho del plugin en píxeles (entre 180 y 500 según especificación de Meta) o vacío para adaptar */
-  width?: number | string;
-  /** Alto del plugin en píxeles (mínimo 70) */
-  height?: number | string;
-  /** Usar encabezado pequeño (true/false) */
-  smallHeader?: boolean;
-  /** Adaptar al ancho del contenedor padre en la carga inicial */
-  adaptContainerWidth?: boolean;
-  /** Ocultar foto de portada del encabezado */
-  hideCover?: boolean;
-  /** Mostrar rostros de los seguidores (Facepile) */
-  showFacepile?: boolean;
-  /** Idioma/región del SDK de Facebook (ej: 'es_LA', 'en_US') */
-  locale?: string;
-  /** Versión de la API de Facebook (ej: 'v19.0') */
-  version?: string;
-  /** Clases adicionales de Tailwind para el contenedor exterior */
-  className?: string;
-}
-
 export default function FacebookPageFeed({
   pageUrl = 'https://www.facebook.com/GobernacionDeOruro',
   tabs = 'timeline',
@@ -53,8 +15,8 @@ export default function FacebookPageFeed({
   locale = 'es_LA',
   version = 'v19.0',
   className = '',
-}: FacebookPageFeedProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+}) {
+  const containerRef = useRef(null);
   const [sdkLoaded, setSdkLoaded] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
@@ -89,7 +51,7 @@ export default function FacebookPageFeed({
   useEffect(() => {
     if (!sdkLoaded || typeof window === 'undefined') return;
 
-    let resizeTimer: NodeJS.Timeout;
+    let resizeTimer;
     const handleResize = () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {

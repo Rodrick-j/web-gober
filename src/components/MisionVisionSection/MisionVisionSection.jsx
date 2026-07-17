@@ -3,71 +3,94 @@
 import styles from './MisionVisionSection.module.css';
 import { motion } from 'framer-motion';
 
-// SVG Icons
 const MissionIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--acento, #8B0000)' }}>
-    <circle cx="12" cy="12" r="10"></circle>
-    <circle cx="12" cy="12" r="6"></circle>
-    <circle cx="12" cy="12" r="2"></circle>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <circle cx="12" cy="12" r="6"/>
+    <circle cx="12" cy="12" r="2"/>
   </svg>
 );
 
 const VisionIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--acento, #8B0000)' }}>
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-    <circle cx="12" cy="12" r="3"></circle>
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+    <circle cx="12" cy="12" r="3"/>
   </svg>
 );
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, delay: i * 0.15, type: 'spring', stiffness: 80 }
+  })
+};
+
 export default function MisionVisionSection({ mision, vision, titleClass, textClass }) {
+  if (!mision && !vision) return null;
+
   return (
     <div className={styles.container}>
       {mision && (
-        <InfoCard 
-          title="Nuestra Misión" 
-          text={mision} 
-          Icon={MissionIcon} 
-          titleClass={titleClass} 
-          textClass={textClass} 
-        />
+        <motion.div
+          className={`${styles.card} ${styles.misionCard}`}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          custom={0}
+          variants={cardVariants}
+          whileHover={{ y: -5, transition: { duration: 0.2 } }}
+        >
+          <div className={styles.cardGlow} />
+          <div className={styles.cardInner}>
+            <div className={styles.iconWrap}>
+              <div className={styles.iconCircle}>
+                <MissionIcon />
+              </div>
+              <div className={styles.iconLabel}>MISIÓN</div>
+            </div>
+            <div className={styles.divider} />
+            <h2 className={`${styles.cardTitle} ${titleClass || ''}`}>
+              Nuestra Misión
+            </h2>
+            <p className={`${styles.cardText} ${textClass || ''}`}>
+              {mision}
+            </p>
+          </div>
+          <div className={styles.cardAccent} />
+        </motion.div>
       )}
+
       {vision && (
-        <InfoCard 
-          title="Nuestra Visión" 
-          text={vision} 
-          Icon={VisionIcon} 
-          titleClass={titleClass} 
-          textClass={textClass} 
-        />
+        <motion.div
+          className={`${styles.card} ${styles.visionCard}`}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-40px' }}
+          custom={1}
+          variants={cardVariants}
+          whileHover={{ y: -5, transition: { duration: 0.2 } }}
+        >
+          <div className={styles.cardGlow} />
+          <div className={styles.cardInner}>
+            <div className={styles.iconWrap}>
+              <div className={`${styles.iconCircle} ${styles.iconCircleBlue}`}>
+                <VisionIcon />
+              </div>
+              <div className={`${styles.iconLabel} ${styles.iconLabelBlue}`}>VISIÓN</div>
+            </div>
+            <div className={styles.divider} />
+            <h2 className={`${styles.cardTitle} ${titleClass || ''}`}>
+              Nuestra Visión
+            </h2>
+            <p className={`${styles.cardText} ${textClass || ''}`}>
+              {vision}
+            </p>
+          </div>
+          <div className={`${styles.cardAccent} ${styles.cardAccentBlue}`} />
+        </motion.div>
       )}
     </div>
-  );
-}
-
-function InfoCard({ title, text, Icon, titleClass, textClass }) {
-  return (
-    <motion.div 
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      variants={{
-        hidden: { opacity: 0, y: 25 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5, type: "spring" } }
-      }}
-      whileHover={{ y: -4, boxShadow: '0 15px 35px rgba(0,0,0,0.08)' }}
-      className={styles.card}
-    >
-      <div className={styles.cardHeader}>
-        <div className={styles.iconBox}>
-          <Icon />
-        </div>
-        <h2 className={styles.cardTitle}>
-          {title}
-        </h2>
-      </div>
-      <div className={`${styles.cardText} ${textClass || ''}`}>
-        {text}
-      </div>
-    </motion.div>
   );
 }

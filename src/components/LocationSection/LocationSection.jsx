@@ -147,7 +147,7 @@ export default function LocationSection({ contacto }) {
                       className="building-video"
                     />
                     <div className="building-overlay">
-                      <span className="building-tag">📍 Sede Principal</span>
+                      <span className="building-tag">📍 Sede Principal · Palacio de Gobierno</span>
                     </div>
                   </div>
 
