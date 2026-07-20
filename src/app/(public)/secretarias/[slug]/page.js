@@ -155,11 +155,16 @@ export default async function SecretariaDetailPage({ params }) {
             {/* Telón estético (usa el banner si existe) para ocultar la carga de YouTube */}
             <div 
               className={styles.videoCurtain}
-              style={sec.banner_url ? { 
-                backgroundImage: `url(${sec.banner_url})`, 
+              style={{ 
+                position: 'absolute', 
+                top: 0, 
+                left: 0, 
+                width: '100%', 
+                height: '100%', 
+                backgroundImage: `url(${sec.banner_url || '/secretaria_default_banner.png'})`, 
                 backgroundSize: 'cover', 
                 backgroundPosition: 'center' 
-              } : { backgroundColor: '#111' }}
+              }}
             ></div>
           </div>
         ) : (

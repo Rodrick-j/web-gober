@@ -78,17 +78,37 @@ export default function PlanificacionSection({ secretariaId }) {
           <button
             onClick={() => setActiveTab(activeTab === 'sistemas' ? 'territorio' : 'sistemas')}
             style={{
-              padding: '0.6rem 1.25rem',
-              background: activeTab !== 'sistemas' ? '#9c0720' : '#f5f5f5',
-              color: activeTab !== 'sistemas' ? '#fff' : '#444',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: 'bold',
+              padding: '0.65rem 1.4rem',
+              background: activeTab !== 'sistemas' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#ffffff',
+              color: activeTab !== 'sistemas' ? '#ffffff' : '#475569',
+              border: activeTab !== 'sistemas' ? 'none' : '1px solid #e2e8f0',
+              borderRadius: '10px',
+              fontWeight: '800',
+              fontSize: '0.95rem',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem',
-              transition: 'all 0.2s'
+              gap: '0.6rem',
+              transition: 'all 0.3s ease',
+              boxShadow: activeTab !== 'sistemas' ? '0 4px 12px rgba(156,7,32,0.25)' : '0 2px 6px rgba(0,0,0,0.02)'
+            }}
+            onMouseEnter={(e) => {
+              if (activeTab === 'sistemas') {
+                e.currentTarget.style.background = '#f8fafc';
+                e.currentTarget.style.borderColor = '#cbd5e1';
+              } else {
+                e.currentTarget.style.transform = 'translateY(-1px)';
+                e.currentTarget.style.boxShadow = '0 6px 16px rgba(156,7,32,0.3)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeTab === 'sistemas') {
+                e.currentTarget.style.background = '#ffffff';
+                e.currentTarget.style.borderColor = '#e2e8f0';
+              } else {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(156,7,32,0.25)';
+              }
             }}
           >
             <MapPin size={18} /> {activeTab !== 'sistemas' ? 'Cerrar Mapas' : 'Ver Mapas y Territorio'}
@@ -105,13 +125,24 @@ export default function PlanificacionSection({ secretariaId }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+            <div style={{ 
+              display: 'inline-flex', 
+              gap: '0.2rem', 
+              marginBottom: '2rem', 
+              flexWrap: 'wrap',
+              background: '#f1f5f9',
+              padding: '0.35rem',
+              borderRadius: '12px',
+              border: '1px solid #e2e8f0',
+              boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
+            }}>
               <button
                 onClick={() => setViewMode('dashboard')}
                 style={{
-                  background: viewMode === 'dashboard' ? '#9c0720' : '#f5f5f5',
-                  color: viewMode === 'dashboard' ? '#fff' : '#444',
-                  border: 'none', padding: '0.6rem 1.25rem', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.5rem'
+                  background: viewMode === 'dashboard' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  color: viewMode === 'dashboard' ? '#ffffff' : '#475569',
+                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'dashboard' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
                 <PieChart size={18} /> Vista Interactiva
@@ -119,9 +150,10 @@ export default function PlanificacionSection({ secretariaId }) {
               <button
                 onClick={() => setViewMode('excel')}
                 style={{
-                  background: viewMode === 'excel' ? '#9c0720' : '#f5f5f5',
-                  color: viewMode === 'excel' ? '#fff' : '#444',
-                  border: 'none', padding: '0.6rem 1.25rem', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.5rem'
+                  background: viewMode === 'excel' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  color: viewMode === 'excel' ? '#ffffff' : '#475569',
+                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'excel' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
                 <Database size={18} /> Planilla Excel POA
@@ -129,9 +161,10 @@ export default function PlanificacionSection({ secretariaId }) {
               <button
                 onClick={() => setViewMode('cards')}
                 style={{
-                  background: viewMode === 'cards' ? '#9c0720' : '#f5f5f5',
-                  color: viewMode === 'cards' ? '#fff' : '#444',
-                  border: 'none', padding: '0.6rem 1.25rem', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '0.5rem'
+                  background: viewMode === 'cards' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  color: viewMode === 'cards' ? '#ffffff' : '#475569',
+                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'cards' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
                 <FileText size={18} /> Documentos (PDF)

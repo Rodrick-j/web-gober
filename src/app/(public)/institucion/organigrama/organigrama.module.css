@@ -178,7 +178,7 @@
     0 10px 25px -5px rgba(0, 0, 0, 0.1),
     0 8px 10px -6px rgba(0, 0, 0, 0.05);
   position: relative;
-  z-index: 2;
+  z-index: 10;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -345,7 +345,7 @@
 .supportLineLeft {
   position: absolute;
   top: 50%;
-  right: -calc(3.5rem + 120px);
+  left: 100%;
   width: calc(3.5rem + 120px);
   height: 2px;
   background-color: #ffb843;
@@ -355,7 +355,7 @@
 .supportLineRight {
   position: absolute;
   top: 50%;
-  left: -calc(3.5rem + 120px);
+  right: 100%;
   width: calc(3.5rem + 120px);
   height: 2px;
   background-color: #ffb843;
@@ -758,7 +758,7 @@
   .supportLineLeft {
     position: absolute;
     top: 50%;
-    right: -calc(1.25rem + 65px);
+    left: 100%;
     width: calc(1.25rem + 65px);
     height: 2px;
     background-color: #ffb843;
@@ -768,7 +768,7 @@
   .supportLineRight {
     position: absolute;
     top: 50%;
-    left: -calc(1.25rem + 65px);
+    right: 100%;
     width: calc(1.25rem + 65px);
     height: 2px;
     background-color: #ffb843;

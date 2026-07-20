@@ -501,7 +501,8 @@ export default function BudgetDashboard() {
                 >
                   <div style={{ 
                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', 
-                    backgroundImage: `url(${prog.image})`, backgroundSize: 'cover', backgroundPosition: 'center',
+                    backgroundImage: prog.image ? `url(${prog.image})` : `linear-gradient(135deg, ${prog.color || '#333'} 0%, #111 100%)`, 
+                    backgroundSize: 'cover', backgroundPosition: 'center',
                     transition: 'transform 0.5s ease'
                   }}
                   onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.08)'}

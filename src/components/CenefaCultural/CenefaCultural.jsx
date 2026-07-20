@@ -6,7 +6,7 @@ import styles from './CenefaCultural.module.css';
 
 export default function CenefaCultural() {
   const [items, setItems] = useState([]);
-  
+
   const motifs = [
     '/motivos/motivo_10.png',
     '/motivos/motivo_11.png'
@@ -20,7 +20,7 @@ export default function CenefaCultural() {
     };
 
     setItems(generateItems(window.innerWidth));
-    
+
     // Debounced resize handler
     let resizeTimer;
     const handleResize = () => {
@@ -29,7 +29,7 @@ export default function CenefaCultural() {
         setItems(generateItems(window.innerWidth));
       }, 200);
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -43,8 +43,8 @@ export default function CenefaCultural() {
     <div className={styles.cenefaContainer}>
       {items.map((src, index) => (
         <div key={index} className={styles.motifItem}>
-          <Image 
-            src={src} 
+          <Image
+            src={src}
             alt={`Motivo Cultural ${index}`}
             fill
             sizes="30px"

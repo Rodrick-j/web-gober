@@ -49,7 +49,6 @@ export default function GobernadorPage() {
               {/* Placa Ejecutiva / Footer Oficial */}
               <div className={styles.portraitFooter}>
                 <div className={styles.footerBadge}>
-                  <span className={styles.footerFlag}>🇧🇴</span>
                   <span className={styles.footerRole}>Gobernador Constitucional</span>
                 </div>
                 <div className={styles.footerEntity}>Departamento de Oruro — Gestión 2026</div>

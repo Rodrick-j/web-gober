@@ -72,7 +72,9 @@
   position: relative;
   z-index: 3;
   margin-top: -10px;
-  background: linear-gradient(135deg, #9c0720 0%, #67181a 100%);
+  background: linear-gradient(135deg, rgba(156, 7, 32, 0.85) 0%, rgba(103, 24, 26, 0.85) 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 1.3rem 1.5rem 1.2rem 1.5rem;
   border-radius: 16px;
   border: 1px solid rgba(212, 175, 55, 0.35);
