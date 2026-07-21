@@ -50,7 +50,7 @@ export default function SocialFeeds({ redes }) {
               </svg>
             </div>
             <div className={styles.avatarWrapper}>
-              <img src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
+              <img loading="lazy" src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
               <div className={`${styles.statusRing} ${styles.fbRing}`}></div>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function SocialFeeds({ redes }) {
               </svg>
             </div>
             <div className={styles.avatarWrapper}>
-              <img src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
+              <img loading="lazy" src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
               <div className={`${styles.statusRing} ${styles.igRing}`}></div>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default function SocialFeeds({ redes }) {
                   <span style={{ color: '#64748B', fontSize: '0.85rem', fontWeight: 600 }}>📍 Oruro, Bolivia</span>
                 </div>
                 <div className={styles.liveImageBox} onDoubleClick={() => setIgLikes(l => l + 1)} style={{ cursor: 'pointer' }}>
-                  <img src="/gober_oruro.jpg" alt="Gobierno Oruro" className={styles.liveImage} />
+                  <img loading="lazy" src="/gober_oruro.jpg" alt="Gobierno Oruro" className={styles.liveImage} />
                 </div>
                 <div className={styles.liveCaptionBox}>
                   <strong>@infounicom.gador:</strong> ¡Avanzando juntos por la gestión departamental! Inspección de infraestructura, salud y obras productivas en el territorio. #Oruro2026 ✨
@@ -167,7 +167,7 @@ export default function SocialFeeds({ redes }) {
               </svg>
             </div>
             <div className={styles.avatarWrapper}>
-              <img src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
+              <img loading="lazy" src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
               <div className={`${styles.statusRing} ${styles.tkRing}`}></div>
             </div>
           </div>
@@ -190,7 +190,7 @@ export default function SocialFeeds({ redes }) {
                   <span style={{ color: '#94A3B8', fontSize: '0.85rem', fontWeight: 600 }}>🎵 Sonido Original</span>
                 </div>
                 <a href={tkUrl} target="_blank" rel="noopener noreferrer" className={styles.liveImageBox} style={{ display: 'block', textDecoration: 'none' }}>
-                  <img src="/icono-planificacion.jpg" alt="Video TikTok Oruro" className={styles.liveImage} />
+                  <img loading="lazy" src="/icono-planificacion.jpg" alt="Video TikTok Oruro" className={styles.liveImage} />
                   <div className={styles.videoPlayOverlay}>
                     <div className={styles.videoPlayCircle}>▶</div>
                     <span className={styles.videoPlayText}>▶ 38.2K reproducciones</span>
@@ -230,7 +230,7 @@ export default function SocialFeeds({ redes }) {
               </svg>
             </div>
             <div className={styles.avatarWrapper}>
-              <img src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
+              <img loading="lazy" src="/logo-gador.png" alt="Icono GADOR Oruro" className={styles.avatar} />
               <div className={`${styles.statusRing} ${styles.ytRing}`}></div>
             </div>
           </div>

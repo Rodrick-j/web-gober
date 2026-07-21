@@ -6,7 +6,9 @@
 }
 
 .headerSection {
-  background: linear-gradient(135deg, #1a1a1a 0%, #a80a15 100%);
+  background: 
+    linear-gradient(135deg, rgba(26, 26, 26, 0.85) 0%, rgba(168, 10, 21, 0.75) 100%),
+    url('/bg-gaceta.png') center/cover no-repeat;
   color: white;
   padding: 4rem 1rem;
   text-align: center;
@@ -31,7 +33,7 @@
 }
 
 .headerTitle {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 1rem;
@@ -69,7 +71,7 @@
 }
 
 .filterTitle {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-weight: 700;
   margin-bottom: 1.5rem;
   color: var(--color-text);
@@ -221,7 +223,7 @@
 }
 
 .docTitle {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-text);
@@ -312,7 +314,7 @@
 }
 
 .emptyState h3 {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.5rem;
   margin: 1rem 0 0.5rem;
 }

@@ -98,7 +98,7 @@
 }
 
 .footerRole {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 0.85rem;
   font-weight: 700;
   color: #D4AF37;
@@ -107,7 +107,7 @@
 }
 
 .footerEntity {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.05rem;
   font-weight: 800;
   color: #FFFFFF;

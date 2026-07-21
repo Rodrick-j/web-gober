@@ -90,7 +90,7 @@ export default function SecretariatsSection({ secretarias = [] }) {
                   {/* Background Image Container */}
                   <div className="secretariat-card-bg">
                     {getSecretariaImage(sec.slug, sec.banner_url) ? (
-                      <img src={getSecretariaImage(sec.slug, sec.banner_url)} alt={sec.nombre_corto || sec.nombre} className="secretariat-image" />
+                      <img loading="lazy" src={getSecretariaImage(sec.slug, sec.banner_url)} alt={sec.nombre_corto || sec.nombre} className="secretariat-image" />
                     ) : (
                       <div className="secretariat-card-fallback-bg" style={{ background: `linear-gradient(135deg, ${sec.color_acento || '#C1272D'} 0%, #1a1a2e 100%)` }}>
                         <span className="fallback-icon">{sec.icono || '🏛️'}</span>
@@ -176,7 +176,7 @@ export default function SecretariatsSection({ secretarias = [] }) {
                 <div className="sec-modal-left" style={{ background: `linear-gradient(135deg, var(--theme-color) 0%, #0d0d11 100%)` }}>
                   <div className="sec-modal-photo-wrapper">
                     {selectedSec.secretario_foto_url ? (
-                      <img src={selectedSec.secretario_foto_url} alt={selectedSec.secretario_nombre} className="sec-modal-photo" />
+                      <img loading="lazy" src={selectedSec.secretario_foto_url} alt={selectedSec.secretario_nombre} className="sec-modal-photo" />
                     ) : (
                       <div className="sec-modal-photo-placeholder">
                         <span className="sec-modal-icon">{selectedSec.icono || '🏛️'}</span>

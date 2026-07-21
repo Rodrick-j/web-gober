@@ -80,6 +80,26 @@ export default async function SecretariaDetailPage({ params }) {
     sec.video_url = '/video-desarrollo-productivo.mp4';
   }
 
+  // Override para secretaría de obras públicas
+  if (slug.includes('obras')) {
+    sec.video_url = '/video-obras-publicas.mp4';
+  }
+
+  // Override para secretaría de medio ambiente
+  if (slug.includes('medio-ambiente') || slug.includes('madre-tierra') || slug.includes('agua')) {
+    sec.video_url = '/video-medio-ambiente.mp4';
+  }
+
+  // Override para secretaría de minería
+  if (slug.includes('mineria') || slug.includes('metalurgia')) {
+    sec.video_url = '/video-mineria.mp4';
+  }
+
+  // Override para secretaría de desarrollo social
+  if (slug.includes('social')) {
+    sec.video_url = '/video-desarrollo-social.mp4';
+  }
+
   const acento = sec.color_acento || '#8B0000';
   
   const hasSpecificVideo = sec.video_url && sec.video_url.trim() !== '';
@@ -109,6 +129,7 @@ export default async function SecretariaDetailPage({ params }) {
   const isProductivo = slug.includes('productiv') || slug.includes('industria');
   const isCompactVideo = hasVideo && isProductivo;
 
+
   return (
     <>
 
@@ -124,24 +145,7 @@ export default async function SecretariaDetailPage({ params }) {
               playsInline
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
-            {/* Texto ORURO para tapar marca de agua de Gemini */}
-            <div style={{
-              position: 'absolute',
-              bottom: '5px',
-              right: '20px',
-              zIndex: 10,
-              color: 'rgba(255,255,255,0.9)',
-              fontSize: '1.2rem',
-              fontWeight: '900',
-              letterSpacing: '5px',
-              textShadow: '0 2px 5px rgba(0,0,0,0.8)',
-              padding: '10px 25px',
-              background: 'rgba(0,0,0,0.6)',
-              borderRadius: '8px',
-              backdropFilter: 'blur(8px)'
-            }}>
-              ORURO
-            </div>
+
           </div>
         ) : youtubeId ? (
           <div className={styles.videoWrapper}>

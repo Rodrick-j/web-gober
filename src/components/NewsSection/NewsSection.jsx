@@ -67,6 +67,7 @@ export default function NewsSection({ noticias = [] }) {
                     src={featured.imagen} 
                     alt={featured.title} 
                     fill
+                    priority
                     className={styles.featuredImage}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     quality={80}
