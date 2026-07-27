@@ -69,7 +69,15 @@ const navItems = [
       { label: 'Marco Normativo', Icon: Scale, href: '/institucion/marco-normativo' },
     ],
   },
-  { label: 'Transparencia', Icon: Search, href: '/transparencia' },
+  {
+    label: 'Transparencia',
+    Icon: Search,
+    href: '/transparencia',
+    children: [
+      { label: 'Lucha contra la Corrupción', Icon: Scale, href: '/transparencia#lucha' },
+      { label: 'Auditoria Interna', Icon: ClipboardList, href: '/transparencia#auditoria' },
+    ],
+  },
   { label: 'Noticias', Icon: Newspaper, href: '/noticias' },
 ];
 

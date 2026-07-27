@@ -8,6 +8,7 @@ import styles from './SecretariaDetail.module.css';
 
 import EstadisticasChartWrapper from '@/components/EstadisticasChart/EstadisticasChartWrapper';
 import PlanificacionSection from './PlanificacionSection';
+import SecretariatTabs from '@/components/SecretariatTabs/SecretariatTabs';
 
 
 
@@ -133,7 +134,7 @@ export default async function SecretariaDetailPage({ params }) {
   return (
     <>
 
-      <div style={{ backgroundColor: '#fafafa', minHeight: '100vh', '--acento': acento }}>
+      <div style={{ backgroundColor: 'transparent', '--acento': acento }}>
       <div className={styles.hero}>
         {isDirectMp4 ? (
           <div className={styles.videoWrapper}>
@@ -185,127 +186,9 @@ export default async function SecretariaDetailPage({ params }) {
         <div className={styles.heroOverlay}></div>
       </div>
 
-      <div className={styles.mainContainer}>
-        {/* Columna Principal (Textos) */}
-        <div>
-          <div className={styles.contentBlock}>
-            {sec.descripcion && (
-              <>
-                <h2 className={styles.sectionTitle}>Acerca de nosotros</h2>
-                <div className={styles.textBody} style={{ fontSize: '1.2rem', color: '#222' }}>
-                  {sec.descripcion}
-                </div>
-              </>
-            )}
-
-            <MisionVisionSection 
-              mision={sec.mision} 
-              vision={sec.vision} 
-              titleClass={styles.sectionTitle} 
-              textClass={styles.textBody} 
-            />
-
-            {!sec.descripcion && !sec.mision && !sec.vision && (
-              <p style={{ color: '#888', fontStyle: 'italic', textAlign: 'center', padding: '2rem 0' }}>
-                La información detallada de esta secretaría se está actualizando.
-              </p>
-            )}
-
-
-          </div>
-        </div>
-
-        {/* Columna Lateral (Sidebar) */}
-        <div>
-          {/* Tarjeta de Autoridad */}
-          <div className={styles.sidebarCard}>
-            <div className={styles.sidebarCardHeader}>Autoridad a Cargo</div>
-            <div className={styles.sidebarCardBody}>
-              <div className={styles.secretarioInfo}>
-                {sec.secretario_foto_url ? (
-                  <Image 
-                    src={sec.secretario_foto_url} 
-                    alt={sec.secretario_nombre || 'Autoridad'} 
-                    width={300}
-                    height={350}
-                    className={styles.secretarioFoto} 
-                  />
-                ) : (
-                  <div className={styles.secretarioFotoPlaceholder}>👤</div>
-                )}
-                <h3 className={styles.secretarioNombre}>
-                  {sec.secretario_nombre || 'Por designar'}
-                </h3>
-                <div className={styles.secretarioCargo}>
-                  {sec.secretario_cargo || 'Autoridad Departamental'}
-                </div>
-                {sec.secretario_bio && (
-                  <p className={styles.secretarioBio}>{sec.secretario_bio}</p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Tarjeta de Contacto */}
-          <div className={styles.sidebarCard}>
-            <div className={styles.sidebarCardHeader}>Atención al Ciudadano</div>
-            <div className={styles.sidebarCardBody}>
-              {sec.direccion && (
-                <div className={styles.contactoItem}>
-                  <div className={styles.contactoIcon}>📍</div>
-                  <div>
-                    <span className={styles.contactoLabel}>Dirección</span>
-                    <span className={styles.contactoValor}>{sec.direccion}</span>
-                  </div>
-                </div>
-              )}
-              
-              {sec.telefono && (
-                <div className={styles.contactoItem}>
-                  <div className={styles.contactoIcon}>📞</div>
-                  <div>
-                    <span className={styles.contactoLabel}>Teléfono</span>
-                    <span className={styles.contactoValor}>{sec.telefono}</span>
-                  </div>
-                </div>
-              )}
-
-              {sec.email && (
-                <div className={styles.contactoItem}>
-                  <div className={styles.contactoIcon}>✉️</div>
-                  <div>
-                    <span className={styles.contactoLabel}>Correo Electrónico</span>
-                    <span className={styles.contactoValor}>{sec.email}</span>
-                  </div>
-                </div>
-              )}
-
-              {sec.horario && (
-                <div className={styles.contactoItem}>
-                  <div className={styles.contactoIcon}>🕒</div>
-                  <div>
-                    <span className={styles.contactoLabel}>Horarios de Atención</span>
-                    <span className={styles.contactoValor}>{sec.horario}</span>
-                  </div>
-                </div>
-              )}
-
-              {!sec.direccion && !sec.telefono && !sec.email && !sec.horario && (
-                <p style={{ color: '#888', fontStyle: 'italic', textAlign: 'center', margin: 0 }}>
-                  Información de contacto no disponible.
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
       </div>
 
-      {slug.includes('planificacion') && (
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '2rem 1.5rem 4rem 1.5rem', width: '100%' }}>
-          <PlanificacionSection secretariaId={sec.id} />
-        </div>
-      )}
+      <SecretariatTabs sec={sec} slug={slug} />
 
     </>
   );

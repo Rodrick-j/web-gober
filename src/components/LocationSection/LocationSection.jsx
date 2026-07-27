@@ -184,12 +184,12 @@ export default function LocationSection({ contacto }) {
                   <div className="horario-clock">
                     {/* Reloj SVG animado */}
                     <svg viewBox="0 0 80 80" className="clock-svg">
-                      <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" strokeWidth="2" fill="none"/>
-                      <circle cx="40" cy="40" r="36" stroke="#ffb843" strokeWidth="2" fill="none"
+                      <circle cx="40" cy="40" r="36" stroke="var(--color-border)" strokeWidth="2" fill="none"/>
+                      <circle cx="40" cy="40" r="36" stroke="var(--color-primary)" strokeWidth="2" fill="none"
                         strokeDasharray="226" strokeDashoffset="56" strokeLinecap="round"/>
-                      <line x1="40" y1="40" x2="40" y2="16" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
-                      <line x1="40" y1="40" x2="54" y2="40" stroke="rgba(255,184,67,0.9)" strokeWidth="2" strokeLinecap="round"/>
-                      <circle cx="40" cy="40" r="3" fill="#ffb843"/>
+                      <line x1="40" y1="40" x2="40" y2="16" stroke="var(--color-text)" strokeWidth="2.5" strokeLinecap="round"/>
+                      <line x1="40" y1="40" x2="54" y2="40" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round"/>
+                      <circle cx="40" cy="40" r="3" fill="var(--color-primary)"/>
                     </svg>
                     <div className="horario-now">
                       <span className="horario-now-label">Hoy</span>
