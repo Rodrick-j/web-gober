@@ -17,18 +17,22 @@ export default function SecretariatsSection({ secretarias = [] }) {
   const [selectedSec, setSelectedSec] = useState(null);
 
   const getSecretariaImage = (slug, banner_url) => {
-    if (banner_url) return banner_url;
+    // Si la DB tiene una imagen y NO queremos que se muestre, podríamos comentar esta línea.
+    // Pero por ahora, priorizamos las imágenes locales (o limpiamos la caché).
+    // if (banner_url) return banner_url; 
+    
     if (!slug) return null;
-    if (slug.includes('general')) return '/images/secretarias/sec_general.png';
-    if (slug.includes('productiv')) return '/images/secretarias/desarrollo_productivo.png';
-    if (slug.includes('cultur')) return '/images/secretarias/cultura_turismo.png';
-    if (slug.includes('obras')) return '/images/secretarias/obras_publicas.png';
-    if (slug.includes('miner')) return '/images/secretarias/mineria.png';
-    if (slug.includes('medio-ambiente')) return '/images/secretarias/medio_ambiente.png';
-    if (slug.includes('desarrollo-social')) return '/images/secretarias/desarrollo_social.png';
-    if (slug.includes('planificacion')) return '/images/secretarias/planificacion.jpg';
-    if (slug.includes('juridicos')) return '/images/secretarias/asuntos_juridicos.jpg';
-    if (slug.includes('finanzas')) return '/images/secretarias/admin_finanzas.jpg';
+    const cacheBuster = '?v=2';
+    if (slug.includes('general')) return '/images/secretarias/sec_general.png' + cacheBuster;
+    if (slug.includes('productiv')) return '/images/secretarias/desarrollo_productivo.png' + cacheBuster;
+    if (slug.includes('cultur')) return '/images/secretarias/cultura_turismo.png' + cacheBuster;
+    if (slug.includes('obras')) return '/images/secretarias/obras_publicas.png' + cacheBuster;
+    if (slug.includes('miner')) return '/images/secretarias/mineria.png' + cacheBuster;
+    if (slug.includes('medio-ambiente')) return '/images/secretarias/medio_ambiente.png' + cacheBuster;
+    if (slug.includes('desarrollo-social')) return '/images/secretarias/desarrollo_social.png' + cacheBuster;
+    if (slug.includes('planificacion')) return '/images/secretarias/planificacion.jpg' + cacheBuster;
+    if (slug.includes('juridicos')) return '/images/secretarias/asuntos_juridicos.jpg' + cacheBuster;
+    if (slug.includes('finanzas')) return '/images/secretarias/admin_finanzas.jpg' + cacheBuster;
     return null;
   };
 
