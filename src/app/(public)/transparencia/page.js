@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './page.module.css';
+import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackground';
 
 export const metadata = {
   title: 'Transparencia | GADOR',
@@ -9,20 +10,21 @@ export const metadata = {
 
 export default function TransparenciaPage() {
   const luchaCorrupcion = [
-    { title: 'RENDICION DE CUENTAS', image: '/secretaria_default_banner.png', link: '#' },
-    { title: 'ACTIVIDADES', image: '/secretaria_default_banner.png', link: '#' },
-    { title: 'FORMULARIO DE RECLAMOS Y SUGERENCIAS', image: '/secretaria_default_banner.png', link: '#' },
+    { title: 'RENDICION DE CUENTAS', image: '/secretaria_default_banner.png', link: '/transparencia/rendicion_cuentas' },
+    { title: 'ACTIVIDADES', image: '/secretaria_default_banner.png', link: '/transparencia/actividades' },
+    { title: 'FORMULARIO DE RECLAMOS Y SUGERENCIAS', image: '/secretaria_default_banner.png', link: '/transparencia/reclamos' },
   ];
 
   const auditoria = [
-    { title: 'AUDITORIA INTERNA G.A.D.O.R.', image: '/secretaria_default_banner.png', link: '#' },
-    { title: 'AUDITORIA INTERNA S.E.D.C.A.M.', image: '/secretaria_default_banner.png', link: '#' },
-    { title: 'AUDITORIA INTERNA S.E.D.E.G.E.S.', image: '/secretaria_default_banner.png', link: '#' },
-    { title: 'AUDITORIA INTERNA S.E.D.E.S.', image: '/secretaria_default_banner.png', link: '#' },
+    { title: 'AUDITORIA INTERNA G.A.D.O.R.', image: '/secretaria_default_banner.png', link: '/transparencia/auditoria_gador' },
+    { title: 'AUDITORIA INTERNA S.E.D.C.A.M.', image: '/secretaria_default_banner.png', link: '/transparencia/auditoria_sedcam' },
+    { title: 'AUDITORIA INTERNA S.E.D.E.G.E.S.', image: '/secretaria_default_banner.png', link: '/transparencia/auditoria_sedeges' },
+    { title: 'AUDITORIA INTERNA S.E.D.E.S.', image: '/secretaria_default_banner.png', link: '/transparencia/auditoria_sedes' },
   ];
 
   return (
     <main className={styles.main}>
+      <AnimatedBackground />
       <div className={styles.heroBanner}>
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>

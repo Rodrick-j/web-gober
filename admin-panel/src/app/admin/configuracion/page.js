@@ -37,6 +37,10 @@ export default function ConfiguracionPage() {
   });
   const [comunicadoFile, setComunicadoFile] = useState(null);
 
+  // Estado para Videos de Inicio
+  const [videosInicio, setVideosInicio] = useState([]);
+  const [nuevoVideo, setNuevoVideo] = useState('');
+
   useEffect(() => {
     async function cargarConfiguracion() {
       const { data, error } = await supabase
@@ -65,6 +69,9 @@ export default function ConfiguracionPage() {
               enlace: config.valor.enlace || ''
             });
           }
+          if (config.clave === 'video_inicio') {
+            setVideosInicio(config.valor.urls || (config.valor.url ? [config.valor.url] : []));
+          }
         });
       }
       setLoading(false);
@@ -83,6 +90,19 @@ export default function ConfiguracionPage() {
     const nuevos = [...mensajes];
     nuevos.splice(index, 1);
     setMensajes(nuevos);
+  };
+
+  const handleAgregarVideo = () => {
+    if (nuevoVideo.trim()) {
+      setVideosInicio([...videosInicio, nuevoVideo.trim()]);
+      setNuevoVideo('');
+    }
+  };
+
+  const handleQuitarVideo = (index) => {
+    const nuevos = [...videosInicio];
+    nuevos.splice(index, 1);
+    setVideosInicio(nuevos);
   };
 
   const handleGuardarTodo = async () => {
@@ -136,6 +156,12 @@ export default function ConfiguracionPage() {
       valor: comunicadoData
     });
 
+    // Upsert Video Inicio
+    await supabase.from('configuracion_global').upsert({
+      clave: 'video_inicio',
+      valor: { urls: videosInicio }
+    });
+
     // Limpiar caché de Next.js para reflejar los cambios en público inmediatamente
     await revalidateConfig();
 
@@ -157,6 +183,47 @@ export default function ConfiguracionPage() {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
         
+        {/* Video Inicio Section */}
+        <div className="tableCard" style={{ padding: '2rem' }}>
+          <h2 style={{ marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
+            Videos Destacados de Inicio (YouTube)
+          </h2>
+          <div style={{ marginBottom: '1.5rem' }}>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              Enlaces / URLs de YouTube
+            </label>
+            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
+              <input 
+                type="text" 
+                className="input" 
+                placeholder="Ej: https://youtu.be/p_RYdGArBqE"
+                value={nuevoVideo} 
+                onChange={(e) => setNuevoVideo(e.target.value)}
+                onKeyDown={(e) => { if(e.key === 'Enter') handleAgregarVideo() }}
+                style={{ flex: 1, padding: '0.5rem' }}
+              />
+              <button type="button" onClick={handleAgregarVideo} className="btnPrimary" style={{ padding: '0.5rem 1rem' }}>
+                Agregar
+              </button>
+            </div>
+            <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.5rem', marginBottom: '1rem' }}>
+              Pega aquí los enlaces de los videos de YouTube que quieres mostrar en la sección principal de la página de inicio.
+            </p>
+
+            <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {videosInicio.length === 0 && <li style={{ color: '#999' }}>No hay videos configurados.</li>}
+              {videosInicio.map((url, index) => (
+                <li key={index} style={{ display: 'flex', justifyContent: 'space-between', background: '#f5f5f5', padding: '0.5rem 1rem', borderRadius: '4px' }}>
+                  <span>{url}</span>
+                  <button type="button" onClick={() => handleQuitarVideo(index)} style={{ color: 'red', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>
+                    ✕ Quitar
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
         {/* Ticker Section */}
         <div className="tableCard" style={{ padding: '2rem' }}>
           <h2 style={{ marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>

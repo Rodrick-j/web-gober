@@ -24,31 +24,34 @@ function formatFecha(fechaStr) {
   return new Date(dateOnly + 'T00:00:00').toLocaleDateString('es-BO');
 }
 
-export default async function TransparenciaPage() {
-  const supabase = await createClient();
-  
-  // Try to get transparencia documentos
-  let { data: documentos, error } = await supabase
-    .from('transparencia_documentos')
-    .select('id, tipo, gestion, titulo, fecha_publicacion, es_publico, archivo_url')
-    .order('gestion', { ascending: false })
-    .order('fecha_publicacion', { ascending: false });
+export default async function TransparenciaPage({ searchParams }) {
+  try {
+    const params = await searchParams;
+    const activeTab = params?.tab || 'rendicion_cuentas';
+    const supabase = await createClient();
+    
+    // Try to get transparencia documentos
+    let { data: documentos, error } = await supabase
+      .from('transparencia_documentos')
+      .select('id, tipo, gestion, titulo, fecha_publicacion, es_publico, archivo_url')
+      .order('gestion', { ascending: false })
+      .order('fecha_publicacion', { ascending: false });
 
-  if (error) {
-    // Show a helpful error message if the table doesn't exist
-    if (error.code === '42P01') {
-      return (
-        <div className="adminPage">
-          <div className={styles.header}>
-            <div>
-              <h1 className="adminTitle">Transparencia Institucional</h1>
-              <p className="adminSubtitle">Administra documentos de transparencia.</p>
+    if (error) {
+      // Show a helpful error message if the table doesn't exist
+      if (error.code === '42P01') {
+        return (
+          <div className="adminPage">
+            <div className={styles.header}>
+              <div>
+                <h1 className="adminTitle">Transparencia Institucional</h1>
+                <p className="adminSubtitle">Administra documentos de transparencia.</p>
+              </div>
             </div>
-          </div>
-          <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '2rem', borderRadius: '12px', color: '#991b1b', textAlign: 'center' }}>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem' }}>Tabla no encontrada en la Base de Datos</h2>
-            <p style={{ marginBottom: '1rem' }}>Por favor ejecuta el script SQL provisto en el plan de implementación en tu Supabase SQL Editor para crear la tabla <code>transparencia_documentos</code>.</p>
-            <pre style={{ background: '#7f1d1d', color: '#fef2f2', padding: '1rem', borderRadius: '8px', textAlign: 'left', fontSize: '0.85rem', overflowX: 'auto' }}>
+            <div style={{ background: '#fef2f2', border: '1px solid #fecaca', padding: '2rem', borderRadius: '12px', color: '#991b1b', textAlign: 'center' }}>
+              <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem' }}>Tabla no encontrada en la Base de Datos</h2>
+              <p style={{ marginBottom: '1rem' }}>Por favor ejecuta el script SQL provisto en el plan de implementación en tu Supabase SQL Editor para crear la tabla <code>transparencia_documentos</code>.</p>
+              <pre style={{ background: '#7f1d1d', color: '#fef2f2', padding: '1rem', borderRadius: '8px', textAlign: 'left', fontSize: '0.85rem', overflowX: 'auto' }}>
 {`CREATE TABLE transparencia_documentos (
   id uuid default gen_random_uuid() primary key,
   titulo text not null,
@@ -59,34 +62,34 @@ export default async function TransparenciaPage() {
   fecha_publicacion date default CURRENT_DATE,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null
 );`}
-            </pre>
+              </pre>
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
+      console.error(error);
+      documentos = [];
     }
-    console.error(error);
-    documentos = [];
-  }
 
-  // Agrupar por tipo
-  const grupos = {};
-  for (const tipo of Object.keys(TIPO_LABELS)) {
-    grupos[tipo] = (documentos || []).filter(d => d.tipo === tipo);
-  }
+    // Agrupar por tipo
+    const grupos = {};
+    for (const tipo of Object.keys(TIPO_LABELS)) {
+      grupos[tipo] = (documentos || []).filter(d => d.tipo === tipo);
+    }
 
-  return (
+    return (
     <div className="adminPage">
       <div className={styles.header}>
         <div>
           <h1 className="adminTitle">Transparencia Institucional</h1>
           <p className="adminSubtitle">Administra reportes, auditorías y rendiciones de cuenta.</p>
         </div>
-        <Link href="/admin/transparencia/crear" className="btnPrimary">
+        <Link href={`/admin/transparencia/crear?tipo=${activeTab}`} className="btnPrimary">
           + Nuevo Documento
         </Link>
       </div>
 
-      <div style={{ background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '12px', padding: '1.25rem', marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+      <div style={{ background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '12px', padding: '1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
         <div style={{ fontSize: '1.5rem', background: 'var(--admin-surface-2)', padding: '0.75rem', borderRadius: '10px' }}>🔍</div>
         <div>
           <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--admin-text)', marginBottom: '0.25rem' }}>Portal de Transparencia</h3>
@@ -96,9 +99,40 @@ export default async function TransparenciaPage() {
         </div>
       </div>
 
-      {/* Secciones separadas por tipo */}
-      {Object.entries(TIPO_LABELS).map(([tipo, config]) => {
-        const docs = grupos[tipo] || [];
+      {/* Menú de Pestañas (Tabs) */}
+      <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem', marginBottom: '1.5rem' }}>
+        {Object.entries(TIPO_LABELS).map(([tipo, config]) => (
+          <Link
+            key={tipo}
+            href={`?tab=${tipo}`}
+            style={{
+              padding: '0.55rem 1.1rem',
+              borderRadius: '20px',
+              textDecoration: 'none',
+              fontSize: '0.85rem',
+              fontWeight: activeTab === tipo ? 700 : 500,
+              background: activeTab === tipo ? `${config.color}15` : 'transparent',
+              color: activeTab === tipo ? config.color : 'var(--admin-text-muted)',
+              border: `1px solid ${activeTab === tipo ? config.color : 'var(--admin-border)'}`,
+              whiteSpace: 'nowrap',
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              boxShadow: activeTab === tipo ? `0 4px 10px ${config.color}10` : 'none'
+            }}
+          >
+            <span style={{ fontSize: '1rem' }}>{config.emoji}</span> 
+            {config.label}
+          </Link>
+        ))}
+      </div>
+
+      {/* Sección Activa */}
+      {Object.entries(TIPO_LABELS)
+        .filter(([tipo]) => tipo === activeTab)
+        .map(([tipo, config]) => {
+          const docs = grupos[tipo] || [];
         return (
           <div key={tipo} className="tableCard" style={{ marginBottom: '2rem' }}>
             {/* Cabecera de sección */}
@@ -108,11 +142,11 @@ export default async function TransparenciaPage() {
               justifyContent: 'space-between',
               padding: '1.25rem 1.5rem',
               borderBottom: '1px solid var(--admin-border)',
-              background: \`linear-gradient(90deg, \${config.color}10, transparent)\`,
+              background: `linear-gradient(90deg, ${config.color}10, transparent)`,
               borderRadius: '12px 12px 0 0',
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                <span style={{ fontSize: '1.5rem', background: \`\${config.color}18\`, padding: '0.5rem', borderRadius: '10px' }}>
+                <span style={{ fontSize: '1.5rem', background: `${config.color}18`, padding: '0.5rem', borderRadius: '10px' }}>
                   {config.emoji}
                 </span>
                 <div>
@@ -125,16 +159,16 @@ export default async function TransparenciaPage() {
                 </div>
               </div>
               <Link
-                href={\`/admin/transparencia/crear?tipo=\${tipo}\`}
+                href={`/admin/transparencia/crear?tipo=${tipo}`}
                 style={{
                   fontSize: '0.8rem',
                   fontWeight: 600,
                   color: config.color,
-                  border: \`1px solid \${config.color}40\`,
+                  border: `1px solid ${config.color}40`,
                   borderRadius: '20px',
                   padding: '0.4rem 0.9rem',
                   textDecoration: 'none',
-                  background: \`\${config.color}0d\`,
+                  background: `${config.color}0d`,
                   transition: 'all 0.2s'
                 }}
               >
@@ -163,13 +197,13 @@ export default async function TransparenciaPage() {
                   <tbody>
                     {docs.map(doc => (
                       <tr key={doc.id}>
-                        <td><strong style={{ color: config.color, background: \`\${config.color}10\`, padding: '4px 8px', borderRadius: '4px' }}>{doc.gestion}</strong></td>
+                        <td><strong style={{ color: config.color, background: `${config.color}10`, padding: '4px 8px', borderRadius: '4px' }}>{doc.gestion}</strong></td>
                         <td style={{ maxWidth: '280px' }}>{doc.titulo}</td>
                         <td style={{ whiteSpace: 'nowrap' }}>
                           {formatFecha(doc.fecha_publicacion)}
                         </td>
                         <td>
-                          <span className={\`badge \${doc.es_publico ? 'badgeSuccess' : 'badgeWarning'}\`}>
+                          <span className={`badge ${doc.es_publico ? 'badgeSuccess' : 'badgeWarning'}`}>
                             {doc.es_publico ? 'PÚBLICO' : 'OCULTO'}
                           </span>
                         </td>
@@ -186,7 +220,7 @@ export default async function TransparenciaPage() {
                         <td>
                           <div style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
                             <Link 
-                              href={\`/admin/transparencia/editar/\${doc.id}\`}
+                              href={`/admin/transparencia/editar/${doc.id}`}
                               className="btnSecondary" 
                               style={{ padding: '0.3rem 0.7rem', fontSize: '0.75rem', textDecoration: 'none' }}
                             >
@@ -240,4 +274,13 @@ export default async function TransparenciaPage() {
       })}
     </div>
   );
+  } catch (e) {
+    console.error("TRANSAPARENCIA PAGE ERROR:", e);
+    return (
+      <div style={{ padding: '2rem', color: 'red' }}>
+        <h2>Error Server Side</h2>
+        <pre>{e.message || JSON.stringify(e)}</pre>
+      </div>
+    );
+  }
 }

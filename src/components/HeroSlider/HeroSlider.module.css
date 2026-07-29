@@ -414,9 +414,10 @@
   .customNav { display: none; }
 
   .floatingSocials {
-    bottom: 18px;
-    right: 50%;
-    transform: translateX(50%);
+    bottom: 20px;
+    right: 15px;
+    transform: none;
+    flex-direction: column;
     gap: 0.45rem;
   }
   .socialIcon { width: 34px; height: 34px; }

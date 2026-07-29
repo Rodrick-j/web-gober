@@ -97,6 +97,7 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeMobileAccordion, setActiveMobileAccordion] = useState(null);
   const [secretariasList, setSecretariasList] = useState([]);
+  const [currentDateTime, setCurrentDateTime] = useState(null);
   const timeoutRef = useRef(null);
   const supabase = useMemo(() => createClient(), []);
 
@@ -110,8 +111,15 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', onScroll, { passive: true });
+    setCurrentDateTime(new Date());
+    const clockTimer = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
     const handleResize = () => {
       if (window.innerWidth > 900) {
@@ -120,27 +128,27 @@ export default function Navbar() {
     };
     window.addEventListener('resize', handleResize);
 
-    // Fetch Secretarias
-    async function fetchSecretarias() {
-      try {
-        const { data, error } = await supabase
-          .from('secretarias')
-          .select('nombre, nombre_corto, slug, icono')
-          .order('orden', { ascending: true });
-        if (data && !error && data.length > 0) {
-          setSecretariasList(data);
-        } else {
-          setSecretariasList(fallbackSecretarias);
-        }
-      } catch (err) {
+    // Load secretarias dynamically
+    const loadSecretarias = async () => {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from('secretarias')
+        .select('nombre, nombre_corto, slug, icono')
+        .eq('activo', true)
+        .order('orden', { ascending: true });
+        
+      if (data && !error && data.length > 0) {
+        setSecretariasList(data);
+      } else {
         setSecretariasList(fallbackSecretarias);
       }
-    }
-    fetchSecretarias();
+    };
+    loadSecretarias();
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
+      clearInterval(clockTimer);
     };
   }, [supabase]);
 
@@ -191,9 +199,20 @@ export default function Navbar() {
             🇧🇴 Bolivia — <span className={styles.topBarLong}>Departamento de Oruro</span><span className={styles.topBarShort}>Oruro</span>
           </span>
           <div className={styles.topBarLinks}>
-            <a href="#">Portal Ciudadano</a>
-            <a href="#">Transparencia</a>
-            <a href="#">Contacto</a>
+            {currentDateTime && (
+              <span className={styles.topBarDateTime}>
+                <span className={styles.dateLong}>
+                  {currentDateTime.toLocaleDateString('es-BO', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+                </span>
+                <span className={styles.dateShort}>
+                  {currentDateTime.toLocaleDateString('es-BO', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+                </span>
+                <span className={styles.topBarTimeSeparator}> | </span>
+                <span className={styles.topBarTimeString}>
+                  {currentDateTime.toLocaleTimeString('es-BO')}
+                </span>
+              </span>
+            )}
             <LanguageSwitcher />
           </div>
         </div>

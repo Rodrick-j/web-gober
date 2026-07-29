@@ -8,7 +8,7 @@ import BreakingNews from '@/components/BreakingNews/BreakingNews';
 
 // Dynamic imports para componentes below-the-fold
 const SecretariatsSection = dynamic(() => import('@/components/SecretariatsSection/SecretariatsSection'), { ssr: true });
-const QuickAccess = dynamic(() => import('@/components/QuickAccess/QuickAccess'), { ssr: true });
+const VideoSection = dynamic(() => import('@/components/VideoSection/VideoSection'), { ssr: true });
 const NewsSection = dynamic(() => import('@/components/NewsSection/NewsSection'), { ssr: true });
 const GacetaSection = dynamic(() => import('@/components/GacetaSection/GacetaSection'), { ssr: true });
 const LocationSection = dynamic(() => import('@/components/LocationSection/LocationSection'), { ssr: true });
@@ -31,7 +31,7 @@ const getCachedHomeData = unstable_cache(
       { data: ultimosDocumentos }
     ] = await Promise.all([
       supabase.from('banners_inicio').select('*').eq('activo', true).order('orden', { ascending: true }),
-      supabase.from('configuracion_global').select('*').in('clave', ['ticker_noticias', 'contacto_oficial', 'redes_sociales', 'comunicado_popup']),
+      supabase.from('configuracion_global').select('*').in('clave', ['ticker_noticias', 'contacto_oficial', 'redes_sociales', 'comunicado_popup', 'video_inicio']),
       supabase.from('secretarias').select('id, nombre, nombre_corto, slug, icono, secretario_nombre, secretario_cargo, secretario_foto_url, secretario_bio').eq('activo', true).order('orden', { ascending: true }),
       supabase.from('noticias').select('id, titulo, resumen, fecha_publicacion, imagen_portada_url, secretarias(nombre_corto, icono, color_acento)').eq('estado', 'publicado').order('fecha_publicacion', { ascending: false }).limit(5),
       supabase.from('documentos').select('id, tipo, numero, titulo, fecha_publicacion, archivo_url').eq('es_publico', true).order('fecha_publicacion', { ascending: false }).limit(5)
@@ -56,6 +56,8 @@ export default async function Home() {
   const contactoConfig = configData?.find(c => c.clave === 'contacto_oficial')?.valor || { direccion: 'Plaza 10 de Febrero s/n, Oruro', telefono: '(591-2) 5270-000', email: 'contacto@oruro.gob.bo', latitud: -17.969520017575668, longitud: -67.11512711053955 };
   const redesConfig = configData?.find(c => c.clave === 'redes_sociales')?.valor || { facebook: '#', twitter: '#', youtube: '#', instagram: '#', tiktok: '#' };
   const comunicadoConfig = configData?.find(c => c.clave === 'comunicado_popup')?.valor || { activo: false, imagen_url: '', enlace: '' };
+  const videoInicioConfig = configData?.find(c => c.clave === 'video_inicio')?.valor || { urls: ['https://youtu.be/p_RYdGArBqE'] };
+  const videoUrls = videoInicioConfig.urls || (videoInicioConfig.url ? [videoInicioConfig.url] : []);
 
   return (
     <>
@@ -75,7 +77,7 @@ export default async function Home() {
         <SecretariatsSection secretarias={secretarias} />
         <CenefaCultural />
 
-        <QuickAccess />
+        <VideoSection urls={videoUrls} />
         <CenefaCultural />
 
         <NewsSection noticias={ultimasNoticias} />

@@ -68,8 +68,11 @@
   top: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.97);
+  background: radial-gradient(circle at 0% 50%, rgba(142, 14, 0, 0.16), transparent 40%),
+              radial-gradient(circle at 100% 50%, rgba(142, 14, 0, 0.16), transparent 40%),
+              rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 3px solid var(--color-primary);
   border-top: 1px solid rgba(255, 215, 0, 0.4);
   transition: all 0.3s ease;
@@ -77,7 +80,9 @@
 }
 
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 1);
+  background: radial-gradient(circle at 0% 50%, rgba(142, 14, 0, 0.08), transparent 40%),
+              radial-gradient(circle at 100% 50%, rgba(142, 14, 0, 0.08), transparent 40%),
+              rgba(255, 255, 255, 0.96);
   box-shadow: 0 8px 26px rgba(0, 0, 0, 0.1);
   border-bottom: 2px solid #8e0e00;
 }
@@ -525,18 +530,60 @@
   font-size: 0.95rem;
 }
 
+.topBarDateTime {
+  color: rgba(255,255,255,0.9);
+  margin-right: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.dateLong {
+  text-transform: capitalize;
+  display: inline;
+}
+
+.dateShort {
+  display: none;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .desktopNav { display: none; }
   .mobileToggle { display: flex; }
   .topBarLinks a { display: none; } /* Ocultar enlaces de texto extra para ahorrar espacio */
   .topBarLinks { display: flex; gap: 0.5rem; } /* Mantiene visible el LanguageSwitcher */
+  
+  .dateLong { display: none; }
+  .dateShort { display: inline; }
+  
+  .topBarDateTime {
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+  }
 }
 
 @media (max-width: 480px) {
   .topBarInner { padding: 0 0.75rem; font-size: 0.68rem; }
   .topBarLong { display: none; }
   .topBarShort { display: inline; }
+  
+  .topBarDateTime {
+    flex-direction: row; /* Keep in one row to save vertical space on mobile */
+    align-items: center;
+    gap: 0.35rem;
+    line-height: 1;
+    margin-right: 0.25rem;
+    font-size: 0.7rem;
+  }
+  
+  .topBarTimeSeparator {
+    display: inline;
+    opacity: 0.5;
+  }
 }
 
 /* =====================================================

@@ -205,6 +205,11 @@
   color: var(--color-text-muted);
 }
 
+.docActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .docDownload {
   display: inline-flex;
   align-items: center;

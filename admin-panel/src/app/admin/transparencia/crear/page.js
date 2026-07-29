@@ -32,6 +32,15 @@ export default function CrearDocumentoTransparenciaPage() {
       return;
     }
 
+    // Validación de tamaño: Supabase (Plan Gratuito) suele tener un límite de 50MB.
+    // Además, evita colgar el navegador o gastar ancho de banda en vano.
+    const MAX_FILE_SIZE_MB = 50;
+    const fileSizeInMB = archivo.size / (1024 * 1024);
+    if (fileSizeInMB > MAX_FILE_SIZE_MB) {
+      setError(`El archivo es demasiado grande (${fileSizeInMB.toFixed(1)} MB). El tamaño máximo permitido por el servidor es de ${MAX_FILE_SIZE_MB} MB. Por favor, comprime tu PDF en ilovepdf.com o escanea a menor resolución.`);
+      return;
+    }
+
     setIsSubmitting(true);
     setUploadProgress(10);
     setError('');
@@ -52,7 +61,7 @@ export default function CrearDocumentoTransparenciaPage() {
 
       if (!uploadResponse.ok) {
         const errText = await uploadResponse.text();
-        throw new Error(\`Error al subir a Supabase: \${errText}\`);
+        throw new Error(`Error al subir a Supabase: ${errText}`);
       }
       setUploadProgress(80);
 
@@ -118,7 +127,7 @@ export default function CrearDocumentoTransparenciaPage() {
               <div style={{ background: 'var(--admin-border)', borderRadius: '999px', height: '6px', overflow: 'hidden' }}>
                 <div style={{
                   height: '100%',
-                  width: \`\${uploadProgress}%\`,
+                  width: `${uploadProgress}%`,
                   background: 'linear-gradient(90deg, var(--color-primary), #dc2626)',
                   borderRadius: '999px',
                   transition: 'width 0.4s ease'
@@ -157,11 +166,9 @@ export default function CrearDocumentoTransparenciaPage() {
                   required
                   disabled={isSubmitting}
                 >
-                  <option value={new Date().getFullYear() + 1}>{new Date().getFullYear() + 1}</option>
-                  <option value={new Date().getFullYear()}>{new Date().getFullYear()}</option>
-                  <option value={new Date().getFullYear() - 1}>{new Date().getFullYear() - 1}</option>
-                  <option value={new Date().getFullYear() - 2}>{new Date().getFullYear() - 2}</option>
-                  <option value={new Date().getFullYear() - 3}>{new Date().getFullYear() - 3}</option>
+                  {Array.from({ length: 20 }, (_, i) => new Date().getFullYear() + 1 - i).map(year => (
+                    <option key={year} value={year}>{year}</option>
+                  ))}
                 </select>
               </div>
 

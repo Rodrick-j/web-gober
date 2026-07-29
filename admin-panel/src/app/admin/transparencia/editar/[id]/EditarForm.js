@@ -88,21 +88,19 @@ export default function EditarForm({ documento }) {
           </div>
 
           <div className="formGroup">
-            <label className="formLabel">Gestión (Año) *</label>
-            <select
-              className="formSelect"
-              value={gestion}
-              onChange={(e) => setGestion(e.target.value)}
-              required
-              disabled={isSubmitting}
-            >
-              <option value={new Date().getFullYear() + 1}>{new Date().getFullYear() + 1}</option>
-              <option value={new Date().getFullYear()}>{new Date().getFullYear()}</option>
-              <option value={new Date().getFullYear() - 1}>{new Date().getFullYear() - 1}</option>
-              <option value={new Date().getFullYear() - 2}>{new Date().getFullYear() - 2}</option>
-              <option value={new Date().getFullYear() - 3}>{new Date().getFullYear() - 3}</option>
-            </select>
-          </div>
+          <label className="formLabel">Gestión (Año) *</label>
+          <select
+            className="formSelect"
+            value={gestion}
+            onChange={(e) => setGestion(e.target.value)}
+            required
+            disabled={isSubmitting}
+          >
+            {Array.from({ length: 20 }, (_, i) => new Date().getFullYear() + 1 - i).map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
+        </div>
 
           <div className="formGroup">
             <label className="formLabel">Título del Documento *</label>
