@@ -1,14 +1,15 @@
 'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { getSignedUploadUrl } from '../actions';
+import { uploadPdfAction } from '../actions';
 import FileUpload from '@/components/admin/FileUpload/FileUpload';
 import Link from 'next/link';
 import styles from '../page.module.css';
 
 export default function CrearDocumentoPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const supabase = createClient();
 
   const [tipo, setTipo] = useState('ley_departamental');
@@ -22,6 +23,12 @@ export default function CrearDocumentoPage() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
 
+  // Leer tipo de la URL si existe
+  useEffect(() => {
+    const urlTipo = searchParams.get('tipo');
+    if (urlTipo) setTipo(urlTipo);
+  }, [searchParams]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!titulo || !tipo || !numero) {
@@ -34,31 +41,19 @@ export default function CrearDocumentoPage() {
     }
 
     setIsSubmitting(true);
-    setUploadProgress(10);
+    setUploadProgress(20);
     setError('');
 
     try {
-      // PASO 1: Pedir al servidor una URL firmada segura (no pasa el archivo por Next.js)
-      const { signedUrl, publicUrl } = await getSignedUploadUrl(archivo.name);
-      setUploadProgress(30);
-
-      // PASO 2: Subir el archivo DIRECTAMENTE a Supabase desde el navegador
-      // usando la URL firmada — el archivo nunca pasa por tu servidor de Next.js
-      const uploadResponse = await fetch(signedUrl, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': archivo.type || 'application/pdf',
-        },
-        body: archivo,
-      });
-
-      if (!uploadResponse.ok) {
-        const errText = await uploadResponse.text();
-        throw new Error(`Error al subir a Supabase: ${errText}`);
-      }
+      // Usar Server Action para evitar problemas de CORS y Buckets faltantes
+      setUploadProgress(50);
+      const formData = new FormData();
+      formData.append('file', archivo);
+      
+      const publicUrl = await uploadPdfAction(formData);
       setUploadProgress(80);
 
-      // PASO 3: Guardar solo los metadatos (texto) en la base de datos
+      // Guardar solo los metadatos (texto) en la base de datos
       const { error: insertError } = await supabase
         .from('documentos')
         .insert({

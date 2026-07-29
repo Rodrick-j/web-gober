@@ -7,7 +7,7 @@
 
 .headerSection {
   background: 
-    linear-gradient(135deg, rgba(26, 26, 26, 0.85) 0%, rgba(168, 10, 21, 0.75) 100%),
+    linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(168, 10, 21, 0.4) 100%),
     url('/bg-gaceta.png') center/cover no-repeat;
   color: white;
   padding: 4rem 1rem;
@@ -24,6 +24,7 @@
   font-size: 4rem;
   margin-bottom: 1rem;
   animation: float 3s ease-in-out infinite;
+  color: #ffffff;
 }
 
 @keyframes float {
@@ -37,11 +38,13 @@
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 1rem;
+  color: #ffffff;
   text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .headerSubtitle {
   font-size: 1.2rem;
+  color: #ffffff;
   opacity: 0.9;
   max-width: 600px;
   margin: 0 auto;

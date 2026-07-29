@@ -25,7 +25,10 @@ function formatFecha(fechaStr) {
   return new Date(dateOnly + 'T00:00:00').toLocaleDateString('es-BO');
 }
 
-export default async function GacetaPage() {
+export default async function GacetaPage({ searchParams }) {
+  const params = await searchParams;
+  const activeTab = params?.tab || 'todos';
+
   const supabase = await createClient();
   
   const { data: documentos } = await supabase
@@ -51,19 +54,63 @@ export default async function GacetaPage() {
         </Link>
       </div>
 
-      <div style={{ background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '12px', padding: '1.25rem', marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+      <div style={{ background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '12px', padding: '1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
         <div style={{ fontSize: '1.5rem', background: 'var(--admin-surface-2)', padding: '0.75rem', borderRadius: '10px' }}>📜</div>
         <div>
           <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--admin-text)', marginBottom: '0.25rem' }}>Publicación Oficial</h3>
           <p style={{ fontSize: '0.85rem', color: 'var(--admin-text-muted)', lineHeight: '1.5' }}>
-            Los documentos marcados como <strong>"Públicos"</strong> aparecerán automáticamente en la sección <strong>Gaceta Oficial</strong> de la portada. Usa las secciones de abajo para gestionar cada tipo de documento por separado.
+            Los documentos marcados como <strong>"Públicos"</strong> aparecerán automáticamente en la sección <strong>Gaceta Oficial</strong> de la portada. Usa las pestañas de abajo para filtrar por tipo y evitar desplazarte mucho.
           </p>
         </div>
       </div>
 
+      {/* Tabs / Botones de Filtro */}
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+        <Link 
+          href="/admin/gaceta" 
+          style={{
+            padding: '0.5rem 1.2rem', 
+            borderRadius: '20px', 
+            fontSize: '0.85rem', 
+            fontWeight: 700,
+            textDecoration: 'none',
+            background: activeTab === 'todos' ? 'var(--color-primary)' : 'var(--admin-surface)',
+            color: activeTab === 'todos' ? '#fff' : 'var(--admin-text)',
+            border: activeTab === 'todos' ? '1px solid var(--color-primary)' : '1px solid var(--admin-border)',
+            transition: 'all 0.2s'
+          }}
+        >
+          Ver Todos
+        </Link>
+        {Object.entries(TIPO_LABELS).map(([tipo, config]) => (
+          <Link 
+            key={tipo} 
+            href={`/admin/gaceta?tab=${tipo}`} 
+            style={{
+              padding: '0.5rem 1rem', 
+              borderRadius: '20px', 
+              fontSize: '0.85rem', 
+              fontWeight: 600,
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              background: activeTab === tipo ? config.color : 'var(--admin-surface)',
+              color: activeTab === tipo ? '#fff' : 'var(--admin-text)',
+              border: activeTab === tipo ? `1px solid ${config.color}` : '1px solid var(--admin-border)',
+              transition: 'all 0.2s'
+            }}
+          >
+            <span>{config.emoji}</span> {config.label}
+          </Link>
+        ))}
+      </div>
+
       {/* Secciones separadas por tipo */}
-      {Object.entries(TIPO_LABELS).map(([tipo, config]) => {
-        const docs = grupos[tipo] || [];
+      {Object.entries(TIPO_LABELS)
+        .filter(([tipo]) => activeTab === 'todos' || activeTab === tipo)
+        .map(([tipo, config]) => {
+          const docs = grupos[tipo] || [];
         return (
           <div key={tipo} className="tableCard" style={{ marginBottom: '2rem' }}>
             {/* Cabecera de sección */}
