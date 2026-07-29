@@ -1,8 +1,12 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal';
 import styles from './VideoSection.module.css';
+import { Play, X } from 'lucide-react';
 
 export default function VideoSection({ urls = [] }) {
+  const [activeVideo, setActiveVideo] = useState(null);
+
   // Extraer los IDs de los videos
   const videoIds = urls.map(url => {
     let videoId = null;
@@ -29,23 +33,46 @@ export default function VideoSection({ urls = [] }) {
         </ScrollReveal>
         
         <ScrollReveal direction="up" delay={0.2}>
-          <div className={styles.videosGrid} style={{ gridTemplateColumns: videoIds.length === 1 ? 'minmax(300px, 900px)' : 'repeat(auto-fit, minmax(300px, 1fr))', justifyContent: 'center' }}>
+          <div className={styles.videosGrid}>
             {videoIds.map((id, index) => (
-              <div key={index} className={styles.videoContainerWrapper}>
-                <div className={styles.videoContainer}>
-                  <iframe
-                    src={`https://www.youtube.com/embed/${id}?autoplay=0&rel=0`}
-                    title="Video de la Gobernación"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                  ></iframe>
+              <div 
+                key={index} 
+                className={styles.videoContainerWrapper}
+                onClick={() => setActiveVideo(id)}
+              >
+                <div className={styles.thumbnailContainer}>
+                  <img 
+                    src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} 
+                    onError={(e) => { e.target.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`; }}
+                    alt="Miniatura del video" 
+                    className={styles.thumbnail}
+                  />
                 </div>
               </div>
             ))}
           </div>
         </ScrollReveal>
       </div>
+
+      {/* Modal / Pestaña emergente para el video */}
+      {activeVideo && (
+        <div className={styles.modalOverlay} onClick={() => setActiveVideo(null)}>
+          <button className={styles.closeButton} onClick={() => setActiveVideo(null)}>
+            <X size={40} color="white" />
+          </button>
+          <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+            <div className={styles.videoContainer}>
+              <iframe
+                src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0&modestbranding=1`}
+                title="Video Modal"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
