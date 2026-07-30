@@ -95,12 +95,22 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.02);
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.totalCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
 }
 
 .totalCardMain {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #9c0720 0%, #7a0518 100%);
   border: none;
   color: #ffffff;
+}
+
+.totalCardMain:hover {
+  box-shadow: 0 15px 30px rgba(156, 7, 32, 0.25);
 }
 
 .totalLabel {
