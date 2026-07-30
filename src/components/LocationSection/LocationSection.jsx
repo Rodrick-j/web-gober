@@ -135,23 +135,7 @@ export default function LocationSection({ contacto }) {
 
                 {/* Info lateral */}
                 <div className="map-sidebar">
-                  {/* Miniatura edificio */}
-                  <div className="building-card">
-                    <video
-                      src="/videos/oruro.mp4"
-                      poster="/videos/oruro-poster.jpg"
-                      autoPlay loop muted playsInline
-                      className="building-video"
-                    />
-                    <div className="building-overlay">
-                      <span className="building-tag">📍 Sede Principal · Palacio de Gobierno</span>
-                    </div>
-                  </div>
-
-                  <p className="map-desc">
-                    El Edificio Central de la Gobernación de Oruro — Palacio de Gobierno o Prefectura —
-                    posee un gran legado arquitectónico y político ligado a la historia de Bolivia.
-                  </p>
+                  {/* Info items compactos */}
 
                   {/* Info items compactos */}
                   <div className="info-container">

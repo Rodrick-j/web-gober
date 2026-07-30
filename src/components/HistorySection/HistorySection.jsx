@@ -44,6 +44,25 @@ export default function HistorySection() {
           </p>
         </div>
 
+        <motion.div 
+          className={styles.videoContainer}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <video
+            src="/videos/oruro.mp4"
+            poster="/videos/oruro-poster.jpg"
+            controls
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className={styles.historyVideo}
+          />
+        </motion.div>
+
         <div className={styles.timeline}>
           {historyItems.map((item, index) => (
             <motion.div 

@@ -56,8 +56,22 @@
   font-size: 1.1rem;
   color: #444;
   line-height: 1.8;
-  max-width: 800px;
   margin: 0 auto;
+}
+
+.videoContainer {
+  margin: 3rem auto 4rem auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  max-width: 800px;
+  background: #000;
+}
+
+.historyVideo {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Timeline */
