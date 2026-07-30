@@ -6,6 +6,8 @@ import { Play, X } from 'lucide-react';
 
 export default function VideoSection({ urls = [] }) {
   const [activeVideo, setActiveVideo] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const videosPerPage = 4;
 
   // Extraer los IDs de los videos
   const videoIds = urls.map(url => {
@@ -17,6 +19,9 @@ export default function VideoSection({ urls = [] }) {
     }
     return videoId;
   }).filter(id => id !== null);
+
+  const totalPages = Math.ceil(videoIds.length / videosPerPage);
+  const currentVideos = videoIds.slice((currentPage - 1) * videosPerPage, currentPage * videosPerPage);
 
   if (videoIds.length === 0) return null;
 
@@ -34,7 +39,7 @@ export default function VideoSection({ urls = [] }) {
         
         <ScrollReveal direction="up" delay={0.2}>
           <div className={styles.videosGrid}>
-            {videoIds.map((id, index) => (
+            {currentVideos.map((id, index) => (
               <div 
                 key={index} 
                 className={styles.videoContainerWrapper}
@@ -51,6 +56,28 @@ export default function VideoSection({ urls = [] }) {
               </div>
             ))}
           </div>
+
+          {totalPages > 1 && (
+            <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '2rem' }}>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                style={{ padding: '0.6rem 1.2rem', borderRadius: '8px', border: 'none', background: currentPage === 1 ? '#e2e8f0' : '#9c0720', color: currentPage === 1 ? '#64748b' : '#fff', fontWeight: 'bold', cursor: currentPage === 1 ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
+              >
+                Anterior
+              </button>
+              <span style={{ display: 'flex', alignItems: 'center', fontWeight: '600', color: '#475569' }}>
+                Página {currentPage} de {totalPages}
+              </span>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                style={{ padding: '0.6rem 1.2rem', borderRadius: '8px', border: 'none', background: currentPage === totalPages ? '#e2e8f0' : '#9c0720', color: currentPage === totalPages ? '#64748b' : '#fff', fontWeight: 'bold', cursor: currentPage === totalPages ? 'not-allowed' : 'pointer', transition: 'all 0.2s' }}
+              >
+                Siguiente
+              </button>
+            </div>
+          )}
         </ScrollReveal>
       </div>
 
