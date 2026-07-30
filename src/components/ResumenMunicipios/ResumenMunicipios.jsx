@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import planificacionData from '@/data/planificacion.json';
 import { BarChart3, Calculator, MapPin, Search } from 'lucide-react';
 import styles from './ResumenMunicipios.module.css';
+import { getMuniFullName } from '@/utils/formatMuni';
 
 export default function ResumenMunicipios() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -140,7 +141,7 @@ export default function ResumenMunicipios() {
                     <tr key={index}>
                       <td className={styles.muniCell}>
                         <MapPin size={16} className={styles.muniIcon} />
-                        {item.nombre}
+                        {getMuniFullName(item.nombre)}
                       </td>
                       <td>
                         <div className={styles.valCell}>

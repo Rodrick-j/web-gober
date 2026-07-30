@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Search, MapPin, Tag, ChevronLeft, ChevronRight, Calculator } from 'lucide-react';
 import planificacionData from '@/data/planificacion.json';
 import styles from './PlanificacionFiltros.module.css';
+import { getMuniFullName } from '@/utils/formatMuni';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -11,6 +12,8 @@ export default function PlanificacionFiltros() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMunicipio, setSelectedMunicipio] = useState('Todos');
   const [selectedTipo, setSelectedTipo] = useState('Todos');
+  const [selectedPrg, setSelectedPrg] = useState('Todos');
+  const [selectedProy, setSelectedProy] = useState('Todos');
   const [currentPage, setCurrentPage] = useState(1);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -25,16 +28,33 @@ export default function PlanificacionFiltros() {
     return ['Todos', ...sorted];
   }, []);
 
+  // Obtener PRG únicos
+  const prgUnicos = useMemo(() => {
+    const p = new Set(planificacionData.map(item => item.prg).filter(Boolean));
+    const sorted = Array.from(p).sort((a,b) => parseInt(a) - parseInt(b));
+    return ['Todos', ...sorted];
+  }, []);
+
+  // Obtener PROY únicos (dependiendo del PRG seleccionado o todos)
+  const proyUnicos = useMemo(() => {
+    const data = selectedPrg === 'Todos' ? planificacionData : planificacionData.filter(item => item.prg === selectedPrg);
+    const p = new Set(data.map(item => item.proyecto).filter(Boolean));
+    const sorted = Array.from(p).sort((a,b) => parseInt(a) - parseInt(b));
+    return ['Todos', ...sorted];
+  }, [selectedPrg]);
+
   // Filtrado de datos
   const filteredData = useMemo(() => {
     return planificacionData.filter(item => {
       const matchSearch = item.descripcion.toLowerCase().includes(searchTerm.toLowerCase());
       const matchMunicipio = selectedMunicipio === 'Todos' || item.municipio === selectedMunicipio;
       const matchTipo = selectedTipo === 'Todos' || item.tipo === selectedTipo;
+      const matchPrg = selectedPrg === 'Todos' || item.prg === selectedPrg;
+      const matchProy = selectedProy === 'Todos' || item.proyecto === selectedProy;
       
-      return matchSearch && matchMunicipio && matchTipo;
+      return matchSearch && matchMunicipio && matchTipo && matchPrg && matchProy;
     });
-  }, [searchTerm, selectedMunicipio, selectedTipo]);
+  }, [searchTerm, selectedMunicipio, selectedTipo, selectedPrg, selectedProy]);
 
   // Calcular total de la búsqueda actual
   const totalMonto = useMemo(() => {
@@ -54,7 +74,7 @@ export default function PlanificacionFiltros() {
   // Resetea a la primera página cuando cambian los filtros
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, selectedMunicipio, selectedTipo]);
+  }, [searchTerm, selectedMunicipio, selectedTipo, selectedPrg, selectedProy]);
 
   const formatMoney = (amount) => {
     if (!amount || amount === 0) return 'Sin presupuesto asignado';
@@ -91,7 +111,40 @@ export default function PlanificacionFiltros() {
               className={styles.selectInput}
             >
               {municipiosUnicos.map(mun => (
-                <option key={mun} value={mun}>{mun}</option>
+                <option key={mun} value={mun}>{getMuniFullName(mun)}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* PRG Selector */}
+          <div className={styles.selectWrapper}>
+            <Tag className={styles.selectIcon} size={18} />
+            <select 
+              value={selectedPrg} 
+              onChange={(e) => {
+                setSelectedPrg(e.target.value);
+                setSelectedProy('Todos'); // reset proy on prg change
+              }}
+              className={styles.selectInput}
+            >
+              <option value="Todos">Todos los PRG</option>
+              {prgUnicos.filter(p => p !== 'Todos').map(p => (
+                <option key={p} value={p}>Programa {p}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* PROY Selector */}
+          <div className={styles.selectWrapper}>
+            <Tag className={styles.selectIcon} size={18} />
+            <select 
+              value={selectedProy} 
+              onChange={(e) => setSelectedProy(e.target.value)}
+              className={styles.selectInput}
+            >
+              <option value="Todos">Todos los PROY</option>
+              {proyUnicos.filter(p => p !== 'Todos').map(p => (
+                <option key={p} value={p}>Proyecto {p}</option>
               ))}
             </select>
           </div>
@@ -134,19 +187,31 @@ export default function PlanificacionFiltros() {
             <table className={styles.dataTable}>
               <thead>
                 <tr>
-                  <th width="5%">N°</th>
+                  <th width="3%">N°</th>
+                  <th width="4%">PRG</th>
+                  <th width="5%">PROY</th>
+                  <th width="4%">ACT</th>
                   <th width="15%">Municipio</th>
                   <th width="15%">Tipo de Gasto</th>
-                  <th width="50%">Descripción</th>
-                  <th width="15%" style={{ textAlign: 'right' }}>Monto (Bs.)</th>
+                  <th width="40%">Descripción</th>
+                  <th width="14%" style={{ textAlign: 'right' }}>Monto (Bs.)</th>
                 </tr>
               </thead>
               <tbody>
                 {paginatedData.map((item, index) => (
                   <tr key={item.id}>
                     <td className={styles.textCenter}>{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</td>
+                    <td className={styles.textCenter}>
+                      <span className={styles.badgePrg}>{item.prg}</span>
+                    </td>
+                    <td className={styles.textCenter}>
+                      <span className={styles.badgeProy}>{item.proyecto}</span>
+                    </td>
+                    <td className={styles.textCenter}>
+                      <span className={styles.badgeAct}>{item.actividad}</span>
+                    </td>
                     <td>
-                      <span className={styles.badgeMunicipio}>{item.municipio}</span>
+                      <span className={styles.badgeMunicipio}>{getMuniFullName(item.municipio)}</span>
                     </td>
                     <td>
                       <span className={`${styles.badge} ${item.tipo === 'INVERSION' ? styles.badgeInversion : styles.badgeGasto}`}>
@@ -160,7 +225,7 @@ export default function PlanificacionFiltros() {
               </tbody>
               <tfoot>
                 <tr style={{ background: '#F9FAFB', borderTop: '2px solid #E5E7EB' }}>
-                  <td colSpan="4" style={{ textAlign: 'right', fontWeight: '800', fontSize: '1.05rem', color: '#1e293b', padding: '1.2rem 1rem' }}>
+                  <td colSpan="7" style={{ textAlign: 'right', fontWeight: '800', fontSize: '1.05rem', color: '#1e293b', padding: '1.2rem 1rem' }}>
                     TOTAL GENERAL:
                   </td>
                   <td className={styles.budgetCell} style={{ fontSize: '1.1rem', color: '#9c0720' }}>

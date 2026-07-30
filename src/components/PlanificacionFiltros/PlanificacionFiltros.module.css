@@ -35,13 +35,17 @@
   width: 100%;
   padding: 1.2rem 1.2rem 1.2rem 3.5rem;
   font-size: 1.1rem;
-  background: #F9FAFB;
-  border: 1px solid #E5E7EB;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
   border-radius: 12px;
   outline: none;
   transition: all 0.2s ease;
-  color: var(--color-text);
+  color: #1e293b;
   font-family: inherit;
+}
+
+.searchInput:hover {
+  border-color: #94a3b8;
 }
 
 .searchInput:focus {
@@ -78,11 +82,11 @@
   width: 100%;
   appearance: none;
   padding: 0.9rem 1rem 0.9rem 2.8rem;
-  background: #F9FAFB;
-  border: 1px solid #E5E7EB;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
   border-radius: 10px;
   font-size: 1rem;
-  color: var(--color-text);
+  color: #1e293b;
   outline: none;
   cursor: pointer;
   font-weight: 500;
@@ -90,8 +94,13 @@
   transition: border-color 0.2s ease;
 }
 
+.selectInput:hover {
+  border-color: #94a3b8;
+}
+
 .selectInput:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(156, 7, 32, 0.1);
 }
 
 /* Tabs */
@@ -233,6 +242,33 @@
   font-weight: 600;
   color: #4B5563;
   white-space: nowrap;
+}
+
+.badgePrg {
+  background: #ffefef;
+  color: #9c0720;
+  font-weight: 800;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+}
+
+.badgeProy {
+  background: #1e293b;
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+}
+
+.badgeAct {
+  background: #f1f5f9;
+  color: #475569;
+  font-weight: 700;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
 }
 
 /* Empty State */
