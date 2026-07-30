@@ -188,8 +188,8 @@ export default function PlanificacionSection({ secretariaId }) {
               {/* Card POA */}
               <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1rem 1.5rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
                 {/* Decorative background element */}
-                <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '80%', opacity: 0.85, mixBlendMode: 'screen', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
-                  <img loading="lazy" src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', transform: 'scale(1.1)' }} />
+                <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '50%', opacity: 0.4, mixBlendMode: 'multiply', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
+                  <img loading="lazy" src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', transform: 'scale(1.2)' }} />
                 </div>
                 
                 <div style={{ position: 'relative', zIndex: 1 }}>
