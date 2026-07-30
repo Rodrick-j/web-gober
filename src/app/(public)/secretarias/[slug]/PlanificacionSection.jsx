@@ -30,7 +30,7 @@ const provinciasOruro = [
 export default function PlanificacionSection({ secretariaId }) {
   const [activeTab, setActiveTab] = useState('sistemas');
   const [openProvincia, setOpenProvincia] = useState(null);
-  const [viewMode, setViewMode] = useState('dashboard'); // 'dashboard', 'cards', 'poa', 'sisin'
+  const [viewMode, setViewMode] = useState('resumen'); // 'resumen', 'dashboard', 'excel', 'filtros', 'cards', 'poa'
   const [mapTab, setMapTab] = useState('territorio');
   const [poaYear, setPoaYear] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -139,6 +139,17 @@ export default function PlanificacionSection({ secretariaId }) {
               boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
             }}>
               <button
+                onClick={() => setViewMode('resumen')}
+                style={{
+                  background: viewMode === 'resumen' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  color: viewMode === 'resumen' ? '#ffffff' : '#475569',
+                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'resumen' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
+                }}
+              >
+                <BarChart3 size={18} /> Resumen de Municipios
+              </button>
+              <button
                 onClick={() => setViewMode('dashboard')}
                 style={{
                   background: viewMode === 'dashboard' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
@@ -158,18 +169,7 @@ export default function PlanificacionSection({ secretariaId }) {
                   boxShadow: viewMode === 'excel' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
-                <Database size={18} /> Planilla Excel POA
-              </button>
-              <button
-                onClick={() => setViewMode('cards')}
-                style={{
-                  background: viewMode === 'cards' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
-                  color: viewMode === 'cards' ? '#ffffff' : '#475569',
-                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
-                  boxShadow: viewMode === 'cards' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
-                }}
-              >
-                <FileText size={18} /> Documentos (PDF)
+                <Database size={18} /> POA por Municipio
               </button>
               <button
                 onClick={() => setViewMode('filtros')}
@@ -180,19 +180,34 @@ export default function PlanificacionSection({ secretariaId }) {
                   boxShadow: viewMode === 'filtros' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
-                <Search size={18} /> Explorador de Proyectos
+                <Search size={18} /> Proyectos de Municipio
               </button>
-              <button
-                onClick={() => setViewMode('resumen')}
-                style={{
-                  background: viewMode === 'resumen' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
-                  color: viewMode === 'resumen' ? '#ffffff' : '#475569',
-                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
-                  boxShadow: viewMode === 'resumen' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
-                }}
-              >
-                <BarChart3 size={18} /> Resumen de Municipios
-              </button>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+              {/* Card POA */}
+              <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1.75rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+                {/* Decorative background element */}
+                <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '60%', opacity: 0.4, mixBlendMode: 'screen', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
+                  <img loading="lazy" src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+                </div>
+                
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '50px', height: '50px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '1.25rem' }}>
+                    <FileText size={24} />
+                  </div>
+                  <h3 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.75rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.95rem', marginBottom: '1.75rem', lineHeight: '1.5' }}>
+                    Acceda a los documentos e instrumentos de planificación anual del Gobierno Autónomo Departamental de Oruro.
+                  </p>
+                  <button 
+                    onClick={() => setViewMode('poa')}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#fff', color: '#9c0720', padding: '0.75rem 1.5rem', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.95rem', border: 'none', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
+                  >
+                    Acceder al POA
+                  </button>
+                </div>
+              </div>
             </div>
 
             {viewMode === 'dashboard' && (
@@ -211,35 +226,7 @@ export default function PlanificacionSection({ secretariaId }) {
               <ResumenMunicipios />
             )}
 
-            {viewMode === 'cards' && (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-                {/* Card POA */}
-                <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1.75rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
-                  {/* Decorative background element */}
-                  <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '60%', opacity: 0.4, mixBlendMode: 'screen', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
-                    <img loading="lazy" src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
-                  </div>
-                  
-                  <div style={{ position: 'relative', zIndex: 1 }}>
-                    <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '50px', height: '50px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '1.25rem' }}>
-                      <FileText size={24} />
-                    </div>
-                    <h3 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.75rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
-                    <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.95rem', marginBottom: '1.75rem', lineHeight: '1.5' }}>
-                      Acceda a los documentos e instrumentos de planificación anual del Gobierno Autónomo Departamental de Oruro.
-                    </p>
-                    <button 
-                      onClick={() => setViewMode('poa')}
-                      style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: '#fff', color: '#9c0720', padding: '0.75rem 1.5rem', borderRadius: '8px', fontWeight: 'bold', fontSize: '0.95rem', border: 'none', cursor: 'pointer', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
-                    >
-                      Acceder al POA
-                    </button>
-                  </div>
-                </div>
 
-
-              </div>
-            )}
 
             {viewMode === 'poa' && (
               <motion.div
