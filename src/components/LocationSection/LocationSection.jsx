@@ -24,8 +24,6 @@ const TABS = [
 
 const HORARIOS = [
   { dia: 'Lunes – Viernes',  hora: '08:00 – 16:00',  activo: true },
-  { dia: 'Sábados',          hora: '08:30 – 12:30',  activo: false },
-  { dia: 'Domingos',         hora: 'Cerrado',         activo: false, cerrado: true },
 ];
 
 export default function LocationSection({ contacto }) {
@@ -50,8 +48,7 @@ export default function LocationSection({ contacto }) {
   // ── Día actual para resaltar horario
   const todayName = (() => {
     const d = new Date().getDay();
-    if (d === 0) return 'Domingos';
-    if (d === 6) return 'Sábados';
+    if (d === 0 || d === 6) return 'Fín de semana';
     return 'Lunes – Viernes';
   })();
 
@@ -197,7 +194,7 @@ export default function LocationSection({ contacto }) {
                     </div>
                   </div>
                   <div className="horario-status">
-                    {todayName === 'Domingos'
+                    {todayName === 'Fín de semana'
                       ? <span className="status-badge status-closed">Cerrado hoy</span>
                       : <span className="status-badge status-open">Abierto ahora</span>
                     }
