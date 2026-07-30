@@ -30,15 +30,15 @@ export default function PlanificacionFiltros() {
 
   // Obtener PRG únicos
   const prgUnicos = useMemo(() => {
-    const p = new Set(planificacionData.map(item => item.prg).filter(Boolean));
+    const p = new Set(planificacionData.map(item => String(item.prg).replace(/\s/g, '')).filter(Boolean));
     const sorted = Array.from(p).sort((a,b) => parseInt(a) - parseInt(b));
     return ['Todos', ...sorted];
   }, []);
 
   // Obtener PROY únicos (dependiendo del PRG seleccionado o todos)
   const proyUnicos = useMemo(() => {
-    const data = selectedPrg === 'Todos' ? planificacionData : planificacionData.filter(item => String(item.prg) === selectedPrg);
-    const p = new Set(data.map(item => item.proyecto).filter(Boolean));
+    const data = selectedPrg === 'Todos' ? planificacionData : planificacionData.filter(item => String(item.prg).replace(/\s/g, '') === selectedPrg);
+    const p = new Set(data.map(item => String(item.proyecto).replace(/\s/g, '')).filter(Boolean));
     const sorted = Array.from(p).sort((a,b) => parseInt(a) - parseInt(b));
     return ['Todos', ...sorted];
   }, [selectedPrg]);
@@ -49,8 +49,8 @@ export default function PlanificacionFiltros() {
       const matchSearch = item.descripcion.toLowerCase().includes(searchTerm.toLowerCase());
       const matchMunicipio = selectedMunicipio === 'Todos' || item.municipio === selectedMunicipio;
       const matchTipo = selectedTipo === 'Todos' || item.tipo === selectedTipo;
-      const matchPrg = selectedPrg === 'Todos' || String(item.prg) === selectedPrg;
-      const matchProy = selectedProy === 'Todos' || String(item.proyecto) === selectedProy;
+      const matchPrg = selectedPrg === 'Todos' || String(item.prg).replace(/\s/g, '') === selectedPrg;
+      const matchProy = selectedProy === 'Todos' || String(item.proyecto).replace(/\s/g, '') === selectedProy;
       
       return matchSearch && matchMunicipio && matchTipo && matchPrg && matchProy;
     });
