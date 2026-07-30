@@ -107,11 +107,18 @@ export default function PlanificacionFiltros() {
             <MapPin className={styles.selectIcon} size={18} />
             <select 
               value={selectedMunicipio} 
-              onChange={(e) => setSelectedMunicipio(e.target.value)}
+              onChange={(e) => {
+                const val = e.target.value;
+                setSelectedMunicipio(val);
+                if (val === 'Todos') {
+                  setSelectedPrg('Todos');
+                  setSelectedProy('Todos');
+                }
+              }}
               className={styles.selectInput}
             >
               {municipiosUnicos.map(mun => (
-                <option key={mun} value={mun}>{getMuniFullName(mun)}</option>
+                <option key={mun} value={mun}>{mun === 'Todos' ? 'Filtro por Municipio' : getMuniFullName(mun)}</option>
               ))}
             </select>
           </div>
@@ -126,6 +133,8 @@ export default function PlanificacionFiltros() {
                 setSelectedProy('Todos'); // reset proy on prg change
               }}
               className={styles.selectInput}
+              disabled={selectedMunicipio === 'Todos'}
+              style={{ opacity: selectedMunicipio === 'Todos' ? 0.5 : 1, cursor: selectedMunicipio === 'Todos' ? 'not-allowed' : 'pointer' }}
             >
               <option value="Todos">Todos los PRG</option>
               {prgUnicos.filter(p => p !== 'Todos').map(p => (
@@ -141,6 +150,8 @@ export default function PlanificacionFiltros() {
               value={selectedProy} 
               onChange={(e) => setSelectedProy(e.target.value)}
               className={styles.selectInput}
+              disabled={selectedMunicipio === 'Todos'}
+              style={{ opacity: selectedMunicipio === 'Todos' ? 0.5 : 1, cursor: selectedMunicipio === 'Todos' ? 'not-allowed' : 'pointer' }}
             >
               <option value="Todos">Todos los PROY</option>
               {proyUnicos.filter(p => p !== 'Todos').map(p => (
