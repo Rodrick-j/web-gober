@@ -1,0 +1,306 @@
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: var(--font-body);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  background: #ffffff;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.titleIcon {
+  color: var(--color-primary);
+  background: #ffefef;
+  padding: 8px;
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.subtitle {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.95rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.searchGroup {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  outline: none;
+  background: #f8fafc;
+  transition: all 0.2s;
+}
+
+.searchInput:focus {
+  border-color: var(--color-primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(156, 7, 32, 0.1);
+}
+
+/* Totales Superiores */
+.totalesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.totalCard {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.totalCardMain {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: none;
+  color: #ffffff;
+}
+
+.totalLabel {
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+}
+
+.totalCardMain .totalLabel {
+  color: #94a3b8;
+}
+
+.totalValueGasto {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #d97706; /* Naranja para gasto */
+  margin-bottom: 1rem;
+}
+
+.totalValueInversion {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #059669; /* Verde para inversion */
+  margin-bottom: 1rem;
+}
+
+.totalValueMain {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #ffffff;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.totalBar {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.totalBarFillGasto {
+  height: 100%;
+  background: #fbbf24;
+  border-radius: 4px;
+}
+
+.totalBarFillInversion {
+  height: 100%;
+  background: #34d399;
+  border-radius: 4px;
+}
+
+.totalPercentage {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Tabla Resumen */
+.tableContainer {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  overflow: hidden;
+}
+
+.tableResponsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.dataTable th {
+  background: #F8FAFC;
+  padding: 1.2rem 1.5rem;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.dataTable td {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.dataTable tbody tr:hover {
+  background: #fcfcfc;
+}
+
+.muniCell {
+  font-weight: 700;
+  color: #1e293b;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.muniIcon {
+  color: #94a3b8;
+}
+
+.valCell {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.pctGasto {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.pctInversion {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.barContainer {
+  width: 100%;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.barFillGasto {
+  height: 100%;
+  background: #f59e0b;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.barFillInversion {
+  height: 100%;
+  background: #10b981;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.totalCell {
+  text-align: right;
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 1.1rem;
+}
+
+.tfootRow {
+  background: #f8fafc;
+  border-top: 2px solid #cbd5e1;
+}
+
+.tfootRow td {
+  padding: 1.5rem;
+  font-weight: 900;
+  color: #0f172a;
+  font-size: 1.15rem;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem !important;
+  color: #64748b;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .searchGroup {
+    max-width: 100%;
+  }
+}

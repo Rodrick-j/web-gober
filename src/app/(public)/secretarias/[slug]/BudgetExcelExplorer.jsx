@@ -50,6 +50,14 @@ const formatBOB = (valStr) => {
   return new Intl.NumberFormat('es-BO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(val);
 };
 
+const MoneyCell = ({ valStr, isTotal }) => {
+  const formatted = formatBOB(valStr);
+  if (formatted === "-") {
+    return <span style={{ color: '#cbd5e1' }}>-</span>;
+  }
+  return <span style={{ fontWeight: isTotal ? '800' : '500', color: isTotal ? '#9c0720' : 'inherit' }}>{formatted}</span>;
+};
+
 const LazyAccordion = ({ summary, children, forceOpen, isProgram }) => {
   const [isOpen, setIsOpen] = useState(forceOpen);
   
@@ -85,6 +93,8 @@ export default function BudgetExcelExplorer() {
   const [onlyPrograms, setOnlyPrograms] = useState(false);
   const [selectedPrg, setSelectedPrg] = useState('ALL');
   const [selectedProy, setSelectedProy] = useState('ALL');
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 50;
 
   const rawRows = useMemo(() => {
     if (selectedMuni === 'TODOS') {
@@ -143,6 +153,17 @@ export default function BudgetExcelExplorer() {
     
     return Array.from(groupsMap.values()).sort((a, b) => parseInt(a.prg) - parseInt(b.prg));
   }, [filteredRows, programDictionary]);
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredRows.length / ITEMS_PER_PAGE);
+  const paginatedRows = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredRows.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredRows, currentPage]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedMuni, selectedPrg, selectedProy, onlyPrograms]);
 
   const uniquePrograms = useMemo(() => {
     const prgs = new Set();
@@ -806,6 +827,112 @@ export default function BudgetExcelExplorer() {
           .btn-action {
             justify-content: center;
           }
+        } /* End of media query */
+
+          /* Table Styles */
+          .table-container {
+            background: #ffffff;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-top: 2rem;
+          }
+          .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+          }
+          .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+          }
+          .data-table th {
+            background: #e2e8f0;
+            padding: 0.6rem 0.5rem;
+            text-align: left;
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #334155;
+            text-transform: uppercase;
+            border: 1px solid #cbd5e1;
+            white-space: nowrap;
+          }
+          .data-table td {
+            padding: 0.5rem 0.5rem;
+            font-size: 0.75rem;
+            border: 1px solid #cbd5e1;
+            vertical-align: middle;
+            color: #1e293b;
+          }
+          .data-table tbody tr {
+            transition: background-color 0.2s ease;
+          }
+          .data-table tbody tr:hover {
+            background: #fcfcfc;
+          }
+          .row-program {
+            background-color: #f1f5f9;
+          }
+          .val-cell {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+          }
+          .desc-cell {
+            line-height: 1.4;
+            color: #0f172a;
+          }
+          .badge-prg {
+            background: #ffefef;
+            color: #9c0720;
+            font-weight: 800;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+          }
+          .badge-proy {
+            background: #1e293b;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+          }
+
+          /* Pagination Styles */
+          .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+          }
+          .page-btn {
+            padding: 0.6rem 1.2rem;
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+          }
+          .page-btn:not(:disabled):hover {
+            background: #f1f5f9;
+            color: #1e293b;
+          }
+          .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+          .page-info {
+            font-size: 0.9rem;
+            color: #64748b;
+          }
+          
           
           /* Text Size Reductions for Mobile */
           .filter-select { font-size: 0.8rem; padding: 0.5rem 0.75rem; }
@@ -979,64 +1106,77 @@ export default function BudgetExcelExplorer() {
         </span>
       </div>
 
-      {/* Listado de Proyectos (Acordeón Agrupado) */}
-      <div className="project-list-container">
-        {groupedRows.length === 0 ? (
+      {/* Excel Table */}
+      <div className="table-container">
+        {paginatedRows.length === 0 ? (
           <div className="empty-state">
             No se encontraron resultados coincidentes con la búsqueda.
           </div>
         ) : (
-          groupedRows.map((group, idx) => {
-            const prog = group.program;
-            const forceOpen = selectedPrg !== 'ALL' || searchQuery !== '';
-            
-            const summaryContent = (
-              <>
-                <div className="summary-header" style={{ width: '70%' }}>
-                  <span className="badge-prg">PROGRAMA {prog.prg}</span>
-                  <span className="summary-title" style={{ marginTop: '0.5rem' }}>{prog.description}</span>
-                </div>
-                <div className="summary-total">
-                  <span className="summary-total-label">Presupuesto Programa</span>
-                  <span className="summary-total-value">{formatBOB(prog.total)} BOB</span>
-                </div>
-              </>
-            );
-
-            return (
-              <LazyAccordion key={idx} summary={summaryContent} forceOpen={forceOpen} isProgram={true}>
-                {group.projects.length === 0 ? (
-                  <>
-                    <h5 className="details-title">Desglose por Grupos de Gasto (Programa Completo)</h5>
-                    {renderPercentageBars(prog)}
-                  </>
-                ) : (
-                  <div className="sub-projects-list">
-                    <h5 className="details-title" style={{ marginBottom: '1rem' }}>Proyectos y Actividades del Programa</h5>
-                    {group.projects.map((proj, pIdx) => {
-                      const projSummary = (
-                        <>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', flexGrow: 1, flexWrap: 'wrap' }}>
-                            <span className="badge-proy">PROY: {proj.proyecto}</span>
-                            <span className="sub-project-title">{proj.description}</span>
-                          </div>
-                          <span className="sub-project-total">{formatBOB(proj.total)} BOB</span>
-                        </>
-                      );
-                      
-                      return (
-                        <LazyAccordion key={pIdx} summary={projSummary} forceOpen={false} isProgram={false}>
-                          {renderPercentageBars(proj)}
-                        </LazyAccordion>
-                      );
-                    })}
-                  </div>
-                )}
-              </LazyAccordion>
-            );
-          })
+          <div className="table-responsive">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th width="4%">PRG</th>
+                  <th width="5%">PROY</th>
+                  <th width="35%">Descripción</th>
+                  <th width="11%" style={{ textAlign: 'right' }}>Serv. Personales</th>
+                  <th width="11%" style={{ textAlign: 'right' }}>Serv. No Personales</th>
+                  <th width="11%" style={{ textAlign: 'right' }}>Materiales</th>
+                  <th width="11%" style={{ textAlign: 'right' }}>Activos Reales</th>
+                  <th width="12%" style={{ textAlign: 'right' }}>Total (BOB)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedRows.map((row, idx) => {
+                  const isProgram = row.proyecto === '0 000';
+                  return (
+                    <tr key={idx} className={isProgram ? 'row-program' : 'row-project'}>
+                      <td style={{ textAlign: 'center' }}>
+                        <span className="badge-prg">{row.prg}</span>
+                      </td>
+                      <td style={{ textAlign: 'center' }}>
+                        {!isProgram && <span className="badge-proy">{row.proyecto}</span>}
+                      </td>
+                      <td className="desc-cell" style={{ fontWeight: isProgram ? '800' : '500', color: isProgram ? '#0f172a' : '#334155' }}>
+                        {row.description}
+                      </td>
+                      <td className="val-cell"><MoneyCell valStr={row.grupo1} /></td>
+                      <td className="val-cell"><MoneyCell valStr={row.grupo2} /></td>
+                      <td className="val-cell"><MoneyCell valStr={row.grupo3} /></td>
+                      <td className="val-cell"><MoneyCell valStr={row.grupo4} /></td>
+                      <td className="val-cell"><MoneyCell valStr={row.total} isTotal={true} /></td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button 
+            className="page-btn" 
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+          >
+            Anterior
+          </button>
+          <span className="page-info">
+            Página <strong>{currentPage}</strong> de {totalPages}
+          </span>
+          <button 
+            className="page-btn" 
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
     </div>
   );
 }

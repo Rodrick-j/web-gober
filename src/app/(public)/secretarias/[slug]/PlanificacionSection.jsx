@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download, Eye, X, PieChart } from 'lucide-react';
+import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download, Eye, X, PieChart, BarChart3 } from 'lucide-react';
 import styles from './SecretariaDetail.module.css'; // Reusing styles from the page
 import { createClient } from '@/lib/supabase/client';
 import BudgetDashboard from './BudgetDashboard';
 import BudgetExcelExplorer from './BudgetExcelExplorer';
+import PlanificacionFiltros from '@/components/PlanificacionFiltros/PlanificacionFiltros';
+import ResumenMunicipios from '@/components/ResumenMunicipios/ResumenMunicipios';
 const provinciasOruro = [
   { nombre: "Cercado", municipios: ["Oruro", "Caracollo", "El Choro", "Soracachi (Paria)"] },
   { nombre: "Abaroa", municipios: ["Challapata", "Quillacas"] },
@@ -169,6 +171,28 @@ export default function PlanificacionSection({ secretariaId }) {
               >
                 <FileText size={18} /> Documentos (PDF)
               </button>
+              <button
+                onClick={() => setViewMode('filtros')}
+                style={{
+                  background: viewMode === 'filtros' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  color: viewMode === 'filtros' ? '#ffffff' : '#475569',
+                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'filtros' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
+                }}
+              >
+                <Search size={18} /> Explorador de Proyectos
+              </button>
+              <button
+                onClick={() => setViewMode('resumen')}
+                style={{
+                  background: viewMode === 'resumen' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  color: viewMode === 'resumen' ? '#ffffff' : '#475569',
+                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'resumen' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
+                }}
+              >
+                <BarChart3 size={18} /> Resumen de Municipios
+              </button>
             </div>
 
             {viewMode === 'dashboard' && (
@@ -177,6 +201,14 @@ export default function PlanificacionSection({ secretariaId }) {
 
             {viewMode === 'excel' && (
               <BudgetExcelExplorer />
+            )}
+
+            {viewMode === 'filtros' && (
+              <PlanificacionFiltros />
+            )}
+
+            {viewMode === 'resumen' && (
+              <ResumenMunicipios />
             )}
 
             {viewMode === 'cards' && (

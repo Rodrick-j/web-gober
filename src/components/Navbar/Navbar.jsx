@@ -63,7 +63,7 @@ const navItems = [
     Icon: Landmark,
     href: '#',
     children: [
-      { label: 'El Gobernador', Icon: User, href: '/institucion/gobernador' },
+      { label: 'Historia de la Institución', Icon: Landmark, href: '/institucion/historia-institucion' },
       { label: 'Historia', Icon: BookOpen, href: '/institucion/historia' },
       { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
       { label: 'Marco Normativo', Icon: Scale, href: '/institucion/marco-normativo' },

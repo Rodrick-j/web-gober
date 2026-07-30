@@ -173,46 +173,6 @@ export default function BudgetDashboard() {
                   </select>
                 </div>
 
-                <button
-                  onClick={() => setSelectedMuni('corque')}
-                  style={{
-                    background: selectedMuni === 'corque' ? '#9c0720' : '#f8f9fa',
-                    color: selectedMuni === 'corque' ? '#ffffff' : '#1a1a2e',
-                    border: selectedMuni === 'corque' ? '1px solid #9c0720' : '1px solid #ddd',
-                    borderRadius: '10px',
-                    padding: '0.55rem 1.1rem',
-                    fontSize: isMobile ? '0.83rem' : '0.9rem',
-                    fontWeight: '800',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    boxShadow: selectedMuni === 'corque' ? '0 4px 12px rgba(156,7,32,0.25)' : 'none',
-                    transition: 'all 0.25s ease'
-                  }}
-                >
-                  <Building2 size={15} /> ⭐ Corque
-                </button>
-                <button
-                  onClick={() => setSelectedMuni('choquecota')}
-                  style={{
-                    background: selectedMuni === 'choquecota' ? '#9c0720' : '#f8f9fa',
-                    color: selectedMuni === 'choquecota' ? '#ffffff' : '#1a1a2e',
-                    border: selectedMuni === 'choquecota' ? '1px solid #9c0720' : '1px solid #ddd',
-                    borderRadius: '10px',
-                    padding: '0.55rem 1.1rem',
-                    fontSize: isMobile ? '0.83rem' : '0.9rem',
-                    fontWeight: '800',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
-                    boxShadow: selectedMuni === 'choquecota' ? '0 4px 12px rgba(156,7,32,0.25)' : 'none',
-                    transition: 'all 0.25s ease'
-                  }}
-                >
-                  <Building2 size={15} /> ⭐ Choquecota
-                </button>
               </div>
             </div>
           </div>

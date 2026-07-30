@@ -2,7 +2,6 @@ import { createClient } from '@/lib/supabase/public';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Footer.module.css';
-import SocialFeeds from '../SocialFeeds/SocialFeeds';
 
 const FacebookIcon = ({ size = 20 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -12,6 +11,11 @@ const FacebookIcon = ({ size = 20 }) => (
 const TwitterIcon = ({ size = 20 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+  </svg>
+);
+const TiktokIcon = ({ size = 20 }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5v3a3 3 0 0 1-3 3 5 5 0 0 0-5 5v3a4 4 0 0 1-8 0 4 4 0 0 1 4-4Z"/>
   </svg>
 );
 const InstagramIcon = ({ size = 20 }) => (
@@ -57,7 +61,6 @@ export default async function Footer() {
 
   return (
     <>
-      <SocialFeeds redes={redes} />
     <footer className={styles.footer}>
       {/* Links Grid */}
       <div className={styles.linksGrid}>
@@ -86,9 +89,9 @@ export default async function Footer() {
           </div>
           <div className={styles.socialIconsRow}>
             {redes.facebook !== '#' && <a href={redes.facebook} target="_blank" rel="noreferrer" aria-label="Facebook"><FacebookIcon size={20} /></a>}
-            {redes.twitter !== '#' && <a href={redes.twitter} target="_blank" rel="noreferrer" aria-label="Twitter"><TwitterIcon size={20} /></a>}
-            {redes.youtube !== '#' && <a href={redes.youtube} target="_blank" rel="noreferrer" aria-label="YouTube"><YoutubeIcon size={20} /></a>}
             {redes.instagram !== '#' && <a href={redes.instagram} target="_blank" rel="noreferrer" aria-label="Instagram"><InstagramIcon size={20} /></a>}
+            {redes.tiktok !== '#' && <a href={redes.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok"><TiktokIcon size={20} /></a>}
+            {redes.youtube !== '#' && <a href={redes.youtube} target="_blank" rel="noreferrer" aria-label="YouTube"><YoutubeIcon size={20} /></a>}
           </div>
         </div>
 
@@ -112,7 +115,7 @@ export default async function Footer() {
           <h4 className={styles.colTitle}>Institución</h4>
           <ul>
             {[
-              { label: 'El Gobernador', href: '/institucion/gobernador' },
+              { label: 'Historia de la Institución', href: '/institucion/historia-institucion' },
               { label: 'Historia', href: '/institucion/historia' },
               { label: 'Organigrama', href: '/institucion/organigrama' },
               { label: 'Transparencia', href: '/transparencia' },

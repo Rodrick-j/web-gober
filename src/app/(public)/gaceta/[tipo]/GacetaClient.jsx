@@ -11,6 +11,7 @@ function formatFecha(fechaStr, opts = { day: 'numeric', month: 'long', year: 'nu
 export default function GacetaClient({ documentos, tipoLabel, icon }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedYear, setSelectedYear] = useState('Todos');
+  const [currentPage, setCurrentPage] = useState(1);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [previewTitle, setPreviewTitle] = useState('');
 
@@ -85,7 +86,10 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
               <button 
                 key={year}
                 className={`${styles.chip} ${selectedYear === year.toString() ? styles.chipActive : ''}`}
-                onClick={() => setSelectedYear(year.toString())}
+                onClick={() => {
+                  setSelectedYear(year.toString());
+                  setCurrentPage(1);
+                }}
               >
                 <span>{year}</span>
                 {year !== 'Todos' && <span style={{ opacity: 0.6, fontSize: '0.8em' }}>
@@ -107,20 +111,33 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
               placeholder={`Buscar en ${tipoLabel} (ej. Ley 045)...`}
               className={styles.searchInput}
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
             />
           </div>
 
           {/* Grilla de Documentos (Tarjetas) */}
           <div className={styles.documentGrid}>
-            {filteredDocs.length === 0 ? (
-              <div className={styles.emptyState}>
-                <div style={{ fontSize: '3rem' }}>📭</div>
-                <h3>No se encontraron resultados</h3>
-                <p>Intenta cambiar el año o el término de búsqueda.</p>
-              </div>
-            ) : (
-              filteredDocs.map(doc => (
+            {(() => {
+              const ITEMS_PER_PAGE = 5;
+              const totalPages = Math.ceil(filteredDocs.length / ITEMS_PER_PAGE);
+              const paginatedDocs = filteredDocs.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
+              if (filteredDocs.length === 0) {
+                return (
+                  <div className={styles.emptyState}>
+                    <div style={{ fontSize: '3rem' }}>📭</div>
+                    <h3>No se encontraron resultados</h3>
+                    <p>Intenta cambiar el año o el término de búsqueda.</p>
+                  </div>
+                );
+              }
+
+              return (
+                <>
+                  {paginatedDocs.map(doc => (
                 <div key={doc.id} className={styles.docCard}>
                   
                   <div className={styles.docInfo}>
@@ -159,8 +176,33 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
                   </div>
                   
                 </div>
-              ))
-            )}
+              ))}
+              
+              {/* Controles de Paginación */}
+              {Math.ceil(filteredDocs.length / 5) > 1 && (
+                <div className={styles.pagination}>
+                  <button 
+                    disabled={currentPage === 1} 
+                    onClick={() => setCurrentPage(p => p - 1)}
+                    className={styles.pageBtn}
+                  >
+                    Anterior
+                  </button>
+                  <span className={styles.pageInfo}>
+                    Página {currentPage} de {Math.ceil(filteredDocs.length / 5)}
+                  </span>
+                  <button 
+                    disabled={currentPage === Math.ceil(filteredDocs.length / 5)} 
+                    onClick={() => setCurrentPage(p => p + 1)}
+                    className={styles.pageBtn}
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              )}
+            </>
+          );
+        })()}
           </div>
         </div>
         

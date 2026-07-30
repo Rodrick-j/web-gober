@@ -14,6 +14,7 @@ const GacetaSection = dynamic(() => import('@/components/GacetaSection/GacetaSec
 const LocationSection = dynamic(() => import('@/components/LocationSection/LocationSection'), { ssr: true });
 const CenefaCultural = dynamic(() => import('@/components/CenefaCultural/CenefaCultural'), { ssr: true });
 const PopupComunicado = dynamic(() => import('@/components/PopupComunicado/PopupComunicado'), { ssr: true });
+const SocialFeeds = dynamic(() => import('@/components/SocialFeeds/SocialFeeds'), { ssr: true });
 
 // Caché en memoria/edge revalidada cada 60 segundos
 const getCachedHomeData = unstable_cache(
@@ -33,7 +34,7 @@ const getCachedHomeData = unstable_cache(
       supabase.from('banners_inicio').select('*').eq('activo', true).order('orden', { ascending: true }),
       supabase.from('configuracion_global').select('*').in('clave', ['ticker_noticias', 'contacto_oficial', 'redes_sociales', 'comunicado_popup', 'video_inicio']),
       supabase.from('secretarias').select('id, nombre, nombre_corto, slug, icono, secretario_nombre, secretario_cargo, secretario_foto_url, secretario_bio').eq('activo', true).order('orden', { ascending: true }),
-      supabase.from('noticias').select('id, titulo, resumen, fecha_publicacion, imagen_portada_url, secretarias(nombre_corto, icono, color_acento)').eq('estado', 'publicado').order('fecha_publicacion', { ascending: false }).limit(5),
+      supabase.from('noticias').select('id, titulo, resumen, fecha_publicacion, imagen_portada_url, secretarias(nombre_corto, icono, color_acento)').eq('estado', 'publicado').order('fecha_publicacion', { ascending: false }).limit(3),
       supabase.from('documentos').select('id, tipo, numero, titulo, fecha_publicacion, archivo_url').eq('es_publico', true).order('fecha_publicacion', { ascending: false }).limit(5)
     ]);
 
@@ -83,11 +84,9 @@ export default async function Home() {
         <NewsSection noticias={ultimasNoticias} />
         <CenefaCultural />
 
-        <GacetaSection documentos={ultimosDocumentos} />
-        <CenefaCultural />
-
         <LocationSection contacto={contactoConfig} />
       </main>
+      <SocialFeeds redes={redesConfig} />
     </>
   );
 }

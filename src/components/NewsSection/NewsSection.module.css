@@ -12,12 +12,13 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 /* Featured Card */
 .featuredReveal {
   grid-row: span 1;
+  height: 100%;
 }
 
 .featuredCard {
@@ -30,6 +31,7 @@
   grid-template-columns: 1fr 1fr;
   box-shadow: var(--shadow-md);
   transition: all 0.3s ease;
+  height: 100%;
 }
 
 .featuredCard:hover {
@@ -93,6 +95,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.25rem;
+  height: 100%;
 }
 
 @media (min-width: 992px) {
@@ -211,7 +214,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   color: var(--color-primary);
-  margin-top: 0.25rem;
+  margin-top: auto;
   transition: gap var(--transition-fast);
 }
 
