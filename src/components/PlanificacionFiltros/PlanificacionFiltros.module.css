@@ -124,13 +124,14 @@
 }
 
 .tabActive {
-  background: #ffffff;
-  color: var(--color-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(135deg, #9c0720 0%, #7a0518 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(156, 7, 32, 0.2);
 }
 
 .tabBtn:hover:not(.tabActive) {
-  color: var(--color-text);
+  color: var(--color-primary);
+  background: rgba(156, 7, 32, 0.05);
 }
 
 /* Results Header */

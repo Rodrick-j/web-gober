@@ -37,7 +37,7 @@ export default function PlanificacionFiltros() {
 
   // Obtener PROY únicos (dependiendo del PRG seleccionado o todos)
   const proyUnicos = useMemo(() => {
-    const data = selectedPrg === 'Todos' ? planificacionData : planificacionData.filter(item => item.prg === selectedPrg);
+    const data = selectedPrg === 'Todos' ? planificacionData : planificacionData.filter(item => String(item.prg) === selectedPrg);
     const p = new Set(data.map(item => item.proyecto).filter(Boolean));
     const sorted = Array.from(p).sort((a,b) => parseInt(a) - parseInt(b));
     return ['Todos', ...sorted];
@@ -49,8 +49,8 @@ export default function PlanificacionFiltros() {
       const matchSearch = item.descripcion.toLowerCase().includes(searchTerm.toLowerCase());
       const matchMunicipio = selectedMunicipio === 'Todos' || item.municipio === selectedMunicipio;
       const matchTipo = selectedTipo === 'Todos' || item.tipo === selectedTipo;
-      const matchPrg = selectedPrg === 'Todos' || item.prg === selectedPrg;
-      const matchProy = selectedProy === 'Todos' || item.proyecto === selectedProy;
+      const matchPrg = selectedPrg === 'Todos' || String(item.prg) === selectedPrg;
+      const matchProy = selectedProy === 'Todos' || String(item.proyecto) === selectedProy;
       
       return matchSearch && matchMunicipio && matchTipo && matchPrg && matchProy;
     });

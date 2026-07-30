@@ -186,18 +186,18 @@ export default function PlanificacionSection({ secretariaId }) {
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
               {/* Card POA */}
-              <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1.75rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1rem 1.5rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
                 {/* Decorative background element */}
                 <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '80%', opacity: 0.85, mixBlendMode: 'screen', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
                   <img loading="lazy" src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                 </div>
                 
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                  <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '50px', height: '50px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '1.25rem' }}>
-                    <FileText size={24} />
+                  <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '0.8rem' }}>
+                    <FileText size={20} />
                   </div>
-                  <h3 style={{ fontSize: '1.35rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.75rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
-                  <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.95rem', marginBottom: '1.75rem', lineHeight: '1.5', maxWidth: '60%' }}>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.5rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.9rem', marginBottom: '0', lineHeight: '1.4', maxWidth: '60%' }}>
                     Acceda a los documentos e instrumentos de planificación anual del Gobierno Autónomo Departamental de Oruro.
                   </p>
                 </div>
