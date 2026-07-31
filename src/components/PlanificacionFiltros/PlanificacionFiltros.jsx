@@ -8,9 +8,28 @@ import { getMuniFullName } from '@/utils/formatMuni';
 
 const ITEMS_PER_PAGE = 20;
 
-export default function PlanificacionFiltros() {
+export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicipio }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedMunicipio, setSelectedMunicipio] = useState('Todos');
+  
+  // Sincronizar estado local con globalMunicipio
+  const [localMuni, setLocalMuni] = useState('Todos');
+  
+  // Convertir id a formato Título (ej. "corque" -> "Corque") o manejar TODOS
+  const getMappedMunicipio = (rawGlobal) => {
+    if (!rawGlobal || rawGlobal.toLowerCase() === 'todos') return 'Todos';
+    return rawGlobal.charAt(0).toUpperCase() + rawGlobal.slice(1).toLowerCase();
+  };
+
+  const selectedMunicipio = getMappedMunicipio(globalMunicipio || localMuni);
+
+  const handleMunicipioChange = (e) => {
+    const val = e.target.value; // 'Todos' o 'Corque' etc.
+    if (setGlobalMunicipio) {
+      setGlobalMunicipio(val === 'Todos' ? 'TODOS' : val.toLowerCase());
+    }
+    setLocalMuni(val);
+  };
+
   const [selectedTipo, setSelectedTipo] = useState('Todos');
   const [selectedPrg, setSelectedPrg] = useState('Todos');
   const [selectedProy, setSelectedProy] = useState('Todos');
@@ -58,7 +77,7 @@ export default function PlanificacionFiltros() {
 
   // Calcular total de la búsqueda actual
   const totalMonto = useMemo(() => {
-    return filteredData.reduce((sum, item) => {
+    return filteredData.filter(d => !d.is_header).reduce((sum, item) => {
       const value = Number(item.monto) || 0;
       return sum + value;
     }, 0);
@@ -112,7 +131,7 @@ export default function PlanificacionFiltros() {
               value={selectedMunicipio === 'Todos' ? '' : selectedMunicipio} 
               onChange={(e) => {
                 const val = e.target.value;
-                setSelectedMunicipio(val || 'Todos');
+                handleMunicipioChange(val || 'Todos');
                 if (val === 'Todos' || !val) {
                   setSelectedPrg('Todos');
                   setSelectedProy('Todos');
@@ -124,7 +143,7 @@ export default function PlanificacionFiltros() {
               <button 
                 className={styles.clearBtn} 
                 onClick={() => {
-                  setSelectedMunicipio('Todos');
+                  handleMunicipioChange('Todos');
                   setSelectedPrg('Todos');
                   setSelectedProy('Todos');
                 }}
@@ -204,7 +223,7 @@ export default function PlanificacionFiltros() {
       {/* Results Header */}
       <div className={styles.resultsHeader}>
         <p className={styles.resultsCount}>
-          Se encontraron <strong>{filteredData.length}</strong> resultados
+          Se encontraron <strong>{filteredData.filter(d => !d.is_header).length}</strong> resultados
         </p>
       </div>
 
@@ -226,7 +245,21 @@ export default function PlanificacionFiltros() {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData.map((item, index) => (
+                {paginatedData.map((item, index) => {
+                  if (item.is_header) {
+                    return (
+                      <tr key={item.id} style={{ background: '#f8f9fa', borderBottom: '2px solid #eaeaea' }}>
+                        <td colSpan="8" style={{ padding: '1rem 1.5rem', fontWeight: '800', color: '#9c0720', fontSize: '1.05rem', textAlign: 'left' }}>
+                          {item.level === 'program' ? `📋 PROGRAMA ${item.prg}: ` : `📌 PROYECTO ${item.proyecto}: `} 
+                          {item.descripcion}
+                          <span style={{ float: 'right', color: '#1a1a2e', fontSize: '0.95rem' }}>
+                            Subtotal: {new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB', maximumFractionDigits: 0 }).format(item.monto)}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  }
+                  return (
                   <tr key={item.id}>
                     <td className={styles.textCenter}>{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</td>
                     <td className={styles.textCenter}>
@@ -249,7 +282,8 @@ export default function PlanificacionFiltros() {
                     <td className={styles.descCell}>{item.descripcion}</td>
                     <td className={styles.budgetCell}>{formatMoney(item.monto)}</td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
               <tfoot>
                 <tr style={{ background: '#F9FAFB', borderTop: '2px solid #E5E7EB' }}>

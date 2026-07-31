@@ -12,9 +12,11 @@ const formatCurrency = (value) => {
   return new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB', maximumFractionDigits: 0 }).format(value);
 };
 
-export default function BudgetDashboard() {
+export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio }) {
   const [activeView, setActiveView] = useState('programas');
-  const [selectedMuni, setSelectedMuni] = useState('corque');
+  const [localMuni, setLocalMuni] = useState('corque');
+  const selectedMuni = globalMunicipio || localMuni;
+  const setSelectedMuni = setGlobalMunicipio || setLocalMuni;
   const [isMobile, setIsMobile] = useState(false);
   const [isDrawing, setIsDrawing] = useState(true);
 
@@ -35,7 +37,8 @@ export default function BudgetDashboard() {
     return () => clearInterval(interval);
   }, []);
 
-  const currentData = municipalitiesData[selectedMuni];
+  const currentMuni = (selectedMuni && selectedMuni.toLowerCase() !== 'todos' && selectedMuni.toLowerCase() !== 'todos') ? selectedMuni.toLowerCase() : 'corque';
+  const currentData = municipalitiesData[currentMuni] || municipalitiesData['corque'];
 
   return (
     <div className="budget-card-container">

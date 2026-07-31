@@ -32,6 +32,7 @@ export default function PlanificacionSection({ secretariaId }) {
   const [openProvincia, setOpenProvincia] = useState(null);
   const [viewMode, setViewMode] = useState('resumen'); // 'resumen', 'dashboard', 'excel', 'filtros', 'cards', 'poa'
   const [mapTab, setMapTab] = useState('territorio');
+  const [globalMunicipio, setGlobalMunicipio] = useState('corque');
   const [poaYear, setPoaYear] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [poaDocs, setPoaDocs] = useState([]);
@@ -165,15 +166,15 @@ export default function PlanificacionSection({ secretariaId }) {
             </div>
 
             {viewMode === 'dashboard' && (
-              <BudgetDashboard />
+              <BudgetDashboard globalMunicipio={globalMunicipio} setGlobalMunicipio={setGlobalMunicipio} />
             )}
 
             {viewMode === 'excel' && (
-              <BudgetExcelExplorer />
+              <BudgetExcelExplorer globalMunicipio={globalMunicipio} setGlobalMunicipio={setGlobalMunicipio} />
             )}
 
             {viewMode === 'filtros' && (
-              <PlanificacionFiltros />
+              <PlanificacionFiltros globalMunicipio={globalMunicipio} setGlobalMunicipio={setGlobalMunicipio} />
             )}
 
             {viewMode === 'resumen' && (

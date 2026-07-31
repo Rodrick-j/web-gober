@@ -87,8 +87,10 @@ const LazyAccordion = ({ summary, children, forceOpen, isProgram }) => {
   );
 };
 
-export default function BudgetExcelExplorer() {
-  const [selectedMuni, setSelectedMuni] = useState('TODOS');
+export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipio }) {
+  const [localMuni, setLocalMuni] = useState('corque');
+  const selectedMuni = globalMunicipio || localMuni;
+  const setSelectedMuni = setGlobalMunicipio || setLocalMuni;
   const [searchQuery, setSearchQuery] = useState('');
   const [onlyPrograms, setOnlyPrograms] = useState(false);
   const [selectedPrg, setSelectedPrg] = useState('ALL');
