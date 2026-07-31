@@ -6,28 +6,53 @@ import planificacionData from '@/data/planificacion.json';
 import styles from './PlanificacionFiltros.module.css';
 import { getMuniFullName } from '@/utils/formatMuni';
 
-const ITEMS_PER_PAGE = 20;
+const ITEMS_PER_PAGE = 10;
 
 export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicipio }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [showMuniDropdown, setShowMuniDropdown] = useState(false);
+  const [muniSearchText, setMuniSearchText] = useState('');
   
   // Sincronizar estado local con globalMunicipio
   const [localMuni, setLocalMuni] = useState('Todos');
   
-  // Convertir id a formato Título (ej. "corque" -> "Corque") o manejar TODOS
-  const getMappedMunicipio = (rawGlobal) => {
-    if (!rawGlobal || rawGlobal.toLowerCase() === 'todos') return 'Todos';
-    return rawGlobal.charAt(0).toUpperCase() + rawGlobal.slice(1).toLowerCase();
+  const RAW_TO_ID = {
+    'oruro': 'oruro', 'challapata': 'challapata', 'huanuni': 'huanuni', 'caracollo': 'caracollo', 'corque': 'corque',
+    'toledo': 'toledo', 'salinas de garci mendoza': 'salinas', 'turco': 'turco', 's. de huari': 'santiago_de_huari',
+    'curahuara de carangas': 'curahuara_de_carangas', 'pazña': 'pazna', 'huallamarca': 'huayllamarca',
+    'machacamarca': 'machacamarca', 'eucaliptus': 'eucaliptos', 'santiago de andamarca': 'santiago_de_andamarca',
+    'sabaya': 'sabaya', 'santuario de quillacas': 'santuario_de_quillacas', 'antequera': 'antequera',
+    'el choro': 'el_choro', 'totora': 'totora', 'poopó': 'poopo', 'belén de andamarca': 'belen_de_andamarca',
+    'cruz de machacamarca': 'cruz_de_machacamarca', 'esmeralda': 'esmeralda', 'carangas': 'carangas',
+    'coipasa': 'coipasa', 'escara': 'escara', 'huachacalla': 'huachacalla', 'la rivera': 'la_rivera',
+    'pampa aullagas': 'pampa_aullagas', 'todos santos': 'todos_santos', 'yunguyo de litoral': 'yunyugo_de_litoral',
+    'chipaya': 'chipaya', 'soracachi': 'soracachi', 'choquecota': 'choquecota'
+  };
+
+  const ID_TO_RAW = Object.fromEntries(Object.entries(RAW_TO_ID).map(([k, v]) => [v, k]));
+
+  const getMappedMunicipio = (globalId) => {
+    if (!globalId || globalId.toLowerCase() === 'todos') return 'Todos';
+    const rawLower = ID_TO_RAW[globalId.toLowerCase()];
+    if (!rawLower) return globalId.charAt(0).toUpperCase() + globalId.slice(1).toLowerCase();
+    
+    // Find the exact string from the JSON data that matches this lowercased raw name
+    const exactMatch = Array.from(new Set(planificacionData.map(d => d.municipio))).find(m => m.toLowerCase() === rawLower);
+    return exactMatch || rawLower.charAt(0).toUpperCase() + rawLower.slice(1);
   };
 
   const selectedMunicipio = getMappedMunicipio(globalMunicipio || localMuni);
 
-  const handleMunicipioChange = (e) => {
-    const val = e.target.value; // 'Todos' o 'Corque' etc.
+  const handleMunicipioChange = (rawVal) => {
     if (setGlobalMunicipio) {
-      setGlobalMunicipio(val === 'Todos' ? 'TODOS' : val.toLowerCase());
+      if (rawVal === 'Todos') {
+        setGlobalMunicipio('TODOS');
+      } else {
+        const id = RAW_TO_ID[rawVal.toLowerCase()] || rawVal.toLowerCase().replace(/\s/g, '_');
+        setGlobalMunicipio(id);
+      }
     }
-    setLocalMuni(val);
+    setLocalMuni(rawVal);
   };
 
   const [selectedTipo, setSelectedTipo] = useState('Todos');
@@ -40,9 +65,10 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
     setIsMounted(true);
   }, []);
 
-  // Obtener municipios únicos
+  // Obtener municipios únicos, excluyendo basura
   const municipiosUnicos = useMemo(() => {
-    const m = new Set(planificacionData.map(item => item.municipio));
+    const garbage = ['Municipio', 'Mnunicipio', 'Comunidad', 'Municipio '];
+    const m = new Set(planificacionData.map(item => item.municipio).filter(x => !garbage.includes(x)));
     const sorted = Array.from(m).sort();
     return ['Todos', ...sorted];
   }, []);
@@ -108,55 +134,125 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
       {/* Header Filters */}
       <div className={styles.filtersWrapper}>
         
-        {/* Search Bar */}
-        <div className={styles.searchGroup}>
-          <Search className={styles.searchIcon} size={20} />
-          <input 
-            type="text" 
-            placeholder="Buscar proyectos, gastos, obras..." 
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={styles.searchInput}
-          />
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          {/* Search Bar */}
+          <div className={styles.searchGroup} style={{ flex: '1', minWidth: '300px', marginBottom: 0 }}>
+            <Search className={styles.searchIcon} size={20} />
+            <input 
+              type="text" 
+              placeholder="Buscar proyectos, gastos, obras..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
+
+          {/* Tipo Selector */}
+          <div className={styles.tabsWrapper}>
+            <button 
+              className={`${styles.tabBtn} ${selectedTipo === 'Todos' ? styles.tabActive : ''}`}
+              onClick={() => setSelectedTipo('Todos')}
+            >
+              Todos
+            </button>
+            <button 
+              className={`${styles.tabBtn} ${selectedTipo === 'INVERSION' ? styles.tabActive : ''}`}
+              onClick={() => setSelectedTipo('INVERSION')}
+            >
+              Inversión
+            </button>
+            <button 
+              className={`${styles.tabBtn} ${selectedTipo === 'GASTO CORRIENTE' ? styles.tabActive : ''}`}
+              onClick={() => setSelectedTipo('GASTO CORRIENTE')}
+            >
+              Gasto Corriente
+            </button>
+          </div>
         </div>
 
         <div className={styles.selectorsGroup}>
           {/* Municipio Selector */}
-          <div className={styles.selectWrapper}>
+          <div className={styles.selectWrapper} style={{ position: 'relative' }}>
             <MapPin className={styles.selectIcon} size={18} />
-            <input 
-              type="text"
-              list="municipios-list-filtros"
-              placeholder="Filtro por Municipio"
-              value={selectedMunicipio === 'Todos' ? '' : selectedMunicipio} 
-              onChange={(e) => {
-                const val = e.target.value;
-                handleMunicipioChange(val || 'Todos');
-                if (val === 'Todos' || !val) {
-                  setSelectedPrg('Todos');
-                  setSelectedProy('Todos');
-                }
-              }}
-              className={styles.selectInput}
-            />
+            
+            <div 
+              className={styles.selectInput} 
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', minHeight: '42px', paddingRight: '10px' }}
+              onClick={() => setShowMuniDropdown(!showMuniDropdown)}
+            >
+              <span style={{ color: selectedMunicipio === 'Todos' ? '#6b7280' : '#1e293b' }}>
+                {selectedMunicipio === 'Todos' ? 'Filtro por Municipio' : getMuniFullName(selectedMunicipio)}
+              </span>
+              <span style={{ fontSize: '0.8rem', color: '#9ca3af' }}>▼</span>
+            </div>
+
             {selectedMunicipio !== 'Todos' && (
               <button 
                 className={styles.clearBtn} 
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   handleMunicipioChange('Todos');
                   setSelectedPrg('Todos');
                   setSelectedProy('Todos');
+                  setMuniSearchText('');
                 }}
                 title="Limpiar municipio"
+                style={{ position: 'absolute', right: '35px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', color: '#ef4444', fontWeight: 'bold' }}
               >
                 ✕
               </button>
             )}
-            <datalist id="municipios-list-filtros">
-              {municipiosUnicos.map(mun => (
-                mun !== 'Todos' && <option key={mun} value={mun}>{getMuniFullName(mun)}</option>
-              ))}
-            </datalist>
+
+            {showMuniDropdown && (
+              <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', marginTop: '4px', zIndex: 50, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', maxHeight: '300px', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ padding: '8px', borderBottom: '1px solid #e5e7eb' }}>
+                  <input 
+                    type="text" 
+                    placeholder="Escribe para buscar..." 
+                    value={muniSearchText}
+                    onChange={(e) => setMuniSearchText(e.target.value)}
+                    style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '0.9rem', outline: 'none' }}
+                    onClick={(e) => e.stopPropagation()}
+                    autoFocus
+                  />
+                </div>
+                <div style={{ overflowY: 'auto', flex: 1 }}>
+                  <div 
+                    onClick={() => {
+                      handleMunicipioChange('Todos');
+                      setSelectedPrg('Todos');
+                      setSelectedProy('Todos');
+                      setShowMuniDropdown(false);
+                      setMuniSearchText('');
+                    }}
+                    style={{ padding: '10px 15px', cursor: 'pointer', background: selectedMunicipio === 'Todos' ? '#f3f4f6' : 'transparent', fontWeight: selectedMunicipio === 'Todos' ? 'bold' : 'normal', borderBottom: '1px solid #f3f4f6' }}
+                  >
+                    Todos los Municipios (Toda la Región)
+                  </div>
+                  {municipiosUnicos
+                    .filter(mun => mun !== 'Todos')
+                    .filter(mun => getMuniFullName(mun).toLowerCase().includes(muniSearchText.toLowerCase()))
+                    .map(mun => (
+                      <div 
+                        key={mun}
+                        onClick={() => {
+                          handleMunicipioChange(mun);
+                          setShowMuniDropdown(false);
+                          setMuniSearchText('');
+                        }}
+                        style={{ padding: '10px 15px', cursor: 'pointer', background: selectedMunicipio === mun ? '#f3f4f6' : 'transparent', fontWeight: selectedMunicipio === mun ? 'bold' : 'normal', borderBottom: '1px solid #f3f4f6', fontSize: '0.95rem' }}
+                      >
+                        {getMuniFullName(mun)}
+                      </div>
+                  ))}
+                  {municipiosUnicos.filter(mun => mun !== 'Todos' && getMuniFullName(mun).toLowerCase().includes(muniSearchText.toLowerCase())).length === 0 && (
+                    <div style={{ padding: '15px', textAlign: 'center', color: '#6b7280', fontStyle: 'italic' }}>
+                      No se encontraron resultados
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* PRG Selector */}
@@ -196,35 +292,17 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
             </select>
           </div>
 
-          {/* Tipo Selector */}
-          <div className={styles.tabsWrapper}>
-            <button 
-              className={`${styles.tabBtn} ${selectedTipo === 'Todos' ? styles.tabActive : ''}`}
-              onClick={() => setSelectedTipo('Todos')}
-            >
-              Todos
-            </button>
-            <button 
-              className={`${styles.tabBtn} ${selectedTipo === 'INVERSION' ? styles.tabActive : ''}`}
-              onClick={() => setSelectedTipo('INVERSION')}
-            >
-              Inversión
-            </button>
-            <button 
-              className={`${styles.tabBtn} ${selectedTipo === 'GASTO CORRIENTE' ? styles.tabActive : ''}`}
-              onClick={() => setSelectedTipo('GASTO CORRIENTE')}
-            >
-              Gasto Corriente
-            </button>
-          </div>
         </div>
       </div>
 
       {/* Results Header */}
-      <div className={styles.resultsHeader}>
+      <div className={styles.resultsHeader} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <p className={styles.resultsCount}>
           Se encontraron <strong>{filteredData.filter(d => !d.is_header).length}</strong> resultados
         </p>
+        <div style={{ fontSize: '1.2rem', fontWeight: '800', color: '#1e293b' }}>
+          TOTAL GENERAL: <span style={{ color: '#9c0720' }}>{formatMoney(totalMonto)}</span>
+        </div>
       </div>
 
       {/* Data Table */}
@@ -249,10 +327,10 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
                   if (item.is_header) {
                     return (
                       <tr key={item.id} style={{ background: '#f8f9fa', borderBottom: '2px solid #eaeaea' }}>
-                        <td colSpan="8" style={{ padding: '1rem 1.5rem', fontWeight: '800', color: '#9c0720', fontSize: '1.05rem', textAlign: 'left' }}>
+                        <td colSpan="8" style={{ padding: '0.6rem 1rem', fontWeight: '800', color: '#9c0720', fontSize: '0.95rem', textAlign: 'left' }}>
                           {item.level === 'program' ? `📋 PROGRAMA ${item.prg}: ` : `📌 PROYECTO ${item.proyecto}: `} 
                           {item.descripcion}
-                          <span style={{ float: 'right', color: '#1a1a2e', fontSize: '0.95rem' }}>
+                          <span style={{ float: 'right', color: '#1a1a2e', fontSize: '0.85rem' }}>
                             Subtotal: {new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB', maximumFractionDigits: 0 }).format(item.monto)}
                           </span>
                         </td>
@@ -285,16 +363,6 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
                   );
                 })}
               </tbody>
-              <tfoot>
-                <tr style={{ background: '#F9FAFB', borderTop: '2px solid #E5E7EB' }}>
-                  <td colSpan="7" style={{ textAlign: 'right', fontWeight: '800', fontSize: '1.05rem', color: '#1e293b', padding: '1.2rem 1rem' }}>
-                    TOTAL GENERAL:
-                  </td>
-                  <td className={styles.budgetCell} style={{ fontSize: '1.1rem', color: '#9c0720' }}>
-                    {formatMoney(totalMonto)}
-                  </td>
-                </tr>
-              </tfoot>
             </table>
           </div>
         ) : (

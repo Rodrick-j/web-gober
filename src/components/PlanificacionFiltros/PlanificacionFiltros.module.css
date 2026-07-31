@@ -198,9 +198,9 @@
 
 .dataTable th {
   background: #e2e8f0;
-  padding: 0.85rem 1rem;
+  padding: 0.5rem 0.5rem;
   text-align: left;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 800;
   color: #334155;
   text-transform: uppercase;
@@ -209,8 +209,8 @@
 }
 
 .dataTable td {
-  padding: 0.85rem 1rem;
-  font-size: 0.85rem;
+  padding: 0.5rem 0.5rem;
+  font-size: 0.75rem;
   border: 1px solid #cbd5e1;
   vertical-align: middle;
   color: #1e293b;

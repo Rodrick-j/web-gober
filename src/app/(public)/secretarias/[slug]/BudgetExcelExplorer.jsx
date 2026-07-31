@@ -874,7 +874,11 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
             background: #fcfcfc;
           }
           .row-program {
-            background-color: #f1f5f9;
+            background-color: #fef2f2;
+          }
+          .row-program td {
+            border-top: 1.5px solid #fecdd3;
+            border-bottom: 1.5px solid #fecdd3;
           }
           .val-cell {
             text-align: right;
@@ -1001,7 +1005,7 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
             <FileSpreadsheet size={18} />
           </div>
           <div className="metric-info">
-            <h4>Proyectos / Actividades</h4>
+            <h4>Actividades</h4>
             <p>{metrics.projectsCount} Registrados</p>
           </div>
         </div>
@@ -1140,7 +1144,8 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
                       <td style={{ textAlign: 'center' }}>
                         {!isProgram && <span className="badge-proy">{row.proyecto}</span>}
                       </td>
-                      <td className="desc-cell" style={{ fontWeight: isProgram ? '800' : '500', color: isProgram ? '#0f172a' : '#334155' }}>
+                      <td className="desc-cell" style={{ fontWeight: isProgram ? '800' : '500', color: isProgram ? '#9c0720' : '#334155' }}>
+                        {isProgram && <span style={{marginRight:'6px'}}>📋</span>}
                         {row.description}
                       </td>
                       <td className="val-cell"><MoneyCell valStr={row.grupo1} /></td>
