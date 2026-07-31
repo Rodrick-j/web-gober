@@ -105,22 +105,39 @@ export default function PlanificacionFiltros() {
           {/* Municipio Selector */}
           <div className={styles.selectWrapper}>
             <MapPin className={styles.selectIcon} size={18} />
-            <select 
-              value={selectedMunicipio} 
+            <input 
+              type="text"
+              list="municipios-list-filtros"
+              placeholder="Filtro por Municipio"
+              value={selectedMunicipio === 'Todos' ? '' : selectedMunicipio} 
               onChange={(e) => {
                 const val = e.target.value;
-                setSelectedMunicipio(val);
-                if (val === 'Todos') {
+                setSelectedMunicipio(val || 'Todos');
+                if (val === 'Todos' || !val) {
                   setSelectedPrg('Todos');
                   setSelectedProy('Todos');
                 }
               }}
               className={styles.selectInput}
-            >
+            />
+            {selectedMunicipio !== 'Todos' && (
+              <button 
+                className={styles.clearBtn} 
+                onClick={() => {
+                  setSelectedMunicipio('Todos');
+                  setSelectedPrg('Todos');
+                  setSelectedProy('Todos');
+                }}
+                title="Limpiar municipio"
+              >
+                ✕
+              </button>
+            )}
+            <datalist id="municipios-list-filtros">
               {municipiosUnicos.map(mun => (
-                <option key={mun} value={mun}>{mun === 'Todos' ? 'Filtro por Municipio' : getMuniFullName(mun)}</option>
+                mun !== 'Todos' && <option key={mun} value={mun}>{getMuniFullName(mun)}</option>
               ))}
-            </select>
+            </datalist>
           </div>
 
           {/* PRG Selector */}

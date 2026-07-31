@@ -40,7 +40,6 @@ function getAcronym(nombre) {
 
 const navItems = [
   { label: 'Inicio', Icon: Home, href: '/' },
-  { label: 'Trámites', Icon: ClipboardList, href: '/tramites' },
   {
     label: 'Secretarías',
     Icon: Building2,

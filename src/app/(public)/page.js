@@ -71,17 +71,13 @@ export default async function Home() {
         <BreakingNews config={tickerConfig} />
         <CenefaCultural />
 
-        {/* Sección del Gobernador */}
         <GovernorSection />
         <CenefaCultural />
 
-        <SecretariatsSection secretarias={secretarias} />
+        <NewsSection noticias={ultimasNoticias} />
         <CenefaCultural />
 
         <VideoSection urls={videoUrls} />
-        <CenefaCultural />
-
-        <NewsSection noticias={ultimasNoticias} />
         <CenefaCultural />
 
         <LocationSection contacto={contactoConfig} />

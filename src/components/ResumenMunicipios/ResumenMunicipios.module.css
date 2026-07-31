@@ -79,6 +79,27 @@
   box-shadow: 0 0 0 3px rgba(156, 7, 32, 0.1);
 }
 
+.clearBtn {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.clearBtn:hover {
+  color: #ef4444;
+}
+
 /* Totales Superiores */
 .totalesGrid {
   display: grid;
@@ -198,7 +219,7 @@
 
 .dataTable th {
   background: #F8FAFC;
-  padding: 1.2rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   text-align: left;
   font-size: 0.85rem;
   font-weight: 800;
@@ -208,9 +229,10 @@
 }
 
 .dataTable td {
-  padding: 1.2rem 1.5rem;
+  padding: 0.4rem 1.2rem;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: middle;
+  font-size: 0.85rem;
 }
 
 .dataTable tbody tr:hover {
@@ -220,10 +242,10 @@
 .muniCell {
   font-weight: 700;
   color: #1e293b;
-  font-size: 1.05rem;
+  font-size: 0.85rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
 }
 
 .muniIcon {
@@ -234,7 +256,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.2rem;
   font-weight: 600;
   color: #334155;
 }

@@ -7,6 +7,7 @@ import styles from './SecretariatTabs.module.css';
 
 export default function SecretariatTabs({ sec, slug }) {
   const [activeTab, setActiveTab] = useState('acerca');
+  const [showFullBio, setShowFullBio] = useState(false);
   const hasPlanificacion = slug.includes('planificacion');
 
   return (
@@ -70,26 +71,43 @@ export default function SecretariatTabs({ sec, slug }) {
         {activeTab === 'autoridad' && (
           <div className={styles.contentBlock}>
             <div className={styles.secretarioInfo}>
-              {sec.secretario_foto_url ? (
-                <Image 
-                  src={sec.secretario_foto_url} 
-                  alt={sec.secretario_nombre || 'Autoridad'} 
-                  width={300}
-                  height={350}
-                  className={styles.secretarioFoto} 
-                />
-              ) : (
-                <div className={styles.secretarioFotoPlaceholder}>👤</div>
-              )}
-              <h3 className={styles.secretarioNombre}>
-                {sec.secretario_nombre || 'Por designar'}
-              </h3>
-              <div className={styles.secretarioCargo} style={{ color: sec.color_acento || '#d32f2f', backgroundColor: `${sec.color_acento || '#d32f2f'}15` }}>
-                {sec.secretario_cargo || 'Autoridad Departamental'}
+              <div className={styles.secretarioFotoWrapper}>
+                {sec.secretario_foto_url ? (
+                  <Image 
+                    src={sec.secretario_foto_url} 
+                    alt={sec.secretario_nombre || 'Autoridad'} 
+                    width={300}
+                    height={350}
+                    className={styles.secretarioFoto} 
+                  />
+                ) : (
+                  <div className={styles.secretarioFotoPlaceholder}>👤</div>
+                )}
               </div>
-              {sec.secretario_bio && (
-                <p className={styles.secretarioBio}>{sec.secretario_bio}</p>
-              )}
+              <div className={styles.secretarioDetalles}>
+                <h3 className={styles.secretarioNombre}>
+                  {sec.secretario_nombre || 'Por designar'}
+                </h3>
+                <div className={styles.secretarioCargo} style={{ color: sec.color_acento || '#d32f2f', backgroundColor: `${sec.color_acento || '#d32f2f'}15` }}>
+                  {sec.secretario_cargo || 'Autoridad Departamental'}
+                </div>
+                {sec.secretario_bio && (
+                  <>
+                    <p className={`${styles.secretarioBio} ${!showFullBio ? styles.bioTruncated : ''}`}>
+                      {sec.secretario_bio}
+                    </p>
+                    {sec.secretario_bio.length > 250 && (
+                      <button 
+                        className={styles.verMasBtn} 
+                        onClick={() => setShowFullBio(!showFullBio)}
+                        style={{ color: sec.color_acento || '#0066cc' }}
+                      >
+                        {showFullBio ? 'Ver menos' : 'Ver más...'}
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         )}

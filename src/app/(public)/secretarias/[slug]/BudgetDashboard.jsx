@@ -31,7 +31,7 @@ export default function BudgetDashboard() {
       setTimeout(() => {
         setIsDrawing(true);
       }, 1000);
-    }, 6500);
+    }, 120000);
     return () => clearInterval(interval);
   }, []);
 
@@ -228,7 +228,7 @@ export default function BudgetDashboard() {
         {activeView === 'mapa' ? (
           <GeoportalPoa currentData={currentData} />
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', minHeight: isMobile ? '340px' : '450px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.7fr 1fr', gap: '1.5rem', minHeight: isMobile ? '340px' : '450px' }}>
             {/* Main Chart */}
             {/* Main Chart Card */}
             {/* Main Chart Card */}
@@ -317,7 +317,8 @@ export default function BudgetDashboard() {
                     axisBottom={{
                       tickSize: 5, tickPadding: 5, tickRotation: 0,
                       legend: 'Monto (BOB)', legendPosition: 'middle', legendOffset: 40,
-                      format: (value) => `${(value / 1000000).toFixed(1)}M`
+                      format: (value) => `${(value / 1000000).toFixed(1)}M`,
+                      tickValues: 4
                     }}
                     axisLeft={{
                       tickSize: 5, tickPadding: 5, tickRotation: 0,
@@ -385,9 +386,9 @@ export default function BudgetDashboard() {
             </div>
 
             {/* Highlights Sidebar */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: isMobile ? '100%' : '340px' }}>
-              <h4 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#1a1a2e', marginBottom: '0.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <TrendingUp size={20} color="#9c0720" /> Mayor Asignación ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', minWidth: '0' }}>
+              <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#1a1a2e', marginBottom: '0.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <TrendingUp size={18} color="#9c0720" /> Mayor Asignación ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
               </h4>
               {(activeView === 'gastos' ? currentData.gruposGasto : currentData.programas)
                 .sort((a, b) => b.value - a.value)
@@ -401,30 +402,30 @@ export default function BudgetDashboard() {
                     style={{ 
                       background: '#ffffff',
                       border: '1px solid #eaeaea', 
-                      borderLeft: `5px solid ${item.color}`,
-                      borderRadius: '12px', 
-                      padding: '1rem 1.25rem',
+                      borderLeft: `4px solid ${item.color}`,
+                      borderRadius: '10px', 
+                      padding: '0.75rem 1rem',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '1rem',
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+                      gap: '0.75rem',
+                      boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
                       transition: 'transform 0.2s, box-shadow 0.2s'
                     }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.06)' }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.02)' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.05)' }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)' }}
                   >
-                    <div style={{ background: '#f8f9fa', padding: '0.65rem', borderRadius: '10px', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      {item.icon ? <item.icon size={22} color={item.color} /> : <TrendingUp size={22} color={item.color} />}
+                    <div style={{ background: '#f8f9fa', padding: '0.5rem', borderRadius: '8px', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {item.icon ? <item.icon size={18} color={item.color} /> : <TrendingUp size={18} color={item.color} />}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <p style={{ margin: 0, fontSize: '0.95rem', color: '#1a1a2e', fontWeight: '700', lineHeight: 1.2 }}>
+                      <p style={{ margin: 0, fontSize: '0.85rem', color: '#1a1a2e', fontWeight: '700', lineHeight: 1.2 }}>
                         {item.label || item.descripcion}
                       </p>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: '0.3rem' }}>
-                        <p style={{ margin: 0, fontSize: '1.2rem', color: item.color, fontWeight: '900' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: '0.2rem' }}>
+                        <p style={{ margin: 0, fontSize: '1.05rem', color: item.color, fontWeight: '900' }}>
                           {((item.value / currentData.totalPresupuesto) * 100).toFixed(1)}%
                         </p>
-                        <p style={{ margin: 0, fontSize: '0.88rem', color: '#666', fontWeight: '600' }}>
+                        <p style={{ margin: 0, fontSize: '0.8rem', color: '#666', fontWeight: '600' }}>
                           {formatCurrency(item.value)}
                         </p>
                       </div>

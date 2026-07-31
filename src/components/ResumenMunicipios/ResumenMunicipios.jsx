@@ -40,13 +40,29 @@ export default function ResumenMunicipios() {
       totales.totalGeneral += monto;
     });
 
-    const arrayData = Object.values(mapa).sort((a, b) => a.nombre.localeCompare(b.nombre));
+    const arrayData = Object.values(mapa)
+      .filter(m => m.total > 0)
+      .sort((a, b) => a.nombre.localeCompare(b.nombre));
     return { dataPorMunicipio: arrayData, totalesGenerales: totales };
   }, []);
 
-  // 2. Filtrar por búsqueda
-  const datosFiltrados = useMemo(() => {
-    return dataPorMunicipio.filter(m => m.nombre.toLowerCase().includes(searchTerm.toLowerCase()));
+  // 2. Filtrar por búsqueda y recalcular totales
+  const { datosFiltrados, totalesFiltrados } = useMemo(() => {
+    const filtrados = dataPorMunicipio.filter(m => m.nombre.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    const totales = {
+      gastoCorriente: 0,
+      inversion: 0,
+      totalGeneral: 0
+    };
+
+    filtrados.forEach(item => {
+      totales.gastoCorriente += item.gastoCorriente;
+      totales.inversion += item.inversion;
+      totales.totalGeneral += item.total;
+    });
+
+    return { datosFiltrados: filtrados, totalesFiltrados: totales };
   }, [dataPorMunicipio, searchTerm]);
 
   const formatMoney = (amount) => {
@@ -75,11 +91,26 @@ export default function ResumenMunicipios() {
           <Search className={styles.searchIcon} size={18} />
           <input 
             type="text" 
-            placeholder="Buscar municipio..." 
+            list="municipios-list"
+            placeholder="Escriba para buscar municipio..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className={styles.searchInput}
           />
+          {searchTerm && (
+            <button 
+              className={styles.clearBtn} 
+              onClick={() => setSearchTerm('')}
+              title="Limpiar búsqueda"
+            >
+              ✕
+            </button>
+          )}
+          <datalist id="municipios-list">
+            {dataPorMunicipio.map((muni) => (
+              <option key={muni.nombre} value={muni.nombre} />
+            ))}
+          </datalist>
         </div>
       </div>
 
@@ -87,35 +118,35 @@ export default function ResumenMunicipios() {
       <div className={styles.totalesGrid}>
         <div className={styles.totalCard}>
           <div className={styles.totalLabel}>TOTAL GASTO CORRIENTE</div>
-          <div className={styles.totalValueGasto}>{formatMoney(totalesGenerales.gastoCorriente)}</div>
+          <div className={styles.totalValueGasto}>{formatMoney(totalesFiltrados.gastoCorriente)}</div>
           <div className={styles.totalBar}>
             <div 
               className={styles.totalBarFillGasto} 
-              style={{ width: `${calcularPorcentaje(totalesGenerales.gastoCorriente, totalesGenerales.totalGeneral)}%` }}
+              style={{ width: `${calcularPorcentaje(totalesFiltrados.gastoCorriente, totalesFiltrados.totalGeneral)}%` }}
             ></div>
           </div>
           <div className={styles.totalPercentage}>
-            {calcularPorcentaje(totalesGenerales.gastoCorriente, totalesGenerales.totalGeneral)}% del Presupuesto
+            {calcularPorcentaje(totalesFiltrados.gastoCorriente, totalesFiltrados.totalGeneral)}% del Presupuesto
           </div>
         </div>
 
         <div className={styles.totalCard}>
           <div className={styles.totalLabel}>TOTAL INVERSIÓN</div>
-          <div className={styles.totalValueInversion}>{formatMoney(totalesGenerales.inversion)}</div>
+          <div className={styles.totalValueInversion}>{formatMoney(totalesFiltrados.inversion)}</div>
           <div className={styles.totalBar}>
             <div 
               className={styles.totalBarFillInversion} 
-              style={{ width: `${calcularPorcentaje(totalesGenerales.inversion, totalesGenerales.totalGeneral)}%` }}
+              style={{ width: `${calcularPorcentaje(totalesFiltrados.inversion, totalesFiltrados.totalGeneral)}%` }}
             ></div>
           </div>
           <div className={styles.totalPercentage}>
-            {calcularPorcentaje(totalesGenerales.inversion, totalesGenerales.totalGeneral)}% del Presupuesto
+            {calcularPorcentaje(totalesFiltrados.inversion, totalesFiltrados.totalGeneral)}% del Presupuesto
           </div>
         </div>
 
         <div className={`${styles.totalCard} ${styles.totalCardMain}`}>
-          <div className={styles.totalLabel}>PRESUPUESTO TOTAL (DEPARTAMENTO)</div>
-          <div className={styles.totalValueMain}>{formatMoney(totalesGenerales.totalGeneral)}</div>
+          <div className={styles.totalLabel}>PRESUPUESTO TOTAL (FILTRADO)</div>
+          <div className={styles.totalValueMain}>{formatMoney(totalesFiltrados.totalGeneral)}</div>
         </div>
       </div>
 
@@ -176,9 +207,9 @@ export default function ResumenMunicipios() {
             <tfoot>
               <tr className={styles.tfootRow}>
                 <td>TOTAL GENERAL</td>
-                <td>{formatMoney(totalesGenerales.gastoCorriente)}</td>
-                <td>{formatMoney(totalesGenerales.inversion)}</td>
-                <td style={{ textAlign: 'right' }}>{formatMoney(totalesGenerales.totalGeneral)}</td>
+                <td>{formatMoney(totalesFiltrados.gastoCorriente)}</td>
+                <td>{formatMoney(totalesFiltrados.inversion)}</td>
+                <td style={{ textAlign: 'right' }}>{formatMoney(totalesFiltrados.totalGeneral)}</td>
               </tr>
             </tfoot>
           </table>

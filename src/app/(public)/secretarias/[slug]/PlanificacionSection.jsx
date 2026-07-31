@@ -76,46 +76,6 @@ export default function PlanificacionSection({ secretariaId }) {
         <h2 style={{ fontSize: 'clamp(1.5rem, 4vw, 2rem)', color: '#1a1a2e', fontWeight: '900', margin: 0 }}>
           Planificación Departamental
         </h2>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button
-            onClick={() => setActiveTab(activeTab === 'sistemas' ? 'territorio' : 'sistemas')}
-            style={{
-              padding: '0.65rem 1.4rem',
-              background: activeTab !== 'sistemas' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#ffffff',
-              color: activeTab !== 'sistemas' ? '#ffffff' : '#475569',
-              border: activeTab !== 'sistemas' ? 'none' : '1px solid #e2e8f0',
-              borderRadius: '10px',
-              fontWeight: '800',
-              fontSize: '0.95rem',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-              transition: 'all 0.3s ease',
-              boxShadow: activeTab !== 'sistemas' ? '0 4px 12px rgba(156,7,32,0.25)' : '0 2px 6px rgba(0,0,0,0.02)'
-            }}
-            onMouseEnter={(e) => {
-              if (activeTab === 'sistemas') {
-                e.currentTarget.style.background = '#f8fafc';
-                e.currentTarget.style.borderColor = '#cbd5e1';
-              } else {
-                e.currentTarget.style.transform = 'translateY(-1px)';
-                e.currentTarget.style.boxShadow = '0 6px 16px rgba(156,7,32,0.3)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (activeTab === 'sistemas') {
-                e.currentTarget.style.background = '#ffffff';
-                e.currentTarget.style.borderColor = '#e2e8f0';
-              } else {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 12px rgba(156,7,32,0.25)';
-              }
-            }}
-          >
-            <MapPin size={18} /> {activeTab !== 'sistemas' ? 'Cerrar Mapas' : 'Ver Mapas y Territorio'}
-          </button>
-        </div>
       </div>
 
       {/* Tab Content */}

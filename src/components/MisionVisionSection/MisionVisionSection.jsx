@@ -51,9 +51,7 @@ export default function MisionVisionSection({ mision, vision, titleClass, textCl
               <div className={styles.iconLabel}>MISIÓN</div>
             </div>
             <div className={styles.divider} />
-            <h2 className={`${styles.cardTitle} ${titleClass || ''}`}>
-              Nuestra Misión
-            </h2>
+
             <p className={`${styles.cardText} ${textClass || ''}`}>
               {mision}
             </p>
@@ -81,9 +79,7 @@ export default function MisionVisionSection({ mision, vision, titleClass, textCl
               <div className={`${styles.iconLabel} ${styles.iconLabelBlue}`}>VISIÓN</div>
             </div>
             <div className={styles.divider} />
-            <h2 className={`${styles.cardTitle} ${titleClass || ''}`}>
-              Nuestra Visión
-            </h2>
+
             <p className={`${styles.cardText} ${textClass || ''}`}>
               {vision}
             </p>
