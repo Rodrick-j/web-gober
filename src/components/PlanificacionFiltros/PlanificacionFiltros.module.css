@@ -374,22 +374,56 @@
     align-items: stretch;
   }
   
+  .selectWrapper {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .searchGroup {
+    flex: none;
+    width: 100%;
+    min-width: 100%;
+  }
+  
+  .selectInput, .searchInput {
+    font-size: 0.75rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  .selectInput {
+    padding-right: 2.2rem;
+  }
+  
   .tabsWrapper {
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
   }
   
   .tabBtn {
+    flex: 1;
     text-align: center;
-    width: 100%;
+    padding: 0.5rem 0.2rem;
+    font-size: 0.75rem;
   }
   
   .pagination {
-    flex-direction: column;
-    gap: 1rem;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.5rem;
   }
   
   .pageBtn {
-    width: 100%;
+    width: auto;
+    flex: 1;
+    padding: 0.6rem 0.5rem;
+    font-size: 0.85rem;
     justify-content: center;
+  }
+  
+  .pageInfo {
+    font-size: 0.85rem;
   }
 }

@@ -335,4 +335,38 @@
   .searchGroup {
     max-width: 100%;
   }
+  .totalesGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  .totalCard {
+    padding: 0.75rem 0.5rem;
+    text-align: center;
+    justify-content: space-between;
+  }
+  .totalLabel {
+    font-size: 0.55rem;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+    text-align: center;
+  }
+  .totalValueGasto, .totalValueInversion {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    word-break: break-word;
+  }
+  .totalValueMain {
+    font-size: 0.95rem;
+    text-align: center;
+    word-break: break-word;
+  }
+  .totalPercentage {
+    font-size: 0.6rem;
+    text-align: center;
+  }
+  .totalBar {
+    height: 4px;
+    margin-bottom: 0.3rem;
+  }
 }

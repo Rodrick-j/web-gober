@@ -471,7 +471,8 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
           background-color: #f8fafc;
           outline: none;
           cursor: pointer;
-          min-width: 260px;
+          flex: 1 1 260px;
+          box-sizing: border-box;
         }
 
         .muni-selector:focus {
@@ -487,9 +488,9 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
           background-color: #ffffff;
           outline: none;
           cursor: pointer;
-          min-width: 260px;
-          max-width: 350px;
+          flex: 1 1 260px;
           text-overflow: ellipsis;
+          box-sizing: border-box;
         }
 
         .project-selector:focus {
@@ -498,12 +499,13 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
 
         .search-wrapper {
           position: relative;
-          min-width: 240px;
+          width: 100%;
           flex-grow: 1;
         }
 
         .search-input {
           width: 100%;
+          box-sizing: border-box;
           padding: 0.65rem 1rem 0.65rem 2.5rem;
           border-radius: 8px;
           border: 1px solid #cbd5e1;
@@ -806,14 +808,24 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
           .search-select-group {
             flex-direction: column;
           }
+          .search-wrapper {
+            flex: none;
+            width: 100%;
+          }
           .muni-selector {
+            width: 100%;
             min-width: 100%;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            box-sizing: border-box;
+            flex: none;
           }
           .project-selector {
+            width: 100%;
             min-width: 100%;
             max-width: 100%;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
+            box-sizing: border-box;
+            flex: none;
           }
           .group-card-value {
             font-size: 0.95rem;
@@ -828,6 +840,40 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
           }
           .btn-action {
             justify-content: center;
+          }
+          .pagination {
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.75rem;
+          }
+          .page-btn {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            flex: 1;
+            text-align: center;
+          }
+          .page-info {
+            font-size: 0.75rem;
+            text-align: center;
+          }
+          .metrics-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+          }
+          .metric-card {
+            flex-direction: column;
+            padding: 0.75rem 0.25rem;
+            gap: 0.5rem;
+            text-align: center;
+          }
+          .metric-info h4 {
+            font-size: 0.55rem;
+            line-height: 1.2;
+          }
+          .metric-info p {
+            font-size: 0.75rem;
+            word-break: break-word;
           }
         } /* End of media query */
 
@@ -1043,7 +1089,7 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
             <option value="ALL">Todos los Programas</option>
             {uniquePrograms.map((prog, idx) => {
               const desc = prog.description || '';
-              const shortDesc = desc.length > 80 ? desc.substring(0, 80) + '...' : desc;
+              const shortDesc = desc.length > 45 ? desc.substring(0, 45) + '...' : desc;
               return (
                 <option key={idx} value={prog.prg}>
                   PRG {prog.prg} : {shortDesc}
@@ -1062,7 +1108,7 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
               <option value="ALL">Todos los Proyectos del Programa</option>
               {uniqueProjects.map((proy, idx) => {
                 const desc = proy.description || '';
-                const shortDesc = desc.length > 80 ? desc.substring(0, 80) + '...' : desc;
+                const shortDesc = desc.length > 45 ? desc.substring(0, 45) + '...' : desc;
                 return (
                   <option key={idx} value={proy.proyecto}>
                     PROY {proy.proyecto} : {shortDesc}

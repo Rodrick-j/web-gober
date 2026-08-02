@@ -73,20 +73,30 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
     return ['Todos', ...sorted];
   }, []);
 
-  // Obtener PRG únicos
+  // Obtener PRG únicos (dependiendo del municipio y tipo seleccionado)
   const prgUnicos = useMemo(() => {
-    const p = new Set(planificacionData.map(item => String(item.prg).replace(/\s/g, '')).filter(Boolean));
+    const data = planificacionData.filter(item => {
+      const matchMunicipio = selectedMunicipio === 'Todos' || item.municipio === selectedMunicipio;
+      const matchTipo = selectedTipo === 'Todos' || item.tipo === selectedTipo;
+      return matchMunicipio && matchTipo;
+    });
+    const p = new Set(data.map(item => String(item.prg).replace(/\s/g, '')).filter(Boolean));
     const sorted = Array.from(p).sort((a,b) => parseInt(a) - parseInt(b));
     return ['Todos', ...sorted];
-  }, []);
+  }, [planificacionData, selectedMunicipio, selectedTipo]);
 
-  // Obtener PROY únicos (dependiendo del PRG seleccionado o todos)
+  // Obtener PROY únicos (dependiendo de municipio, tipo y PRG seleccionado)
   const proyUnicos = useMemo(() => {
-    const data = selectedPrg === 'Todos' ? planificacionData : planificacionData.filter(item => String(item.prg).replace(/\s/g, '') === selectedPrg);
+    const data = planificacionData.filter(item => {
+      const matchMunicipio = selectedMunicipio === 'Todos' || item.municipio === selectedMunicipio;
+      const matchTipo = selectedTipo === 'Todos' || item.tipo === selectedTipo;
+      const matchPrg = selectedPrg === 'Todos' || String(item.prg).replace(/\s/g, '') === selectedPrg;
+      return matchMunicipio && matchTipo && matchPrg;
+    });
     const p = new Set(data.map(item => String(item.proyecto).replace(/\s/g, '')).filter(Boolean));
     const sorted = Array.from(p).sort((a,b) => parseInt(a) - parseInt(b));
     return ['Todos', ...sorted];
-  }, [selectedPrg]);
+  }, [planificacionData, selectedMunicipio, selectedTipo, selectedPrg]);
 
   // Filtrado de datos
   const filteredData = useMemo(() => {
@@ -134,9 +144,14 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
       {/* Header Filters */}
       <div className={styles.filtersWrapper}>
         
+        {/* Orientation Text */}
+        <div style={{ marginBottom: '0.5rem', color: '#475569', fontSize: '0.9rem', lineHeight: '1.4' }}>
+          <strong>Explorador de Planificación:</strong> Utilice estos filtros para buscar y explorar los proyectos, gastos y obras planificadas en el departamento.
+        </div>
+
         <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
           {/* Search Bar */}
-          <div className={styles.searchGroup} style={{ flex: '1', minWidth: '300px', marginBottom: 0 }}>
+          <div className={styles.searchGroup} style={{ flex: '1 1 100%', minWidth: '150px', marginBottom: 0 }}>
             <Search className={styles.searchIcon} size={20} />
             <input 
               type="text" 
@@ -172,15 +187,15 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
 
         <div className={styles.selectorsGroup}>
           {/* Municipio Selector */}
-          <div className={styles.selectWrapper} style={{ position: 'relative' }}>
-            <MapPin className={styles.selectIcon} size={18} />
+          <div className={styles.selectWrapper} style={{ position: 'relative', width: '100%', display: 'block' }}>
+            <MapPin className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
             
             <div 
               className={styles.selectInput} 
-              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', minHeight: '42px', paddingRight: '10px' }}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', minHeight: '42px', paddingRight: '35px' }}
               onClick={() => setShowMuniDropdown(!showMuniDropdown)}
             >
-              <span style={{ color: selectedMunicipio === 'Todos' ? '#6b7280' : '#1e293b' }}>
+              <span style={{ color: selectedMunicipio === 'Todos' ? '#6b7280' : '#1e293b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, marginRight: '10px' }}>
                 {selectedMunicipio === 'Todos' ? 'Filtro por Municipio' : getMuniFullName(selectedMunicipio)}
               </span>
               <span style={{ fontSize: '0.8rem', color: '#9ca3af' }}>▼</span>
@@ -197,7 +212,7 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
                   setMuniSearchText('');
                 }}
                 title="Limpiar municipio"
-                style={{ position: 'absolute', right: '35px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', color: '#ef4444', fontWeight: 'bold' }}
+                style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', color: '#ef4444', fontWeight: 'bold', zIndex: 10, padding: '5px' }}
               >
                 ✕
               </button>
@@ -237,6 +252,8 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
                         key={mun}
                         onClick={() => {
                           handleMunicipioChange(mun);
+                          setSelectedPrg('Todos');
+                          setSelectedProy('Todos');
                           setShowMuniDropdown(false);
                           setMuniSearchText('');
                         }}
@@ -255,43 +272,45 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
             )}
           </div>
 
-          {/* PRG Selector */}
-          <div className={styles.selectWrapper}>
-            <Tag className={styles.selectIcon} size={18} />
-            <select 
-              value={selectedPrg} 
-              onChange={(e) => {
-                setSelectedPrg(e.target.value);
-                setSelectedProy('Todos'); // reset proy on prg change
-              }}
-              className={styles.selectInput}
-              disabled={selectedMunicipio === 'Todos'}
-              style={{ opacity: selectedMunicipio === 'Todos' ? 0.5 : 1, cursor: selectedMunicipio === 'Todos' ? 'not-allowed' : 'pointer' }}
-            >
-              <option value="Todos">Todos los PRG</option>
-              {prgUnicos.filter(p => p !== 'Todos').map(p => (
-                <option key={p} value={p}>Programa {p}</option>
-              ))}
-            </select>
-          </div>
+          {/* PRG and PROY Selectors Row */}
+          <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
+            {/* PRG Selector */}
+            <div className={styles.selectWrapper} style={{ position: 'relative', flex: 1, display: 'block' }}>
+              <Tag className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
+              <select 
+                value={selectedPrg} 
+                onChange={(e) => {
+                  setSelectedPrg(e.target.value);
+                  setSelectedProy('Todos'); // reset proy on prg change
+                }}
+                className={styles.selectInput}
+                disabled={selectedMunicipio === 'Todos'}
+                style={{ opacity: selectedMunicipio === 'Todos' ? 0.5 : 1, cursor: selectedMunicipio === 'Todos' ? 'not-allowed' : 'pointer', width: '100%' }}
+              >
+                <option value="Todos">Todos los PRG</option>
+                {prgUnicos.filter(p => p !== 'Todos').map(p => (
+                  <option key={p} value={p}>Programa {p}</option>
+                ))}
+              </select>
+            </div>
 
-          {/* PROY Selector */}
-          <div className={styles.selectWrapper}>
-            <Tag className={styles.selectIcon} size={18} />
-            <select 
-              value={selectedProy} 
-              onChange={(e) => setSelectedProy(e.target.value)}
-              className={styles.selectInput}
-              disabled={selectedMunicipio === 'Todos'}
-              style={{ opacity: selectedMunicipio === 'Todos' ? 0.5 : 1, cursor: selectedMunicipio === 'Todos' ? 'not-allowed' : 'pointer' }}
-            >
-              <option value="Todos">Todos los PROY</option>
-              {proyUnicos.filter(p => p !== 'Todos').map(p => (
-                <option key={p} value={p}>Proyecto {p}</option>
-              ))}
-            </select>
+            {/* PROY Selector */}
+            <div className={styles.selectWrapper} style={{ position: 'relative', flex: 1, display: 'block' }}>
+              <Tag className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
+              <select 
+                value={selectedProy} 
+                onChange={(e) => setSelectedProy(e.target.value)}
+                className={styles.selectInput}
+                disabled={selectedMunicipio === 'Todos'}
+                style={{ opacity: selectedMunicipio === 'Todos' ? 0.5 : 1, cursor: selectedMunicipio === 'Todos' ? 'not-allowed' : 'pointer', width: '100%' }}
+              >
+                <option value="Todos">Todos los PROY</option>
+                {proyUnicos.filter(p => p !== 'Todos').map(p => (
+                  <option key={p} value={p}>Proyecto {p}</option>
+                ))}
+              </select>
+            </div>
           </div>
-
         </div>
       </div>
 

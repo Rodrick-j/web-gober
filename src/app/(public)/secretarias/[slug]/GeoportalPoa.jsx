@@ -974,23 +974,23 @@ export default function GeoportalPoa({ currentData }) {
 
   const baseMapConfigs = {
     voyager: {
-      name: 'Institucional Claro',
-      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+      name: 'Google Maps (Calles)',
+      url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
       icon: Sun
     },
     satelite: {
-      name: 'Satelital HD Esri',
-      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      name: 'Google Earth (Satelital)',
+      url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
       icon: Globe
     },
     topografico: {
-      name: 'Relieve Topográfico',
-      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+      name: 'Google (Terreno)',
+      url: 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
       icon: Compass
     },
     dark: {
-      name: 'Modo Oscuro',
-      url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+      name: 'Google Maps (Oscuro)',
+      url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', // fallback since google doesn't have a direct dark raster tile out of the box
       icon: Moon
     }
   };
@@ -1072,146 +1072,108 @@ export default function GeoportalPoa({ currentData }) {
     setObraSeleccionada(obra);
     setMostrarListaResultados(false);
     if (leafletMapRef.current) {
-      leafletMapRef.current.flyTo([obra.lat, obra.lng], 16, { duration: 0.8 });
+      leafletMapRef.current.flyTo([obra.lat, obra.lng], 16, { duration: 1.5 });
     }
   };
 
+  // 1. Inicializar mapa
   useEffect(() => {
-    if (!document.getElementById('leaflet-cdn-css')) {
-      const link = document.createElement('link');
-      link.id = 'leaflet-cdn-css';
-      link.rel = 'stylesheet';
-      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-      document.head.appendChild(link);
-    }
-
-    let isMounted = true;
+    if (typeof window === 'undefined') return;
 
     import('leaflet').then((L) => {
-      if (!isMounted || !mapContainerRef.current) return;
+      import('leaflet/dist/leaflet.css');
+      
+      if (!leafletMapRef.current && mapContainerRef.current) {
+        const map = L.map(mapContainerRef.current, {
+          zoomControl: false,
+          attributionControl: false
+        }).setView([currentData.lat, currentData.lng], 14);
 
+        L.control.zoom({ position: 'topleft' }).addTo(map);
+
+        tileLayerRef.current = L.tileLayer(baseMapConfigs[baseLayer].url, {
+          maxZoom: 19
+        }).addTo(map);
+
+        markersGroupRef.current = L.layerGroup().addTo(map);
+        leafletMapRef.current = map;
+      }
+    });
+
+    return () => {
       if (leafletMapRef.current) {
         leafletMapRef.current.remove();
         leafletMapRef.current = null;
       }
-
-      const map = L.map(mapContainerRef.current, {
-        center: [currentData.lat, currentData.lng],
-        zoom: 14,
-        zoomControl: true,
-        attributionControl: false
-      });
-
-      const layer = L.tileLayer(baseMapConfigs[baseLayer].url, {
-        maxZoom: 19,
-        subdomains: 'abcd'
-      }).addTo(map);
-
-      leafletMapRef.current = map;
-      tileLayerRef.current = layer;
-      markersGroupRef.current = L.layerGroup().addTo(map);
-
-      return () => {
-        isMounted = false;
-        if (leafletMapRef.current) {
-          leafletMapRef.current.remove();
-          leafletMapRef.current = null;
-        }
-      };
-    });
+    };
   }, [currentData]);
 
+  // 2. Cambiar capa base
   useEffect(() => {
-    if (!leafletMapRef.current || !tileLayerRef.current) return;
-
-    import('leaflet').then((L) => {
-      if (!leafletMapRef.current || !tileLayerRef.current) return;
-      leafletMapRef.current.removeLayer(tileLayerRef.current);
-
-      const layer = L.tileLayer(baseMapConfigs[baseLayer].url, {
-        maxZoom: 19,
-        subdomains: 'abcd'
-      }).addTo(leafletMapRef.current);
-
-      tileLayerRef.current = layer;
-      if (layer.bringToBack) {
-        layer.bringToBack();
-      }
-    });
+    if (tileLayerRef.current && baseMapConfigs[baseLayer]) {
+      tileLayerRef.current.setUrl(baseMapConfigs[baseLayer].url);
+    }
   }, [baseLayer]);
 
+  // 3. Dibujar marcadores
   useEffect(() => {
-    if (!leafletMapRef.current || !markersGroupRef.current) return;
+    if (!leafletMapRef.current || !markersGroupRef.current || typeof window === 'undefined') return;
 
     import('leaflet').then((L) => {
-      if (!markersGroupRef.current) return;
       markersGroupRef.current.clearLayers();
 
-      obrasFiltradas.forEach((obra) => {
-        const color = getMarkerColor(obra);
-        const radius = obra.presupuesto > 500000 ? 9.5 : obra.presupuesto > 100000 ? 7.5 : 6;
+      obrasFiltradas.forEach(obra => {
+        let markerColor = '#1e293b'; 
 
-        const circle = L.circleMarker([obra.lat, obra.lng], {
-          radius,
-          fillColor: color,
-          color: '#ffffff',
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 0.88
+        if (criterio === 'estado') {
+          const ESTADOS_COLORES = {
+            'EN EJECUCIÓN FÍSICA': '#28a745',
+            'EN LICITACIÓN / ADJUDICACIÓN': '#ff8c00',
+            'ESTUDIO DE PREINVERSIÓN': '#17a2b8',
+            'CONCLUIDO 100%': '#007bff'
+          };
+          markerColor = ESTADOS_COLORES[obra.estado] || '#6c757d';
+        } else if (criterio === 'prioridad') {
+          const PRIORIDAD_COLORES = {
+            'ESTRATÉGICA': '#1a1a2e',
+            'ALTA': '#9c0720',
+            'MEDIA': '#d31027',
+            'DESCONCENTRADA': '#ff8c00'
+          };
+          markerColor = PRIORIDAD_COLORES[obra.prioridad] || '#1e293b';
+        } else if (criterio === 'monto') {
+          if (obra.presupuesto > 500000) markerColor = '#9f1239';
+          else if (obra.presupuesto > 150000) markerColor = '#e11d48';
+          else markerColor = '#fb7185';
+        }
+
+        const isSelected = obraSeleccionada?.id === obra.id;
+        
+        const customIcon = L.divIcon({
+          className: 'custom-div-icon',
+          html: `<div style="
+            background-color: ${markerColor};
+            width: ${isSelected ? '24px' : '14px'};
+            height: ${isSelected ? '24px' : '14px'};
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: ${isSelected ? '0 0 12px rgba(0,0,0,0.8)' : '0 0 6px rgba(0,0,0,0.5)'};
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+          "></div>`,
+          iconSize: [isSelected ? 24 : 14, isSelected ? 24 : 14],
+          iconAnchor: [isSelected ? 12 : 7, isSelected ? 12 : 7]
         });
 
-        const tooltipHtml = `
-          <div style="font-family: 'Inter', system-ui, sans-serif; padding: 10px 14px; max-width: 280px; text-align: left;">
-            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 5px;">
-              <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: ${color}; box-shadow: 0 0 6px ${color};"></span>
-              <span style="font-size: 0.72rem; font-weight: 800; color: ${color}; text-transform: uppercase; letter-spacing: 0.5px;">${obra.categoria}</span>
-            </div>
-            <div style="font-size: 0.88rem; font-weight: 800; color: #1a1a2e; line-height: 1.3; margin-bottom: 8px;">
-              ${obra.titulo}
-            </div>
-            <div style="background: #f8f9fa; border: 1px solid #eaeaea; border-radius: 6px; padding: 6px 8px; font-size: 0.76rem; color: #444; display: flex; flex-direction: column; gap: 3px;">
-              <div style="display: flex; justify-content: space-between;">
-                <span>Presupuesto:</span>
-                <strong style="color: #9c0720; font-weight: 800;">BOB ${obra.presupuesto.toLocaleString('es-BO')}</strong>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span>Subalcaldía/Distrito:</span>
-                <strong style="color: #1a1a2e;">${obra.subalcaldia || obra.distrito}</strong>
-              </div>
-            </div>
-            <div style="margin-top: 6px; font-size: 0.68rem; color: #888; text-align: right; font-style: italic;">
-              ⚡ Haz clic para enfocar en mapa
-            </div>
-          </div>
-        `;
-
-        circle.bindTooltip(tooltipHtml, {
-          direction: 'top',
-          offset: [0, -10],
-          opacity: 0.98,
-          className: 'premium-map-tooltip',
-          sticky: true
+        const marker = L.marker([obra.lat, obra.lng], { icon: customIcon, zIndexOffset: isSelected ? 1000 : 0 });
+        
+        marker.on('click', () => {
+          saltarAObra(obra);
         });
 
-        circle.on('mouseover', () => {
-          circle.setRadius(radius + 4);
-          circle.setStyle({ weight: 3, fillOpacity: 1 });
-        });
-
-        circle.on('mouseout', () => {
-          circle.setRadius(radius);
-          circle.setStyle({ weight: 2, fillOpacity: 0.88 });
-        });
-
-        circle.on('click', () => {
-          setObraSeleccionada(obra);
-          leafletMapRef.current.flyTo([obra.lat, obra.lng], 16, { duration: 0.8 });
-        });
-
-        circle.addTo(markersGroupRef.current);
+        marker.addTo(markersGroupRef.current);
       });
     });
-  }, [obrasFiltradas, criterio]);
+  }, [obrasFiltradas, criterio, obraSeleccionada]);
 
   return (
     <div className="geoportal-wrapper">
@@ -1724,10 +1686,9 @@ export default function GeoportalPoa({ currentData }) {
       {/* Grilla principal responsiva: Mapa vs Selector/Leyenda */}
       <div className="geoportal-grid">
         
-        {/* Contenedor del Mapa Interactivo con Card Flotante */}
-        <div className="geoportal-map-box">
-          <div ref={mapContainerRef} className="geoportal-map-inner" />
-
+        {/* Contenedor del Mapa Interactivo (Modo Google Maps + Leaflet) */}
+        <div className="geoportal-map-box" style={{ position: 'relative', width: '100%', overflow: 'hidden' }}>
+          <div ref={mapContainerRef} className="geoportal-map-inner" style={{ width: '100%', height: '100%', minHeight: '520px' }}></div>
           {/* Tarjeta Flotante (Popup de Obra 2025 Auditada) */}
           {obraSeleccionada && (
             <div className="obra-popup-card">
@@ -1808,36 +1769,12 @@ export default function GeoportalPoa({ currentData }) {
                   Prioridad
                 </button>
                 <button 
-                  onClick={() => setCriterio('tipo')} 
-                  style={{ background: criterio === 'tipo' ? '#9c0720' : '#f1f5f9', color: criterio === 'tipo' ? '#fff' : '#475569', border: 'none', borderRadius: '6px', padding: '0.3rem 0.6rem', fontSize: '0.74rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s' }}
-                >
-                  Tipo
-                </button>
-                <button 
-                  onClick={() => setCriterio('categoria')} 
-                  style={{ background: criterio === 'categoria' ? '#9c0720' : '#f1f5f9', color: criterio === 'categoria' ? '#fff' : '#475569', border: 'none', borderRadius: '6px', padding: '0.3rem 0.6rem', fontSize: '0.74rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s' }}
-                >
-                  Área
-                </button>
-                <button 
                   onClick={() => setCriterio('estado')} 
                   style={{ background: criterio === 'estado' ? '#9c0720' : '#f1f5f9', color: criterio === 'estado' ? '#fff' : '#475569', border: 'none', borderRadius: '6px', padding: '0.3rem 0.6rem', fontSize: '0.74rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s' }}
                 >
                   Avance
                 </button>
               </div>
-
-              {/* Título de leyenda dinámica */}
-              <p style={{ margin: '0 0 0.2rem 0', fontSize: '0.68rem', fontWeight: '700', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                Leyenda Oficial:
-              </p>
-              <h5 style={{ margin: '0 0 0.65rem 0', fontSize: '0.84rem', fontWeight: '800', color: '#1a1a2e' }}>
-                {criterio === 'monto' && 'OPERACIONES SEGÚN MONTO 2025'}
-                {criterio === 'prioridad' && 'OPERACIONES SEGÚN PRIORIDAD'}
-                {criterio === 'tipo' && 'OPERACIONES SEGÚN TIPO DE OBRA'}
-                {criterio === 'categoria' && 'OPERACIONES SEGÚN ÁREA'}
-                {criterio === 'estado' && 'OPERACIONES SEGÚN AVANCE'}
-              </h5>
 
               {/* Lista de colores según el criterio */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
@@ -1883,48 +1820,6 @@ export default function GeoportalPoa({ currentData }) {
                   </>
                 )}
 
-                {criterio === 'tipo' && (
-                  <>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '18px', height: '10px', background: '#28a745', borderRadius: '3px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '600' }}>Continuidad de Obra</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '18px', height: '10px', background: '#6f42c1', borderRadius: '3px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '600' }}>Inversión Nueva</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '18px', height: '10px', background: '#007bff', borderRadius: '3px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '600' }}>Preinversión / Estudio</span>
-                    </div>
-                  </>
-                )}
-
-                {criterio === 'categoria' && (
-                  <>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '18px', height: '10px', background: '#d31027', borderRadius: '3px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '600' }}>Salud y Saneamiento</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '18px', height: '10px', background: '#ff8c00', borderRadius: '3px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '600' }}>Infraestructura Vial y Caminos</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '18px', height: '10px', background: '#28a745', borderRadius: '3px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '600' }}>Desarrollo Agropecuario</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '18px', height: '10px', background: '#007bff', borderRadius: '3px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '600' }}>Agua Potable y Riego</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                      <div style={{ width: '18px', height: '10px', background: '#6f42c1', borderRadius: '3px', flexShrink: 0 }} />
-                      <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '600' }}>Educación y Deportes</span>
-                    </div>
-                  </>
-                )}
-
                 {criterio === 'estado' && (
                   <>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
@@ -1956,6 +1851,7 @@ export default function GeoportalPoa({ currentData }) {
               <Layers size={15} color="#ff6b81" /> Leyenda ({criterio.toUpperCase()})
             </button>
           )}
+
         </div>
       </div>
     </div>

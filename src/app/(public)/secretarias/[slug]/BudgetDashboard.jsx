@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { ResponsivePie } from '@nivo/pie';
 import { ResponsiveBar } from '@nivo/bar';
 import { Wallet, PieChart, BarChart2, TrendingUp, Building2, Shield, Activity, Map, Users, MapPin } from 'lucide-react';
 import GeoportalPoa from './GeoportalPoa';
 import { municipalitiesData, municipalitiesList } from './municipalitiesData';
+import budgetsData from './municipalitiesBudgets.json';
 
 const formatCurrency = (value) => {
   return new Intl.NumberFormat('es-BO', { style: 'currency', currency: 'BOB', maximumFractionDigits: 0 }).format(value);
@@ -37,8 +38,87 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
     return () => clearInterval(interval);
   }, []);
 
-  const currentMuni = (selectedMuni && selectedMuni.toLowerCase() !== 'todos' && selectedMuni.toLowerCase() !== 'todos') ? selectedMuni.toLowerCase() : 'corque';
-  const currentData = municipalitiesData[currentMuni] || municipalitiesData['corque'];
+  const currentMuni = (selectedMuni && selectedMuni.toLowerCase() !== 'todos') ? selectedMuni.toLowerCase() : 'corque';
+  
+  const currentData = useMemo(() => {
+    const rawRows = budgetsData[currentMuni] || [];
+    if (!rawRows || rawRows.length === 0) {
+      return municipalitiesData[currentMuni] || municipalitiesData['corque'];
+    }
+
+    let totalBudget = 0;
+    const groupsSum = {
+      'Grupo 1': { total: 0, desc: 'Servicios Personales', color: 'hsl(348, 70%, 55%)' },
+      'Grupo 2': { total: 0, desc: 'Servicios No Personales', color: 'hsl(348, 70%, 45%)' },
+      'Grupo 3': { total: 0, desc: 'Materiales y Suministros', color: 'hsl(348, 70%, 35%)' },
+      'Grupo 4': { total: 0, desc: 'Activos Reales', color: 'hsl(348, 70%, 15%)' },
+      'Grupo 5': { total: 0, desc: 'Activos Financieros', color: 'hsl(145, 63%, 42%)' },
+      'Grupo 6': { total: 0, desc: 'Deudas', color: 'hsl(0, 0%, 50%)' },
+      'Grupo 7': { total: 0, desc: 'Transferencias', color: 'hsl(348, 70%, 25%)' },
+      'Grupo 8': { total: 0, desc: 'Impuestos y Otros', color: 'hsl(283, 39%, 53%)' },
+      'Grupo 9': { total: 0, desc: 'Otros Gastos', color: 'hsl(204, 70%, 50%)' }
+    };
+
+    const programColors = [
+      "hsl(204, 70%, 50%)", "hsl(43, 74%, 49%)", "hsl(348, 70%, 50%)", "hsl(180, 25%, 25%)",
+      "hsl(145, 63%, 42%)", "hsl(14, 89%, 55%)", "hsl(283, 39%, 53%)", "hsl(348, 70%, 40%)",
+      "hsl(220, 50%, 50%)", "hsl(30, 80%, 50%)"
+    ];
+
+    const programasList = [];
+
+    rawRows.forEach(row => {
+      if (row.proyecto === '0 000') {
+        const val = parseFloat((row.total || '0').toString().replace(/,/g, '')) || 0;
+        totalBudget += val;
+        
+        groupsSum['Grupo 1'].total += parseFloat((row.grupo1 || '0').toString().replace(/,/g, '')) || 0;
+        groupsSum['Grupo 2'].total += parseFloat((row.grupo2 || '0').toString().replace(/,/g, '')) || 0;
+        groupsSum['Grupo 3'].total += parseFloat((row.grupo3 || '0').toString().replace(/,/g, '')) || 0;
+        groupsSum['Grupo 4'].total += parseFloat((row.grupo4 || '0').toString().replace(/,/g, '')) || 0;
+        groupsSum['Grupo 5'].total += parseFloat((row.grupo5 || '0').toString().replace(/,/g, '')) || 0;
+        groupsSum['Grupo 6'].total += parseFloat((row.grupo6 || '0').toString().replace(/,/g, '')) || 0;
+        groupsSum['Grupo 7'].total += parseFloat((row.grupo7 || '0').toString().replace(/,/g, '')) || 0;
+        groupsSum['Grupo 8'].total += parseFloat((row.grupo8 || '0').toString().replace(/,/g, '')) || 0;
+        groupsSum['Grupo 9'].total += parseFloat((row.grupo9 || '0').toString().replace(/,/g, '')) || 0;
+
+        if (val > 0) {
+          programasList.push({
+            id: `PRG ${row.prg}`,
+            label: row.description,
+            value: val
+          });
+        }
+      }
+    });
+
+    const gruposGasto = Object.keys(groupsSum)
+      .filter(k => groupsSum[k].total > 0)
+      .map(k => ({
+        grupo: k,
+        descripcion: groupsSum[k].desc,
+        value: groupsSum[k].total,
+        color: groupsSum[k].color
+      }))
+      .sort((a, b) => b.value - a.value);
+
+    const programas = programasList
+      .sort((a, b) => b.value - a.value)
+      .slice(0, 10) // Show top 10 for pie chart legibility
+      .map((p, idx) => ({
+        ...p,
+        label: p.label,
+        color: programColors[idx % programColors.length],
+        icon: null
+      }));
+
+    return {
+      ...(municipalitiesData[currentMuni] || municipalitiesData['corque']),
+      totalPresupuesto: totalBudget,
+      programas,
+      gruposGasto
+    };
+  }, [currentMuni]);
 
   return (
     <div className="budget-card-container">
@@ -153,8 +233,8 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                       color: '#1a1a2e',
                       border: '1.5px solid #dcdcdc',
                       borderRadius: '10px',
-                      padding: '0.6rem 1rem 0.6rem 2.3rem',
-                      fontSize: isMobile ? '0.85rem' : '0.94rem',
+                      padding: isMobile ? '0.5rem 0.5rem 0.5rem 1.8rem' : '0.6rem 1rem 0.6rem 2.3rem',
+                      fontSize: isMobile ? '0.75rem' : '0.94rem',
                       fontWeight: '800',
                       outline: 'none',
                       cursor: 'pointer',
@@ -162,17 +242,11 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                       transition: 'all 0.2s'
                     }}
                   >
-                    <optgroup label="⭐ Municipios con POA Detallado 100%">
-                      <option value="corque">Gob. Autónomo Municipal de Corque (⭐ 100%)</option>
-                      <option value="choquecota">Gob. Autónomo Municipal de Choquecota (⭐ 100%)</option>
-                    </optgroup>
-                    <optgroup label="📍 Los 35 Municipios de Oruro (Por Orden Alfabético con GPS Exacto)">
-                      {municipalitiesList.map((muni) => (
-                        <option key={muni.id} value={muni.id}>
-                          {muni.entidad} {muni.isLoaded100 ? '(⭐ 100% Cargado)' : ''}
-                        </option>
-                      ))}
-                    </optgroup>
+                    {municipalitiesList.map((muni) => (
+                      <option key={muni.id} value={muni.id}>
+                        {muni.entidad}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -327,16 +401,22 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                       tickSize: 5, tickPadding: 5, tickRotation: 0,
                     }}
                     theme={{
+                      labels: { text: { fontSize: 11, fontWeight: 700, fill: '#ffffff', textShadow: '1px 1px 3px rgba(0,0,0,0.8)' } },
                       axis: { ticks: { text: { fill: '#555', fontSize: isMobile ? 11 : 13, fontWeight: '600' } }, legend: { text: { fill: '#333', fontSize: 14, fontWeight: '700' } } },
                       grid: { line: { stroke: '#eaeaea', strokeWidth: 1, strokeDasharray: '4 4' } },
                       tooltip: { container: { background: '#ffffff', color: '#1a1a2e', fontSize: '14px', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.12)', border: '1px solid #eaeaea' } },
                     }}
                     enableGridX={true}
                     enableGridY={false}
-                    labelSkipWidth={42}
-                    labelSkipHeight={16}
+                    labelSkipWidth={0}
+                    labelSkipHeight={0}
                     labelTextColor="#ffffff"
-                    label={d => `${((d.value / currentData.totalPresupuesto) * 100).toFixed(1)}%`}
+                    label={d => {
+                      const pct = (d.value / currentData.totalPresupuesto) * 100;
+                      // Push tiny labels to the right using non-breaking spaces so they don't overlap the Y-axis text
+                      if (pct < 3) return `\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${pct.toFixed(1)}%`;
+                      return `${pct.toFixed(1)}%`;
+                    }}
                     tooltip={({ id, value, color, indexValue, data }) => (
                       <div style={{
                         background: 'rgba(255, 255, 255, 0.98)',
@@ -406,29 +486,29 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                       background: '#ffffff',
                       border: '1px solid #eaeaea', 
                       borderLeft: `4px solid ${item.color}`,
-                      borderRadius: '10px', 
-                      padding: '0.75rem 1rem',
+                      borderRadius: '8px', 
+                      padding: '0.4rem 0.6rem',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.75rem',
+                      gap: '0.5rem',
                       boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
                       transition: 'transform 0.2s, box-shadow 0.2s'
                     }}
                     onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.05)' }}
                     onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)' }}
                   >
-                    <div style={{ background: '#f8f9fa', padding: '0.5rem', borderRadius: '8px', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      {item.icon ? <item.icon size={18} color={item.color} /> : <TrendingUp size={18} color={item.color} />}
+                    <div style={{ background: '#f8f9fa', padding: '0.4rem', borderRadius: '6px', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {item.icon ? <item.icon size={16} color={item.color} /> : <TrendingUp size={16} color={item.color} />}
                     </div>
                     <div style={{ flex: 1 }}>
-                      <p style={{ margin: 0, fontSize: '0.85rem', color: '#1a1a2e', fontWeight: '700', lineHeight: 1.2 }}>
+                      <p style={{ margin: 0, fontSize: '0.75rem', color: '#1a1a2e', fontWeight: '700', lineHeight: 1.15 }}>
                         {item.label || item.descripcion}
                       </p>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: '0.2rem' }}>
-                        <p style={{ margin: 0, fontSize: '1.05rem', color: item.color, fontWeight: '900' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.3rem' }}>
+                        <p style={{ margin: 0, fontSize: '0.95rem', color: item.color, fontWeight: '900' }}>
                           {((item.value / currentData.totalPresupuesto) * 100).toFixed(1)}%
                         </p>
-                        <p style={{ margin: 0, fontSize: '0.8rem', color: '#666', fontWeight: '600' }}>
+                        <p style={{ margin: 0, fontSize: '0.75rem', color: '#0f172a', fontWeight: '800', background: '#f1f5f9', padding: '0.15rem 0.45rem', borderRadius: '4px', letterSpacing: '-0.2px' }}>
                           {formatCurrency(item.value)}
                         </p>
                       </div>
@@ -478,7 +558,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                     display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.25rem', pointerEvents: 'none'
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                      <prog.icon size={18} color={prog.color} />
+                      {prog.icon ? <prog.icon size={18} color={prog.color} /> : <Activity size={18} color={prog.color} />}
                       <span style={{ color: prog.color, fontWeight: '900', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                         {((prog.value / currentData.totalPresupuesto) * 100).toFixed(1)}%
                       </span>
