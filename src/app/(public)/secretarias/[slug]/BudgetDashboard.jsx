@@ -563,7 +563,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
             {/* Highlights Sidebar */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', minWidth: '0' }}>
               <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#1a1a2e', marginBottom: '0.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <TrendingUp size={18} color="#9c0720" /> Mayor Asignación ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
+                <TrendingUp size={18} color="#9c0720" /> Top 5 Mayor Asignación ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
               </h4>
               {(activeView === 'gastos' ? currentData.gruposGasto : currentData.programas)
                 .sort((a, b) => b.value - a.value)

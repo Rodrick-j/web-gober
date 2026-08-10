@@ -32,7 +32,7 @@ export default function FacebookEmbed({ url, className = '' }) {
       <Script
         id="facebook-jssdk-post"
         src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v19.0"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
         onLoad={() => setSdkLoaded(true)}
       />
 
