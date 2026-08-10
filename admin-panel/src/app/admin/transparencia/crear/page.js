@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { getSignedUploadUrl } from '../../gaceta/actions';
+import { uploadPdfAction } from '../../gaceta/actions';
 import Link from 'next/link';
 import styles from '../page.module.css';
 
@@ -32,8 +32,6 @@ export default function CrearDocumentoTransparenciaPage() {
       return;
     }
 
-    // Validación de tamaño: Supabase (Plan Gratuito) suele tener un límite de 50MB.
-    // Además, evita colgar el navegador o gastar ancho de banda en vano.
     const MAX_FILE_SIZE_MB = 50;
     const fileSizeInMB = archivo.size / (1024 * 1024);
     if (fileSizeInMB > MAX_FILE_SIZE_MB) {
@@ -46,23 +44,10 @@ export default function CrearDocumentoTransparenciaPage() {
     setError('');
 
     try {
-      // Pedir al servidor una URL firmada segura
-      const { signedUrl, publicUrl } = await getSignedUploadUrl(archivo.name);
-      setUploadProgress(30);
-
-      // Subir archivo a Supabase usando la URL firmada
-      const uploadResponse = await fetch(signedUrl, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': archivo.type || 'application/pdf',
-        },
-        body: archivo,
-      });
-
-      if (!uploadResponse.ok) {
-        const errText = await uploadResponse.text();
-        throw new Error(`Error al subir a Supabase: ${errText}`);
-      }
+      const formData = new FormData();
+      formData.append('file', archivo);
+      
+      const publicUrl = await uploadPdfAction(formData);
       setUploadProgress(80);
 
       // Guardar metadatos en tabla transparencia_documentos

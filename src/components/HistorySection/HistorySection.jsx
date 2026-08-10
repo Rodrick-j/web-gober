@@ -54,7 +54,6 @@ export default function HistorySection() {
           <video
             src="/videos/oruro.mp4"
             poster="/videos/oruro-poster.jpg"
-            controls
             autoPlay 
             loop 
             muted 

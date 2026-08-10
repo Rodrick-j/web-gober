@@ -185,9 +185,9 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
           </div>
         </div>
 
-        <div className={styles.selectorsGroup}>
+        <div className={styles.selectorsGroup} style={{ display: 'flex', gap: '1rem', width: '100%', flexWrap: 'wrap' }}>
           {/* Municipio Selector */}
-          <div className={styles.selectWrapper} style={{ position: 'relative', width: '100%', display: 'block' }}>
+          <div className={styles.selectWrapper} style={{ position: 'relative', flex: '1.5 1 280px', display: 'block' }}>
             <MapPin className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
             
             <div 
@@ -272,10 +272,8 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
             )}
           </div>
 
-          {/* PRG and PROY Selectors Row */}
-          <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
-            {/* PRG Selector */}
-            <div className={styles.selectWrapper} style={{ position: 'relative', flex: 1, display: 'block' }}>
+          {/* PRG Selector */}
+          <div className={styles.selectWrapper} style={{ position: 'relative', flex: '1 1 150px', display: 'block' }}>
               <Tag className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
               <select 
                 value={selectedPrg} 
@@ -294,8 +292,8 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
               </select>
             </div>
 
-            {/* PROY Selector */}
-            <div className={styles.selectWrapper} style={{ position: 'relative', flex: 1, display: 'block' }}>
+          {/* PROY Selector */}
+          <div className={styles.selectWrapper} style={{ position: 'relative', flex: '1 1 150px', display: 'block' }}>
               <Tag className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
               <select 
                 value={selectedProy} 
@@ -309,7 +307,6 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
                   <option key={p} value={p}>Proyecto {p}</option>
                 ))}
               </select>
-            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   // Permitir archivos grandes (hasta 50MB) en Server Actions y API Routes
   experimental: {
     serverActions: {

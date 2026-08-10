@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ResponsivePie } from '@nivo/pie';
 import { ResponsiveBar } from '@nivo/bar';
-import { Wallet, PieChart, BarChart2, TrendingUp, Building2, Shield, Activity, Map, Users, MapPin } from 'lucide-react';
+import { Wallet, PieChart, BarChart2, TrendingUp, Building2, Shield, Activity, Map, Users, MapPin, ChevronDown, Search } from 'lucide-react';
 import GeoportalPoa from './GeoportalPoa';
 import { municipalitiesData, municipalitiesList } from './municipalitiesData';
 import budgetsData from './municipalitiesBudgets.json';
@@ -20,6 +20,20 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
   const setSelectedMuni = setGlobalMunicipio || setLocalMuni;
   const [isMobile, setIsMobile] = useState(false);
   const [isDrawing, setIsDrawing] = useState(true);
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -222,32 +236,110 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
             </h3>
             <div style={{ marginTop: '0.85rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-                <div style={{ position: 'relative', flex: '1 1 280px', minWidth: '260px' }}>
-                  <MapPin size={16} color="#9c0720" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
-                  <select
-                    value={selectedMuni}
-                    onChange={(e) => setSelectedMuni(e.target.value)}
+                <div style={{ position: 'relative', flex: '1 1 280px', minWidth: '260px' }} ref={dropdownRef}>
+                  <div
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     style={{
                       width: '100%',
                       background: '#f8f9fa',
                       color: '#1a1a2e',
                       border: '1.5px solid #dcdcdc',
                       borderRadius: '10px',
-                      padding: isMobile ? '0.5rem 0.5rem 0.5rem 1.8rem' : '0.6rem 1rem 0.6rem 2.3rem',
+                      padding: isMobile ? '0.5rem 2rem 0.5rem 1.8rem' : '0.6rem 2.5rem 0.6rem 2.3rem',
                       fontSize: isMobile ? '0.75rem' : '0.94rem',
                       fontWeight: '800',
-                      outline: 'none',
                       cursor: 'pointer',
                       boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-                      transition: 'all 0.2s'
+                      transition: 'all 0.2s',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      position: 'relative'
                     }}
                   >
-                    {municipalitiesList.map((muni) => (
-                      <option key={muni.id} value={muni.id}>
-                        {muni.entidad}
-                      </option>
-                    ))}
-                  </select>
+                    <MapPin size={16} color="#9c0720" style={{ position: 'absolute', left: '12px' }} />
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {municipalitiesList.find(m => m.id === selectedMuni)?.entidad || 'Seleccionar Municipio'}
+                    </span>
+                    <ChevronDown size={18} color="#555" style={{ position: 'absolute', right: '12px', transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+                  </div>
+
+                  {isDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.15 }}
+                      style={{
+                        position: 'absolute',
+                        top: '100%',
+                        left: 0,
+                        right: 0,
+                        marginTop: '0.5rem',
+                        background: '#ffffff',
+                        border: '1px solid #eaeaea',
+                        borderRadius: '10px',
+                        boxShadow: '0 10px 35px rgba(0,0,0,0.1)',
+                        zIndex: 999,
+                        overflow: 'hidden'
+                      }}
+                    >
+                      <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
+                        <Search size={16} color="#888" />
+                        <input
+                          type="text"
+                          placeholder="Buscar municipio..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          style={{
+                            width: '100%',
+                            border: 'none',
+                            outline: 'none',
+                            background: 'transparent',
+                            fontSize: '0.85rem',
+                            color: '#333'
+                          }}
+                          autoFocus
+                        />
+                      </div>
+                      <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
+                        {municipalitiesList
+                          .filter(m => m.entidad.toLowerCase().includes(searchTerm.toLowerCase()))
+                          .map((muni) => (
+                            <div
+                              key={muni.id}
+                              onClick={() => {
+                                setSelectedMuni(muni.id);
+                                setIsDropdownOpen(false);
+                                setSearchTerm('');
+                              }}
+                              style={{
+                                padding: '0.6rem 1rem',
+                                fontSize: '0.85rem',
+                                fontWeight: selectedMuni === muni.id ? '800' : '500',
+                                color: selectedMuni === muni.id ? '#9c0720' : '#333',
+                                background: selectedMuni === muni.id ? '#fce8e8' : 'transparent',
+                                cursor: 'pointer',
+                                transition: 'background 0.15s'
+                              }}
+                              onMouseEnter={(e) => {
+                                if (selectedMuni !== muni.id) e.currentTarget.style.background = '#f5f5f5';
+                              }}
+                              onMouseLeave={(e) => {
+                                if (selectedMuni !== muni.id) e.currentTarget.style.background = 'transparent';
+                              }}
+                            >
+                              {muni.entidad}
+                            </div>
+                          ))}
+                        {municipalitiesList.filter(m => m.entidad.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 && (
+                          <div style={{ padding: '1rem', textAlign: 'center', fontSize: '0.85rem', color: '#888' }}>
+                            No se encontraron resultados
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
                 </div>
 
               </div>
@@ -526,7 +618,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
             <h4 style={{ fontSize: '1.35rem', fontWeight: '800', color: '#1a1a2e', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
               <Building2 color="#9c0720" /> Desglose Visual por Áreas
             </h4>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1.2rem' }}>
               {currentData.programas.sort((a,b) => b.value - a.value).map((prog, idx) => (
                 <motion.div
                   key={prog.id}
@@ -537,7 +629,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                     borderRadius: '16px',
                     overflow: 'hidden',
                     position: 'relative',
-                    height: '200px',
+                    height: '140px',
                     border: '1px solid #eaeaea',
                     boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
                     cursor: 'pointer'
@@ -555,16 +647,16 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                   <div style={{ 
                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', 
                     background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.05) 100%)',
-                    display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '1.25rem', pointerEvents: 'none'
+                    display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '0.9rem', pointerEvents: 'none'
                   }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                      {prog.icon ? <prog.icon size={18} color={prog.color} /> : <Activity size={18} color={prog.color} />}
-                      <span style={{ color: prog.color, fontWeight: '900', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.3rem' }}>
+                      {prog.icon ? <prog.icon size={15} color={prog.color} /> : <Activity size={15} color={prog.color} />}
+                      <span style={{ color: prog.color, fontWeight: '900', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                         {((prog.value / currentData.totalPresupuesto) * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <h5 style={{ margin: 0, color: '#ffffff', fontSize: '1.15rem', fontWeight: '800', lineHeight: 1.2, marginBottom: '0.2rem' }}>{prog.label}</h5>
-                    <p style={{ margin: 0, color: '#dddddd', fontSize: '0.95rem', fontWeight: '600' }}>{formatCurrency(prog.value)}</p>
+                    <h5 style={{ margin: 0, color: '#ffffff', fontSize: '0.9rem', fontWeight: '800', lineHeight: 1.2, marginBottom: '0.2rem' }}>{prog.label}</h5>
+                    <p style={{ margin: 0, color: '#dddddd', fontSize: '0.8rem', fontWeight: '600' }}>{formatCurrency(prog.value)}</p>
                   </div>
                 </motion.div>
               ))}

@@ -1,13 +1,26 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import planificacionData from '@/data/planificacion.json';
-import { BarChart3, Calculator, MapPin, Search } from 'lucide-react';
+import { BarChart3, Calculator, MapPin, Search, ChevronDown, X } from 'lucide-react';
 import styles from './ResumenMunicipios.module.css';
 import { getMuniFullName } from '@/utils/formatMuni';
 
 export default function ResumenMunicipios() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // 1. Agrupar y procesar datos por municipio
   const { dataPorMunicipio, totalesGenerales } = useMemo(() => {
@@ -87,30 +100,141 @@ export default function ResumenMunicipios() {
           </div>
         </div>
 
-        <div className={styles.searchGroup}>
-          <Search className={styles.searchIcon} size={18} />
-          <input 
-            type="text" 
-            list="municipios-list"
-            placeholder="Escriba para buscar municipio..." 
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={styles.searchInput}
-          />
-          {searchTerm && (
-            <button 
-              className={styles.clearBtn} 
-              onClick={() => setSearchTerm('')}
-              title="Limpiar búsqueda"
+        <div className={styles.searchGroup} ref={dropdownRef}>
+          <div
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            style={{
+              width: '100%',
+              background: '#f8f9fa',
+              color: '#1a1a2e',
+              border: '1.5px solid #dcdcdc',
+              borderRadius: '10px',
+              padding: '0.6rem 2.5rem 0.6rem 2.3rem',
+              fontSize: '0.94rem',
+              fontWeight: '800',
+              cursor: 'pointer',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+              transition: 'all 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              position: 'relative'
+            }}
+          >
+            <MapPin size={16} color="#9c0720" style={{ position: 'absolute', left: '12px' }} />
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {searchTerm ? searchTerm : 'Todos los Municipios'}
+            </span>
+            {searchTerm ? (
+              <X 
+                size={16} 
+                color="#555" 
+                style={{ position: 'absolute', right: '35px', cursor: 'pointer' }} 
+                onClick={(e) => { e.stopPropagation(); setSearchTerm(''); }}
+              />
+            ) : null}
+            <ChevronDown size={18} color="#555" style={{ position: 'absolute', right: '12px', transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+          </div>
+
+          {isDropdownOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.15 }}
+              style={{
+                position: 'absolute',
+                top: '100%',
+                left: 0,
+                right: 0,
+                marginTop: '0.5rem',
+                background: '#ffffff',
+                border: '1px solid #eaeaea',
+                borderRadius: '10px',
+                boxShadow: '0 10px 35px rgba(0,0,0,0.1)',
+                zIndex: 999,
+                overflow: 'hidden'
+              }}
             >
-              ✕
-            </button>
+              <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
+                <Search size={16} color="#888" />
+                <input
+                  type="text"
+                  placeholder="Buscar municipio..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  style={{
+                    width: '100%',
+                    border: 'none',
+                    outline: 'none',
+                    background: 'transparent',
+                    fontSize: '0.85rem',
+                    color: '#333'
+                  }}
+                  autoFocus
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+              <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
+                <div
+                  onClick={() => {
+                    setSearchTerm('');
+                    setIsDropdownOpen(false);
+                  }}
+                  style={{
+                    padding: '0.6rem 1rem',
+                    fontSize: '0.85rem',
+                    fontWeight: !searchTerm ? '800' : '500',
+                    color: !searchTerm ? '#9c0720' : '#333',
+                    background: !searchTerm ? '#fce8e8' : 'transparent',
+                    cursor: 'pointer',
+                    transition: 'background 0.15s'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (searchTerm) e.currentTarget.style.background = '#f5f5f5';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (searchTerm) e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  Todos los Municipios
+                </div>
+                {dataPorMunicipio
+                  .filter(m => m.nombre.toLowerCase().includes(searchTerm.toLowerCase()))
+                  .map((muni) => (
+                    <div
+                      key={muni.nombre}
+                      onClick={() => {
+                        setSearchTerm(muni.nombre);
+                        setIsDropdownOpen(false);
+                      }}
+                      style={{
+                        padding: '0.6rem 1rem',
+                        fontSize: '0.85rem',
+                        fontWeight: searchTerm === muni.nombre ? '800' : '500',
+                        color: searchTerm === muni.nombre ? '#9c0720' : '#333',
+                        background: searchTerm === muni.nombre ? '#fce8e8' : 'transparent',
+                        cursor: 'pointer',
+                        transition: 'background 0.15s'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (searchTerm !== muni.nombre) e.currentTarget.style.background = '#f5f5f5';
+                      }}
+                      onMouseLeave={(e) => {
+                        if (searchTerm !== muni.nombre) e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      {getMuniFullName(muni.nombre)}
+                    </div>
+                  ))}
+                {dataPorMunicipio.filter(m => m.nombre.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 && (
+                  <div style={{ padding: '1rem', textAlign: 'center', fontSize: '0.85rem', color: '#888' }}>
+                    No se encontraron resultados
+                  </div>
+                )}
+              </div>
+            </motion.div>
           )}
-          <datalist id="municipios-list">
-            {dataPorMunicipio.map((muni) => (
-              <option key={muni.nombre} value={muni.nombre} />
-            ))}
-          </datalist>
         </div>
       </div>
 

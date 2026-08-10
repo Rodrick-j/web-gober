@@ -10,7 +10,7 @@
     linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(168, 10, 21, 0.4) 100%),
     url('/bg-gaceta.png') center/cover no-repeat;
   color: white;
-  padding: 4rem 1rem;
+  padding: 2rem 1rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -21,8 +21,8 @@
 }
 
 .headerIcon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
   animation: float 3s ease-in-out infinite;
   color: #ffffff;
 }
@@ -35,15 +35,15 @@
 
 .headerTitle {
   font-family: var(--font-heading);
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 800;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #ffffff;
   text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .headerSubtitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #ffffff;
   opacity: 0.9;
   max-width: 600px;
@@ -66,20 +66,29 @@
 /* Sidebar / Filters */
 .filtersSidebar {
   background: var(--color-surface);
-  padding: 2rem;
-  border-radius: 20px;
+  padding: 1rem;
+  border-radius: 12px;
   border: 1px solid rgba(0,0,0,0.05);
   box-shadow: 0 10px 30px rgba(0,0,0,0.03);
   height: fit-content;
-  position: sticky;
-  top: 100px;
+  position: relative;
   z-index: 10;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 992px) {
+  .filtersSidebar {
+    position: sticky;
+    top: 100px;
+    margin-bottom: 0;
+  }
 }
 
 .filterTitle {
   font-family: var(--font-heading);
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
   color: var(--color-text);
   border-bottom: 2px solid var(--color-primary);
   display: inline-block;
@@ -88,23 +97,35 @@
 
 .chipsContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  overflow-x: auto;
   gap: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+@media (min-width: 992px) {
+  .chipsContainer {
+    flex-direction: column;
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
 }
 
 .chip {
-  padding: 0.75rem 1.5rem;
-  border-radius: 12px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   border: 1px solid rgba(0,0,0,0.1);
   background: transparent;
   color: var(--color-text);
   font-weight: 600;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: left;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  white-space: nowrap;
 }
 
 .chip:hover {
@@ -132,11 +153,11 @@
 
 .searchInput {
   width: 100%;
-  padding: 1.25rem 1.5rem 1.25rem 3.5rem;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
   border-radius: 50px;
   border: 2px solid rgba(0,0,0,0.08);
   background: var(--color-surface);
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-family: inherit;
   color: var(--color-text);
   transition: all 0.3s ease;
@@ -151,10 +172,10 @@
 
 .searchIcon {
   position: absolute;
-  left: 1.5rem;
+  left: 0.8rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.2rem;
+  font-size: 1rem;
   opacity: 0.5;
 }
 
@@ -167,13 +188,13 @@
 
 .docCard {
   background: var(--color-surface);
-  border-radius: 16px;
+  border-radius: 12px;
   border: 1px solid rgba(0,0,0,0.05);
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 4px 15px rgba(0,0,0,0.02);
 }
@@ -194,20 +215,20 @@
 
 .docInfo {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   align-items: flex-start;
   flex: 1;
 }
 
 .docIconWrapper {
-  width: 60px;
-  height: 60px;
-  border-radius: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   background: linear-gradient(135deg, rgba(168, 10, 21, 0.1) 0%, rgba(168, 10, 21, 0.05) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 1.2rem;
   color: var(--color-primary);
   flex-shrink: 0;
 }
@@ -218,11 +239,11 @@
 }
 
 .docBadge {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: var(--color-primary);
   background: rgba(168, 10, 21, 0.1);
-  padding: 0.2rem 0.6rem;
+  padding: 0.15rem 0.4rem;
   border-radius: 20px;
   width: fit-content;
   margin-bottom: 0.5rem;
@@ -230,20 +251,20 @@
 
 .docTitle {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--color-text);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.15rem;
 }
 
 .docDesc {
   color: var(--color-text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
 }
 
 .docDate {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: rgba(0,0,0,0.4);
 }
@@ -266,17 +287,17 @@
   background: transparent;
   color: var(--color-primary);
   border: 2px solid var(--color-primary);
-  padding: 0.65rem 1.2rem;
-  border-radius: 30px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .previewBtn:hover {
@@ -294,15 +315,15 @@
   background: var(--color-primary);
   color: white;
   text-decoration: none;
-  padding: 0.65rem 1.2rem;
-  border-radius: 30px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
   font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   transition: all 0.3s ease;
   white-space: nowrap;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 .downloadBtn:hover {
