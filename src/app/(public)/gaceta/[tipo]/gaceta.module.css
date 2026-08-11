@@ -1,5 +1,7 @@
 .portalContainer {
-  background-color: var(--color-bg);
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)),
+    url('/images/fondo_gaceta.jpg') center/cover fixed;
   min-height: 100vh;
   padding-top: var(--nav-height);
   padding-bottom: 5rem;
@@ -8,7 +10,7 @@
 .headerSection {
   background: 
     linear-gradient(135deg, rgba(26, 26, 26, 0.9) 0%, rgba(168, 10, 21, 0.4) 100%),
-    url('/bg-gaceta.png') center/cover no-repeat;
+    url('/images/fondo_gaceta.jpg') center/cover no-repeat;
   color: white;
   padding: 2rem 1rem;
   text-align: center;

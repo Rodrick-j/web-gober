@@ -7,26 +7,10 @@ import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import GlobalSearchModal from '@/components/GlobalSearchModal/GlobalSearchModal';
 import { createClient } from '@/lib/supabase/client';
 import { 
-  Home, 
-  ClipboardList, 
-  Building2, 
-  ScrollText, 
-  Landmark, 
-  Search, 
-  Newspaper,
-  BookOpen,
-  FileText,
-  FileSignature,
-  Pin,
-  User,
-  GitMerge,
-  Scale,
-  Pickaxe,
-  Leaf,
-  Gavel,
-  HardHat,
-  HeartPulse,
-  Coins
+  Home, ClipboardList, Building2, ScrollText, Landmark, Search, Newspaper,
+  BookOpen, FileText, FileSignature, Pin, User, GitMerge, Scale, Pickaxe,
+  Leaf, Gavel, HardHat, HeartPulse, Coins, Menu, X, ChevronDown, ExternalLink,
+  Globe, Map, Tractor
 } from 'lucide-react';
 import styles from './Navbar.module.css';
 
@@ -80,13 +64,17 @@ const navItems = [
   { label: 'Noticias', Icon: Newspaper, href: '/noticias' },
 ];
 
-const secretariasIconMap = {
-  'mineria-y-metalurgia': Pickaxe,
-  'medio-ambiente': Leaf,
-  'asuntos-juridicos': Gavel,
-  'obras-publicas': HardHat,
-  'desarrollo-social': HeartPulse,
-  'economia-y-finanzas': Coins
+const getSecretariaIcon = (sec) => {
+  const text = (sec.slug + ' ' + (sec.nombre_corto || '') + ' ' + (sec.nombre || '')).toLowerCase();
+  if (text.includes('minería') || text.includes('mineria') || text.includes('metalurgia')) return Pickaxe;
+  if (text.includes('medio ambiente') || text.includes('madre tierra') || text.includes('agua')) return Leaf;
+  if (text.includes('jurídico') || text.includes('juridico') || text.includes('justicia')) return Gavel;
+  if (text.includes('obras') || text.includes('infraestructura')) return HardHat;
+  if (text.includes('social') || text.includes('salud') || text.includes('desarrollo humano')) return HeartPulse;
+  if (text.includes('economía') || text.includes('economia') || text.includes('finanzas') || text.includes('planificación')) return Coins;
+  if (text.includes('cultura') || text.includes('turismo')) return Map;
+  if (text.includes('producción') || text.includes('productivo') || text.includes('desarrollo productivo')) return Tractor;
+  return Building2;
 };
 
 export default function Navbar() {
@@ -158,7 +146,7 @@ export default function Navbar() {
       return {
         ...item,
         children: listToUse.map(sec => {
-          const SecIcon = secretariasIconMap[sec.slug] || Building2;
+          const SecIcon = getSecretariaIcon(sec);
           return {
             label: sec.nombre_corto,
             fullLabel: sec.nombre || sec.nombre_corto,
