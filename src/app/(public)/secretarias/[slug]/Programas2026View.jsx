@@ -10,7 +10,9 @@ const formatCurrency = (value) => {
 export default function Programas2026View() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUnidad, setSelectedUnidad] = useState('');
+  const [executionFilter, setExecutionFilter] = useState(''); // 'alta', 'media', 'baja'
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isExecDropdownOpen, setIsExecDropdownOpen] = useState(false);
 
   // Obtener unidades únicas
   const unidadesUnicas = useMemo(() => {
@@ -23,9 +25,14 @@ export default function Programas2026View() {
     return programasData.filter(prog => {
       const matchSearch = prog.programa.toLowerCase().includes(searchTerm.toLowerCase());
       const matchUnidad = selectedUnidad ? prog.unidadEjecutora === selectedUnidad : true;
-      return matchSearch && matchUnidad;
+      let matchExec = true;
+      if (executionFilter === 'alta') matchExec = prog.porcentaje >= 50;
+      else if (executionFilter === 'media') matchExec = prog.porcentaje >= 20 && prog.porcentaje < 50;
+      else if (executionFilter === 'baja') matchExec = prog.porcentaje < 20;
+      
+      return matchSearch && matchUnidad && matchExec;
     });
-  }, [searchTerm, selectedUnidad]);
+  }, [searchTerm, selectedUnidad, executionFilter]);
 
   return (
     <div style={{ marginTop: '2rem' }}>
@@ -40,30 +47,30 @@ export default function Programas2026View() {
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '2rem', background: '#fff', padding: '1rem', borderRadius: '12px', boxShadow: '0 2px 10px rgba(0,0,0,0.02)', border: '1px solid #f0f0f0' }}>
         
         {/* Buscador */}
-        <div style={{ flex: '1 1 300px', position: 'relative' }}>
-          <Search size={18} color="#888" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+        <div style={{ flex: '1 1 220px', position: 'relative' }}>
+          <Search size={16} color="#888" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
           <input
             type="text"
             placeholder="Buscar programa o proyecto..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={{ width: '100%', padding: '0.8rem 1rem 0.8rem 2.5rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.95rem', outline: 'none' }}
+            style={{ width: '100%', padding: '0.6rem 1rem 0.6rem 2.2rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.8rem', outline: 'none' }}
           />
         </div>
 
         {/* Dropdown Unidad Ejecutora */}
-        <div style={{ flex: '1 1 300px', position: 'relative' }}>
+        <div style={{ flex: '1 1 220px', position: 'relative' }}>
           <div
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            onClick={() => { setIsDropdownOpen(!isDropdownOpen); setIsExecDropdownOpen(false); }}
             style={{
-              padding: '0.8rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#fff',
-              display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontSize: '0.95rem', color: selectedUnidad ? '#1a1a2e' : '#888'
+              padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#fff',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontSize: '0.8rem', color: selectedUnidad ? '#1a1a2e' : '#888'
             }}
           >
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {selectedUnidad || 'Todas las Unidades Ejecutoras'}
+              {selectedUnidad || 'Todas las Secretarías'}
             </span>
-            <ChevronDown size={18} color="#555" style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+            <ChevronDown size={16} color="#555" style={{ transform: isDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
           </div>
 
           <AnimatePresence>
@@ -75,21 +82,21 @@ export default function Programas2026View() {
                 style={{
                   position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '0.5rem',
                   background: '#fff', borderRadius: '8px', border: '1px solid #e2e8f0',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)', zIndex: 10, maxHeight: '300px', overflowY: 'auto'
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)', zIndex: 10, maxHeight: '250px', overflowY: 'auto'
                 }}
               >
                 <div
                   onClick={() => { setSelectedUnidad(''); setIsDropdownOpen(false); }}
-                  style={{ padding: '0.8rem 1rem', cursor: 'pointer', borderBottom: '1px solid #f0f0f0', fontWeight: !selectedUnidad ? 'bold' : 'normal', color: !selectedUnidad ? '#9c0720' : '#333', background: !selectedUnidad ? '#f8f9fa' : '#fff' }}
+                  style={{ padding: '0.6rem 1rem', cursor: 'pointer', borderBottom: '1px solid #f0f0f0', fontSize: '0.8rem', fontWeight: !selectedUnidad ? 'bold' : 'normal', color: !selectedUnidad ? '#9c0720' : '#333', background: !selectedUnidad ? '#f8f9fa' : '#fff' }}
                 >
-                  Todas las Unidades Ejecutoras
+                  Todas las Secretarías
                 </div>
                 {unidadesUnicas.map((unidad, idx) => (
                   <div
                     key={idx}
                     onClick={() => { setSelectedUnidad(unidad); setIsDropdownOpen(false); }}
                     style={{
-                      padding: '0.8rem 1rem', cursor: 'pointer', borderBottom: '1px solid #f0f0f0',
+                      padding: '0.6rem 1rem', cursor: 'pointer', borderBottom: '1px solid #f0f0f0', fontSize: '0.8rem',
                       fontWeight: selectedUnidad === unidad ? 'bold' : 'normal', color: selectedUnidad === unidad ? '#9c0720' : '#333',
                       background: selectedUnidad === unidad ? '#f8f9fa' : '#fff'
                     }}
@@ -101,9 +108,57 @@ export default function Programas2026View() {
             )}
           </AnimatePresence>
         </div>
+
+        {/* Dropdown Estado de Ejecución */}
+        <div style={{ flex: '1 1 200px', position: 'relative' }}>
+          <div
+            onClick={() => { setIsExecDropdownOpen(!isExecDropdownOpen); setIsDropdownOpen(false); }}
+            style={{
+              padding: '0.6rem 1rem', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#fff',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer', fontSize: '0.8rem', color: executionFilter ? '#1a1a2e' : '#888'
+            }}
+          >
+            <span>
+              {executionFilter === 'alta' ? 'Ejecución Alta (≥50%)' :
+               executionFilter === 'media' ? 'Ejecución Media (20-50%)' :
+               executionFilter === 'baja' ? 'Ejecución Baja (<20%)' : 'Cualquier Ejecución'}
+            </span>
+            <ChevronDown size={16} color="#555" style={{ transform: isExecDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
+          </div>
+
+          <AnimatePresence>
+            {isExecDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                style={{
+                  position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '0.5rem',
+                  background: '#fff', borderRadius: '8px', border: '1px solid #e2e8f0',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)', zIndex: 10
+                }}
+              >
+                {[
+                  { id: '', label: 'Cualquier Ejecución' },
+                  { id: 'alta', label: 'Ejecución Alta (≥50%)' },
+                  { id: 'media', label: 'Ejecución Media (20-50%)' },
+                  { id: 'baja', label: 'Ejecución Baja (<20%)' }
+                ].map(opt => (
+                  <div
+                    key={opt.id}
+                    onClick={() => { setExecutionFilter(opt.id); setIsExecDropdownOpen(false); }}
+                    style={{ padding: '0.6rem 1rem', cursor: 'pointer', borderBottom: '1px solid #f0f0f0', fontSize: '0.8rem', fontWeight: executionFilter === opt.id ? 'bold' : 'normal', color: executionFilter === opt.id ? '#9c0720' : '#333', background: executionFilter === opt.id ? '#f8f9fa' : '#fff' }}
+                  >
+                    {opt.label}
+                  </div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
         <AnimatePresence>
           {programasFiltrados.map((prog) => (
             <motion.div
@@ -114,42 +169,42 @@ export default function Programas2026View() {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.2 }}
               style={{
-                background: '#fff', borderRadius: '12px', border: '1px solid #e2e8f0', padding: '1.5rem',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.02)', display: 'flex', flexDirection: 'column', gap: '1rem'
+                background: '#fff', borderRadius: '10px', border: '1px solid #e2e8f0', padding: '1rem',
+                boxShadow: '0 4px 15px rgba(0,0,0,0.02)', display: 'flex', flexDirection: 'column', gap: '0.8rem'
               }}
             >
               <div>
-                <div style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#9c0720', textTransform: 'uppercase', marginBottom: '0.5rem', letterSpacing: '0.5px' }}>
+                <div style={{ fontSize: '0.65rem', fontWeight: 'bold', color: '#9c0720', textTransform: 'uppercase', marginBottom: '0.3rem', letterSpacing: '0.5px' }}>
                   {prog.unidadEjecutora}
                 </div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#1a1a2e', margin: 0, lineHeight: '1.3' }}>
+                <h3 style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#1a1a2e', margin: 0, lineHeight: '1.2' }}>
                   {prog.programa}
                 </h3>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: 'auto', background: '#f8f9fa', padding: '1rem', borderRadius: '8px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.8rem', marginTop: 'auto', background: '#f8f9fa', padding: '0.8rem', borderRadius: '6px' }}>
                 <div>
-                  <div style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                    <Wallet size={12} /> Vigente
+                  <div style={{ fontSize: '0.65rem', color: '#64748b', marginBottom: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <Wallet size={10} /> Vigente
                   </div>
-                  <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#334155' }}>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#334155' }}>
                     {formatCurrency(prog.presupuestoVigente)}
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                    <Target size={12} /> Ejecutado
+                  <div style={{ fontSize: '0.65rem', color: '#64748b', marginBottom: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <Target size={10} /> Ejecutado
                   </div>
-                  <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#059669' }}>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 'bold', color: '#059669' }}>
                     {formatCurrency(prog.ejecucion)}
                   </div>
                 </div>
               </div>
 
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span style={{ fontSize: '0.8rem', fontWeight: '600', color: '#64748b' }}>Avance de Ejecución</span>
-                  <span style={{ fontSize: '0.8rem', fontWeight: '800', color: '#9c0720' }}>{prog.porcentaje.toFixed(2)}%</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
+                  <span style={{ fontSize: '0.7rem', fontWeight: '600', color: '#64748b' }}>Avance de Ejecución</span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#9c0720' }}>{prog.porcentaje.toFixed(2)}%</span>
                 </div>
                 <div style={{ width: '100%', height: '8px', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
                   <motion.div
