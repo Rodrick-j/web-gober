@@ -133,7 +133,7 @@ export default function Programas2026View() {
                 <tr key={prog.id} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#fff' : '#fafafa' }}>
                   <td style={{ padding: '0.5rem 0.8rem', borderRight: '1px solid #e2e8f0', color: '#64748b' }}>{(currentPage - 1) * itemsPerPage + idx + 1}</td>
                   <td style={{ padding: '0.5rem 0.8rem', borderRight: '1px solid #e2e8f0', color: '#64748b' }}>
-                    <span style={{ padding: '0.15rem 0.4rem', borderRadius: '4px', background: prog.tipo === 'Programa' ? '#f0f9ff' : '#fdf4ff', color: prog.tipo === 'Programa' ? '#0369a1' : '#a21caf', fontSize: '0.7rem', fontWeight: '600' }}>
+                    <span style={{ padding: '0.15rem 0.4rem', borderRadius: '4px', background: '#ffefef', color: '#9c0720', fontSize: '0.7rem', fontWeight: '700' }}>
                       {prog.tipo}
                     </span>
                   </td>
