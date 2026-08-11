@@ -1,0 +1,258 @@
+[
+  {
+    "id": 1,
+    "unidadEjecutora": "ASAMBLEA LEGISLATIVA DEPARTAMENTAL DE ORURO",
+    "programa": "PROGRAMA DE APOYO TECNICO A LA ASAMBLEA LEGISLATIVA DEPARTAMENTAL DE ORURO",
+    "presupuestoVigente": 751966,
+    "ejecucion": 209792.39,
+    "porcentaje": 27.899185601476663
+  },
+  {
+    "id": 3,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE ASUNTOS JURIDICOS",
+    "programa": "PROGRAMA DE MANEJO Y DELIMITACION TERRITORIAL DEL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 542806,
+    "ejecucion": 137337.84,
+    "porcentaje": 25.301459453285336
+  },
+  {
+    "id": 5,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE CULTURA Y TURISMO",
+    "programa": "PROGRAMA DE PRESERVACION AL PATRIMONIO CULTURAL DEL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 592327,
+    "ejecucion": 212129.11,
+    "porcentaje": 35.81283817891131
+  },
+  {
+    "id": 6,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE CULTURA Y TURISMO",
+    "programa": "PROGRAMA DEPARTAMENTAL AL FOMENTO DE LAS EXPRESIONES ARTISTICAS",
+    "presupuestoVigente": 1299838,
+    "ejecucion": 340296.1,
+    "porcentaje": 26.179885493423026
+  },
+  {
+    "id": 7,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE CULTURA Y TURISMO",
+    "programa": "PROGRAMA DEPARTAMENTAL DE EXTENSION Y FOMENTO DEL TURISMO EN ORURO",
+    "presupuestoVigente": 409457,
+    "ejecucion": 55127.17,
+    "porcentaje": 13.463482123886024
+  },
+  {
+    "id": 9,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "PROGRAMA DE APOYO A LA PRODUCCION DE ALIMENTOS COMPLEMENTARIOS EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 495623,
+    "ejecucion": 45425.26,
+    "porcentaje": 9.165284904050054
+  },
+  {
+    "id": 10,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "PROGRAMA DE APOYO AL SECTOR PRODUCTIVO MEDIANTE EL CAMPO FERIAL MULTIPROPOSITO ORURO",
+    "presupuestoVigente": 222890,
+    "ejecucion": 6079.93,
+    "porcentaje": 2.727771546502759
+  },
+  {
+    "id": 11,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "PROGRAMA DEPARTAMENTAL AGROPECUARIO DE ATENCION Y EMERGENCIAS ANTE EVENTOS CLIMATICOS ADVERSOS",
+    "presupuestoVigente": 354331,
+    "ejecucion": 17162.17,
+    "porcentaje": 4.843541773087876
+  },
+  {
+    "id": 13,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA  DEPARTAMENTAL DE LUCHA CONTRA EL CANCER",
+    "presupuestoVigente": 327380,
+    "ejecucion": 71887.2,
+    "porcentaje": 21.958335878795285
+  },
+  {
+    "id": 14,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DE APOYO AL SISTEMA DE SALUD DE TERCER NIVEL ORURO",
+    "presupuestoVigente": 5194000,
+    "ejecucion": 2056321.44,
+    "porcentaje": 39.59032422025414
+  },
+  {
+    "id": 15,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DE ATENCION INTEGRAL A CENTROS DE ACOGIDA EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 5888926,
+    "ejecucion": 1155179.48,
+    "porcentaje": 19.616131702113424
+  },
+  {
+    "id": 16,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DE FORTALECIMIENTOA LOS INSTITUTOS TECNICO TECNOLOGICOS DEL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 392741.5,
+    "ejecucion": 54016.23,
+    "porcentaje": 13.75363438801349
+  },
+  {
+    "id": 17,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DE FOTALECIMIENTO INTEGRAL AL BANCO DE SANGRE DE REFERENCIA DEPARTAMENTAL DE ORURO",
+    "presupuestoVigente": 594765,
+    "ejecucion": 91783.3,
+    "porcentaje": 15.431859642043497
+  },
+  {
+    "id": 18,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DE MEJORAMIENTO A LAS REDES DE SERVICIOS DE SALUD ORURO",
+    "presupuestoVigente": 898828,
+    "ejecucion": 172664.16,
+    "porcentaje": 19.209922254313394
+  },
+  {
+    "id": 19,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DEPARTAMENTAL DE APOYO A LA ESTIMULACION TEMPRANA Y DESARROLLO ADOLESCENTE",
+    "presupuestoVigente": 656080,
+    "ejecucion": 61054.45,
+    "porcentaje": 9.30594592122912
+  },
+  {
+    "id": 20,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DEPARTAMENTAL DE ATENCION Y VIGILANCIA DE LAS ITS/VIH/SIDA Y HEPATITIS VIRALES",
+    "presupuestoVigente": 396470,
+    "ejecucion": 17458.6,
+    "porcentaje": 4.403510984437663
+  },
+  {
+    "id": 21,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DEPARTAMENTAL DE DETECCION Y CONTROL DE LA TUBERCULOSIS",
+    "presupuestoVigente": 94750,
+    "ejecucion": 60424.12,
+    "porcentaje": 63.77215831134565
+  },
+  {
+    "id": 22,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DEPARTAMENTAL DE FORTALECIMIENTO  AL DEPORTE DE ALTO RENDIMIENTO EN ALTURA",
+    "presupuestoVigente": 170000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 23,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DEPARTAMENTAL DE FORTALECIMIENTO A LA INMUNIZACION MEDIANTE LA VACUNACIÓN",
+    "presupuestoVigente": 149731,
+    "ejecucion": 49917,
+    "porcentaje": 33.337785762467355
+  },
+  {
+    "id": 24,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DEPARTAMENTAL DE FORTALECIMIENTO DEL DEPORTE EN ORURO",
+    "presupuestoVigente": 1764993,
+    "ejecucion": 715510.86,
+    "porcentaje": 40.53901970149457
+  },
+  {
+    "id": 25,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA DEPTAL. DE FORTALECIMIENTO DE LOS DERECHOS DE LA MUJER, JUVENTUD, ADULTO MAYOR Y PERSONAS CON DISCAPACIDAD",
+    "presupuestoVigente": 1400889,
+    "ejecucion": 787637.99,
+    "porcentaje": 56.22415409072382
+  },
+  {
+    "id": 26,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "PROGRAMA PREPARANDO NADADORES CON MIRAS AL ALTO RENDIMIENTO EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 632766,
+    "ejecucion": 161359.37,
+    "porcentaje": 25.500638466668562
+  },
+  {
+    "id": 28,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "PROGRAMA DE DESARROLLO DE VALLES DE HIDROGENO VERDE EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 420230,
+    "ejecucion": 42535.92,
+    "porcentaje": 10.122056968802799
+  },
+  {
+    "id": 29,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "PROGRAMA EDUCACION AMBIENTAL INTEGRAL EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 206105,
+    "ejecucion": 16148.83,
+    "porcentaje": 7.835244171660076
+  },
+  {
+    "id": 31,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MINERIA, METALURGIA Y RECURSOS ENERGETICOS",
+    "programa": "PROGRAMA DE FORTALECIMIENTO DE FISCALIZACION Y CONTROL DE REGALIAS MINERAS EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 2314597,
+    "ejecucion": 674764.19,
+    "porcentaje": 29.1525561469232
+  },
+  {
+    "id": 33,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "PROGRAMA DE APOYO A LA ELECTRIFICACION DEPARTAMENTAL",
+    "presupuestoVigente": 365271,
+    "ejecucion": 44648.42,
+    "porcentaje": 12.22336840318558
+  },
+  {
+    "id": 34,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "PROGRAMA DE TRANSPORTE INTERPROVINCIAL E INTERMUNICIPAL DEL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 415803,
+    "ejecucion": 69621.7,
+    "porcentaje": 16.7439147865696
+  },
+  {
+    "id": 35,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "PROGRAMA DEPARTAMENTAL DE FORTALECIMIENTO A OBRAS CIVILES",
+    "presupuestoVigente": 645616.66,
+    "ejecucion": 347479.32,
+    "porcentaje": 53.821306284134614
+  },
+  {
+    "id": 36,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "PROGRAMA DEPARTAMENTAL DE MONITOREO DE AGUA Y SANEAMIENTO BASICO",
+    "presupuestoVigente": 715275,
+    "ejecucion": 110829.3,
+    "porcentaje": 15.494641920939499
+  },
+  {
+    "id": 37,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "PROGRAMA DEPARTAMENTAL DE RIESGOS Y EMERGENCIAS",
+    "presupuestoVigente": 985373.88,
+    "ejecucion": 126532.48,
+    "porcentaje": 12.841062927302275
+  },
+  {
+    "id": 39,
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE PLANIFICACION DEL DESARROLLO",
+    "programa": "PROGRAMA DE APOYO TECNICO A LA INVERSION PUBLICA EN EL GOBIERNO AUTONOMO DEPARTAMENTAL DE ORURO",
+    "presupuestoVigente": 2166153,
+    "ejecucion": 274437.36,
+    "porcentaje": 12.669343301234955
+  },
+  {
+    "id": 41,
+    "unidadEjecutora": "SECRETARIA GENERAL",
+    "programa": "PROGRAMA DE APOYO Y PREVENCION A LA SEGURIDAD CIUDADANA EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 4692156,
+    "ejecucion": 2675219.7,
+    "porcentaje": 57.01472201691504
+  }
+]

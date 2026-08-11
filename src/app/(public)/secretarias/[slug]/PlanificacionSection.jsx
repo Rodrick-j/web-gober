@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download, Eye, X, PieChart, BarChart3 } from 'lucide-react';
+import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download, Eye, X, PieChart, BarChart3, Briefcase } from 'lucide-react';
 import styles from './SecretariaDetail.module.css'; // Reusing styles from the page
 import { createClient } from '@/lib/supabase/client';
 import BudgetDashboard from './BudgetDashboard';
@@ -10,6 +10,7 @@ import BudgetExcelExplorer from './BudgetExcelExplorer';
 import PlanificacionFiltros from '@/components/PlanificacionFiltros/PlanificacionFiltros';
 import ResumenMunicipios from '@/components/ResumenMunicipios/ResumenMunicipios';
 import CostosConstruccion from '@/components/CostosConstruccion/CostosConstruccion';
+import Programas2026View from './Programas2026View';
 const provinciasOruro = [
   { nombre: "Cercado", municipios: ["Oruro", "Caracollo", "El Choro", "Soracachi (Paria)"] },
   { nombre: "Abaroa", municipios: ["Challapata", "Quillacas"] },
@@ -175,10 +176,25 @@ export default function PlanificacionSection({ secretariaId }) {
               >
                 <Building size={18} /> Índice de Costos de Construcción
               </button>
+              <button
+                onClick={() => setViewMode('programas2026')}
+                style={{
+                  background: viewMode === 'programas2026' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  color: viewMode === 'programas2026' ? '#ffffff' : '#475569',
+                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'programas2026' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
+                }}
+              >
+                <Briefcase size={18} /> Proyectos y Programas 2026
+              </button>
             </div>
 
             {viewMode === 'dashboard' && (
               <BudgetDashboard globalMunicipio={globalMunicipio} setGlobalMunicipio={setGlobalMunicipio} />
+            )}
+            
+            {viewMode === 'programas2026' && (
+              <Programas2026View />
             )}
 
             {viewMode === 'excel' && (
