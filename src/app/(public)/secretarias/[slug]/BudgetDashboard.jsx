@@ -603,7 +603,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                         <p style={{ margin: 0, fontSize: '0.95rem', color: item.color, fontWeight: '900' }}>
                           {((item.value / currentData.totalPresupuesto) * 100).toFixed(1)}%
                         </p>
-                        <p style={{ margin: 0, fontSize: '0.75rem', color: '#0f172a', fontWeight: '800', background: '#f1f5f9', padding: '0.15rem 0.45rem', borderRadius: '4px', letterSpacing: '-0.2px' }}>
+                        <p style={{ margin: 0, fontSize: '0.8rem', fontFamily: 'monospace', color: '#0f172a', fontWeight: '800', background: '#f1f5f9', padding: '0.15rem 0.45rem', borderRadius: '4px', letterSpacing: '-0.2px' }}>
                           {formatCurrency(item.value)}
                         </p>
                       </div>

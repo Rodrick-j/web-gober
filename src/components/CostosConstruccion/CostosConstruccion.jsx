@@ -171,7 +171,7 @@ export default function CostosConstruccion() {
                       ? parseFloat(price).toFixed(2) 
                       : '-';
                     return (
-                      <td key={m} style={{ padding: '0.4rem 0.5rem', textAlign: 'right', color: displayPrice === '-' ? '#cbd5e1' : '#334155', fontWeight: '500', border: '1px solid #e2e8f0' }}>
+                      <td key={m} style={{ padding: '0.4rem 0.5rem', textAlign: 'right', color: displayPrice === '-' ? '#cbd5e1' : '#334155', fontWeight: '500', border: '1px solid #e2e8f0', fontFamily: 'monospace', fontSize: '0.8rem' }}>
                         {displayPrice}
                       </td>
                     );

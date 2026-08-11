@@ -53,9 +53,9 @@ const formatBOB = (valStr) => {
 const MoneyCell = ({ valStr, isTotal }) => {
   const formatted = formatBOB(valStr);
   if (formatted === "-") {
-    return <span style={{ color: '#cbd5e1' }}>-</span>;
+    return <span style={{ color: '#cbd5e1', fontFamily: 'monospace', fontSize: '0.8rem' }}>-</span>;
   }
-  return <span style={{ fontWeight: isTotal ? '800' : '500', color: isTotal ? '#9c0720' : 'inherit' }}>{formatted}</span>;
+  return <span style={{ fontWeight: isTotal ? '800' : '500', color: isTotal ? '#9c0720' : 'inherit', fontFamily: 'monospace', fontSize: '0.8rem' }}>{formatted}</span>;
 };
 
 const LazyAccordion = ({ summary, children, forceOpen, isProgram }) => {

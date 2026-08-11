@@ -259,6 +259,8 @@
   margin-bottom: 0.2rem;
   font-weight: 600;
   color: #334155;
+  font-family: monospace;
+  font-size: 0.8rem;
 }
 
 .pctGasto {
@@ -305,7 +307,8 @@
   text-align: right;
   font-weight: 800;
   color: #0f172a;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
+  font-family: monospace;
 }
 
 .tfootRow {
@@ -317,7 +320,8 @@
   padding: 1.5rem;
   font-weight: 900;
   color: #0f172a;
-  font-size: 1.15rem;
+  font-size: 0.85rem;
+  font-family: monospace;
 }
 
 .emptyState {
