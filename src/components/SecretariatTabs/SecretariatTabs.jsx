@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import PlanificacionSection from '@/app/(public)/secretarias/[slug]/PlanificacionSection';
+import ClimaWidget from '@/components/ClimaWidget/ClimaWidget';
 import { secretariasContactData } from '@/data/secretariasContactData';
 import styles from './SecretariatTabs.module.css';
 
@@ -10,6 +11,7 @@ export default function SecretariatTabs({ sec, slug }) {
   const [activeTab, setActiveTab] = useState('acerca');
   const [showFullBio, setShowFullBio] = useState(false);
   const hasPlanificacion = slug.includes('planificacion');
+  const hasMedioAmbiente = slug.includes('medio-ambiente') || slug.includes('madre-tierra') || slug.includes('agua');
   const contactOverride = secretariasContactData[slug];
 
   return (
@@ -45,6 +47,15 @@ export default function SecretariatTabs({ sec, slug }) {
             Planificación Departamental
           </button>
         )}
+        {hasMedioAmbiente && (
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'clima' ? styles.active : ''}`}
+            onClick={() => setActiveTab('clima')}
+            style={{ '--acento': sec.color_acento || '#8b0000' }}
+          >
+            Monitoreo Climatológico
+          </button>
+        )}
       </div>
 
       <div className={styles.tabContent}>
@@ -67,6 +78,12 @@ export default function SecretariatTabs({ sec, slug }) {
             {!sec.descripcion && !sec.mision && !sec.vision && (
               <p className={styles.emptyText}>La información detallada de esta secretaría se está actualizando.</p>
             )}
+          </div>
+        )}
+
+        {activeTab === 'clima' && hasMedioAmbiente && (
+          <div className={styles.contentBlock}>
+            <ClimaWidget />
           </div>
         )}
 
