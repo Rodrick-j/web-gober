@@ -11,7 +11,6 @@ export default function SecretariatTabs({ sec, slug }) {
   const [activeTab, setActiveTab] = useState('acerca');
   const [showFullBio, setShowFullBio] = useState(false);
   const hasPlanificacion = slug.includes('planificacion');
-  const hasMedioAmbiente = slug.includes('medio-ambiente') || slug.includes('madre-tierra') || slug.includes('agua');
   const contactOverride = secretariasContactData[slug];
 
   return (
@@ -47,15 +46,13 @@ export default function SecretariatTabs({ sec, slug }) {
             Planificación Departamental
           </button>
         )}
-        {hasMedioAmbiente && (
-          <button 
-            className={`${styles.tabBtn} ${activeTab === 'clima' ? styles.active : ''}`}
-            onClick={() => setActiveTab('clima')}
-            style={{ '--acento': sec.color_acento || '#8b0000' }}
-          >
-            Monitoreo Climatológico
-          </button>
-        )}
+        <button 
+          className={`${styles.tabBtn} ${activeTab === 'clima' ? styles.active : ''}`}
+          onClick={() => setActiveTab('clima')}
+          style={{ '--acento': sec.color_acento || '#8b0000' }}
+        >
+          Monitoreo Climatológico
+        </button>
       </div>
 
       <div className={styles.tabContent}>
@@ -81,7 +78,7 @@ export default function SecretariatTabs({ sec, slug }) {
           </div>
         )}
 
-        {activeTab === 'clima' && hasMedioAmbiente && (
+        {activeTab === 'clima' && (
           <div className={styles.contentBlock}>
             <ClimaWidget />
           </div>
