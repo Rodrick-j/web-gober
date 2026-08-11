@@ -33,10 +33,10 @@ export default function GovernorSection() {
 
         <motion.div 
           className={styles.imageContent}
-          initial={{ opacity: 0, filter: 'blur(15px)', scale: 0.95 }}
-          whileInView={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 2.5, ease: 'easeOut' }}
+          transition={{ duration: 1.2, ease: 'easeOut' }}
         >
           <div className={styles.imageWrapper}>
             <Image

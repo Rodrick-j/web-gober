@@ -1,20 +1,22 @@
 .cenefaContainer {
   width: 100%;
-  height: 32px; /* Reducido de 60px para una barra mucho más delgada y elegante */
+  height: 48px; /* Slightly larger */
   background-color: transparent;
   display: flex;
   justify-content: space-around;
   align-items: center;
   overflow: hidden;
-  padding: 4px 0;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.3); /* Línea dorada sutil */
-  margin-bottom: 1.25rem;
+  padding: 8px 0;
+  border-top: 1px solid rgba(142, 14, 0, 0.1);
+  border-bottom: 1px solid rgba(142, 14, 0, 0.1);
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .motifItem {
   position: relative;
-  width: 22px; /* Reducido de 40px */
-  height: 22px;
+  width: 32px; /* A bit larger */
+  height: 32px;
   opacity: 1;
   animation: spinSlow 15s linear infinite;
   will-change: transform;
@@ -48,12 +50,13 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .cenefaContainer {
-    height: 24px;
-    padding: 2px 0;
-    margin-bottom: 0.75rem;
+    height: 36px;
+    padding: 6px 0;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
   }
   .motifItem {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
   }
 }

@@ -974,24 +974,14 @@ export default function GeoportalPoa({ currentData }) {
 
   const baseMapConfigs = {
     voyager: {
-      name: 'Google Maps (Calles)',
+      name: 'Plano de Calles',
       url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
       icon: Sun
     },
     satelite: {
-      name: 'Google Earth (Satelital)',
+      name: 'Vista Satelital',
       url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
       icon: Globe
-    },
-    topografico: {
-      name: 'Google (Terreno)',
-      url: 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
-      icon: Compass
-    },
-    dark: {
-      name: 'Google Maps (Oscuro)',
-      url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', // fallback since google doesn't have a direct dark raster tile out of the box
-      icon: Moon
     }
   };
 
@@ -1495,18 +1485,18 @@ export default function GeoportalPoa({ currentData }) {
                 title={config.name}
               >
                 <Icon size={13} />
-                <span>{config.name.split(' ')[0]}</span>
+                <span>{config.name}</span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Barra de Filtros Avanzados Compacta (2 filas en móvil sin scroll vertical perdido) */}
-      <div className="geoportal-filters">
+      {/* Barra de Filtros Avanzados Compacta */}
+      <div className="geoportal-filters" style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '1rem', alignItems: 'center', justifyContent: 'space-between' }}>
         
         {/* Fila 1: Buscador Principal + Botón Resultados */}
-        <div className="filter-row-top">
+        <div className="filter-row-top" style={{ display: 'flex', flex: '1 1 300px', gap: '0.5rem', minWidth: '0' }}>
           <div style={{ position: 'relative', flex: '1', minWidth: '0' }}>
             <input 
               type="text"
@@ -1561,12 +1551,13 @@ export default function GeoportalPoa({ currentData }) {
           </button>
         </div>
 
-        {/* Fila 2: Selectores en grilla de 3 columnas en móvil + Limpiar si activo */}
-        <div className="filter-row-bottom">
+        {/* Fila 2: Selectores */}
+        <div className="filter-row-bottom" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', flex: '2 1 600px', justifyContent: 'flex-start' }}>
           <select
             value={categoriaFiltro}
             onChange={(e) => { setCategoriaFiltro(e.target.value); setMostrarListaResultados(true); }}
             className="filter-select"
+            style={{ flex: '1 1 150px' }}
           >
             <option value="TODAS">Categoría: Todas</option>
             <option value="Infraestructura Vial y Caminos">Vial y Caminos</option>
@@ -1580,6 +1571,7 @@ export default function GeoportalPoa({ currentData }) {
             value={estadoFiltro}
             onChange={(e) => { setEstadoFiltro(e.target.value); setMostrarListaResultados(true); }}
             className="filter-select"
+            style={{ flex: '1 1 140px' }}
           >
             <option value="TODOS">Estado: Todos</option>
             <option value="EN EJECUCIÓN FÍSICA">En Ejecución</option>
@@ -1592,6 +1584,7 @@ export default function GeoportalPoa({ currentData }) {
             value={distritoFiltro}
             onChange={(e) => { setDistritoFiltro(e.target.value); setMostrarListaResultados(true); }}
             className="filter-select"
+            style={{ flex: '1 1 120px' }}
           >
             <option value="TODOS">Distrito: Todos</option>
             <option value="Distrito 1">Distrito 1</option>

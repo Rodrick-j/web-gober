@@ -229,121 +229,119 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
       <div style={{ position: 'absolute', top: '-15%', right: '-5%', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(156,7,32,0.04) 0%, rgba(0,0,0,0) 70%)', borderRadius: '50%', pointerEvents: 'none', zIndex: 0 }} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
-        <header className="budget-header">
+        {/* Guardar el dropdown en una variable para reusarlo */}
+        {(() => {
+          const municipioSelectorJSX = (
+            <div style={{ position: 'relative', flex: '1 1 200px', minWidth: '220px', maxWidth: '300px' }} ref={dropdownRef}>
+              <div
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                style={{
+                  width: '100%',
+                  background: '#f8f9fa',
+                  color: '#1a1a2e',
+                  border: '1px solid #dcdcdc',
+                  borderRadius: '8px',
+                  padding: '0.5rem 2rem 0.5rem 1.8rem',
+                  fontSize: '0.85rem',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.03)',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  position: 'relative',
+                  height: '100%'
+                }}
+              >
+                <MapPin size={15} color="#9c0720" style={{ position: 'absolute', left: '10px' }} />
+                <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {municipalitiesList.find(m => m.id === selectedMuni)?.entidad || 'Seleccionar Municipio'}
+                </span>
+                <ChevronDown size={16} color="#555" style={{ position: 'absolute', right: '10px', transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+              </div>
+
+              {isDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.15 }}
+                  style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: 0,
+                    right: 0,
+                    marginTop: '0.3rem',
+                    background: '#ffffff',
+                    border: '1px solid #eaeaea',
+                    borderRadius: '8px',
+                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                    zIndex: 9999,
+                    overflow: 'hidden'
+                  }}
+                >
+                  <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
+                    <Search size={14} color="#888" />
+                    <input
+                      type="text"
+                      placeholder="Buscar municipio..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      style={{
+                        width: '100%',
+                        border: 'none',
+                        outline: 'none',
+                        background: 'transparent',
+                        fontSize: '0.8rem',
+                        color: '#333'
+                      }}
+                      autoFocus
+                    />
+                  </div>
+                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                    {municipalitiesList
+                      .filter(m => m.entidad.toLowerCase().includes(searchTerm.toLowerCase()))
+                      .map((muni) => (
+                        <div
+                          key={muni.id}
+                          onClick={() => {
+                            setSelectedMuni(muni.id);
+                            setIsDropdownOpen(false);
+                            setSearchTerm('');
+                          }}
+                          style={{
+                            padding: '0.5rem 1rem',
+                            fontSize: '0.8rem',
+                            fontWeight: selectedMuni === muni.id ? '800' : '500',
+                            color: selectedMuni === muni.id ? '#9c0720' : '#333',
+                            background: selectedMuni === muni.id ? '#fce8e8' : 'transparent',
+                            cursor: 'pointer',
+                            transition: 'background 0.15s'
+                          }}
+                          onMouseEnter={(e) => {
+                            if (selectedMuni !== muni.id) e.currentTarget.style.background = '#f5f5f5';
+                          }}
+                          onMouseLeave={(e) => {
+                            if (selectedMuni !== muni.id) e.currentTarget.style.background = 'transparent';
+                          }}
+                        >
+                          {muni.entidad}
+                        </div>
+                      ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          );
+
+          return (
+            <>
+              <header className="budget-header">
           <div>
             <h3 style={{ fontSize: '1.7rem', fontWeight: '900', margin: 0, color: '#9c0720', letterSpacing: '-0.5px' }}>
               Gestión Presupuestaria e Inversión Municipal
             </h3>
-            <div style={{ marginTop: '0.85rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-                <div style={{ position: 'relative', flex: '1 1 280px', minWidth: '260px' }} ref={dropdownRef}>
-                  <div
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    style={{
-                      width: '100%',
-                      background: '#f8f9fa',
-                      color: '#1a1a2e',
-                      border: '1.5px solid #dcdcdc',
-                      borderRadius: '10px',
-                      padding: isMobile ? '0.5rem 2rem 0.5rem 1.8rem' : '0.6rem 2.5rem 0.6rem 2.3rem',
-                      fontSize: isMobile ? '0.75rem' : '0.94rem',
-                      fontWeight: '800',
-                      cursor: 'pointer',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-                      transition: 'all 0.2s',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      position: 'relative'
-                    }}
-                  >
-                    <MapPin size={16} color="#9c0720" style={{ position: 'absolute', left: '12px' }} />
-                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {municipalitiesList.find(m => m.id === selectedMuni)?.entidad || 'Seleccionar Municipio'}
-                    </span>
-                    <ChevronDown size={18} color="#555" style={{ position: 'absolute', right: '12px', transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
-                  </div>
-
-                  {isDropdownOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.15 }}
-                      style={{
-                        position: 'absolute',
-                        top: '100%',
-                        left: 0,
-                        right: 0,
-                        marginTop: '0.5rem',
-                        background: '#ffffff',
-                        border: '1px solid #eaeaea',
-                        borderRadius: '10px',
-                        boxShadow: '0 10px 35px rgba(0,0,0,0.1)',
-                        zIndex: 999,
-                        overflow: 'hidden'
-                      }}
-                    >
-                      <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
-                        <Search size={16} color="#888" />
-                        <input
-                          type="text"
-                          placeholder="Buscar municipio..."
-                          value={searchTerm}
-                          onChange={(e) => setSearchTerm(e.target.value)}
-                          style={{
-                            width: '100%',
-                            border: 'none',
-                            outline: 'none',
-                            background: 'transparent',
-                            fontSize: '0.85rem',
-                            color: '#333'
-                          }}
-                          autoFocus
-                        />
-                      </div>
-                      <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
-                        {municipalitiesList
-                          .filter(m => m.entidad.toLowerCase().includes(searchTerm.toLowerCase()))
-                          .map((muni) => (
-                            <div
-                              key={muni.id}
-                              onClick={() => {
-                                setSelectedMuni(muni.id);
-                                setIsDropdownOpen(false);
-                                setSearchTerm('');
-                              }}
-                              style={{
-                                padding: '0.6rem 1rem',
-                                fontSize: '0.85rem',
-                                fontWeight: selectedMuni === muni.id ? '800' : '500',
-                                color: selectedMuni === muni.id ? '#9c0720' : '#333',
-                                background: selectedMuni === muni.id ? '#fce8e8' : 'transparent',
-                                cursor: 'pointer',
-                                transition: 'background 0.15s'
-                              }}
-                              onMouseEnter={(e) => {
-                                if (selectedMuni !== muni.id) e.currentTarget.style.background = '#f5f5f5';
-                              }}
-                              onMouseLeave={(e) => {
-                                if (selectedMuni !== muni.id) e.currentTarget.style.background = 'transparent';
-                              }}
-                            >
-                              {muni.entidad}
-                            </div>
-                          ))}
-                        {municipalitiesList.filter(m => m.entidad.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 && (
-                          <div style={{ padding: '1rem', textAlign: 'center', fontSize: '0.85rem', color: '#888' }}>
-                            No se encontraron resultados
-                          </div>
-                        )}
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-
-              </div>
-            </div>
           </div>
           <div className="budget-total-card">
             <div style={{ background: 'rgba(156,7,32,0.12)', padding: '0.8rem', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -357,40 +355,43 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
         </header>
 
         {/* View Toggle */}
-        <div className="budget-tabs-bar">
-          <button 
-            onClick={() => setActiveView('programas')}
-            className="budget-tab-btn"
-            style={{ 
-              background: activeView === 'programas' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent', 
-              color: activeView === 'programas' ? '#fff' : '#555',
-              boxShadow: activeView === 'programas' ? '0 4px 12px rgba(156,7,32,0.25)' : 'none'
-            }}
-          >
-            <PieChart size={16} /> Categoría Programática
-          </button>
-          <button 
-            onClick={() => setActiveView('gastos')}
-            className="budget-tab-btn"
-            style={{ 
-              background: activeView === 'gastos' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent', 
-              color: activeView === 'gastos' ? '#fff' : '#555',
-              boxShadow: activeView === 'gastos' ? '0 4px 12px rgba(156,7,32,0.25)' : 'none'
-            }}
-          >
-            <BarChart2 size={16} /> Grupo de Gasto
-          </button>
-          <button 
-            onClick={() => setActiveView('mapa')}
-            className="budget-tab-btn"
-            style={{ 
-              background: activeView === 'mapa' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent', 
-              color: activeView === 'mapa' ? '#fff' : '#555',
-              boxShadow: activeView === 'mapa' ? '0 4px 12px rgba(156,7,32,0.25)' : 'none'
-            }}
-          >
-            <MapPin size={16} /> Mapas POA 2025
-          </button>
+        <div className="budget-tabs-bar" style={{ display: 'flex', justifyContent: 'space-between', width: '100%', flexWrap: 'wrap', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <button 
+              onClick={() => setActiveView('programas')}
+              className="budget-tab-btn"
+              style={{ 
+                background: activeView === 'programas' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent', 
+                color: activeView === 'programas' ? '#fff' : '#555',
+                boxShadow: activeView === 'programas' ? '0 4px 12px rgba(156,7,32,0.25)' : 'none'
+              }}
+            >
+              <PieChart size={16} /> Categoría Programática
+            </button>
+            <button 
+              onClick={() => setActiveView('gastos')}
+              className="budget-tab-btn"
+              style={{ 
+                background: activeView === 'gastos' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent', 
+                color: activeView === 'gastos' ? '#fff' : '#555',
+                boxShadow: activeView === 'gastos' ? '0 4px 12px rgba(156,7,32,0.25)' : 'none'
+              }}
+            >
+              <BarChart2 size={16} /> Grupo de Gasto
+            </button>
+            <button 
+              onClick={() => setActiveView('mapa')}
+              className="budget-tab-btn"
+              style={{ 
+                background: activeView === 'mapa' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent', 
+                color: activeView === 'mapa' ? '#fff' : '#555',
+                boxShadow: activeView === 'mapa' ? '0 4px 12px rgba(156,7,32,0.25)' : 'none'
+              }}
+            >
+              <MapPin size={16} /> Mapas POA 2025
+            </button>
+          </div>
+          {municipioSelectorJSX}
         </div>
 
         {/* Charts or Geoportal Container */}
@@ -663,6 +664,9 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
             </div>
           </div>
         )}
+            </>
+          );
+        })()}
       </div>
     </div>
   );
