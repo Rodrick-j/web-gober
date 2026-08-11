@@ -33,9 +33,9 @@ import styles from './Navbar.module.css';
 // Helper function to extract initials from full name
 function getAcronym(nombre) {
   if(!nombre) return '';
-  const ignoredWords = ['de', 'y', 'e', 'la', 'las', 'el', 'los', 'en'];
+  const ignoredWords = ['de', 'del', 'y', 'e', 'la', 'las', 'el', 'los', 'en', 'al', 'a', 'por', 'para'];
   const words = nombre.split(' ').filter(w => !ignoredWords.includes(w.toLowerCase()));
-  return words.map(w => w[0].toUpperCase()).join('.') + '.';
+  return words.map(w => w[0].toUpperCase()).join('');
 }
 
 const navItems = [

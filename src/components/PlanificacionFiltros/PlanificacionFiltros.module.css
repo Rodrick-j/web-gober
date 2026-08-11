@@ -25,7 +25,7 @@
 
 .searchIcon {
   position: absolute;
-  left: 1.2rem;
+  left: 0.8rem;
   top: 50%;
   transform: translateY(-50%);
   color: #9CA3AF;
@@ -33,8 +33,8 @@
 
 .searchInput {
   width: 100%;
-  padding: 1.2rem 1.2rem 1.2rem 3.5rem;
-  font-size: 1.1rem;
+  padding: 0.7rem 1rem 0.7rem 2.5rem;
+  font-size: 0.95rem;
   background: #ffffff;
   border: 2px solid #cbd5e1;
   border-radius: 12px;
@@ -72,7 +72,7 @@
 
 .selectIcon {
   position: absolute;
-  left: 1rem;
+  left: 0.7rem;
   top: 50%;
   transform: translateY(-50%);
   color: #6B7280;
@@ -82,7 +82,7 @@
 .selectInput {
   width: 100%;
   appearance: none;
-  padding: 0.9rem 1rem 0.9rem 2.5rem;
+  padding: 0.6rem 0.8rem 0.6rem 2rem;
   background: #ffffff;
   border: 2px solid #cbd5e1;
   border-radius: 10px;
@@ -140,9 +140,9 @@
 .tabBtn {
   border: none;
   background: transparent;
-  padding: 0.7rem 1.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #4B5563;
   cursor: pointer;
@@ -197,21 +197,21 @@
 }
 
 .dataTable th {
-  background: #e2e8f0;
+  background: #9c0720;
   padding: 0.5rem 0.5rem;
   text-align: left;
   font-size: 0.7rem;
   font-weight: 800;
-  color: #334155;
+  color: #ffffff;
   text-transform: uppercase;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #b81d36;
   white-space: nowrap;
 }
 
 .dataTable td {
   padding: 0.5rem 0.5rem;
   font-size: 0.75rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #e2e8f0;
   vertical-align: middle;
   color: #1e293b;
 }

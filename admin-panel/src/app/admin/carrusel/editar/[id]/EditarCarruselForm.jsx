@@ -15,6 +15,7 @@ export default function EditarCarruselForm({ banner }) {
   const [animacionCarrusel, setAnimacionCarrusel] = useState(banner.animacion_carrusel || 'creative');
   const [activo, setActivo] = useState(banner.activo !== false);
   const [imagenMovil, setImagenMovil] = useState(null);
+  const [removeImagenMovil, setRemoveImagenMovil] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -26,7 +27,10 @@ export default function EditarCarruselForm({ banner }) {
 
     try {
       let nuevaImagenMovilUrl = banner.imagen_movil_url;
-      if (imagenMovil) {
+      
+      if (removeImagenMovil) {
+        nuevaImagenMovilUrl = null;
+      } else if (imagenMovil) {
         nuevaImagenMovilUrl = await uploadFile(imagenMovil, 'general');
       }
 
@@ -147,25 +151,52 @@ export default function EditarCarruselForm({ banner }) {
                   style={{ objectFit: 'cover' }} 
                 />
               </div>
-              <div style={{ position: 'relative', width: '100%', height: '100px', borderRadius: '8px', overflow: 'hidden', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.8rem' }}>
-                {banner.imagen_movil_url ? (
-                  <Image 
-                    src={banner.imagen_movil_url} 
-                    alt="Banner Móvil" 
-                    fill
-                    style={{ objectFit: 'cover' }} 
-                  />
-                ) : 'Sin imagen móvil'}
+              <div style={{ position: 'relative', width: '100%', height: '100px', borderRadius: '8px', overflow: 'hidden', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.8rem', flexDirection: 'column' }}>
+                {(banner.imagen_movil_url && !removeImagenMovil) || imagenMovil ? (
+                  <>
+                    <Image 
+                      src={imagenMovil ? URL.createObjectURL(imagenMovil) : banner.imagen_movil_url} 
+                      alt="Banner Móvil" 
+                      fill
+                      style={{ objectFit: 'cover' }} 
+                    />
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', opacity: 0, transition: 'opacity 0.2s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.opacity = 1} onMouseLeave={(e) => e.currentTarget.style.opacity = 0}>
+                      <button 
+                        type="button" 
+                        onClick={() => { setRemoveImagenMovil(true); setImagenMovil(null); }} 
+                        style={{ background: '#ef4444', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}
+                      >
+                        Quitar Imagen
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <span style={{ padding: '0 1rem' }}>{removeImagenMovil ? 'Imagen eliminada (Guardar para aplicar)' : 'Sin imagen móvil'}</span>
+                )}
               </div>
             </div>
             <p style={{ fontSize: '0.75rem', color: '#999', margin: '0.5rem 0' }}>Para cambiar la imagen principal de PC, debes subir un banner nuevo.</p>
 
             <div style={{ marginTop: '1rem', textAlign: 'left' }}>
-              <label className="formLabel" style={{ color: 'white', fontSize: '0.85rem' }}>Cambiar Imagen Celular (Vertical)</label>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label className="formLabel" style={{ color: 'white', fontSize: '0.85rem' }}>Cambiar Imagen Celular (Vertical)</label>
+                {(banner.imagen_movil_url || imagenMovil) && !removeImagenMovil && (
+                  <button 
+                    type="button" 
+                    onClick={() => { setRemoveImagenMovil(true); setImagenMovil(null); }}
+                    style={{ background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', fontSize: '0.7rem', padding: '2px 8px', borderRadius: '4px', cursor: 'pointer' }}
+                  >
+                    Quitar
+                  </button>
+                )}
+              </div>
               <input 
                 type="file" 
                 accept="image/*"
-                onChange={(e) => setImagenMovil(e.target.files[0])}
+                onChange={(e) => {
+                  setImagenMovil(e.target.files[0]);
+                  if (e.target.files[0]) setRemoveImagenMovil(false);
+                }}
                 disabled={isSubmitting}
                 style={{ marginTop: '0.5rem', width: '100%', fontSize: '0.8rem', color: '#ccc' }}
               />

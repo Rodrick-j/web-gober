@@ -896,20 +896,20 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
             min-width: 900px;
           }
           .data-table th {
-            background: #e2e8f0;
+            background: #9c0720;
             padding: 0.6rem 0.5rem;
             text-align: left;
             font-size: 0.68rem;
             font-weight: 800;
-            color: #334155;
+            color: #ffffff;
             text-transform: uppercase;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #b81d36;
             white-space: nowrap;
           }
           .data-table td {
             padding: 0.5rem 0.5rem;
             font-size: 0.75rem;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #e2e8f0;
             vertical-align: middle;
             color: #1e293b;
           }
@@ -1117,9 +1117,11 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
               })}
             </select>
           )}
+        </div>
 
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginTop: '0.5rem', width: '100%' }}>
           {/* Search Box */}
-          <div className="search-wrapper">
+          <div className="search-wrapper" style={{ flex: '1', minWidth: '250px' }}>
             <Search size={16} color="#94a3b8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
             <input 
               type="text" 
@@ -1129,16 +1131,16 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div className="actions-group">
-          <button className="btn-action btn-primary-action" onClick={exportToCSV}>
-            <Download size={16} /> Exportar CSV
-          </button>
-          <button className="btn-action" onClick={handlePrint}>
-            <Printer size={16} /> Imprimir
-          </button>
+          {/* Action Buttons */}
+          <div className="actions-group" style={{ display: 'flex', gap: '1rem', width: 'auto' }}>
+            <button className="btn-action btn-primary-action" onClick={exportToCSV}>
+              <Download size={16} /> Exportar CSV
+            </button>
+            <button className="btn-action" onClick={handlePrint}>
+              <Printer size={16} /> Imprimir
+            </button>
+          </div>
         </div>
       </section>
 

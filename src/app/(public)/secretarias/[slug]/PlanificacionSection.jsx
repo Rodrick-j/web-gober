@@ -9,6 +9,7 @@ import BudgetDashboard from './BudgetDashboard';
 import BudgetExcelExplorer from './BudgetExcelExplorer';
 import PlanificacionFiltros from '@/components/PlanificacionFiltros/PlanificacionFiltros';
 import ResumenMunicipios from '@/components/ResumenMunicipios/ResumenMunicipios';
+import CostosConstruccion from '@/components/CostosConstruccion/CostosConstruccion';
 const provinciasOruro = [
   { nombre: "Cercado", municipios: ["Oruro", "Caracollo", "El Choro", "Soracachi (Paria)"] },
   { nombre: "Abaroa", municipios: ["Challapata", "Quillacas"] },
@@ -88,6 +89,26 @@ export default function PlanificacionSection({ secretariaId }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+              {/* Card POA */}
+              <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1rem 1.5rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+                {/* Decorative background element */}
+                <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '50%', opacity: 0.4, mixBlendMode: 'multiply', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
+                  <img loading="lazy" src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', transform: 'scale(1.2)' }} />
+                </div>
+                
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '0.8rem' }}>
+                    <FileText size={20} />
+                  </div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.5rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.9rem', marginBottom: '0', lineHeight: '1.4', maxWidth: '60%' }}>
+                    Acceda a los documentos e instrumentos de planificación anual del Gobierno Autónomo Departamental de Oruro.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div style={{ 
               display: 'inline-flex', 
               gap: '0.2rem', 
@@ -143,26 +164,17 @@ export default function PlanificacionSection({ secretariaId }) {
               >
                 <Search size={18} /> Proyectos de Municipio
               </button>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
-              {/* Card POA */}
-              <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1rem 1.5rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
-                {/* Decorative background element */}
-                <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '50%', opacity: 0.4, mixBlendMode: 'multiply', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
-                  <img loading="lazy" src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', transform: 'scale(1.2)' }} />
-                </div>
-                
-                <div style={{ position: 'relative', zIndex: 1 }}>
-                  <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '0.8rem' }}>
-                    <FileText size={20} />
-                  </div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.5rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
-                  <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.9rem', marginBottom: '0', lineHeight: '1.4', maxWidth: '60%' }}>
-                    Acceda a los documentos e instrumentos de planificación anual del Gobierno Autónomo Departamental de Oruro.
-                  </p>
-                </div>
-              </div>
+              <button
+                onClick={() => setViewMode('costos')}
+                style={{
+                  background: viewMode === 'costos' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  color: viewMode === 'costos' ? '#ffffff' : '#475569',
+                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'costos' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
+                }}
+              >
+                <Building size={18} /> Índice de Costos de Construcción
+              </button>
             </div>
 
             {viewMode === 'dashboard' && (
@@ -179,6 +191,10 @@ export default function PlanificacionSection({ secretariaId }) {
 
             {viewMode === 'resumen' && (
               <ResumenMunicipios />
+            )}
+
+            {viewMode === 'costos' && (
+              <CostosConstruccion />
             )}
 
 

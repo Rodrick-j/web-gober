@@ -149,9 +149,9 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
           <strong>Explorador de Planificación:</strong> Utilice estos filtros para buscar y explorar los proyectos, gastos y obras planificadas en el departamento.
         </div>
 
-        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
           {/* Search Bar */}
-          <div className={styles.searchGroup} style={{ flex: '1 1 100%', minWidth: '150px', marginBottom: 0 }}>
+          <div className={styles.searchGroup} style={{ flex: '1', minWidth: '250px', marginBottom: 0 }}>
             <Search className={styles.searchIcon} size={20} />
             <input 
               type="text" 
@@ -187,12 +187,12 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
 
         <div className={styles.selectorsGroup} style={{ display: 'flex', gap: '1rem', width: '100%', flexWrap: 'wrap' }}>
           {/* Municipio Selector */}
-          <div className={styles.selectWrapper} style={{ position: 'relative', flex: '1.5 1 280px', display: 'block' }}>
-            <MapPin className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
+          <div className={styles.selectWrapper}>
+            <MapPin className={styles.selectIcon} size={16} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
             
             <div 
               className={styles.selectInput} 
-              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', minHeight: '42px', paddingRight: '35px' }}
+              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', minHeight: '38px', paddingRight: '25px' }}
               onClick={() => setShowMuniDropdown(!showMuniDropdown)}
             >
               <span style={{ color: selectedMunicipio === 'Todos' ? '#6b7280' : '#1e293b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, marginRight: '10px' }}>
@@ -273,8 +273,8 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
           </div>
 
           {/* PRG Selector */}
-          <div className={styles.selectWrapper} style={{ position: 'relative', flex: '1 1 150px', display: 'block' }}>
-              <Tag className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
+          <div className={styles.selectWrapper}>
+              <Tag className={styles.selectIcon} size={16} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
               <select 
                 value={selectedPrg} 
                 onChange={(e) => {
@@ -293,8 +293,8 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
             </div>
 
           {/* PROY Selector */}
-          <div className={styles.selectWrapper} style={{ position: 'relative', flex: '1 1 150px', display: 'block' }}>
-              <Tag className={styles.selectIcon} size={18} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
+          <div className={styles.selectWrapper}>
+              <Tag className={styles.selectIcon} size={16} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
               <select 
                 value={selectedProy} 
                 onChange={(e) => setSelectedProy(e.target.value)}

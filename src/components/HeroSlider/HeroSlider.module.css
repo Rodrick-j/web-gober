@@ -1,23 +1,14 @@
 /* =============================================
-   HERO SLIDER – Rediseño Premium
-   Más luminoso, moderno y con animaciones suaves
+   HERO SLIDER – Cinematic Premium (Apple-Style)
    ============================================= */
 
 .sliderSection {
   width: 100%;
-  padding: 0;
-  background-color: #080c14;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.sliderFrame {
+  height: calc(100vw * 9 / 16); /* Escala perfectamente en 16:9 */
+  max-height: 100vh;
+  min-height: 350px; /* Permite achicarse en pantallas angostas */
   position: relative;
-  width: 100%;
-  height: calc(100vh - 120px);
-  max-height: 920px;
-  min-height: 560px;
+  background-color: transparent; /* Eliminamos el fondo negro */
   overflow: hidden;
 }
 
@@ -30,399 +21,350 @@
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12vh;
 }
 
-/* ── Fondo desenfocado para evitar bordes negros — más sutil */
-.bgBlur {
-  position: absolute;
-  top: -8%;
-  left: -8%;
-  width: 116%;
-  height: 116%;
-  filter: blur(22px) brightness(1.05);
-  z-index: 0;
-  opacity: 0.55;
-  transform: scale(1.04);
-}
-
-/* Overlay eliminado — transparente para mostrar color natural */
-.bgOverlay {
+.bgImageWrapper {
   position: absolute;
   inset: 0;
-  background: transparent;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bgImage {
+.blurredBg {
+  object-fit: cover;
+  object-position: center center;
+  filter: blur(40px) brightness(0.9); /* Resplandor ambiental claro, no borde oscuro */
+  transform: scale(1.15); /* Escala mayor para evitar bordes duros */
   position: absolute;
   inset: 0;
-  z-index: 2;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
 .mainImage {
-  object-fit: cover;
-  object-position: center 20%;
-  transition: transform 7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  /* Imagen con color natural + brillo extra */
-  filter: brightness(1.08) saturate(1.15) contrast(1.04);
+  object-fit: contain; /* Obligamos a que nunca se recorte (100% responsiva) */
+  object-position: center center;
+  transition: transform 10s cubic-bezier(0.1, 0, 0.9, 1);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
-/* Zoom sutil al slide activo */
+/* Subtle zoom effect for active slide */
 :global(.swiper-slide-active) .mainImage {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
-.hideOnMobile  { display: block; }
+.hideOnMobile { display: block; }
 .showOnlyOnMobile { display: none !important; }
 
-/* ── Gradientes de luz – más sutiles y direccionales ── */
-/* Viñetado muy sutil — solo en los bordes para que el texto sea legible */
+/* Gradient overlay for better text readability */
 .gradientOverlay {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(to right,  rgba(0,0,0,0.38) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.18) 100%),
-    linear-gradient(to top,    rgba(0,0,0,0.45) 0%, transparent 38%);
-  z-index: 3;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.4) 30%,
+    transparent 60%
+  );
   pointer-events: none;
 }
 
-/* Halo de color de marca muy tenue — casi invisible */
-.lightLeakOverlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 5% 10%, rgba(156,7,32,0.06) 0%, transparent 45%);
-  z-index: 4;
-  pointer-events: none;
-}
-
-/* Línea decorativa luminosa lateral */
-.slideInner::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 15%;
-  height: 70%;
-  width: 3px;
-  background: linear-gradient(to bottom, transparent 0%, var(--color-gold) 40%, var(--color-primary-light) 60%, transparent 100%);
-  z-index: 11;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-  border-radius: 2px;
-}
-:global(.swiper-slide-active) .slideInner::before {
-  opacity: 1;
-}
-
-/* ── Contenido del slide ── */
-.slideContentWrapper {
-  position: absolute;
-  inset: 0;
+/* ── Content Card ── */
+.slideContentContainer {
+  position: relative;
   z-index: 10;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  padding: 0 5% 80px;
-  pointer-events: none;
-}
-
-/* Card glassmorphism más luminosa */
-.slideContentCard {
-  background: rgba(8, 12, 24, 0.45);
-  backdrop-filter: blur(24px) saturate(150%) brightness(1.1);
-  -webkit-backdrop-filter: blur(24px) saturate(150%) brightness(1.1);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-left: 3px solid var(--color-gold);
-  border-radius: 14px;
-  padding: 1.8rem 2.25rem;
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255,255,255,0.04) inset,
-    0 1px 0 rgba(255,255,255,0.08) inset;
-  max-width: 490px;
   width: 100%;
-  pointer-events: auto;
+  max-width: 1200px;
+  padding: 0 5%;
+  display: flex;
+  justify-content: center;
+}
 
-  /* Estado inicial para animación */
+/* Apple-style Glassmorphism Card */
+.glassCard {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 2.5rem 3.5rem;
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(40px);
 }
 
-:global(.swiper-slide-active) .slideContentCard {
-  animation: cardEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+:global(.swiper-slide-active) .glassCard {
+  animation: cardReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
 }
 
-@keyframes cardEnter {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes cardReveal {
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Header de la card ── */
 .cardHeader {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  margin-bottom: 0.9rem;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.indicatorPulse {
+  width: 8px;
+  height: 8px;
+  background-color: #ffb843; /* Oruro Gold */
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffb843;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 184, 67, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 184, 67, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 184, 67, 0); }
 }
 
 .tagLine {
   font-family: var(--font-body);
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-gold);
-  letter-spacing: 0.22em;
-  opacity: 0;
-  transform: translateX(-12px);
-}
-:global(.swiper-slide-active) .tagLine {
-  animation: fadeInLeft 0.7s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+  color: #ffb843; /* Oruro Gold */
 }
 
-.activeIndicator {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--color-primary-light);
-  box-shadow: 0 0 8px var(--color-primary-light), 0 0 18px rgba(156,7,32,0.4);
-  animation: pulse 2.2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.6; transform: scale(0.85); }
-}
-
-/* ── Textos ── */
 .slideTitle {
   font-family: var(--font-heading);
-  font-size: 1.9rem;
-  font-weight: 800;
-  line-height: 1.22;
-  color: #ffffff;
-  margin-bottom: 0.7rem;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 1rem;
   letter-spacing: -0.02em;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-
-  opacity: 0;
-  transform: translateY(16px);
-}
-:global(.swiper-slide-active) .slideTitle {
-  animation: fadeInUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
 }
 
 .slideDesc {
   font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.72);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-
-  opacity: 0;
-  transform: translateY(12px);
-}
-:global(.swiper-slide-active) .slideDesc {
-  animation: fadeInUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.45s forwards;
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto 2rem;
 }
 
-/* ── Botón de acción ── */
+/* Primary Action Button (Apple Style) */
 .actionWrapper {
   display: flex;
-  opacity: 0;
-}
-:global(.swiper-slide-active) .actionWrapper {
-  animation: fadeInUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.58s forwards;
+  justify-content: center;
 }
 
-.slideLink {
+.primaryButton {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.7rem 1.6rem;
-  background: var(--color-gold);
-  color: var(--color-primary-dark);
+  gap: 0.5rem;
+  background: #ffffff;
+  color: #000000;
+  padding: 0.8rem 2rem;
+  border-radius: 9999px;
   font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 0.875rem;
-  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
-  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
-  box-shadow: 0 4px 16px rgba(255, 184, 67, 0.22);
-  letter-spacing: 0.01em;
-}
-.slideLink:hover {
-  background: var(--color-gold-light);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 184, 67, 0.35);
-}
-.slideLink:active { transform: translateY(0); }
-
-.linkArrow {
-  width: 14px;
-  height: 14px;
-  transition: transform 0.2s ease;
-}
-.slideLink:hover .linkArrow { transform: translateX(4px); }
-
-/* ── Keyframes compartidos ── */
-@keyframes fadeInUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeInLeft {
-  to { opacity: 1; transform: translateX(0); }
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }
 
-/* ── Navegación custom ── */
-.customNav {
+.primaryButton:hover {
+  transform: scale(1.05);
+  background: #ffb843; /* Oruro Gold */
+  color: #140205; /* Deep Crimson */
+}
+
+.primaryButton svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.primaryButton:hover svg {
+  transform: translateX(4px);
+}
+
+/* ── Custom Navigation Controls ── */
+.controlsContainer {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.navBtn {
+  pointer-events: auto;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 40;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
 }
-.customNav:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.28);
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+  border-color: #ffb843;
+  color: #ffb843;
 }
-.customNav:active { transform: translateY(-50%) scale(0.95); }
-.customNav svg { width: 22px; height: 22px; transition: transform 0.2s ease; }
 
-.navPrev { left: 28px; }
-.navPrev:hover svg { transform: translateX(-2px); }
-.navNext { right: 28px; }
-.navNext:hover svg { transform: translateX(2px); }
+.navBtn svg { width: 24px; height: 24px; }
 
-/* ── Paginación ── */
+/* ── Pagination ── */
 .customBullet {
-  width: 22px !important;
+  width: 30px !important;
   height: 3px !important;
   background: rgba(255, 255, 255, 0.3) !important;
   border-radius: 2px !important;
   opacity: 1 !important;
   margin: 0 4px !important;
-  transition: all 0.35s ease !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
   display: inline-block;
   cursor: pointer;
 }
 .customBulletActive {
-  background: var(--color-gold) !important;
-  width: 44px !important;
+  background: #ffb843 !important; /* Oruro Gold */
+  width: 60px !important;
 }
 
 /* ── Fallback ── */
 .heroFallback {
-  position: relative;
   width: 100%;
-  padding: 8rem 2rem;
-  background: linear-gradient(135deg, #080c14 0%, #0f1728 100%);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
   color: white;
   text-align: center;
 }
-.heroFallback .title   { font-size: 3rem; margin-bottom: 1rem; }
-.heroFallback .highlight { color: var(--color-gold); }
-.heroFallback .subtitle { max-width: 600px; margin: 0 auto; opacity: 0.85; }
 
-/* ── Redes sociales flotantes ── */
+/* ── Floating Social Icons (Professional SVG Style) ── */
 .floatingSocials {
   position: absolute;
-  bottom: 28px;
-  right: 38px;
-  display: flex;
-  gap: 0.6rem;
+  bottom: 40px;
+  right: 40px;
   z-index: 30;
-
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  
   opacity: 0;
-  animation: fadeInRight 0.8s cubic-bezier(0.16,1,0.3,1) 0.8s forwards;
-}
-
-@keyframes fadeInRight {
-  from { opacity: 0; transform: translateX(16px); }
-  to   { opacity: 1; transform: translateX(0); }
+  animation: cardReveal 1.2s cubic-bezier(0.16,1,0.3,1) 0.8s forwards;
 }
 
 .socialIcon {
-  width: 38px;
-  height: 38px;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.8);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-}
-.socialIcon svg { width: 16px; height: 16px; }
-.socialIcon:hover {
-  transform: translateY(-4px);
-  color: white;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* Brand colors on hover */
-.socialIcon.fb:hover { background: #1877f2; border-color: transparent; }
-.socialIcon.ig:hover { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); border-color: transparent; }
-.socialIcon.tk:hover { background: #111; border-color: rgba(255,255,255,0.15); }
-.socialIcon.yt:hover { background: #ff0000; border-color: transparent; }
+.socialIcon svg { width: 18px; height: 18px; }
+
+/* Oruro Colors on Hover */
+.socialIcon:hover {
+  transform: translateY(-4px) scale(1.1);
+  color: #140205; /* Deep Crimson */
+  background: #ffb843; /* Oruro Gold */
+  border-color: #ffb843;
+  box-shadow: 0 12px 28px rgba(255, 184, 67, 0.4);
+}
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-  .slideContentWrapper { padding-left: 6%; padding-right: 6%; }
-  .slideContentCard { max-width: 410px; padding: 1.5rem 2rem; }
-  .slideTitle { font-size: 1.65rem; }
+  .glassCard {
+    padding: 2rem;
+    max-width: 90%;
+  }
 }
 
 @media (max-width: 768px) {
-  .sliderFrame { height: 75vh; min-height: 500px; }
-
-  .slideContentWrapper {
-    padding-left: 5%;
-    padding-right: 5%;
-    align-items: flex-end;
-    padding-bottom: 85px;
+  .sliderSection { 
+    height: calc(100vw * 16 / 9); /* Escala en formato vertical para móviles */
+    max-height: 85vh; 
+    min-height: 400px; /* Reducimos altura mínima */
   }
-  .slideContentCard {
-    max-width: 100%;
-    padding: 1.35rem 1.5rem;
-    border-radius: 12px;
+  .glassCard {
+    padding: 1.5rem;
+    border-radius: 16px;
   }
-  .slideTitle  { font-size: 1.45rem; }
-  .slideDesc   { font-size: 0.83rem; margin-bottom: 1.15rem; }
-
-  .customNav { display: none; }
-
+  .slideTitle { font-size: 2rem; }
+  .slideDesc { font-size: 0.9rem; margin-bottom: 1.5rem; }
+  
+  .mainImage {
+    transform: scale(1.1);
+  }
+  :global(.swiper-slide-active) .mainImage {
+    transform: scale(1.15);
+  }
+  
+  .controlsContainer { 
+    padding: 0 0.5rem; 
+  }
+  .navBtn {
+    width: 40px;
+    height: 40px;
+  }
+  .navBtn svg {
+    width: 20px;
+    height: 20px;
+  }
+  
   .floatingSocials {
-    bottom: 20px;
-    right: 15px;
-    transform: none;
-    flex-direction: column;
-    gap: 0.45rem;
+    flex-direction: row;
+    bottom: 25px;
+    right: 50%;
+    transform: translateX(50%);
+    gap: 1rem;
+    animation: fadeInUp 0.8s forwards;
   }
-  .socialIcon { width: 34px; height: 34px; }
-  .socialIcon svg { width: 15px; height: 15px; }
-
-  .hideOnMobile      { display: none !important; }
-  .showOnlyOnMobile  { display: block !important; }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translate(50%, 20px); }
+    to { opacity: 1; transform: translate(50%, 0); }
+  }
+  
+  .hideOnMobile { display: none !important; }
+  .showOnlyOnMobile { display: block !important; }
 }
