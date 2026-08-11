@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ResponsivePie } from '@nivo/pie';
 import { ResponsiveBar } from '@nivo/bar';
 import { Wallet, PieChart, BarChart2, TrendingUp, Building2, Shield, Activity, Map, Users, MapPin, ChevronDown, Search } from 'lucide-react';
@@ -261,77 +261,79 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                 <ChevronDown size={16} color="#555" style={{ position: 'absolute', right: '10px', transform: isDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
               </div>
 
-              {isDropdownOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -5 }}
-                  transition={{ duration: 0.15 }}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: 0,
-                    right: 0,
-                    marginTop: '0.3rem',
-                    background: '#ffffff',
-                    border: '1px solid #eaeaea',
-                    borderRadius: '8px',
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                    zIndex: 9999,
-                    overflow: 'hidden'
-                  }}
-                >
-                  <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
-                    <Search size={14} color="#888" />
-                    <input
-                      type="text"
-                      placeholder="Buscar municipio..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      style={{
-                        width: '100%',
-                        border: 'none',
-                        outline: 'none',
-                        background: 'transparent',
-                        fontSize: '0.8rem',
-                        color: '#333'
-                      }}
-                      autoFocus
-                    />
-                  </div>
-                  <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                    {municipalitiesList
-                      .filter(m => m.entidad.toLowerCase().includes(searchTerm.toLowerCase()))
-                      .map((muni) => (
-                        <div
-                          key={muni.id}
-                          onClick={() => {
-                            setSelectedMuni(muni.id);
-                            setIsDropdownOpen(false);
-                            setSearchTerm('');
-                          }}
-                          style={{
-                            padding: '0.5rem 1rem',
-                            fontSize: '0.8rem',
-                            fontWeight: selectedMuni === muni.id ? '800' : '500',
-                            color: selectedMuni === muni.id ? '#9c0720' : '#333',
-                            background: selectedMuni === muni.id ? '#fce8e8' : 'transparent',
-                            cursor: 'pointer',
-                            transition: 'background 0.15s'
-                          }}
-                          onMouseEnter={(e) => {
-                            if (selectedMuni !== muni.id) e.currentTarget.style.background = '#f5f5f5';
-                          }}
-                          onMouseLeave={(e) => {
-                            if (selectedMuni !== muni.id) e.currentTarget.style.background = 'transparent';
-                          }}
-                        >
-                          {muni.entidad}
-                        </div>
-                      ))}
-                  </div>
-                </motion.div>
-              )}
+              <AnimatePresence>
+                {isDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.15 }}
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      right: 0,
+                      marginTop: '0.3rem',
+                      background: '#ffffff',
+                      border: '1px solid #eaeaea',
+                      borderRadius: '8px',
+                      boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                      zIndex: 9999,
+                      overflow: 'hidden'
+                    }}
+                  >
+                    <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
+                      <Search size={14} color="#888" />
+                      <input
+                        type="text"
+                        placeholder="Buscar municipio..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{
+                          width: '100%',
+                          border: 'none',
+                          outline: 'none',
+                          background: 'transparent',
+                          fontSize: '0.8rem',
+                          color: '#333'
+                        }}
+                        autoFocus
+                      />
+                    </div>
+                    <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                      {municipalitiesList
+                        .filter(m => m.entidad.toLowerCase().includes(searchTerm.toLowerCase()))
+                        .map((muni) => (
+                          <div
+                            key={muni.id}
+                            onClick={() => {
+                              setSelectedMuni(muni.id);
+                              setIsDropdownOpen(false);
+                              setSearchTerm('');
+                            }}
+                            style={{
+                              padding: '0.5rem 1rem',
+                              fontSize: '0.8rem',
+                              fontWeight: selectedMuni === muni.id ? '800' : '500',
+                              color: selectedMuni === muni.id ? '#9c0720' : '#333',
+                              background: selectedMuni === muni.id ? '#fce8e8' : 'transparent',
+                              cursor: 'pointer',
+                              transition: 'background 0.15s'
+                            }}
+                            onMouseEnter={(e) => {
+                              if (selectedMuni !== muni.id) e.currentTarget.style.background = '#f5f5f5';
+                            }}
+                            onMouseLeave={(e) => {
+                              if (selectedMuni !== muni.id) e.currentTarget.style.background = 'transparent';
+                            }}
+                          >
+                            {muni.entidad}
+                          </div>
+                        ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           );
 
