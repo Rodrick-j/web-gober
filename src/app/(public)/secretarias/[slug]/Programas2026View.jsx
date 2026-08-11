@@ -11,6 +11,7 @@ export default function Programas2026View() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUnidad, setSelectedUnidad] = useState('');
   const [executionFilter, setExecutionFilter] = useState(''); // 'alta', 'media', 'baja'
+  const [tipoFilter, setTipoFilter] = useState(''); // 'Programa', 'Proyecto'
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isExecDropdownOpen, setIsExecDropdownOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,19 +28,20 @@ export default function Programas2026View() {
     return programasData.filter(prog => {
       const matchSearch = prog.programa.toLowerCase().includes(searchTerm.toLowerCase());
       const matchUnidad = selectedUnidad ? prog.unidadEjecutora === selectedUnidad : true;
+      const matchTipo = tipoFilter ? prog.tipo === tipoFilter : true;
       let matchExec = true;
       if (executionFilter === 'alta') matchExec = prog.porcentaje >= 50;
       else if (executionFilter === 'media') matchExec = prog.porcentaje >= 20 && prog.porcentaje < 50;
       else if (executionFilter === 'baja') matchExec = prog.porcentaje < 20;
       
-      return matchSearch && matchUnidad && matchExec;
+      return matchSearch && matchUnidad && matchTipo && matchExec;
     });
-  }, [searchTerm, selectedUnidad, executionFilter]);
+  }, [searchTerm, selectedUnidad, tipoFilter, executionFilter]);
 
   // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, selectedUnidad, executionFilter]);
+  }, [searchTerm, selectedUnidad, tipoFilter, executionFilter]);
 
   const totalPages = Math.ceil(programasFiltrados.length / itemsPerPage);
   
@@ -85,6 +87,18 @@ export default function Programas2026View() {
           </select>
         </div>
 
+        <div style={{ flex: '1 1 120px' }}>
+          <select
+            value={tipoFilter}
+            onChange={(e) => setTipoFilter(e.target.value)}
+            style={{ width: '100%', padding: '0.4rem 0.5rem', borderRadius: '4px', border: '1px solid #cbd5e1', fontSize: '0.75rem', outline: 'none', background: '#fff' }}
+          >
+            <option value="">Cualquier Tipo</option>
+            <option value="Programa">Programa</option>
+            <option value="Proyecto">Proyecto</option>
+          </select>
+        </div>
+
         <div style={{ flex: '1 1 150px' }}>
           <select
             value={executionFilter}
@@ -105,8 +119,9 @@ export default function Programas2026View() {
           <thead>
             <tr style={{ background: '#f1f5f9', borderBottom: '2px solid #cbd5e1' }}>
               <th style={{ padding: '0.6rem 0.8rem', borderRight: '1px solid #e2e8f0', fontWeight: 'bold', color: '#475569', width: '50px' }}>N°</th>
+              <th style={{ padding: '0.6rem 0.8rem', borderRight: '1px solid #e2e8f0', fontWeight: 'bold', color: '#475569', width: '60px' }}>Tipo</th>
               <th style={{ padding: '0.6rem 0.8rem', borderRight: '1px solid #e2e8f0', fontWeight: 'bold', color: '#475569', width: '25%' }}>Unidad Ejecutora</th>
-              <th style={{ padding: '0.6rem 0.8rem', borderRight: '1px solid #e2e8f0', fontWeight: 'bold', color: '#475569' }}>Nombre del Programa</th>
+              <th style={{ padding: '0.6rem 0.8rem', borderRight: '1px solid #e2e8f0', fontWeight: 'bold', color: '#475569' }}>Nombre del Programa/Proyecto</th>
               <th style={{ padding: '0.6rem 0.8rem', borderRight: '1px solid #e2e8f0', fontWeight: 'bold', color: '#475569', textAlign: 'right', width: '120px' }}>Presup. Vigente</th>
               <th style={{ padding: '0.6rem 0.8rem', borderRight: '1px solid #e2e8f0', fontWeight: 'bold', color: '#475569', textAlign: 'right', width: '120px' }}>Ejecución</th>
               <th style={{ padding: '0.6rem 0.8rem', fontWeight: 'bold', color: '#475569', textAlign: 'center', width: '80px' }}>% Avance</th>
@@ -117,6 +132,11 @@ export default function Programas2026View() {
               paginatedData.map((prog, idx) => (
                 <tr key={prog.id} style={{ borderBottom: '1px solid #e2e8f0', background: idx % 2 === 0 ? '#fff' : '#fafafa' }}>
                   <td style={{ padding: '0.5rem 0.8rem', borderRight: '1px solid #e2e8f0', color: '#64748b' }}>{(currentPage - 1) * itemsPerPage + idx + 1}</td>
+                  <td style={{ padding: '0.5rem 0.8rem', borderRight: '1px solid #e2e8f0', color: '#64748b' }}>
+                    <span style={{ padding: '0.15rem 0.4rem', borderRadius: '4px', background: prog.tipo === 'Programa' ? '#f0f9ff' : '#fdf4ff', color: prog.tipo === 'Programa' ? '#0369a1' : '#a21caf', fontSize: '0.7rem', fontWeight: '600' }}>
+                      {prog.tipo}
+                    </span>
+                  </td>
                   <td style={{ padding: '0.5rem 0.8rem', borderRight: '1px solid #e2e8f0', fontWeight: '600', color: '#9c0720' }}>{prog.unidadEjecutora}</td>
                   <td style={{ padding: '0.5rem 0.8rem', borderRight: '1px solid #e2e8f0', color: '#1e293b' }}>{prog.programa}</td>
                   <td style={{ padding: '0.5rem 0.8rem', borderRight: '1px solid #e2e8f0', textAlign: 'right', color: '#334155', fontFamily: 'monospace', fontSize: '0.8rem' }}>{formatCurrency(prog.presupuestoVigente)}</td>
@@ -128,8 +148,8 @@ export default function Programas2026View() {
               ))
             ) : (
               <tr>
-                <td colSpan="6" style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>
-                  No se encontraron programas con los filtros seleccionados.
+                <td colSpan="7" style={{ padding: '2rem', textAlign: 'center', color: '#94a3b8' }}>
+                  No se encontraron resultados con los filtros seleccionados.
                 </td>
               </tr>
             )}

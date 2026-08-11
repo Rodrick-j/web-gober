@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "tipo": "Programa",
     "unidadEjecutora": "ASAMBLEA LEGISLATIVA DEPARTAMENTAL DE ORURO",
     "programa": "PROGRAMA DE APOYO TECNICO A LA ASAMBLEA LEGISLATIVA DEPARTAMENTAL DE ORURO",
     "presupuestoVigente": 751966,
@@ -8,7 +9,8 @@
     "porcentaje": 27.899185601476663
   },
   {
-    "id": 3,
+    "id": 2,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE ASUNTOS JURIDICOS",
     "programa": "PROGRAMA DE MANEJO Y DELIMITACION TERRITORIAL DEL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 542806,
@@ -16,7 +18,8 @@
     "porcentaje": 25.301459453285336
   },
   {
-    "id": 5,
+    "id": 3,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE CULTURA Y TURISMO",
     "programa": "PROGRAMA DE PRESERVACION AL PATRIMONIO CULTURAL DEL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 592327,
@@ -24,7 +27,8 @@
     "porcentaje": 35.81283817891131
   },
   {
-    "id": 6,
+    "id": 4,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE CULTURA Y TURISMO",
     "programa": "PROGRAMA DEPARTAMENTAL AL FOMENTO DE LAS EXPRESIONES ARTISTICAS",
     "presupuestoVigente": 1299838,
@@ -32,7 +36,8 @@
     "porcentaje": 26.179885493423026
   },
   {
-    "id": 7,
+    "id": 5,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE CULTURA Y TURISMO",
     "programa": "PROGRAMA DEPARTAMENTAL DE EXTENSION Y FOMENTO DEL TURISMO EN ORURO",
     "presupuestoVigente": 409457,
@@ -40,7 +45,8 @@
     "porcentaje": 13.463482123886024
   },
   {
-    "id": 9,
+    "id": 6,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
     "programa": "PROGRAMA DE APOYO A LA PRODUCCION DE ALIMENTOS COMPLEMENTARIOS EN EL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 495623,
@@ -48,7 +54,8 @@
     "porcentaje": 9.165284904050054
   },
   {
-    "id": 10,
+    "id": 7,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
     "programa": "PROGRAMA DE APOYO AL SECTOR PRODUCTIVO MEDIANTE EL CAMPO FERIAL MULTIPROPOSITO ORURO",
     "presupuestoVigente": 222890,
@@ -56,7 +63,8 @@
     "porcentaje": 2.727771546502759
   },
   {
-    "id": 11,
+    "id": 8,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
     "programa": "PROGRAMA DEPARTAMENTAL AGROPECUARIO DE ATENCION Y EMERGENCIAS ANTE EVENTOS CLIMATICOS ADVERSOS",
     "presupuestoVigente": 354331,
@@ -64,7 +72,8 @@
     "porcentaje": 4.843541773087876
   },
   {
-    "id": 13,
+    "id": 9,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA  DEPARTAMENTAL DE LUCHA CONTRA EL CANCER",
     "presupuestoVigente": 327380,
@@ -72,7 +81,8 @@
     "porcentaje": 21.958335878795285
   },
   {
-    "id": 14,
+    "id": 10,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DE APOYO AL SISTEMA DE SALUD DE TERCER NIVEL ORURO",
     "presupuestoVigente": 5194000,
@@ -80,7 +90,8 @@
     "porcentaje": 39.59032422025414
   },
   {
-    "id": 15,
+    "id": 11,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DE ATENCION INTEGRAL A CENTROS DE ACOGIDA EN EL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 5888926,
@@ -88,7 +99,8 @@
     "porcentaje": 19.616131702113424
   },
   {
-    "id": 16,
+    "id": 12,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DE FORTALECIMIENTOA LOS INSTITUTOS TECNICO TECNOLOGICOS DEL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 392741.5,
@@ -96,7 +108,8 @@
     "porcentaje": 13.75363438801349
   },
   {
-    "id": 17,
+    "id": 13,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DE FOTALECIMIENTO INTEGRAL AL BANCO DE SANGRE DE REFERENCIA DEPARTAMENTAL DE ORURO",
     "presupuestoVigente": 594765,
@@ -104,7 +117,8 @@
     "porcentaje": 15.431859642043497
   },
   {
-    "id": 18,
+    "id": 14,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DE MEJORAMIENTO A LAS REDES DE SERVICIOS DE SALUD ORURO",
     "presupuestoVigente": 898828,
@@ -112,7 +126,8 @@
     "porcentaje": 19.209922254313394
   },
   {
-    "id": 19,
+    "id": 15,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DEPARTAMENTAL DE APOYO A LA ESTIMULACION TEMPRANA Y DESARROLLO ADOLESCENTE",
     "presupuestoVigente": 656080,
@@ -120,7 +135,8 @@
     "porcentaje": 9.30594592122912
   },
   {
-    "id": 20,
+    "id": 16,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DEPARTAMENTAL DE ATENCION Y VIGILANCIA DE LAS ITS/VIH/SIDA Y HEPATITIS VIRALES",
     "presupuestoVigente": 396470,
@@ -128,7 +144,8 @@
     "porcentaje": 4.403510984437663
   },
   {
-    "id": 21,
+    "id": 17,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DEPARTAMENTAL DE DETECCION Y CONTROL DE LA TUBERCULOSIS",
     "presupuestoVigente": 94750,
@@ -136,7 +153,8 @@
     "porcentaje": 63.77215831134565
   },
   {
-    "id": 22,
+    "id": 18,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DEPARTAMENTAL DE FORTALECIMIENTO  AL DEPORTE DE ALTO RENDIMIENTO EN ALTURA",
     "presupuestoVigente": 170000,
@@ -144,7 +162,8 @@
     "porcentaje": 0
   },
   {
-    "id": 23,
+    "id": 19,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DEPARTAMENTAL DE FORTALECIMIENTO A LA INMUNIZACION MEDIANTE LA VACUNACIÓN",
     "presupuestoVigente": 149731,
@@ -152,7 +171,8 @@
     "porcentaje": 33.337785762467355
   },
   {
-    "id": 24,
+    "id": 20,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DEPARTAMENTAL DE FORTALECIMIENTO DEL DEPORTE EN ORURO",
     "presupuestoVigente": 1764993,
@@ -160,7 +180,8 @@
     "porcentaje": 40.53901970149457
   },
   {
-    "id": 25,
+    "id": 21,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA DEPTAL. DE FORTALECIMIENTO DE LOS DERECHOS DE LA MUJER, JUVENTUD, ADULTO MAYOR Y PERSONAS CON DISCAPACIDAD",
     "presupuestoVigente": 1400889,
@@ -168,7 +189,8 @@
     "porcentaje": 56.22415409072382
   },
   {
-    "id": 26,
+    "id": 22,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
     "programa": "PROGRAMA PREPARANDO NADADORES CON MIRAS AL ALTO RENDIMIENTO EN EL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 632766,
@@ -176,7 +198,8 @@
     "porcentaje": 25.500638466668562
   },
   {
-    "id": 28,
+    "id": 23,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
     "programa": "PROGRAMA DE DESARROLLO DE VALLES DE HIDROGENO VERDE EN EL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 420230,
@@ -184,7 +207,8 @@
     "porcentaje": 10.122056968802799
   },
   {
-    "id": 29,
+    "id": 24,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
     "programa": "PROGRAMA EDUCACION AMBIENTAL INTEGRAL EN EL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 206105,
@@ -192,7 +216,8 @@
     "porcentaje": 7.835244171660076
   },
   {
-    "id": 31,
+    "id": 25,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MINERIA, METALURGIA Y RECURSOS ENERGETICOS",
     "programa": "PROGRAMA DE FORTALECIMIENTO DE FISCALIZACION Y CONTROL DE REGALIAS MINERAS EN EL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 2314597,
@@ -200,7 +225,8 @@
     "porcentaje": 29.1525561469232
   },
   {
-    "id": 33,
+    "id": 26,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
     "programa": "PROGRAMA DE APOYO A LA ELECTRIFICACION DEPARTAMENTAL",
     "presupuestoVigente": 365271,
@@ -208,7 +234,8 @@
     "porcentaje": 12.22336840318558
   },
   {
-    "id": 34,
+    "id": 27,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
     "programa": "PROGRAMA DE TRANSPORTE INTERPROVINCIAL E INTERMUNICIPAL DEL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 415803,
@@ -216,7 +243,8 @@
     "porcentaje": 16.7439147865696
   },
   {
-    "id": 35,
+    "id": 28,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
     "programa": "PROGRAMA DEPARTAMENTAL DE FORTALECIMIENTO A OBRAS CIVILES",
     "presupuestoVigente": 645616.66,
@@ -224,7 +252,8 @@
     "porcentaje": 53.821306284134614
   },
   {
-    "id": 36,
+    "id": 29,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
     "programa": "PROGRAMA DEPARTAMENTAL DE MONITOREO DE AGUA Y SANEAMIENTO BASICO",
     "presupuestoVigente": 715275,
@@ -232,7 +261,8 @@
     "porcentaje": 15.494641920939499
   },
   {
-    "id": 37,
+    "id": 30,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
     "programa": "PROGRAMA DEPARTAMENTAL DE RIESGOS Y EMERGENCIAS",
     "presupuestoVigente": 985373.88,
@@ -240,7 +270,8 @@
     "porcentaje": 12.841062927302275
   },
   {
-    "id": 39,
+    "id": 31,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE PLANIFICACION DEL DESARROLLO",
     "programa": "PROGRAMA DE APOYO TECNICO A LA INVERSION PUBLICA EN EL GOBIERNO AUTONOMO DEPARTAMENTAL DE ORURO",
     "presupuestoVigente": 2166153,
@@ -248,11 +279,786 @@
     "porcentaje": 12.669343301234955
   },
   {
-    "id": 41,
+    "id": 32,
+    "tipo": "Programa",
     "unidadEjecutora": "SECRETARIA GENERAL",
     "programa": "PROGRAMA DE APOYO Y PREVENCION A LA SEGURIDAD CIUDADANA EN EL DEPARTAMENTO DE ORURO",
     "presupuestoVigente": 4692156,
     "ejecucion": 2675219.7,
     "porcentaje": 57.01472201691504
+  },
+  {
+    "id": 33,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "PRESER. Y MONITOREO DE ESPECIES ICTICOLAS EN LAGOS Y LAGUNAS DE 11 MUNICIPIOS",
+    "presupuestoVigente": 280853,
+    "ejecucion": 14764.45,
+    "porcentaje": 5.257002773692999
+  },
+  {
+    "id": 34,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "APOYO A LA COMPETITIVIDAD DE LA MICRO Y PEQUEñA EMPRESA (REACTIVA TIC) EN  MUN. PROD. DEL DPTO DE ORURO",
+    "presupuestoVigente": 589690,
+    "ejecucion": 1578.92,
+    "porcentaje": 0.2677542437551934
+  },
+  {
+    "id": 35,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "MEJ. DEL SISTEMA DE PRODUCCION DE PAPA  EN 11 MUNICIPIOS DEL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 529452,
+    "ejecucion": 50626.69,
+    "porcentaje": 9.56209250319198
+  },
+  {
+    "id": 36,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "MEJ. AL MANEJO DEL GANADO CAMELIDO EN 10 MUNICIPIOS DEL DPTO. DE ORURO",
+    "presupuestoVigente": 518379,
+    "ejecucion": 21794.13,
+    "porcentaje": 4.2042848958001775
+  },
+  {
+    "id": 37,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "APOYO A LA PRODUCCION DE HORTALIZAS CON SOBERANIA ALIMENTARIA EN 10 MUNICIPIOS DEL DPTO. DE ORURO",
+    "presupuestoVigente": 513198,
+    "ejecucion": 44472.65,
+    "porcentaje": 8.665787863553637
+  },
+  {
+    "id": 38,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "CONSER. Y MANEJO DE LA DIVERSIDAD GENETICA OVINA EN 4 MUNICIPIOS DEL DPTO. DE ORURO",
+    "presupuestoVigente": 498864,
+    "ejecucion": 53317.81,
+    "porcentaje": 10.687844783347765
+  },
+  {
+    "id": 39,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "FORTAL. LA PRODUCCION LECHERA DEL GANADO BOVINO EN 8 MUNICIPIOS DEL DPTO. DE ORURO",
+    "presupuestoVigente": 449280,
+    "ejecucion": 37152.18,
+    "porcentaje": 8.269270833333334
+  },
+  {
+    "id": 40,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "FORTAL. LA PRODUCCION ORGANICA DE GRANOS ANDINOS EN 10 MUNICIPIOS DEL DPTO. DE ORURO",
+    "presupuestoVigente": 525310,
+    "ejecucion": 52257.19,
+    "porcentaje": 9.947876491976167
+  },
+  {
+    "id": 41,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO PRODUCTIVO E INDUSTRIA",
+    "programa": "CONST. PARQUE INDUSTRIAL DPTO DE ORURO",
+    "presupuestoVigente": 1046460,
+    "ejecucion": 1046460,
+    "porcentaje": 100
+  },
+  {
+    "id": 42,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "CONST. CENTRO TRANSITORIO CRECER  ORURO",
+    "presupuestoVigente": 103600,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 43,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "CONST. CENTRO TECNOLOGICO PARA HOGARES Y CENTROS DE ACOGIDA  ORURO",
+    "presupuestoVigente": 7850,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 44,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "CONST. CENTRO DE REINTEGRACION SOCIAL \"RENACER\" ORURO",
+    "presupuestoVigente": 9000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 45,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE DESARROLLO SOCIAL Y SEGURIDAD ALIMENTARIA",
+    "programa": "MEJ. Y REHABILITACIÓN DEL SISTEMA DE ILUMINACIÓN DEL ESTADIO JESÚS BERMÚDEZ TORRES -  MUNICIPIO ORURO",
+    "presupuestoVigente": 8750000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 46,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA CUENCA DEL RIO CARANGAS PROV. MEJILLONES",
+    "presupuestoVigente": 45000,
+    "ejecucion": 44500,
+    "porcentaje": 98.88888888888889
+  },
+  {
+    "id": 47,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA DEL RIO  TURCO",
+    "presupuestoVigente": 1348500,
+    "ejecucion": 951459.69,
+    "porcentaje": 70.55689210233592
+  },
+  {
+    "id": 48,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO DEL SISTEMA ACUIFERO CHALLAPAMPA, PARIA Y COCHIRAYA",
+    "presupuestoVigente": 767655.82,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 49,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO SOSTENIBLE DE LOS TOTORALES  EN LOS LAGOS URU URU Y POOPO",
+    "presupuestoVigente": 500244,
+    "ejecucion": 48147.86,
+    "porcentaje": 9.624875060970247
+  },
+  {
+    "id": 50,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO VENTA Y MEDIA",
+    "presupuestoVigente": 7500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 51,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO MIUTA",
+    "presupuestoVigente": 7500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 52,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO SAN JUAN DE SORA SORA",
+    "presupuestoVigente": 7500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 53,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO KHONCHU MAYU",
+    "presupuestoVigente": 7500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 54,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO JAKKE JIHUATA",
+    "presupuestoVigente": 7500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 55,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO HUANUNI",
+    "presupuestoVigente": 7500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 56,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO PARINA PATA",
+    "presupuestoVigente": 7500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 57,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO SANTA FE",
+    "presupuestoVigente": 7500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 58,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO BANDERANI",
+    "presupuestoVigente": 54000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 59,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LAS MICROCUENCAS DE LOS RIOS CHUSUTA Y POTOSKOLLO",
+    "presupuestoVigente": 54000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 60,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO PARIA PALCA CASTILLA HUMA",
+    "presupuestoVigente": 54000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 61,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO PANANOSA",
+    "presupuestoVigente": 54000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 62,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "MANEJO INTEGRAL DE LA MICROCUENCA  DEL RIO ANTEQUERA",
+    "presupuestoVigente": 54000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 63,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "FORTAL. EL MANEJO COMUNITARIO SOSTENIBLE DE LA VICUñA  EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 458469,
+    "ejecucion": 68730.98,
+    "porcentaje": 14.991412723651981
+  },
+  {
+    "id": 64,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "PRESER. DE SISTEMAS DE VIDA EN SUELOS DESCERTIFICADOS EN 10 MUNICIPIOS DEL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 523559,
+    "ejecucion": 51053.15,
+    "porcentaje": 9.751174175212345
+  },
+  {
+    "id": 65,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "REPOS. DEL MANTO VEGETAL DE PRADERAS NATIVAS  EN 10 MUNICIPIOS DEL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 522462,
+    "ejecucion": 57384.33,
+    "porcentaje": 10.983445686002044
+  },
+  {
+    "id": 66,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MEDIO AMBIENTE AGUA Y MADRE TIERRA",
+    "programa": "IMPLEM. DE LA COBERTURA FORESTAL  EN 6 MUNICIPIOS DEL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 587691,
+    "ejecucion": 43330.06,
+    "porcentaje": 7.372932374325964
+  },
+  {
+    "id": 67,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE MINERIA, METALURGIA Y RECURSOS ENERGETICOS",
+    "programa": "CONST. PLANTA INDUSTRIAL ACERIA DEPTO. DE ORURO",
+    "presupuestoVigente": 297000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 68,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. COMPLEJO PATRIMONIAL CULTURAL ORURO – GAD ORURO",
+    "presupuestoVigente": 30077321,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 69,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASF. EL CHORO PUENTE CARACILA EL CHORO",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 70,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. ELECTRIFICACION PROV. CERCADO FASE II",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 71,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO CARACOLLO CAÑOHUMA",
+    "presupuestoVigente": 97974677.41,
+    "ejecucion": 2009258.9,
+    "porcentaje": 2.0507940961027553
+  },
+  {
+    "id": 72,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. ASFALTADO CRUCE SAN MIGUEL SECTOR JACHUYO (SORACACHI)",
+    "presupuestoVigente": 345814,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 73,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASFALTADO CRUCE VENTILLA MOJOMPAMPA LMTE. DEPTAL. POTOSI",
+    "presupuestoVigente": 100000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 74,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASFALTADO AVAROA CHULLUNQUIANI",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 75,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. ELECTRIFICACION PROVINCIA LADISLAO CABRERA FASE III",
+    "presupuestoVigente": 464007,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 76,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO HUACHACALLA-CRUZ DE MACHACAMARCA-QUEAQUEANI-JULO",
+    "presupuestoVigente": 700000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 77,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. ELECTRIFICACION PROV. SAUCARI FASE II",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 78,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "MEJ. CONVERSION LINEA MONOFASICA A TRIFASICA MUNICIPIO QUILLACAS",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 79,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. ELECTRIFICACION PROVINCIA LITORAL FASE II",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 80,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. TEATRO NACIONAL ORURO",
+    "presupuestoVigente": 0,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 81,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "IMPLEM. DEL SISTEMA DE PREVENCION CONTRA INUNDACIONES EN EL RIO DESAGUADERO DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 8630122.19,
+    "ejecucion": 50546.91,
+    "porcentaje": 0.5857032946598407
+  },
+  {
+    "id": 82,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "MEJ. CONVERSION AMPLIACION LINEA MONOFASICA A TRAFASICA  PROV NOR CARANGAS",
+    "presupuestoVigente": 100000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 83,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. C/ASF.  CAMINO PAZñA-TOTORAL-CRUCE PAMPITAS",
+    "presupuestoVigente": 91956,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 84,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. ELECTRIFICACION  COMUNIDADES PROVINCIA TOTORA",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 85,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. UNIDAD EDUCATIVA AYACUCHO MUNICIPIO ORURO",
+    "presupuestoVigente": 24000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 86,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "MEJ. CAM. ASFALTADO  SANTIAGO DE HUARI - CONDO - APACHETA",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 87,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. PUENTES VEHICULARES  TRAMO CONDO VILA APACHETA",
+    "presupuestoVigente": 46250,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 88,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ANCACATO - OCURI - CUCHILLANI LIMITE DEPARTAMENTAL POTOSI",
+    "presupuestoVigente": 115630,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 89,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO CIRCUITO TURÍSTICO NOR OCCIDENTE",
+    "presupuestoVigente": 155500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 90,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO JAPO-SANTA FE-MOROCOCALA",
+    "presupuestoVigente": 44800,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 91,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASFALTADO  HUACHACALLA  - ESCARA -  CHIPAYA",
+    "presupuestoVigente": 140000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 92,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASFALTADO AVAROA - UCUMASI",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 93,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASFALTADO CARACOLLO (F-1)-SOLEDAD-ANCOTANGA (F-31)",
+    "presupuestoVigente": 750000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 94,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "REHAB. CAMINO ASFALTADO CIRCUITO LAGO POOPO  TRAMO CONDO K (F-30)-COPACABANITA (F-12)",
+    "presupuestoVigente": 150000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 95,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASFALTADO CR F12 QUISIÑOCA - UNTAVI - SANTIAGO DE ANDAMARCA",
+    "presupuestoVigente": 0,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 96,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASFALTADO SABAYA - COIPASA",
+    "presupuestoVigente": 247000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 97,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. COMPLEJO PATRIMONIAL CULTURAL  ORURO",
+    "presupuestoVigente": 5200000,
+    "ejecucion": 2602002.12,
+    "porcentaje": 50.038502307692305
+  },
+  {
+    "id": 98,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CANCHAS DE FUTBOL DE CESPED SINTETICO  EN MUNICIPIOS DEL DPTO DE ORURO",
+    "presupuestoVigente": 5607412.88,
+    "ejecucion": 3942807.96,
+    "porcentaje": 70.31420807379534
+  },
+  {
+    "id": 99,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CASA DE ACOGIDA Y REFUGIO TEMPORAL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 6462832.13,
+    "ejecucion": 839819.9,
+    "porcentaje": 12.994611079276169
+  },
+  {
+    "id": 100,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CENTRO DE EDUCACIÓN ESPECIAL GHISLAIN DUBE - MUNICIPIO ORURO",
+    "presupuestoVigente": 3120991.57,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 101,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. UNIDAD EDUCATIVA ORURO SECUNDARIA - MUNICIPIO ORURO",
+    "presupuestoVigente": 9488787.92,
+    "ejecucion": 534274.92,
+    "porcentaje": 5.630591857510923
+  },
+  {
+    "id": 102,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. OFICINAS ADMINISTRATIVAS DEL SERVICIO DEPARTAMENTAL DE SALUD ORURO",
+    "presupuestoVigente": 350000,
+    "ejecucion": 324085.13,
+    "porcentaje": 92.59575142857143
+  },
+  {
+    "id": 103,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. HOSPITAL DE ESPECIALIDADES DE ALTA COMPLEJIDAD MEDICA COMPLEJO HOSPITALARIO SAN JUAN DE DIOS  ORURO",
+    "presupuestoVigente": 7323399.97,
+    "ejecucion": 2214498.07,
+    "porcentaje": 30.238660718677092
+  },
+  {
+    "id": 104,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. ELECTRIFICACIÓN COMUNIDADES PROVINCIA AVAROA",
+    "presupuestoVigente": 51600,
+    "ejecucion": 51600,
+    "porcentaje": 100
+  },
+  {
+    "id": 105,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. PUENTES VEHICULARES RUTA F12-LA RIVERA-TODOS SANTOS",
+    "presupuestoVigente": 190000,
+    "ejecucion": 47425,
+    "porcentaje": 24.960526315789473
+  },
+  {
+    "id": 106,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "AMPL. Y EQUIPAMIENTO HOSPITAL DE TERCER NIVEL DE ORURO",
+    "presupuestoVigente": 137350049,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 107,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. INSTITUTO SUPERIOR TECNOLOGICO AGROINDUSTRIAL \"SAJAMA\" - MUNICIPIO CORQUE",
+    "presupuestoVigente": 3074711.46,
+    "ejecucion": 625423.61,
+    "porcentaje": 20.340887856839743
+  },
+  {
+    "id": 108,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. INSTITUTO TECNOLOGICO SUPERIOR MARKA QAQACHACA –  MUNICIPIO CHALLAPATA",
+    "presupuestoVigente": 6890533.33,
+    "ejecucion": 351327.81,
+    "porcentaje": 5.098702715367317
+  },
+  {
+    "id": 109,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. CAMINO ASFALTADO LA RIVERA - CARANGAS - MANTOS",
+    "presupuestoVigente": 233100,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 110,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. OBRAS DE CONTROL HIDRAULICO EN EL BRAZO IZQUIERDO DEL RIO DESAGUADERO DPTO. ORURO",
+    "presupuestoVigente": 763289,
+    "ejecucion": 88383.27,
+    "porcentaje": 11.579266830781002
+  },
+  {
+    "id": 111,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. Y PERFORACION DE POZOS PROFUNDOS PARA EL USO DE RECURSOS HIDRICOS  EN EL DEPARTAMENTO DE ORURO",
+    "presupuestoVigente": 1544951,
+    "ejecucion": 269345.66,
+    "porcentaje": 17.43392897250463
+  },
+  {
+    "id": 112,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "CONST. OBRAS COMPLEMENTARIAS COMPLEJO PATRIMONIAL CULTURAL ORURO",
+    "presupuestoVigente": 7322194.49,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 113,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "MEJ. C/ASF. CRUCE RT F12 OBRAJES TOLAPALCA LIMTE DEPTAL. CBBA.",
+    "presupuestoVigente": 555148,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 114,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "MEJ. C/ASF. CAM. S. ANDAMARCA-B. ANDAMARCA-S. MARTIN-CR.RTA. D455",
+    "presupuestoVigente": 500000,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 115,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE OBRAS PUBLICAS",
+    "programa": "RESTAU. E IMPLEMENTACION TEATRO PALAIS CONCERT",
+    "presupuestoVigente": 5497036.54,
+    "ejecucion": 1672808.24,
+    "porcentaje": 30.43109187700615
+  },
+  {
+    "id": 116,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE PLANIFICACION DEL DESARROLLO",
+    "programa": "CONST. CANCHAS DE FUTBOL CON CESPED SINTETICO DPTO DE ORURO",
+    "presupuestoVigente": 1418500,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 117,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE PLANIFICACION DEL DESARROLLO",
+    "programa": "IMPLEM. PROGRAMA DE INVERSION PUBLICA MULTISECTORIAL GOBIERNO AUTONOMO DEPARTAMENTAL DE ORURO",
+    "presupuestoVigente": 42315.9,
+    "ejecucion": 0,
+    "porcentaje": 0
+  },
+  {
+    "id": 118,
+    "tipo": "Proyecto",
+    "unidadEjecutora": "SECRETARIA DEPARTAMENTAL DE PLANIFICACION DEL DESARROLLO",
+    "programa": "FORTAL. A MUNICIPIOS Y RELEVAMIENTO DE INFORMACION ESTADISTICA DEL GOBIERNO AUTONOMO  DEPARTAMENTAL DE ORURO",
+    "presupuestoVigente": 929516.1,
+    "ejecucion": 288,
+    "porcentaje": 0.030983863539319006
   }
 ]
