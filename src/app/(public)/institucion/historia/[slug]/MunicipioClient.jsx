@@ -24,8 +24,9 @@ const TABS = [
   { id: 'distancias', icon: '📍', label: 'Distancias' },
 ];
 
-export default function MunicipioClient({ mun }) {
+export default function MunicipioClient({ mun, allMunicipios }) {
   const [activeTab, setActiveTab] = useState('intro');
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <div className={styles.page}>
@@ -365,10 +366,39 @@ export default function MunicipioClient({ mun }) {
           </div>
         )}
 
-        {/* Volver atrás */}
-        <a href="/institucion/historia" className={styles.backLink}>
-          ← Ver todos los municipios de Oruro
-        </a>
+        {/* Volver atrás y Carrusel */}
+        <div className={styles.carouselContainer}>
+          <div className={styles.carouselHeader}>
+            <h2 className={styles.carouselTitle}>Explorar otros Municipios</h2>
+            <input 
+              type="text" 
+              placeholder="Buscar municipio..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className={styles.carouselSearch}
+            />
+          </div>
+          
+          <div className={styles.carouselWrapper}>
+            {allMunicipios && allMunicipios
+              .filter(m => m.slug !== mun.slug && m.nombre.toLowerCase().includes(searchTerm.toLowerCase()))
+              .map(m => (
+              <a href={`/institucion/historia/${m.slug}`} key={m.slug} className={styles.carouselItem}>
+                <div className={styles.carouselItemIcon}>🏛️</div>
+                <div className={styles.carouselItemName}>{m.nombre}</div>
+                <div className={styles.carouselItemProv}>Prov. {m.provincia}</div>
+              </a>
+            ))}
+            
+            {allMunicipios && allMunicipios.filter(m => m.slug !== mun.slug && m.nombre.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 && (
+              <p style={{ padding: '1rem', color: 'var(--color-text-muted)' }}>No se encontraron municipios con ese nombre.</p>
+            )}
+          </div>
+
+          <a href="/institucion/historia" className={styles.backLink} style={{ marginTop: '2rem' }}>
+            ← Ver todos los municipios del Departamento
+          </a>
+        </div>
 
       </div>
     </div>

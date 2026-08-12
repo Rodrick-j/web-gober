@@ -50,6 +50,7 @@ const navItems = [
       { label: 'Auditoria Interna', Icon: ClipboardList, href: '/auditoria' },
     ],
   },
+  { label: 'Noticias', Icon: Newspaper, href: '/noticias' },
   {
     label: 'Gaceta Oficial',
     Icon: ScrollText,
@@ -61,7 +62,6 @@ const navItems = [
       { label: 'Resoluciones Administrativas', Icon: Pin, href: '/gaceta/resoluciones' },
     ],
   },
-  { label: 'Noticias', Icon: Newspaper, href: '/noticias' },
 ];
 
 const getSecretariaIcon = (sec) => {
@@ -183,7 +183,7 @@ export default function Navbar() {
       <div className={styles.topBar}>
         <div className={styles.topBarInner}>
           <span className={styles.topBarTitle}>
-            🇧🇴 Bolivia — <span className={styles.topBarLong}>Departamento de Oruro</span><span className={styles.topBarShort}>Oruro</span>
+            🇧🇴 Bolivia — <span className={styles.topBarLong}>Departamento de Oruro</span><span className={styles.topBarShort}> Oruro</span>
           </span>
           <div className={styles.topBarLinks}>
             {currentDateTime && (
@@ -216,13 +216,6 @@ export default function Navbar() {
           <Link 
             href="/" 
             className={styles.logo}
-            style={{ 
-              display: 'block', 
-              width: 290, 
-              height: 68,
-              background: 'transparent',
-              position: 'relative'
-            }}
           >
             <motion.div
               animate={{ scaleX: [1, 1, 0, 1, 1, 0, 1] }}

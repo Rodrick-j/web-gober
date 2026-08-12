@@ -50,7 +50,7 @@ export default function HistoriaIndexClient() {
 
           <div className={styles.heroTop}>
             <div>
-              <h1 className={styles.heroTitle}>Municipios de Oruro</h1>
+              <h1 className={styles.heroTitle}>DATOS DE MUNICIPIOS</h1>
               <p className={styles.heroSubtitle}>
                 Explora los {municipios.length} municipios del Departamento de Oruro: historia, geografía, gobierno y datos oficiales.
               </p>

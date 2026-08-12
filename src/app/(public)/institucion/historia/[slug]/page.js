@@ -22,5 +22,5 @@ export default async function MunicipioPage({ params }) {
   const mun = getMunicipio(slug);
   if (!mun) notFound();
 
-  return <MunicipioClient mun={mun} />;
+  return <MunicipioClient mun={mun} allMunicipios={municipios} />;
 }

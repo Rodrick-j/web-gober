@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail } from 'lucide-react';
+import { CloudSun, X } from 'lucide-react';
+import ClimaWidget from '@/components/ClimaWidget/ClimaWidget';
 import styles from './ScrollToTop.module.css';
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isClimaOpen, setIsClimaOpen] = useState(false);
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -33,19 +35,20 @@ export default function ScrollToTop() {
 
   return (
     <div className={styles.floatingContainer}>
-      <motion.a
-        href="mailto:contacto@oruro.gob.bo"
-        className={styles.emailBtn}
-        aria-label="Correo Institucional"
+      <motion.button
+        type="button"
+        onClick={() => setIsClimaOpen(true)}
+        className={styles.weatherBtn}
+        aria-label="Clima en tiempo real"
         whileHover={{ scale: 1.12 }}
         whileTap={{ scale: 0.92 }}
         initial={{ opacity: 0, scale: 0.3 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.35, type: 'spring', stiffness: 260, damping: 20 }}
       >
-        <Mail size={24} className={styles.icon} strokeWidth={2.5} />
-        <span className={styles.tooltip}>Correo Institucional</span>
-      </motion.a>
+        <CloudSun size={24} className={styles.icon} strokeWidth={2.5} />
+        <span className={styles.tooltip}>Clima Oruro</span>
+      </motion.button>
 
       <AnimatePresence>
         {isVisible && (
@@ -75,6 +78,35 @@ export default function ScrollToTop() {
             </svg>
             <span className={styles.tooltip}>Volver arriba</span>
           </motion.button>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isClimaOpen && (
+          <motion.div 
+            className={styles.climaModalOverlay} 
+            onClick={() => setIsClimaOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div 
+              className={styles.climaModalContent}
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 50, scale: 0.9 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            >
+              <button 
+                className={styles.closeClimaBtn}
+                onClick={() => setIsClimaOpen(false)}
+              >
+                <X size={24} />
+              </button>
+              <ClimaWidget />
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

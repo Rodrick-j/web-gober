@@ -882,3 +882,95 @@
     opacity: 0.8;
   }
 }
+
+/* ========================================================
+   CARRUSEL DE MUNICIPIOS (Detalle)
+   ======================================================== */
+.carouselContainer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+.carouselTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin: 0;
+}
+.carouselHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.carouselSearch {
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  width: 100%;
+  max-width: 300px;
+  background: white;
+  transition: all 0.2s ease;
+}
+.carouselSearch:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(156,7,32,0.1);
+}
+.carouselWrapper {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold) transparent;
+}
+.carouselWrapper::-webkit-scrollbar {
+  height: 8px;
+}
+.carouselWrapper::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.05);
+  border-radius: 10px;
+}
+.carouselWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--color-gold);
+  border-radius: 10px;
+}
+.carouselItem {
+  scroll-snap-align: start;
+  flex: 0 0 200px; /* Contenedor más pequeño */
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-decoration: none;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.carouselItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border-color: var(--color-gold);
+}
+.carouselItemIcon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+.carouselItemName {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 0.25rem;
+}
+.carouselItemProv {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}

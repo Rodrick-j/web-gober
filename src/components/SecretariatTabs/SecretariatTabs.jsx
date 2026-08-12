@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import PlanificacionSection from '@/app/(public)/secretarias/[slug]/PlanificacionSection';
-import ClimaWidget from '@/components/ClimaWidget/ClimaWidget';
 import { secretariasContactData } from '@/data/secretariasContactData';
 import styles from './SecretariatTabs.module.css';
 
@@ -13,6 +12,29 @@ export default function SecretariatTabs({ sec, slug }) {
   const hasPlanificacion = slug.includes('planificacion');
   const contactOverride = secretariasContactData[slug];
 
+  const getAbreviatura = (sec) => {
+    if (sec.sigla) return sec.sigla.toUpperCase();
+    
+    // Forzar lectura del nombre completo
+    const nombreFull = sec.nombre || sec.nombre_corto || '';
+    
+    const skipWords = ['de', 'y', 'la', 'el', 'las', 'los', 'en', 'para', 'del'];
+    let abr = nombreFull.split(' ')
+      .filter(w => w.trim() && !skipWords.includes(w.toLowerCase()))
+      .map(w => w.charAt(0).toUpperCase())
+      .join('.');
+      
+    // Si la sigla no incluye S.D. (Secretaría Departamental), se lo añadimos
+    if (abr && !abr.startsWith('S.D.')) {
+      // Remover posibles 'S.' o 'D.' sueltos al inicio si estaban mal formados
+      abr = abr.replace(/^(S\.|D\.|S\.D\.)+/, '');
+      abr = `S.D.${abr}`;
+    }
+    
+    return abr ? `${abr}.` : 'LA SECRETARÍA';
+  };
+  const siglaText = getAbreviatura(sec);
+
   return (
     <div className={styles.tabsContainer}>
       <div className={styles.tabButtons}>
@@ -21,7 +43,7 @@ export default function SecretariatTabs({ sec, slug }) {
           onClick={() => setActiveTab('acerca')}
           style={{ '--acento': sec.color_acento || '#8b0000' }}
         >
-          Acerca de nosotros
+          ACERCA DE {siglaText}
         </button>
         <button 
           className={`${styles.tabBtn} ${activeTab === 'autoridad' ? styles.active : ''}`}
@@ -46,13 +68,6 @@ export default function SecretariatTabs({ sec, slug }) {
             Planificación Departamental
           </button>
         )}
-        <button 
-          className={`${styles.tabBtn} ${activeTab === 'clima' ? styles.active : ''}`}
-          onClick={() => setActiveTab('clima')}
-          style={{ '--acento': sec.color_acento || '#8b0000' }}
-        >
-          Monitoreo Climatológico
-        </button>
       </div>
 
       <div className={styles.tabContent}>
@@ -60,7 +75,7 @@ export default function SecretariatTabs({ sec, slug }) {
           <div className={styles.contentBlock}>
             {sec.descripcion && (
               <>
-                <h2 className={styles.sectionTitle}>Acerca de nosotros</h2>
+                <h2 className={styles.sectionTitle}>ACERCA DE {siglaText}</h2>
                 <div className={styles.textBody} style={{ fontSize: '1.2rem', color: '#222' }}>
                   {sec.descripcion}
                 </div>
@@ -78,11 +93,6 @@ export default function SecretariatTabs({ sec, slug }) {
           </div>
         )}
 
-        {activeTab === 'clima' && (
-          <div className={styles.contentBlock}>
-            <ClimaWidget />
-          </div>
-        )}
 
         {activeTab === 'autoridad' && (
           <div className={styles.contentBlock}>

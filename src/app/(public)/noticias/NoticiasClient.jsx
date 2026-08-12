@@ -186,17 +186,6 @@ export default function NoticiasClient() {
           </aside>
         </div>
 
-        {/* Banner de Newsletter */}
-        <div className={styles.newsletterBanner}>
-          <div className={styles.newsletterText}>
-            <h3>Mantente Informado</h3>
-            <p>Recibe los comunicados urgentes y noticias más importantes directamente en tu correo electrónico o WhatsApp.</p>
-          </div>
-          <form className={styles.newsletterForm} action="/noticias">
-            <input type="email" placeholder="Tu correo o número celular..." required />
-            <button type="submit">Suscribirme</button>
-          </form>
-        </div>
       </div>
     </main>
   );
