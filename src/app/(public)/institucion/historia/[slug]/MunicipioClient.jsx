@@ -15,7 +15,7 @@ const ChakanaIcon = ({ className }) => (
 );
 
 const TABS = [
-  { id: 'intro',      icon: '🏛️', label: 'El Municipio' },
+  { id: 'intro',      icon: '🏛️', label: 'Datos de Municipio' },
   { id: 'gobierno',   icon: '🏢', label: 'Gobierno' },
   { id: 'demografia', icon: '👥', label: 'Demografía' },
   { id: 'territorio', icon: '🌄', label: 'Territorio' },
@@ -41,7 +41,7 @@ export default function MunicipioClient({ mun }) {
           <nav className={styles.heroBreadcrumb}>
             <a href="/">Inicio</a><span>›</span>
             <a href="/institucion">Institución</a><span>›</span>
-            <a href="/institucion/historia">Historia</a><span>›</span>
+            <a href="/institucion/historia">Datos de Municipio</a><span>›</span>
             <span style={{ color: 'rgba(255,255,255,0.9)' }}>{mun.nombre}</span>
           </nav>
 
@@ -60,7 +60,7 @@ export default function MunicipioClient({ mun }) {
 
             <div className={styles.heroStats}>
               <div className={styles.heroStat}>
-                <span className={styles.heroStatValue}>{mun.altitud.toLocaleString()}m</span>
+                <span className={styles.heroStatValue}>{mun.altitud.toLocaleString('en-US')}m</span>
                 <span className={styles.heroStatLabel}>Altitud</span>
               </div>
               {mun.poblacion !== 'N/D' && (
@@ -104,7 +104,7 @@ export default function MunicipioClient({ mun }) {
           <div key="intro" className={styles.tabPanel}>
             <div className={styles.panelHeader}>
               <div className={styles.panelHeaderIcon}>🏛️</div>
-              <h2 className={styles.panelHeaderTitle}>El Municipio de {mun.nombre}</h2>
+              <h2 className={styles.panelHeaderTitle}>Datos del Municipio de {mun.nombre}</h2>
             </div>
             <div className={styles.panelBody}>
               <div className={styles.panelGrid2}>
@@ -135,7 +135,7 @@ export default function MunicipioClient({ mun }) {
                     </div>
                     <div className={styles.statCard}>
                       <span className={styles.statCardLabel}>País</span>
-                      <span className={styles.statCardValue}>Bolivia 🇧🇴</span>
+                      <span className={styles.statCardValue}>Bolivia</span>
                     </div>
                     <div className={styles.statCard}>
                       <span className={styles.statCardLabel}>Código municipal</span>
@@ -239,7 +239,7 @@ export default function MunicipioClient({ mun }) {
                   <div className={styles.panelGrid2} style={{ gap: '0.65rem', marginBottom: '1.25rem' }}>
                     <div className={styles.statCard}>
                       <span className={styles.statCardLabel}>Altitud</span>
-                      <span className={styles.statCardValue}>{mun.altitud.toLocaleString()} m</span>
+                      <span className={styles.statCardValue}>{mun.altitud.toLocaleString('en-US')} m</span>
                       <span className={styles.statCardSub}>Sobre el nivel del mar</span>
                     </div>
                     <div className={styles.statCard}>

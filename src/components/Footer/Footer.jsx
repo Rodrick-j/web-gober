@@ -116,7 +116,7 @@ export default async function Footer() {
           <ul>
             {[
               { label: 'Historia de la Institución', href: '/institucion/historia-institucion' },
-              { label: 'Historia', href: '/institucion/historia' },
+              { label: 'Datos de Municipio', href: '/institucion/historia' },
               { label: 'Organigrama', href: '/institucion/organigrama' },
               { label: 'Transparencia', href: '/transparencia' },
             ].map((item) => (

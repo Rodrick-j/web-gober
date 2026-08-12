@@ -53,6 +53,12 @@ export default function ClimaWidget() {
       </div>
 
       <div className={styles.iframeWrapper}>
+        <div className={styles.overlayTopLeft}>
+          <img src="/imagotipo_gador_2026.png" alt="Gobernación de Oruro" className={styles.overlayLogo} />
+        </div>
+        <div className={styles.overlayTopRight}>
+          <img src="/logo-gador.png" alt="Escudo" className={styles.overlayLogo} />
+        </div>
         <iframe 
           src={ventuskyUrl}
           className={styles.iframe}

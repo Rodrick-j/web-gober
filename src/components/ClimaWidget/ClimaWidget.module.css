@@ -62,3 +62,45 @@
     height: 400px;
   }
 }
+
+.overlayTopLeft {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 250px;
+  height: 55px;
+  background: rgba(255, 255, 255, 0.2); /* Mucho más transparente */
+  backdrop-filter: blur(12px); /* Un poco más de desenfoque para tapar el logo de atrás sin ser un bloque blanco */
+  z-index: 10;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  pointer-events: none;
+}
+
+.overlayLogo {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.overlayTopRight {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 55px;
+  height: 55px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+}

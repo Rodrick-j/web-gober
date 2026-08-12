@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ResponsivePie } from '@nivo/pie';
 import { ResponsiveBar } from '@nivo/bar';
-import { Wallet, PieChart, BarChart2, TrendingUp, Building2, Shield, Activity, Map, Users, MapPin, ChevronDown, Search } from 'lucide-react';
+import { Wallet, PieChart, BarChart2, TrendingUp, Building2, Shield, Activity, Map, Users, MapPin, ChevronDown, Search, X } from 'lucide-react';
 import GeoportalPoa from './GeoportalPoa';
 import { municipalitiesData, municipalitiesList } from './municipalitiesData';
 import budgetsData from './municipalitiesBudgets.json';
@@ -23,6 +23,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -118,7 +119,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
 
     const programas = programasList
       .sort((a, b) => b.value - a.value)
-      .slice(0, 10) // Show top 10 for pie chart legibility
+      // Removed slice to allow "Ver más" to show everything
       .map((p, idx) => ({
         ...p,
         label: p.label,
@@ -566,51 +567,82 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
             {/* Highlights Sidebar */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', minWidth: '0' }}>
               <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#1a1a2e', marginBottom: '0.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <TrendingUp size={18} color="#9c0720" /> Top 5 Mayor Asignación ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
+                <TrendingUp size={18} color="#9c0720" /> Top {isMobile ? 12 : 5} Mayor Asignación ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
               </h4>
-              {(activeView === 'gastos' ? currentData.gruposGasto : currentData.programas)
-                .sort((a, b) => b.value - a.value)
-                .slice(0, isMobile ? 12 : 5)
-                .map((item, idx) => (
-                  <motion.div 
-                    key={item.id || item.grupo}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.08, type: 'spring', stiffness: 100 }}
-                    style={{ 
-                      background: '#ffffff',
-                      border: '1px solid #eaeaea', 
-                      borderLeft: `4px solid ${item.color}`,
-                      borderRadius: '8px', 
-                      padding: '0.4rem 0.6rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
-                      transition: 'transform 0.2s, box-shadow 0.2s'
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.05)' }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)' }}
-                  >
-                    <div style={{ background: '#f8f9fa', padding: '0.4rem', borderRadius: '6px', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      {item.icon ? <item.icon size={16} color={item.color} /> : <TrendingUp size={16} color={item.color} />}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <p style={{ margin: 0, fontSize: '0.75rem', color: '#1a1a2e', fontWeight: '700', lineHeight: 1.15 }}>
-                        {item.label || item.descripcion}
-                      </p>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.3rem' }}>
-                        <p style={{ margin: 0, fontSize: '0.95rem', color: item.color, fontWeight: '900' }}>
-                          {((item.value / currentData.totalPresupuesto) * 100).toFixed(1)}%
-                        </p>
-                        <p style={{ margin: 0, fontSize: '0.8rem', fontFamily: 'monospace', color: '#0f172a', fontWeight: '800', background: '#f1f5f9', padding: '0.15rem 0.45rem', borderRadius: '4px', letterSpacing: '-0.2px' }}>
-                          {formatCurrency(item.value)}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))
-              }
+              {(() => {
+                const itemsList = (activeView === 'gastos' ? currentData.gruposGasto : currentData.programas).sort((a, b) => b.value - a.value);
+                const limit = isMobile ? 12 : 5;
+                const visibleItems = itemsList.slice(0, limit);
+                
+                return (
+                  <>
+                    {visibleItems.map((item, idx) => (
+                      <motion.div 
+                        key={item.id || item.grupo}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05, type: 'spring', stiffness: 100 }}
+                        style={{ 
+                          background: '#ffffff',
+                          border: '1px solid #eaeaea', 
+                          borderLeft: `4px solid ${item.color}`,
+                          borderRadius: '8px', 
+                          padding: '0.4rem 0.6rem',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          boxShadow: '0 2px 6px rgba(0,0,0,0.02)',
+                          transition: 'transform 0.2s, box-shadow 0.2s'
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.05)' }}
+                        onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)' }}
+                      >
+                        <div style={{ background: '#f8f9fa', padding: '0.4rem', borderRadius: '6px', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          {item.icon ? <item.icon size={16} color={item.color} /> : <TrendingUp size={16} color={item.color} />}
+                        </div>
+                        <div style={{ flex: 1 }}>
+                          <p style={{ margin: 0, fontSize: '0.75rem', color: '#1a1a2e', fontWeight: '700', lineHeight: 1.15 }}>
+                            {item.label || item.descripcion}
+                          </p>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.3rem' }}>
+                            <p style={{ margin: 0, fontSize: '0.95rem', color: item.color, fontWeight: '900' }}>
+                              {((item.value / currentData.totalPresupuesto) * 100).toFixed(1)}%
+                            </p>
+                            <p style={{ margin: 0, fontSize: '0.8rem', fontFamily: 'monospace', color: '#0f172a', fontWeight: '800', background: '#f1f5f9', padding: '0.15rem 0.45rem', borderRadius: '4px', letterSpacing: '-0.2px' }}>
+                              {formatCurrency(item.value)}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                    {itemsList.length > limit && (
+                      <button
+                        onClick={() => setIsModalOpen(true)}
+                        style={{
+                          background: 'transparent',
+                          border: '1px solid #eaeaea',
+                          color: '#9c0720',
+                          padding: '0.6rem',
+                          borderRadius: '8px',
+                          fontWeight: '800',
+                          fontSize: '0.85rem',
+                          cursor: 'pointer',
+                          marginTop: '0.5rem',
+                          transition: 'all 0.2s',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '0.4rem'
+                        }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = '#ffefef'; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                      >
+                        Ver Todos ({itemsList.length - limit} más)
+                      </button>
+                    )}
+                  </>
+                );
+              })()}
             </div>
           </div>
         )}
@@ -670,6 +702,94 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
           );
         })()}
       </div>
+
+      {/* Modal para Ver Todos */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div style={{
+            position: 'fixed',
+            top: 0, left: 0, width: '100%', height: '100%',
+            zIndex: 999999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem'
+          }}>
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setIsModalOpen(false)}
+              style={{
+                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                background: 'rgba(0, 0, 0, 0.5)', backdropFilter: 'blur(4px)'
+              }}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              style={{
+                background: '#fff',
+                borderRadius: '16px',
+                width: '100%',
+                maxWidth: '600px',
+                maxHeight: '85vh',
+                display: 'flex',
+                flexDirection: 'column',
+                position: 'relative',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+              }}
+            >
+              <div style={{ padding: '1.5rem', borderBottom: '1px solid #eaeaea', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#1a1a2e', fontWeight: '800' }}>
+                  Todas las Asignaciones ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
+                </h3>
+                <button 
+                  onClick={() => setIsModalOpen(false)}
+                  style={{ background: '#f1f5f9', border: 'none', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: '#64748b' }}
+                >
+                  <X size={18} />
+                </button>
+              </div>
+              <div style={{ padding: '1.5rem', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                {(activeView === 'gastos' ? currentData.gruposGasto : currentData.programas)
+                  .sort((a, b) => b.value - a.value)
+                  .map((item, idx) => (
+                    <div 
+                      key={item.id || item.grupo}
+                      style={{ 
+                        background: '#ffffff',
+                        border: '1px solid #eaeaea', 
+                        borderLeft: `4px solid ${item.color}`,
+                        borderRadius: '8px', 
+                        padding: '0.6rem 0.8rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.8rem'
+                      }}
+                    >
+                      <div style={{ background: '#f8f9fa', padding: '0.5rem', borderRadius: '6px', border: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {item.icon ? <item.icon size={18} color={item.color} /> : <TrendingUp size={18} color={item.color} />}
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <p style={{ margin: 0, fontSize: '0.85rem', color: '#1a1a2e', fontWeight: '700', lineHeight: 1.2 }}>
+                          {item.label || item.descripcion}
+                        </p>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '0.3rem' }}>
+                          <p style={{ margin: 0, fontSize: '1rem', color: item.color, fontWeight: '900' }}>
+                            {((item.value / currentData.totalPresupuesto) * 100).toFixed(1)}%
+                          </p>
+                          <p style={{ margin: 0, fontSize: '0.85rem', fontFamily: 'monospace', color: '#0f172a', fontWeight: '800', background: '#f1f5f9', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
+                            {formatCurrency(item.value)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }

@@ -62,7 +62,7 @@ export default function HistoriaIndexClient() {
                 <span className={styles.heroStatLabel}>Municipios</span>
               </div>
               <div className={styles.heroStat}>
-                <span className={styles.heroStatValue}>10</span>
+                <span className={styles.heroStatValue}>16</span>
                 <span className={styles.heroStatLabel}>Provincias</span>
               </div>
               <div className={styles.heroStat}>
@@ -85,7 +85,7 @@ export default function HistoriaIndexClient() {
               <h2 className={styles.capitalTitle}>{capital.nombre}</h2>
               <p className={styles.capitalDesc}>{capital.descripcion}</p>
               <div className={styles.capitalStats}>
-                <span>{capital.altitud.toLocaleString()} m altitud</span>
+                <span>{capital.altitud.toLocaleString('en-US')} m altitud</span>
                 <span>·</span>
                 <span>{capital.poblacion} hab.</span>
                 <span>·</span>
@@ -114,23 +114,75 @@ export default function HistoriaIndexClient() {
         </div>
 
         {/* GRID DE MUNICIPIOS */}
-        <div className={styles.municipiosGrid}>
-          {filtered.filter(m => !m.esCapital).map((m) => (
-            <Link key={m.slug} href={`/institucion/historia/${m.slug}`} className={styles.municipioCard}>
-              <div className={styles.municipioCardTop}>
-                <span className={styles.municipioCardIcon}>🏘️</span>
-                <span className={styles.municipioProv}>{m.provincia}</span>
+        {(() => {
+          const isChakana = search === '' && filtered.length === 35;
+          if (isChakana) {
+            const nonCapitals = [...filtered.filter(m => !m.esCapital)];
+            const capital = filtered.find(m => m.esCapital);
+            const layoutStructure = [
+              'E', 'E', 'M', 'M', 'M', 'E', 'E',
+              'E', 'M', 'M', 'M', 'M', 'M', 'E',
+              'M', 'M', 'M', 'M', 'M', 'M', 'M',
+              'M', 'M', 'C', 'M', 'M',
+              'M', 'M', 'M', 'M', 'M', 'M', 'M',
+              'E', 'M', 'M', 'M', 'M', 'M', 'E',
+              'E', 'E', 'M', 'M', 'M', 'E', 'E'
+            ];
+
+            let nonCapIdx = 0;
+
+            return (
+              <div className={`${styles.municipiosGrid} ${styles.chakanaGrid}`}>
+                {layoutStructure.map((type, i) => {
+                  if (type === 'E') return <div key={`empty-${i}`} className={styles.emptySlot}></div>;
+                  if (type === 'C') {
+                    const m = capital;
+                    return (
+                      <Link key={m.slug} href={`/institucion/historia/${m.slug}`} className={`${styles.municipioCard} ${styles.chakanaCenter}`}>
+                        <ChakanaIcon className={styles.miniCardWatermark} />
+                        <span className={styles.capitalLabel}>Capital</span>
+                        <h3 className={styles.municipioNombre}>{m.nombre}</h3>
+                        {m.poblacion !== 'N/D' && <span className={styles.miniStats}>👥 {m.poblacion}</span>}
+                      </Link>
+                    );
+                  }
+                  if (type === 'M') {
+                    const m = nonCapitals[nonCapIdx++];
+                    return (
+                      <Link key={m.slug} href={`/institucion/historia/${m.slug}`} className={`${styles.municipioCard} ${styles.miniCard}`}>
+                        <ChakanaIcon className={styles.miniCardWatermark} />
+                        <h3 className={styles.municipioNombre}>{m.nombre}</h3>
+                        <p className={styles.municipioGentilicio}>{m.gentilicio}</p>
+                        {m.poblacion !== 'N/D' && <span className={styles.miniStats}>👥 {m.poblacion}</span>}
+                      </Link>
+                    );
+                  }
+                })}
               </div>
-              <h3 className={styles.municipioNombre}>{m.nombre}</h3>
-              <p className={styles.municipioGentilicio}>{m.gentilicio}</p>
-              <div className={styles.municipioStats}>
-                {m.altitud && <span>🏔️ {m.altitud.toLocaleString()} m</span>}
-                {m.poblacion !== 'N/D' && <span>👥 {m.poblacion}</span>}
-              </div>
-              <div className={styles.municipioArrow}>Ver más →</div>
-            </Link>
-          ))}
-        </div>
+            );
+          }
+
+          // GRID NORMAL DE BÚSQUEDA
+          return (
+            <div className={styles.municipiosGrid}>
+              {filtered.map((m) => (
+                <Link key={m.slug} href={`/institucion/historia/${m.slug}`} className={styles.municipioCard}>
+                  <div className={styles.municipioCardTop}>
+                    <span className={styles.municipioCardIcon}>🏘️</span>
+                    <span className={styles.municipioProv}>{m.provincia}</span>
+                  </div>
+                  <h3 className={styles.municipioNombre}>{m.nombre}</h3>
+                  <p className={styles.municipioGentilicio}>{m.gentilicio}</p>
+                  <div className={styles.municipioStats}>
+                    {m.altitud && <span>🏔️ {m.altitud.toLocaleString('en-US')} m</span>}
+                    {m.poblacion !== 'N/D' && <span>👥 {m.poblacion}</span>}
+                  </div>
+                  <div className={styles.municipioArrow}>Ver más →</div>
+                </Link>
+              ))}
+            </div>
+          );
+        })()}
 
         {filtered.length === 0 && (
           <div className={styles.noResults}>

@@ -10,7 +10,7 @@ import styles from './GlobalSearchModal.module.css';
 const staticSearchIndex = [
   { id: 'tramites', title: 'Trámites y Servicios Ciudadanos', desc: 'Guía de requisitos, personerías jurídicas y audiencias', category: 'Trámite', href: '/tramites', icon: '📋' },
   { id: 'gobernador', title: 'El Gobernador — Máxima Autoridad', desc: 'Biografía oficial, agenda y mensaje del Gobernador de Oruro', category: 'Institución', href: '/institucion/gobernador', icon: '👤' },
-  { id: 'historia', title: 'Historia del Departamento de Oruro', desc: 'Reseña histórica, símbolos patrios, provincias y cultura', category: 'Institución', href: '/institucion/historia', icon: '🏛️' },
+  { id: 'historia', title: 'Datos de Municipio', desc: 'Reseña histórica, símbolos patrios, provincias y cultura', category: 'Institución', href: '/institucion/historia', icon: '🏛️' },
   { id: 'leyes', title: 'Gaceta Oficial — Leyes Departamentales', desc: 'Archivo digital oficial de Leyes aprobadas por la Asamblea', category: 'Gaceta', href: '/gaceta/leyes', icon: '⚖️' },
   { id: 'decretos', title: 'Gaceta Oficial — Decretos Departamentales', desc: 'Decretos ejecutivos y normativas departamentales vigentes', category: 'Gaceta', href: '/gaceta/decretos-departamentales', icon: '📜' },
   { id: 'obras', title: 'Secretaría de Obras Públicas e Infraestructura', desc: 'Proyectos viales, caminos y desarrollo urbano departamental', category: 'Secretaría', href: '/secretarias/obras-publicas', icon: '🏗️' },

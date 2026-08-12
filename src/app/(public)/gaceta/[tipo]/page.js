@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import GacetaClient from './GacetaClient';
+import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackground';
 import styles from './gaceta.module.css';
 
 // Configuración de los tipos permitidos y su metadata
@@ -94,8 +95,7 @@ export default async function GacetaPage({ params }) {
 
   return (
     <>
-
-
+      <AnimatedBackground />
       <main className={styles.portalContainer}>
         {/* Header Dinámico Premium */}
         <div className="container">

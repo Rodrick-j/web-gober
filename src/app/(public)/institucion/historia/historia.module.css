@@ -753,6 +753,26 @@
   transition: gap 0.2s;
 }
 .backLink:hover { gap: 0.75rem; }
+/* SISTER CITIES */
+.sisterCities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.sisterCity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(156,7,32,0.03);
+  border: 1px solid rgba(156,7,32,0.1);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  white-space: nowrap;
+}
 
 /* ============= MOBILE ============= */
 @media (max-width: 768px) {
@@ -763,4 +783,102 @@
   .tabsWrapper { padding: 1.25rem 1rem; }
   .panelBody { padding: 1rem; }
   .dataTable th { width: 42%; font-size: 0.7rem; }
+}
+
+
+/* ================= CHAKANA GRID ================= */
+@media (min-width: 1024px) {
+  .chakanaGrid {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr) !important;
+    gap: 0.5rem !important; /* tight packing */
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+  
+  .emptySlot {
+    visibility: hidden;
+  }
+
+  .chakanaGrid .miniCard {
+    position: relative;
+    overflow: hidden;
+    padding: 1rem 0.5rem;
+    text-align: center;
+    justify-content: center;
+    min-height: 100px;
+    background: rgba(156, 7, 32, 0.45); /* Crimson transparente */
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+
+  .chakanaGrid .miniCard h3 {
+    font-size: 0.9rem;
+    margin: 0;
+  }
+  
+  .chakanaGrid .miniCard p {
+    font-size: 0.75rem;
+    margin: 0.2rem 0 0 0;
+    opacity: 0.7;
+  }
+
+  .chakanaGrid .chakanaCenter {
+    position: relative;
+    overflow: hidden;
+    grid-column: span 3;
+    background: rgba(220, 160, 20, 0.5); /* Dorado transparente */
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    text-align: center;
+    justify-content: center;
+    border: 2px solid rgba(220, 160, 20, 0.8);
+  }
+  
+  .chakanaGrid .chakanaCenter h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 900;
+  }
+  
+  .miniStats {
+    position: relative;
+    z-index: 2;
+    font-size: 0.7rem;
+    opacity: 0.85;
+    margin-top: 0.35rem;
+    font-weight: 600;
+  }
+  
+  .miniCardWatermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    opacity: 0.08;
+    color: #fff;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  .chakanaGrid .miniCard h3,
+  .chakanaGrid .miniCard p,
+  .chakanaGrid .chakanaCenter h3,
+  .chakanaGrid .chakanaCenter span {
+    position: relative;
+    z-index: 2;
+  }
+  
+  
+  .capitalLabel {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+  }
 }

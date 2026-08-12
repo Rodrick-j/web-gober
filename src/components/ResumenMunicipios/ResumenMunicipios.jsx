@@ -6,6 +6,7 @@ import planificacionData from '@/data/planificacion.json';
 import { BarChart3, Calculator, MapPin, Search, ChevronDown, X } from 'lucide-react';
 import styles from './ResumenMunicipios.module.css';
 import { getMuniFullName } from '@/utils/formatMuni';
+import { numeroALetras } from '@/utils/numeroALetras';
 
 export default function ResumenMunicipios() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,6 +33,8 @@ export default function ResumenMunicipios() {
     };
 
     planificacionData.forEach(item => {
+      if (item.is_header) return;
+      
       const muni = item.municipio;
       const monto = Number(item.monto) || 0;
       const esGasto = item.tipo === 'GASTO CORRIENTE';
@@ -241,6 +244,7 @@ export default function ResumenMunicipios() {
       {/* Totales Generales (Tarjetas Superiores) */}
       <div className={styles.totalesGrid}>
         <div className={styles.totalCard}>
+          <div className={styles.tooltip}>{numeroALetras(totalesFiltrados.gastoCorriente)}</div>
           <div className={styles.totalLabel}>TOTAL GASTO CORRIENTE</div>
           <div className={styles.totalValueGasto}>{formatMoney(totalesFiltrados.gastoCorriente)}</div>
           <div className={styles.totalBar}>
@@ -255,6 +259,7 @@ export default function ResumenMunicipios() {
         </div>
 
         <div className={styles.totalCard}>
+          <div className={styles.tooltip}>{numeroALetras(totalesFiltrados.inversion)}</div>
           <div className={styles.totalLabel}>TOTAL INVERSIÓN</div>
           <div className={styles.totalValueInversion}>{formatMoney(totalesFiltrados.inversion)}</div>
           <div className={styles.totalBar}>
@@ -269,6 +274,7 @@ export default function ResumenMunicipios() {
         </div>
 
         <div className={`${styles.totalCard} ${styles.totalCardMain}`}>
+          <div className={styles.tooltip}>{numeroALetras(totalesFiltrados.totalGeneral)}</div>
           <div className={styles.totalLabel}>PRESUPUESTO TOTAL (FILTRADO)</div>
           <div className={styles.totalValueMain}>{formatMoney(totalesFiltrados.totalGeneral)}</div>
         </div>

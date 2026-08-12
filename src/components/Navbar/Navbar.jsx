@@ -31,23 +31,12 @@ const navItems = [
     children: [], // Se llenará dinámicamente desde la base de datos
   },
   {
-    label: 'Gaceta Oficial',
-    Icon: ScrollText,
-    href: '#',
-    children: [
-      { label: 'Leyes Departamentales', Icon: Scale, href: '/gaceta/leyes' },
-      { label: 'Decretos Departamentales', Icon: FileText, href: '/gaceta/decretos-departamentales' },
-      { label: 'Decretos Ejecutivos', Icon: FileSignature, href: '/gaceta/decretos-ejecutivos' },
-      { label: 'Resoluciones Administrativas', Icon: Pin, href: '/gaceta/resoluciones' },
-    ],
-  },
-  {
     label: 'Institución',
     Icon: Landmark,
     href: '#',
     children: [
       { label: 'Historia de la Institución', Icon: Landmark, href: '/institucion/historia-institucion' },
-      { label: 'Historia', Icon: BookOpen, href: '/institucion/historia' },
+      { label: 'Datos de Municipio', Icon: BookOpen, href: '/institucion/historia' },
       { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
       { label: 'Marco Normativo', Icon: Scale, href: '/institucion/marco-normativo' },
     ],
@@ -57,8 +46,19 @@ const navItems = [
     Icon: Search,
     href: '/transparencia',
     children: [
-      { label: 'Lucha contra la Corrupción', Icon: Scale, href: '/transparencia#lucha' },
-      { label: 'Auditoria Interna', Icon: ClipboardList, href: '/transparencia#auditoria' },
+      { label: 'Lucha contra la Corrupción', Icon: Scale, href: '/transparencia' },
+      { label: 'Auditoria Interna', Icon: ClipboardList, href: '/auditoria' },
+    ],
+  },
+  {
+    label: 'Gaceta Oficial',
+    Icon: ScrollText,
+    href: '#',
+    children: [
+      { label: 'Leyes Departamentales', Icon: Scale, href: '/gaceta/leyes' },
+      { label: 'Decretos Departamentales', Icon: FileText, href: '/gaceta/decretos-departamentales' },
+      { label: 'Decretos Ejecutivos', Icon: FileSignature, href: '/gaceta/decretos-ejecutivos' },
+      { label: 'Resoluciones Administrativas', Icon: Pin, href: '/gaceta/resoluciones' },
     ],
   },
   { label: 'Noticias', Icon: Newspaper, href: '/noticias' },
