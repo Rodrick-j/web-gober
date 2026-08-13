@@ -69,9 +69,9 @@ export default async function Footer() {
           <Image 
             src="/logo-gador.png" 
             alt="Gobierno Autónomo Departamental de Oruro" 
-            width={160} 
-            height={90} 
-            style={{ objectFit: 'contain', width: 'auto', height: 'auto', maxWidth: '160px', maxHeight: '90px', marginBottom: '1rem', filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }} 
+            width={220} 
+            height={120} 
+            style={{ objectFit: 'contain', width: 'auto', height: 'auto', maxWidth: '220px', maxHeight: '120px', marginBottom: '1.5rem', filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }} 
           />
           <div className={styles.contactInfo}>
             <div className={styles.contactItem}>

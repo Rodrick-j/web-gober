@@ -1,5 +1,5 @@
 .footer {
-  background: linear-gradient(135deg, #8B0000 0%, #9c0720 50%, #680010 100%) !important; /* Rojo carmesí oficial del GADOR en todo el fondo */
+  background: var(--color-primary) !important; /* Mismo color principal que en el resto de la web */
   color: #ffffff !important;
   font-family: var(--font-body);
   position: relative;
