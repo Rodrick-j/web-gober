@@ -23,7 +23,7 @@ export default function GovernorSection() {
               Su liderazgo lo llevó a destacar como ejecutivo de la FSUTCO, diputado nacional y gerente del FPS, priorizando siempre el progreso de Oruro. Su aguda conciencia crítica se refleja además en su faceta como analista político y autor del libro <em>"Insurrección de Indios y toma de Oruro del 10 de Febrero"</em>.
             </p>
             <p>
-              Con el apoyo contundente del pueblo y la Alianza Jach'a, asumió la gobernación en mayo de 2026. Hoy lidera un proyecto histórico enfocado en la transparencia, la lucha frontal contra la corrupción, la recuperación económica y la modernización administrativa, marcando un nuevo tiempo de reencuentro y unidad para todos los orureños.
+              Tras ganar las elecciones el 19 de abril de 2026 con el apoyo contundente del pueblo y la Alianza Jach'a, asumió la gobernación en mayo de ese mismo año. Hoy lidera un proyecto histórico enfocado en la transparencia, la lucha frontal contra la corrupción, la recuperación económica y la modernización administrativa, marcando un nuevo tiempo de reencuentro y unidad para todos los orureños.
             </p>
             <p className={styles.unidadText}>
               ¡GOBIERNO DE UNIDAD!

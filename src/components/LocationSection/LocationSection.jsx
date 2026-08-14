@@ -226,78 +226,102 @@ export default function LocationSection({ contacto }) {
             {/* ════ TAB FORMULARIO ════ */}
             {activeTab === 'contacto' && (
               <div className="tab-contacto">
-                {formStatus === 'sent' ? (
-                  <motion.div
-                    className="form-success"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                  >
-                    <div className="success-icon">✓</div>
-                    <h3>¡Mensaje enviado!</h3>
-                    <p>Nos pondremos en contacto contigo a la brevedad posible.</p>
-                    <button className="form-reset" onClick={() => { setFormStatus('idle'); setFormData({ nombre:'', email:'', asunto:'', mensaje:'' }); }}>
-                      Enviar otro mensaje
-                    </button>
-                  </motion.div>
-                ) : (
-                  <form className="contact-form" onSubmit={handleFormSubmit} noValidate>
-                    <div className="form-row">
-                      <div className="form-group">
-                        <label htmlFor="cf-nombre">Nombre completo</label>
-                        <input
-                          id="cf-nombre" name="nombre" type="text"
-                          placeholder="Tu nombre"
-                          value={formData.nombre}
-                          onChange={handleFormChange}
-                          required
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label htmlFor="cf-email">Correo electrónico</label>
-                        <input
-                          id="cf-email" name="email" type="email"
-                          placeholder="tu@correo.com"
-                          value={formData.email}
-                          onChange={handleFormChange}
-                          required
-                        />
+                <div className="contacto-sidebar">
+                  <h3>Envíanos un mensaje</h3>
+                  <p>Si tienes alguna consulta, sugerencia o requieres atención ciudadana, por favor completa el formulario. Nuestro equipo te responderá a la brevedad posible.</p>
+                  
+                  <div className="info-container" style={{ marginTop: '2rem' }}>
+                    <div className="info-item">
+                      <div className="info-icon"><Icon d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6" /></div>
+                      <div className="info-text">
+                        <span className="info-label">Correo electrónico</span>
+                        <span className="info-value">{contacto?.email || 'contacto@oruro.gob.bo'}</span>
                       </div>
                     </div>
-                    <div className="form-group">
-                      <label htmlFor="cf-asunto">Asunto</label>
-                      <input
-                        id="cf-asunto" name="asunto" type="text"
-                        placeholder="¿En qué podemos ayudarte?"
-                        value={formData.asunto}
-                        onChange={handleFormChange}
-                        required
-                      />
+                    <div className="info-item">
+                      <div className="info-icon"><Icon d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></div>
+                      <div className="info-text">
+                        <span className="info-label">Atención Ciudadana</span>
+                        <span className="info-value">{contacto?.telefono || '(591-2) 5270-000'}</span>
+                      </div>
                     </div>
-                    <div className="form-group">
-                      <label htmlFor="cf-mensaje">Mensaje</label>
-                      <textarea
-                        id="cf-mensaje" name="mensaje"
-                        placeholder="Describe tu consulta, sugerencia o reclamo..."
-                        rows={5}
-                        value={formData.mensaje}
-                        onChange={handleFormChange}
-                        required
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className={`form-submit${formStatus === 'sending' ? ' form-submit--loading' : ''}`}
-                      disabled={formStatus === 'sending'}
-                      id="btn-enviar-contacto"
+                  </div>
+                </div>
+
+                <div className="contacto-form-wrapper">
+                  {formStatus === 'sent' ? (
+                    <motion.div
+                      className="form-success"
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
                     >
-                      {formStatus === 'sending' ? (
-                        <><span className="spinner" />Enviando...</>
-                      ) : (
-                        <><Icon d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z" />Enviar mensaje</>
-                      )}
-                    </button>
-                  </form>
-                )}
+                      <div className="success-icon">✓</div>
+                      <h3>¡Mensaje enviado!</h3>
+                      <p>Nos pondremos en contacto contigo a la brevedad posible.</p>
+                      <button className="form-reset" onClick={() => { setFormStatus('idle'); setFormData({ nombre:'', email:'', asunto:'', mensaje:'' }); }}>
+                        Enviar otro mensaje
+                      </button>
+                    </motion.div>
+                  ) : (
+                    <form className="contact-form" onSubmit={handleFormSubmit} noValidate>
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label htmlFor="cf-nombre">Nombre completo</label>
+                          <input
+                            id="cf-nombre" name="nombre" type="text"
+                            placeholder="Tu nombre"
+                            value={formData.nombre}
+                            onChange={handleFormChange}
+                            required
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="cf-email">Correo electrónico</label>
+                          <input
+                            id="cf-email" name="email" type="email"
+                            placeholder="tu@correo.com"
+                            value={formData.email}
+                            onChange={handleFormChange}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="cf-asunto">Asunto</label>
+                        <input
+                          id="cf-asunto" name="asunto" type="text"
+                          placeholder="¿En qué podemos ayudarte?"
+                          value={formData.asunto}
+                          onChange={handleFormChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="cf-mensaje">Mensaje</label>
+                        <textarea
+                          id="cf-mensaje" name="mensaje"
+                          placeholder="Describe tu consulta, sugerencia o reclamo..."
+                          rows={5}
+                          value={formData.mensaje}
+                          onChange={handleFormChange}
+                          required
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        className={`form-submit${formStatus === 'sending' ? ' form-submit--loading' : ''}`}
+                        disabled={formStatus === 'sending'}
+                        id="btn-enviar-contacto"
+                      >
+                        {formStatus === 'sending' ? (
+                          <><span className="spinner" />Enviando...</>
+                        ) : (
+                          <><Icon d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z" />Enviar mensaje</>
+                        )}
+                      </button>
+                    </form>
+                  )}
+                </div>
               </div>
             )}
 

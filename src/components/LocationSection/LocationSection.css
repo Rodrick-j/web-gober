@@ -551,10 +551,36 @@
   color: var(--color-text);
 }
 
-/* ── TAB FORMULARIO ── */
 .tab-contacto {
-  max-width: 800px;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 3rem;
+  width: 100%;
+}
+
+.contacto-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.contacto-sidebar h3 {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.contacto-sidebar p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.contacto-form-wrapper {
+  background: var(--color-bg-alt);
+  padding: 2.5rem;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .contact-form {
@@ -716,7 +742,8 @@
 
 /* ── RESPONSIVE ── */
 @media (max-width: 992px) {
-  .tab-mapa {
+  .tab-mapa,
+  .tab-contacto {
     grid-template-columns: 1fr;
   }
   .map-container {
