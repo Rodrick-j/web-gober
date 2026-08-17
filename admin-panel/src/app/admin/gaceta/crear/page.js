@@ -2,10 +2,20 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { uploadPdfAction } from '../actions';
-import FileUpload from '@/components/admin/FileUpload/FileUpload';
+import { normalizarUrlDrive } from '@/lib/driveUtils';
 import Link from 'next/link';
 import styles from '../page.module.css';
+
+const TIPOS = [
+  { value: 'ley_departamental',         label: 'Ley Departamental' },
+  { value: 'decreto_departamental',     label: 'Decreto Departamental' },
+  { value: 'decreto_ejecutivo',         label: 'Decreto Ejecutivo' },
+  { value: 'resolucion_administrativa', label: 'Resolución Administrativa' },
+  { value: 'resolucion_secretarial',    label: 'Resolución Secretarial' },
+  { value: 'convenio',                  label: 'Convenio' },
+  { value: 'contrato',                  label: 'Contrato' },
+  { value: 'otro',                      label: 'Otro' },
+];
 
 export default function CrearDocumentoPage() {
   const router = useRouter();
@@ -16,11 +26,10 @@ export default function CrearDocumentoPage() {
   const [numero, setNumero] = useState('');
   const [titulo, setTitulo] = useState('');
   const [esPublico, setEsPublico] = useState(true);
-  const [archivo, setArchivo] = useState(null);
+  const [driveUrl, setDriveUrl] = useState('');
   const [fechaPublicacion, setFechaPublicacion] = useState(() => new Date().toISOString().split('T')[0]);
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
 
   // Leer tipo de la URL si existe
@@ -35,49 +44,37 @@ export default function CrearDocumentoPage() {
       setError('El tipo, número y título son obligatorios.');
       return;
     }
-    if (!archivo) {
-      setError('Debe subir un documento PDF.');
+    if (!driveUrl.trim()) {
+      setError('Debes pegar el link de Google Drive del PDF.');
       return;
     }
 
     setIsSubmitting(true);
-    setUploadProgress(20);
     setError('');
 
     try {
-      // Usar Server Action para evitar problemas de CORS y Buckets faltantes
-      setUploadProgress(50);
-      const formData = new FormData();
-      formData.append('file', archivo);
-      
-      const publicUrl = await uploadPdfAction(formData);
-      setUploadProgress(80);
+      const archivoUrl = normalizarUrlDrive(driveUrl);
 
-      // Guardar solo los metadatos (texto) en la base de datos
       const { error: insertError } = await supabase
         .from('documentos')
         .insert({
           tipo,
           numero,
           titulo,
-          archivo_url: publicUrl,
+          archivo_url: archivoUrl,
           es_publico: esPublico,
-          es_gaceta_oficial: esPublico, // Mostrar en sección Gaceta de la web pública
-          fecha_publicacion: fechaPublicacion || new Date().toISOString().split('T')[0]
+          es_gaceta_oficial: esPublico,
+          fecha_publicacion: fechaPublicacion || new Date().toISOString().split('T')[0],
         });
 
       if (insertError) throw insertError;
-      setUploadProgress(100);
 
-      // Volver a la lista
       router.push('/admin/gaceta');
       router.refresh();
-
     } catch (err) {
       console.error(err);
       setError('Ocurrió un error: ' + err.message);
       setIsSubmitting(false);
-      setUploadProgress(0);
     }
   };
 
@@ -88,71 +85,44 @@ export default function CrearDocumentoPage() {
           <h1 className="adminTitle">Cargar Nuevo Documento</h1>
           <p className="adminSubtitle">Agrega una Ley, Decreto o Resolución a la Gaceta.</p>
         </div>
-        <Link href="/admin/gaceta" className="btnSecondary">
-          Volver
-        </Link>
+        <Link href="/admin/gaceta" className="btnSecondary">Volver</Link>
+      </div>
+
+      {/* Instrucciones Drive */}
+      <div style={{ background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '12px', padding: '1rem 1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+        <div style={{ fontSize: '1.4rem', flexShrink: 0 }}>📁</div>
+        <div style={{ fontSize: '0.85rem', color: 'var(--admin-text-muted)', lineHeight: '1.6' }}>
+          <strong style={{ color: 'var(--admin-text)' }}>¿Cómo obtener el link de Google Drive?</strong><br />
+          1. Sube el PDF a Google Drive → clic derecho → <em>Compartir</em><br />
+          2. Cambia el acceso a <strong>"Cualquiera con el enlace"</strong><br />
+          3. Haz clic en <strong>"Copiar enlace"</strong> y pégalo abajo
+        </div>
       </div>
 
       <div className="tableCard">
         <form onSubmit={handleSubmit} className={styles.formContainer}>
-          
           {error && <div className={styles.errorAlert}>{error}</div>}
-
-          {isSubmitting && (
-            <div style={{
-              background: 'var(--admin-surface-2)',
-              borderRadius: '12px',
-              padding: '1.25rem',
-              marginBottom: '1rem',
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--admin-text-muted)' }}>
-                <span>
-                  {uploadProgress < 30 ? '🔐 Obteniendo permiso seguro...' :
-                   uploadProgress < 80 ? '📤 Subiendo PDF a Supabase...' :
-                   uploadProgress < 100 ? '💾 Guardando en base de datos...' :
-                   '✅ ¡Completado!'}
-                </span>
-                <span>{uploadProgress}%</span>
-              </div>
-              <div style={{ background: 'var(--admin-border)', borderRadius: '999px', height: '6px', overflow: 'hidden' }}>
-                <div style={{
-                  height: '100%',
-                  width: `${uploadProgress}%`,
-                  background: 'linear-gradient(90deg, var(--color-primary), #dc2626)',
-                  borderRadius: '999px',
-                  transition: 'width 0.4s ease'
-                }} />
-              </div>
-            </div>
-          )}
 
           <div className={styles.grid}>
             <div className={styles.mainCol}>
               <div className="formGroup">
                 <label className="formLabel">Tipo de Documento *</label>
-                <select 
+                <select
                   className="formSelect"
                   value={tipo}
                   onChange={(e) => setTipo(e.target.value)}
                   required
                   disabled={isSubmitting}
                 >
-                  <option value="ley_departamental">Ley Departamental</option>
-                  <option value="decreto_departamental">Decreto Departamental</option>
-                  <option value="decreto_ejecutivo">Decreto Ejecutivo</option>
-                  <option value="resolucion_administrativa">Resolución Administrativa</option>
-                  <option value="resolucion_secretarial">Resolución Secretarial</option>
-                  <option value="convenio">Convenio</option>
-                  <option value="contrato">Contrato</option>
-                  <option value="otro">Otro</option>
+                  {TIPOS.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
                 </select>
               </div>
 
               <div className="formGroup">
                 <label className="formLabel">Número de Documento *</label>
-                <input 
-                  type="text" 
-                  className="formInput" 
+                <input
+                  type="text"
+                  className="formInput"
                   placeholder="Ej: N° 123/2026"
                   value={numero}
                   onChange={(e) => setNumero(e.target.value)}
@@ -163,8 +133,8 @@ export default function CrearDocumentoPage() {
 
               <div className="formGroup">
                 <label className="formLabel">Título / Descripción Breve *</label>
-                <textarea 
-                  className="formTextarea" 
+                <textarea
+                  className="formTextarea"
                   placeholder="Ej: Ley que declara Patrimonio Cultural a..."
                   value={titulo}
                   onChange={(e) => setTitulo(e.target.value)}
@@ -173,23 +143,34 @@ export default function CrearDocumentoPage() {
                   disabled={isSubmitting}
                 />
               </div>
+
+              <div className="formGroup">
+                <label className="formLabel">Link de Google Drive (PDF) *</label>
+                <input
+                  type="url"
+                  className="formInput"
+                  placeholder="https://drive.google.com/file/d/..."
+                  value={driveUrl}
+                  onChange={(e) => setDriveUrl(e.target.value)}
+                  disabled={isSubmitting}
+                />
+                {driveUrl && !driveUrl.includes('drive.google.com') && (
+                  <p style={{ fontSize: '0.78rem', color: '#d97706', marginTop: '0.3rem' }}>
+                    ⚠️ El link no parece ser de Google Drive. Asegúrate de copiar el enlace correcto.
+                  </p>
+                )}
+                {driveUrl && driveUrl.includes('drive.google.com') && (
+                  <p style={{ fontSize: '0.78rem', color: '#059669', marginTop: '0.3rem' }}>
+                    ✅ Link de Drive detectado.
+                  </p>
+                )}
+              </div>
             </div>
 
             <div className={styles.sideCol}>
               <div className="formGroup">
-                <label className="formLabel">Archivo PDF *</label>
-                <FileUpload 
-                  onFileSelect={setArchivo} 
-                  accept=".pdf"
-                  label="Subir PDF"
-                  icon="📄"
-                  maxSizeMB={50}
-                />
-              </div>
-
-              <div className="formGroup">
                 <label className="formLabel">Estado de Publicación</label>
-                <select 
+                <select
                   className="formSelect"
                   value={esPublico ? 'publico' : 'oculto'}
                   onChange={(e) => setEsPublico(e.target.value === 'publico')}
@@ -215,12 +196,12 @@ export default function CrearDocumentoPage() {
                 </p>
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className={`btnPrimary ${styles.submitBtn}`}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? `⏳ Publicando... ${uploadProgress}%` : '📤 Publicar Documento'}
+                {isSubmitting ? '⏳ Guardando...' : '💾 Guardar Documento'}
               </button>
             </div>
           </div>

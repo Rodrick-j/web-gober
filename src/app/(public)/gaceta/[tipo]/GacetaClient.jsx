@@ -81,6 +81,24 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
         {/* Sidebar con Filtros (Chips) */}
         <aside className={styles.filtersSidebar}>
           <h3 className={styles.filterTitle}>Filtrar por Gestión</h3>
+          <div className={styles.mobileSelectContainer}>
+            <select
+              className={styles.yearSelect}
+              value={selectedYear}
+              onChange={(e) => {
+                setSelectedYear(e.target.value);
+                setCurrentPage(1);
+              }}
+            >
+              {years.map(year => (
+                <option key={year} value={year.toString()}>
+                  {year === 'Todos' ? 'Todos' : year}
+                  {year !== 'Todos' && ` (${documentos.filter(d => d.anio === year).length})`}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className={styles.chipsContainer}>
             {years.map(year => (
               <button 

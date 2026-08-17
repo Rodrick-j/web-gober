@@ -1,0 +1,702 @@
+[
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 01.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 02.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 03.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 04.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 05.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 06.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 07.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 10.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 11.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2015-2\\DECRETO DEPARTAMENTAL 12.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2016\\DECRETO DEPARTAMENTAL N°20 Y ANEXOS\\ANEXOS\\1 FORMULARIO 900.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2016\\DECRETO DEPARTAMENTAL N°20 Y ANEXOS\\ANEXOS\\2FORMULARIO   900.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2016\\DECRETO DEPARTAMENTAL N°20 Y ANEXOS\\ANEXOS\\3 FORMULARIO  950.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2016\\DECRETO DEPARTAMENTAL N°20 Y ANEXOS\\ANEXOS\\4 FORMULARIO 950.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 100.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 101.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 102.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 103.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 82.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 83.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 84.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 85.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 86.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 87-n.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 88-n.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 89.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 90.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 91.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 92.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 93.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 94.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 95.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 96.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2020\\decreto dptal 99.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DEPARTAMENTAL No. 124.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\decreto dptal 104.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\decreto dptal 105.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\decreto dptal 106.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\decreto dptal 107.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\decreto dptal 110.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DPTAL. 111.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DPTAL. 112.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DPTAL. 113.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DPTAL. 114.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DPTAL. 115.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DPTAL. 116.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DPTAL. 117.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO DPTAL. 118.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO-DEPARTAMENTAL-N°-119.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2021\\DECRETO-DEPARTAMENTAL-N°-120.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2022\\DECRETO DEPARTAMENTAL No.125 embanderamiento hizo de la bandera.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2022\\DECRETO DEPARTAMENTAL No.126.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2022\\DECRETO DEPARTAMENTAL No.127.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\2-Decretos Departamentales\\GESTION 2022\\DECRETO DEPARTAMENTAL No.128-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\Decreto Ejecutivo 01.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\Decreto Ejecutivo 01a.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\Decreto Ejecutivo 02.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 03.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 04.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 05.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 06.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 08.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 09.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 10.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 11.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 12.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 13.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2015\\decreto ejecutivo 14.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2016\\DECRETO EJECUTIVO 15.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2016\\DECRETO EJECUTIVO 16.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2016\\DECRETO EJECUTIVO 17.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2016\\DECRETO EJECUTIVO 18.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 19.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 20.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 21.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 22.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 23.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 24.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 25.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 26.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 27.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2017\\DECRETO EJECUTIVO 28.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 29.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 30.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 31.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 32.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 33.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 34.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 35.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 36.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2018\\DECRETO EJECUTIVO 37.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 38.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 39.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 40.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 41.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 42.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 43.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 44.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 45.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 46.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 47.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 48.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2019\\DECRETO EJECUTIVO 49.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 50.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 51.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 52.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 53.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 54.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 55.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 56.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 57.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 58.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 60.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 61.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 62.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 63.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 64.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 65.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 66.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 67.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 68.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 69.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 70.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 71.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 72.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 73.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 74.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 75.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 76.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 77.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 78.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2020\\DECRETO EJECUTIVO 79.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 80.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 81.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 82.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 83.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 84.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 85.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 86.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 87.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO 88.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 01.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 02.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 03.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 04.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 05.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 06.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 07.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 08.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 09.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 10.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 11.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 12.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 13.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 14.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 15.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 16.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 17.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\Decreto Ejecutivo 18.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO-EJECUTIVO-N°-21.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2021\\DECRETO-EJECUTIVO-N°-22.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 002-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 003-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 004-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 005-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 006-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 007-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 008-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 009-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo departamental 010-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\3-Decretos Ejecutivos Departamentales\\GESTION 2022\\decreto ejecutivo depatamemtal 001-2022.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\DECRETOS\\DECRETOS DEPARTAMENTALES\\Resolución Admnistrativa 2026\\Resolución Administrativa 2026 (2).pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\LEYES DEPARTAMENTALES\\Gestion 2011\\LEY No. 11 FOTOCOPIA.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\LEYES DEPARTAMENTALES\\GESTION 2015-2\\LEY DPTAL 95 RECONOCIMIENTO AL CIUDADANO VICTOR HUGO VAZQUEZ MAMANI COMO GOBERNADOR DEL DEPARTAMENTO DE ORURO.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  },
+  {
+    "file": "C:\\gaceta\\GACETA\\LEYES DEPARTAMENTALES\\GESTION 2017\\ANEXO DE LEY DPTAL 133.pdf",
+    "error": "BD: null value in column \"numero\" of relation \"documentos\" violates not-null constraint"
+  }
+]

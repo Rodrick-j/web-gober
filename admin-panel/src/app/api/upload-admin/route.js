@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { verifyAdminSession } from '@/lib/auth';
 
 // Esta ruta usa la llave MAESTRA (service role) del servidor.
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 // Jamás se expone al navegador. Salta todas las restricciones de seguridad (RLS).
 export async function POST(request) {

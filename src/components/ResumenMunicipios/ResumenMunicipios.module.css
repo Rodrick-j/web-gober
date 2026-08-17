@@ -397,15 +397,15 @@
     text-align: center;
   }
   .totalValueGasto, .totalValueInversion {
-    font-size: 0.85rem;
+    font-size: 0.80rem;
     margin-bottom: 0.5rem;
     text-align: center;
-    word-break: break-word;
+    white-space: nowrap;
   }
   .totalValueMain {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     text-align: center;
-    word-break: break-word;
+    white-space: nowrap;
   }
   .totalPercentage {
     font-size: 0.6rem;

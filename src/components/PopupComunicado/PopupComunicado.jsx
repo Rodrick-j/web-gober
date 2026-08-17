@@ -46,7 +46,11 @@ export default function PopupComunicado({ config }) {
   return (
     <AnimatePresence>
       {isVisible && (
-        <div className={styles.overlay} onClick={handleClose}>
+        <div 
+          className={styles.overlay} 
+          onClick={handleClose} 
+          style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.75)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 16px', boxSizing: 'border-box' }}
+        >
           <motion.div
             className={styles.popupContainer}
             onClick={(e) => e.stopPropagation()} // Evitar que clic adentro cierre el modal
@@ -54,12 +58,13 @@ export default function PopupComunicado({ config }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 50 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
+            style={{ position: 'relative', width: '100%', maxWidth: '500px', background: 'transparent' }}
           >
             <button 
               className={styles.closeButton} 
               onClick={handleClose}
               aria-label="Cerrar comunicado"
-              style={{ zIndex: 30, top: '-20px', right: '-20px', boxShadow: '0 4px 15px rgba(0,0,0,0.5)' }}
+              style={{ zIndex: 30, position: 'absolute', top: '-12px', right: '0px', width: '32px', height: '32px', borderRadius: '50%', border: '2px solid white', background: '#9c0720', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1rem', cursor: 'pointer', boxShadow: '0 2px 10px rgba(0,0,0,0.3)' }}
             >
               ✕
             </button>

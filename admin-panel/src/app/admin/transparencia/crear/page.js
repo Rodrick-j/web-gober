@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { uploadPdfAction } from '../../gaceta/actions';
+import { normalizarUrlDrive } from '@/lib/driveUtils';
 import Link from 'next/link';
 import styles from '../page.module.css';
 
@@ -14,11 +14,10 @@ export default function CrearDocumentoTransparenciaPage() {
   const [gestion, setGestion] = useState(() => new Date().getFullYear());
   const [titulo, setTitulo] = useState('');
   const [esPublico, setEsPublico] = useState(true);
-  const [archivo, setArchivo] = useState(null);
+  const [driveUrl, setDriveUrl] = useState('');
   const [fechaPublicacion, setFechaPublicacion] = useState(() => new Date().toISOString().split('T')[0]);
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -27,52 +26,36 @@ export default function CrearDocumentoTransparenciaPage() {
       setError('El tipo, gestión y título son obligatorios.');
       return;
     }
-    if (!archivo) {
-      setError('Debe subir un documento PDF.');
-      return;
-    }
-
-    const MAX_FILE_SIZE_MB = 50;
-    const fileSizeInMB = archivo.size / (1024 * 1024);
-    if (fileSizeInMB > MAX_FILE_SIZE_MB) {
-      setError(`El archivo es demasiado grande (${fileSizeInMB.toFixed(1)} MB). El tamaño máximo permitido por el servidor es de ${MAX_FILE_SIZE_MB} MB. Por favor, comprime tu PDF en ilovepdf.com o escanea a menor resolución.`);
+    if (!driveUrl.trim()) {
+      setError('Debes pegar el link de Google Drive del PDF.');
       return;
     }
 
     setIsSubmitting(true);
-    setUploadProgress(10);
     setError('');
 
     try {
-      const formData = new FormData();
-      formData.append('file', archivo);
-      
-      const publicUrl = await uploadPdfAction(formData);
-      setUploadProgress(80);
+      const archivoUrl = normalizarUrlDrive(driveUrl);
 
-      // Guardar metadatos en tabla transparencia_documentos
       const { error: insertError } = await supabase
         .from('transparencia_documentos')
         .insert({
           tipo,
           gestion: parseInt(gestion, 10),
           titulo,
-          archivo_url: publicUrl,
+          archivo_url: archivoUrl,
           es_publico: esPublico,
-          fecha_publicacion: fechaPublicacion || new Date().toISOString().split('T')[0]
+          fecha_publicacion: fechaPublicacion || new Date().toISOString().split('T')[0],
         });
 
       if (insertError) throw insertError;
-      setUploadProgress(100);
 
       router.push('/admin/transparencia');
       router.refresh();
-
     } catch (err) {
       console.error(err);
       setError('Ocurrió un error: ' + err.message);
       setIsSubmitting(false);
-      setUploadProgress(0);
     }
   };
 
@@ -83,49 +66,29 @@ export default function CrearDocumentoTransparenciaPage() {
           <h1 className="adminTitle">Cargar Nuevo Documento de Transparencia</h1>
           <p className="adminSubtitle">Agrega una Rendición de Cuentas, Auditoría o Actividad.</p>
         </div>
-        <Link href="/admin/transparencia" className="btnSecondary">
-          Volver
-        </Link>
+        <Link href="/admin/transparencia" className="btnSecondary">Volver</Link>
+      </div>
+
+      {/* Instrucciones Drive */}
+      <div style={{ background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '12px', padding: '1rem 1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+        <div style={{ fontSize: '1.4rem', flexShrink: 0 }}>📁</div>
+        <div style={{ fontSize: '0.85rem', color: 'var(--admin-text-muted)', lineHeight: '1.6' }}>
+          <strong style={{ color: 'var(--admin-text)' }}>¿Cómo obtener el link de Google Drive?</strong><br />
+          1. Sube el PDF a Google Drive → clic derecho → <em>Compartir</em><br />
+          2. Cambia el acceso a <strong>"Cualquiera con el enlace"</strong><br />
+          3. Haz clic en <strong>"Copiar enlace"</strong> y pégalo abajo
+        </div>
       </div>
 
       <div className="tableCard">
         <form onSubmit={handleSubmit} className={styles.formContainer}>
-          
           {error && <div className={styles.errorAlert}>{error}</div>}
-
-          {isSubmitting && (
-            <div style={{
-              background: 'var(--admin-surface-2)',
-              borderRadius: '12px',
-              padding: '1.25rem',
-              marginBottom: '1rem',
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.9rem', color: 'var(--admin-text-muted)' }}>
-                <span>
-                  {uploadProgress < 30 ? '🔐 Obteniendo permiso seguro...' :
-                   uploadProgress < 80 ? '📤 Subiendo PDF a Supabase...' :
-                   uploadProgress < 100 ? '💾 Guardando en base de datos...' :
-                   '✅ ¡Completado!'}
-                </span>
-                <span>{uploadProgress}%</span>
-              </div>
-              <div style={{ background: 'var(--admin-border)', borderRadius: '999px', height: '6px', overflow: 'hidden' }}>
-                <div style={{
-                  height: '100%',
-                  width: `${uploadProgress}%`,
-                  background: 'linear-gradient(90deg, var(--color-primary), #dc2626)',
-                  borderRadius: '999px',
-                  transition: 'width 0.4s ease'
-                }} />
-              </div>
-            </div>
-          )}
 
           <div className={styles.grid}>
             <div className={styles.mainCol}>
               <div className="formGroup">
                 <label className="formLabel">Tipo de Documento *</label>
-                <select 
+                <select
                   className="formSelect"
                   value={tipo}
                   onChange={(e) => setTipo(e.target.value)}
@@ -159,8 +122,8 @@ export default function CrearDocumentoTransparenciaPage() {
 
               <div className="formGroup">
                 <label className="formLabel">Título del Documento *</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   className="formInput"
                   value={titulo}
                   onChange={(e) => setTitulo(e.target.value)}
@@ -171,51 +134,34 @@ export default function CrearDocumentoTransparenciaPage() {
               </div>
 
               <div className="formGroup">
-                <label className="formLabel">Archivo PDF *</label>
-                <div style={{
-                  border: '2px dashed var(--admin-border)',
-                  borderRadius: '12px',
-                  padding: '2rem',
-                  textAlign: 'center',
-                  background: 'var(--admin-surface-2)',
-                  cursor: 'pointer'
-                }}>
-                  <input 
-                    type="file" 
-                    accept="application/pdf"
-                    onChange={(e) => setArchivo(e.target.files[0])}
-                    disabled={isSubmitting}
-                    id="file-upload"
-                    style={{ display: 'none' }}
-                  />
-                  <label htmlFor="file-upload" style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                    <div style={{ fontSize: '2rem' }}>📄</div>
-                    {archivo ? (
-                      <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>{archivo.name}</span>
-                    ) : (
-                      <>
-                        <span style={{ fontWeight: 600, color: 'var(--admin-text)' }}>Haz clic para seleccionar el PDF</span>
-                        <span style={{ fontSize: '0.85rem', color: 'var(--admin-text-muted)' }}>Solo archivos en formato .pdf</span>
-                      </>
-                    )}
-                  </label>
-                </div>
+                <label className="formLabel">Link de Google Drive (PDF) *</label>
+                <input
+                  type="url"
+                  className="formInput"
+                  placeholder="https://drive.google.com/file/d/..."
+                  value={driveUrl}
+                  onChange={(e) => setDriveUrl(e.target.value)}
+                  disabled={isSubmitting}
+                />
+                {driveUrl && !driveUrl.includes('drive.google.com') && (
+                  <p style={{ fontSize: '0.78rem', color: '#d97706', marginTop: '0.3rem' }}>
+                    ⚠️ El link no parece ser de Google Drive.
+                  </p>
+                )}
+                {driveUrl && driveUrl.includes('drive.google.com') && (
+                  <p style={{ fontSize: '0.78rem', color: '#059669', marginTop: '0.3rem' }}>
+                    ✅ Link de Drive detectado.
+                  </p>
+                )}
               </div>
             </div>
 
             <div className={styles.sideCol}>
               <div className="formGroup">
                 <label className="formLabel">Estado de Publicación</label>
-                <div style={{
-                  display: 'flex',
-                  gap: '0.5rem',
-                  padding: '1rem',
-                  background: 'var(--admin-surface-2)',
-                  borderRadius: '12px',
-                  border: '1px solid var(--admin-border)'
-                }}>
-                  <input 
-                    type="checkbox" 
+                <div style={{ display: 'flex', gap: '0.5rem', padding: '1rem', background: 'var(--admin-surface-2)', borderRadius: '12px', border: '1px solid var(--admin-border)' }}>
+                  <input
+                    type="checkbox"
                     id="esPublico"
                     checked={esPublico}
                     onChange={(e) => setEsPublico(e.target.checked)}
@@ -225,7 +171,7 @@ export default function CrearDocumentoTransparenciaPage() {
                   <label htmlFor="esPublico" style={{ cursor: 'pointer', fontSize: '0.9rem' }}>
                     <strong>Visible al público</strong>
                     <p style={{ fontSize: '0.8rem', color: 'var(--admin-text-muted)', marginTop: '0.2rem' }}>
-                      Si está marcado, aparecerá en el portal de Transparencia de la Gobernación.
+                      Si está marcado, aparecerá en el portal de Transparencia.
                     </p>
                   </label>
                 </div>
@@ -233,8 +179,8 @@ export default function CrearDocumentoTransparenciaPage() {
 
               <div className="formGroup">
                 <label className="formLabel">Fecha de Publicación</label>
-                <input 
-                  type="date" 
+                <input
+                  type="date"
                   className="formInput"
                   value={fechaPublicacion}
                   onChange={(e) => setFechaPublicacion(e.target.value)}
@@ -243,13 +189,13 @@ export default function CrearDocumentoTransparenciaPage() {
               </div>
 
               <div style={{ marginTop: '2rem' }}>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   className="btnPrimary"
                   style={{ width: '100%', padding: '0.85rem' }}
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Guardando...' : 'Guardar y Publicar'}
+                  {isSubmitting ? '⏳ Guardando...' : '💾 Guardar Documento'}
                 </button>
               </div>
             </div>

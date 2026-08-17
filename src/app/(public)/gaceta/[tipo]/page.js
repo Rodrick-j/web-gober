@@ -77,7 +77,8 @@ export default async function GacetaPage({ params }) {
     .select('id, tipo, numero, titulo, descripcion, fecha_publicacion, archivo_url, descargas')
     .eq('tipo', config.dbTipo)      // Usar el valor ENUM correcto
     .eq('es_publico', true)         // Solo los públicos
-    .order('fecha_publicacion', { ascending: false });
+    .order('fecha_publicacion', { ascending: false })
+    .order('created_at', { ascending: false });
 
   if (error) {
     console.error("Error consultando documentos:", error.message);
