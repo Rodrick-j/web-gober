@@ -218,13 +218,6 @@ export default function Navbar() {
             className={styles.logo}
           >
             <motion.div
-              animate={{ scaleX: [1, 1, 0, 1, 1, 0, 1] }}
-              transition={{
-                repeat: Infinity,
-                duration: 8,
-                times: [0, 0.4, 0.45, 0.5, 0.9, 0.95, 1],
-                ease: "easeInOut",
-              }}
               style={{
                 position: 'relative',
                 width: '100%',
@@ -232,18 +225,24 @@ export default function Navbar() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                perspective: '1200px'
               }}
             >
               {/* Front Face: Logo institucional */}
               <motion.div 
-                animate={{ opacity: [1, 1, 0, 0, 0, 0, 1] }}
+                animate={{ 
+                  y: [0, 0, -20, 20, 20, 0], 
+                  opacity: [1, 1, 0, 0, 0, 1],
+                  scale: [1, 1, 0.8, 0.8, 0.8, 1],
+                  rotateX: [0, 0, 90, -90, -90, 0],
+                }}
                 transition={{
                   repeat: Infinity,
-                  duration: 8,
-                  times: [0, 0.4, 0.45, 0.5, 0.9, 0.95, 1],
+                  duration: 6,
+                  times: [0, 0.45, 0.5, 0.51, 0.95, 1],
                   ease: "easeInOut",
                 }}
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', transformStyle: 'preserve-3d' }}
               >
                   <Image
                     src="/imagotipo_gador_2026.png"
@@ -257,17 +256,22 @@ export default function Navbar() {
 
               {/* Back Face: Imagen MARCA GOBIERNO con texto completo */}
               <motion.div 
-                animate={{ opacity: [0, 0, 0, 1, 1, 0, 0] }}
+                animate={{ 
+                  y: [20, 20, 0, 0, -20, 20], 
+                  opacity: [0, 0, 1, 1, 0, 0],
+                  scale: [0.8, 0.8, 1, 1, 0.8, 0.8],
+                  rotateX: [-90, -90, 0, 0, 90, -90],
+                }}
                 transition={{
                   repeat: Infinity,
-                  duration: 8,
-                  times: [0, 0.4, 0.45, 0.5, 0.9, 0.95, 1],
+                  duration: 6,
+                  times: [0, 0.45, 0.5, 0.51, 0.95, 1],
                   ease: "easeInOut",
                 }}
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', transformStyle: 'preserve-3d' }}
               >
                 <Image
-                  src="/marca_gobierno.png"
+                  src="/marca_gobierno_2.png"
                   alt="¡Gobierno de Unidad!"
                   width={310}
                   height={68}

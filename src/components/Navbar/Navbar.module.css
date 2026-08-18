@@ -3,7 +3,9 @@
    ===================================================== */
 
 .topBar {
-  background: linear-gradient(90deg, #7A0C00 0%, #9C0720 50%, #7A0C00 100%);
+  background: linear-gradient(90deg, #7A0C00, #C20F2A, #8F0A1B, #C20F2A, #7A0C00);
+  background-size: 200% 100%;
+  animation: gradientFlow 6s linear infinite;
   color: rgba(255, 255, 255, 0.95);
   font-size: 0.78rem;
   font-weight: 500;
@@ -61,14 +63,16 @@
   background: rgba(255, 255, 255, 0.16);
 }
 
-/* Main Navbar */
 .navbar {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.95);
+  /* Animación sutil y poco intensa (mezcla blanco con ligerísimos tonos carmesí) */
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.98), rgba(255, 240, 242, 0.95), rgba(255, 248, 249, 0.98), rgba(255, 240, 242, 0.95), rgba(255, 255, 255, 0.98));
+  background-size: 200% 100%;
+  animation: gradientFlow 10s ease-in-out infinite;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: none;

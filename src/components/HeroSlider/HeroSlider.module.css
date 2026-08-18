@@ -49,7 +49,7 @@
 }
 
 .mainImage {
-  object-fit: contain; /* Obligamos a que nunca se recorte (100% responsiva) */
+  object-fit: cover; /* Cambiado a cover para llenar el espacio */
   object-position: center center;
   transition: transform 10s cubic-bezier(0.1, 0, 0.9, 1);
   width: 100%;
@@ -321,9 +321,9 @@
 
 @media (max-width: 768px) {
   .sliderSection { 
-    height: calc(100vw * 16 / 9); /* Escala en formato vertical para móviles */
-    max-height: 85vh; 
-    min-height: 400px; /* Reducimos altura mínima */
+    height: 60vh; /* Altura fija relativa a la pantalla para evitar recortes extremos */
+    max-height: 600px; 
+    min-height: 400px; 
   }
   .glassCard {
     padding: 1.5rem;
