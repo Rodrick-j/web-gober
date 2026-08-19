@@ -111,7 +111,8 @@ export default function PlanificacionSection({ secretariaId }) {
             </div>
 
             <div style={{ 
-              display: 'inline-flex', 
+              display: 'flex', 
+              width: '100%',
               gap: '0.2rem', 
               marginBottom: '2rem', 
               flexWrap: 'wrap',

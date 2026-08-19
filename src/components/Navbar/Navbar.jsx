@@ -228,21 +228,16 @@ export default function Navbar() {
                 perspective: '1200px'
               }}
             >
-              {/* Front Face: Logo institucional */}
+              {/* Primer Logo: Logo Institucional */}
               <motion.div 
-                animate={{ 
-                  y: [0, 0, -20, 20, 20, 0], 
-                  opacity: [1, 1, 0, 0, 0, 1],
-                  scale: [1, 1, 0.8, 0.8, 0.8, 1],
-                  rotateX: [0, 0, 90, -90, -90, 0],
-                }}
+                animate={{ opacity: [1, 1, 0, 0, 1] }}
                 transition={{
                   repeat: Infinity,
-                  duration: 6,
-                  times: [0, 0.45, 0.5, 0.51, 0.95, 1],
+                  duration: 8,
+                  times: [0, 0.45, 0.5, 0.95, 1],
                   ease: "easeInOut",
                 }}
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', transformStyle: 'preserve-3d' }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
               >
                   <Image
                     src="/imagotipo_gador_2026.png"
@@ -254,21 +249,16 @@ export default function Navbar() {
                   />
               </motion.div>
 
-              {/* Back Face: Imagen MARCA GOBIERNO con texto completo */}
+              {/* Segundo Logo: Marca de Gobierno */}
               <motion.div 
-                animate={{ 
-                  y: [20, 20, 0, 0, -20, 20], 
-                  opacity: [0, 0, 1, 1, 0, 0],
-                  scale: [0.8, 0.8, 1, 1, 0.8, 0.8],
-                  rotateX: [-90, -90, 0, 0, 90, -90],
-                }}
+                animate={{ opacity: [0, 0, 1, 1, 0] }}
                 transition={{
                   repeat: Infinity,
-                  duration: 6,
-                  times: [0, 0.45, 0.5, 0.51, 0.95, 1],
+                  duration: 8,
+                  times: [0, 0.45, 0.5, 0.95, 1],
                   ease: "easeInOut",
                 }}
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start', transformStyle: 'preserve-3d' }}
+                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
               >
                 <Image
                   src="/marca_gobierno_2.png"

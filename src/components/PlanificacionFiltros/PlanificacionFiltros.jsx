@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
-import { Search, MapPin, Tag, ChevronLeft, ChevronRight, Calculator } from 'lucide-react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { Search, MapPin, Tag, ChevronLeft, ChevronRight, Calculator, X, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 import planificacionData from '@/data/planificacion.json';
 import styles from './PlanificacionFiltros.module.css';
 import { getMuniFullName } from '@/utils/formatMuni';
@@ -12,6 +13,17 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
   const [searchTerm, setSearchTerm] = useState('');
   const [showMuniDropdown, setShowMuniDropdown] = useState(false);
   const [muniSearchText, setMuniSearchText] = useState('');
+  const dropdownRef = useRef(null);
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowMuniDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
   
   // Sincronizar estado local con globalMunicipio
   const [localMuni, setLocalMuni] = useState('Todos');
@@ -187,52 +199,89 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
 
         <div className={styles.selectorsGroup} style={{ display: 'flex', gap: '1rem', width: '100%', flexWrap: 'wrap' }}>
           {/* Municipio Selector */}
-          <div className={styles.selectWrapper}>
-            <MapPin className={styles.selectIcon} size={16} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', zIndex: 10, color: '#6b7280', pointerEvents: 'none' }} />
-            
-            <div 
-              className={styles.selectInput} 
-              style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', minHeight: '38px', paddingRight: '25px' }}
+          <div className={styles.searchGroup} style={{ flex: '1', minWidth: '250px' }} ref={dropdownRef}>
+            <div
               onClick={() => setShowMuniDropdown(!showMuniDropdown)}
+              style={{
+                width: '100%',
+                background: '#f8f9fa',
+                color: '#1a1a2e',
+                border: '1.5px solid #dcdcdc',
+                borderRadius: '10px',
+                padding: '0.6rem 2.5rem 0.6rem 2.3rem',
+                fontSize: '0.94rem',
+                fontWeight: '800',
+                cursor: 'pointer',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                position: 'relative'
+              }}
             >
-              <span style={{ color: selectedMunicipio === 'Todos' ? '#6b7280' : '#1e293b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, marginRight: '10px' }}>
-                {selectedMunicipio === 'Todos' ? 'Filtro por Municipio' : getMuniFullName(selectedMunicipio)}
+              <MapPin size={16} color="#9c0720" style={{ position: 'absolute', left: '12px' }} />
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {selectedMunicipio === 'Todos' ? 'Todos los Municipios' : getMuniFullName(selectedMunicipio)}
               </span>
-              <span style={{ fontSize: '0.8rem', color: '#9ca3af' }}>▼</span>
+              {selectedMunicipio !== 'Todos' ? (
+                <X 
+                  size={16} 
+                  color="#555" 
+                  style={{ position: 'absolute', right: '35px', cursor: 'pointer' }} 
+                  onClick={(e) => { 
+                    e.stopPropagation(); 
+                    handleMunicipioChange('Todos');
+                    setSelectedPrg('Todos');
+                    setSelectedProy('Todos');
+                    setMuniSearchText('');
+                  }}
+                />
+              ) : null}
+              <ChevronDown size={18} color="#555" style={{ position: 'absolute', right: '12px', transform: showMuniDropdown ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
             </div>
 
-            {selectedMunicipio !== 'Todos' && (
-              <button 
-                className={styles.clearBtn} 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleMunicipioChange('Todos');
-                  setSelectedPrg('Todos');
-                  setSelectedProy('Todos');
-                  setMuniSearchText('');
-                }}
-                title="Limpiar municipio"
-                style={{ position: 'absolute', right: '14px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', color: '#ef4444', fontWeight: 'bold', zIndex: 10, padding: '5px' }}
-              >
-                ✕
-              </button>
-            )}
-
             {showMuniDropdown && (
-              <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px', marginTop: '4px', zIndex: 50, boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', maxHeight: '300px', display: 'flex', flexDirection: 'column' }}>
-                <div style={{ padding: '8px', borderBottom: '1px solid #e5e7eb' }}>
-                  <input 
-                    type="text" 
-                    placeholder="Escribe para buscar..." 
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.15 }}
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  marginTop: '0.5rem',
+                  background: '#ffffff',
+                  border: '1px solid #eaeaea',
+                  borderRadius: '10px',
+                  boxShadow: '0 10px 35px rgba(0,0,0,0.1)',
+                  zIndex: 999,
+                  overflow: 'hidden'
+                }}
+              >
+                <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
+                  <Search size={16} color="#888" />
+                  <input
+                    type="text"
+                    placeholder="Buscar municipio..."
                     value={muniSearchText}
                     onChange={(e) => setMuniSearchText(e.target.value)}
-                    style={{ width: '100%', padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '0.9rem', outline: 'none' }}
-                    onClick={(e) => e.stopPropagation()}
+                    style={{
+                      width: '100%',
+                      border: 'none',
+                      outline: 'none',
+                      background: 'transparent',
+                      fontSize: '0.85rem',
+                      color: '#333'
+                    }}
                     autoFocus
+                    onClick={(e) => e.stopPropagation()}
                   />
                 </div>
-                <div style={{ overflowY: 'auto', flex: 1 }}>
-                  <div 
+                <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
+                  <div
                     onClick={() => {
                       handleMunicipioChange('Todos');
                       setSelectedPrg('Todos');
@@ -240,15 +289,29 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
                       setShowMuniDropdown(false);
                       setMuniSearchText('');
                     }}
-                    style={{ padding: '10px 15px', cursor: 'pointer', background: selectedMunicipio === 'Todos' ? '#f3f4f6' : 'transparent', fontWeight: selectedMunicipio === 'Todos' ? 'bold' : 'normal', borderBottom: '1px solid #f3f4f6' }}
+                    style={{
+                      padding: '0.6rem 1rem',
+                      fontSize: '0.85rem',
+                      fontWeight: selectedMunicipio === 'Todos' ? '800' : '500',
+                      color: selectedMunicipio === 'Todos' ? '#9c0720' : '#333',
+                      background: selectedMunicipio === 'Todos' ? '#fce8e8' : 'transparent',
+                      cursor: 'pointer',
+                      transition: 'background 0.15s'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (selectedMunicipio !== 'Todos') e.currentTarget.style.background = '#f5f5f5';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (selectedMunicipio !== 'Todos') e.currentTarget.style.background = 'transparent';
+                    }}
                   >
-                    Todos los Municipios (Toda la Región)
+                    Todos los Municipios
                   </div>
                   {municipiosUnicos
                     .filter(mun => mun !== 'Todos')
                     .filter(mun => getMuniFullName(mun).toLowerCase().includes(muniSearchText.toLowerCase()))
-                    .map(mun => (
-                      <div 
+                    .map((mun) => (
+                      <div
                         key={mun}
                         onClick={() => {
                           handleMunicipioChange(mun);
@@ -257,18 +320,32 @@ export default function PlanificacionFiltros({ globalMunicipio, setGlobalMunicip
                           setShowMuniDropdown(false);
                           setMuniSearchText('');
                         }}
-                        style={{ padding: '10px 15px', cursor: 'pointer', background: selectedMunicipio === mun ? '#f3f4f6' : 'transparent', fontWeight: selectedMunicipio === mun ? 'bold' : 'normal', borderBottom: '1px solid #f3f4f6', fontSize: '0.95rem' }}
+                        style={{
+                          padding: '0.6rem 1rem',
+                          fontSize: '0.85rem',
+                          fontWeight: selectedMunicipio === mun ? '800' : '500',
+                          color: selectedMunicipio === mun ? '#9c0720' : '#333',
+                          background: selectedMunicipio === mun ? '#fce8e8' : 'transparent',
+                          cursor: 'pointer',
+                          transition: 'background 0.15s'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (selectedMunicipio !== mun) e.currentTarget.style.background = '#f5f5f5';
+                        }}
+                        onMouseLeave={(e) => {
+                          if (selectedMunicipio !== mun) e.currentTarget.style.background = 'transparent';
+                        }}
                       >
                         {getMuniFullName(mun)}
                       </div>
-                  ))}
+                    ))}
                   {municipiosUnicos.filter(mun => mun !== 'Todos' && getMuniFullName(mun).toLowerCase().includes(muniSearchText.toLowerCase())).length === 0 && (
-                    <div style={{ padding: '15px', textAlign: 'center', color: '#6b7280', fontStyle: 'italic' }}>
+                    <div style={{ padding: '1rem', textAlign: 'center', fontSize: '0.85rem', color: '#888' }}>
                       No se encontraron resultados
                     </div>
                   )}
                 </div>
-              </div>
+              </motion.div>
             )}
           </div>
 

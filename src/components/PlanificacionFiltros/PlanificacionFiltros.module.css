@@ -3,6 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   font-family: var(--font-body);
+  box-sizing: border-box;
 }
 
 /* Filters Header */
@@ -183,6 +184,8 @@
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0,0,0,0.02);
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tableResponsive {

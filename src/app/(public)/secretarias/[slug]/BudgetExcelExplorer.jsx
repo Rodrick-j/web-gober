@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
-import { Search, Download, Printer, RefreshCw, FileSpreadsheet, Layers, Coins } from 'lucide-react';
+import { useState, useMemo, useEffect, useRef } from 'react';
+import { Search, Download, Printer, RefreshCw, FileSpreadsheet, Layers, Coins, MapPin, X, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { ResponsivePie } from '@nivo/pie';
 import budgetsData from './municipalitiesBudgets.json';
 
@@ -97,6 +98,27 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
   const [selectedProy, setSelectedProy] = useState('ALL');
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 50;
+
+  const [isMuniDropdownOpen, setIsMuniDropdownOpen] = useState(false);
+  const [muniSearchTerm, setMuniSearchTerm] = useState('');
+  const muniDropdownRef = useRef(null);
+
+  const [isPrgDropdownOpen, setIsPrgDropdownOpen] = useState(false);
+  const [prgSearchTerm, setPrgSearchTerm] = useState('');
+  const prgDropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (muniDropdownRef.current && !muniDropdownRef.current.contains(event.target)) {
+        setIsMuniDropdownOpen(false);
+      }
+      if (prgDropdownRef.current && !prgDropdownRef.current.contains(event.target)) {
+        setIsPrgDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const rawRows = useMemo(() => {
     if (selectedMuni === 'TODOS') {
@@ -1061,42 +1083,313 @@ export default function BudgetExcelExplorer({ globalMunicipio, setGlobalMunicipi
       <section className="controls-row">
         <div className="search-select-group">
           {/* Municipality Dropdown */}
-          <select 
-            className="muni-selector" 
-            value={selectedMuni} 
-            onChange={(e) => {
-              setSelectedMuni(e.target.value);
-              setSelectedPrg('ALL');
-            }}
-          >
-            <option value="TODOS">Todos los Municipios (Toda la Región)</option>
-            {municipios.map(m => (
-              <option key={m.id} value={m.id}>
-                {m.nombre}
-              </option>
-            ))}
-          </select>
+          <div className="muni-selector-custom" ref={muniDropdownRef} style={{ position: 'relative', width: '100%', maxWidth: '100%', marginBottom: '10px' }}>
+            <div
+              onClick={() => setIsMuniDropdownOpen(!isMuniDropdownOpen)}
+              style={{
+                width: '100%',
+                background: '#fff',
+                color: '#1a1a2e',
+                border: '1px solid #dcdcdc',
+                borderRadius: '8px',
+                padding: '0.6rem 2.5rem 0.6rem 2.3rem',
+                fontSize: '0.94rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                position: 'relative'
+              }}
+            >
+              <MapPin size={16} color="#9c0720" style={{ position: 'absolute', left: '12px' }} />
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {selectedMuni === 'TODOS' ? 'Todos los Municipios' : (municipios.find(m => m.id === selectedMuni)?.nombre || selectedMuni)}
+              </span>
+              {selectedMuni !== 'TODOS' ? (
+                <X 
+                  size={16} 
+                  color="#555" 
+                  style={{ position: 'absolute', right: '35px', cursor: 'pointer' }} 
+                  onClick={(e) => { 
+                    e.stopPropagation(); 
+                    setSelectedMuni('TODOS');
+                    setSelectedPrg('ALL');
+                    setMuniSearchTerm('');
+                  }}
+                />
+              ) : null}
+              <ChevronDown size={18} color="#555" style={{ position: 'absolute', right: '12px', transform: isMuniDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+            </div>
+
+            {isMuniDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.15 }}
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  marginTop: '0.5rem',
+                  background: '#ffffff',
+                  border: '1px solid #eaeaea',
+                  borderRadius: '10px',
+                  boxShadow: '0 10px 35px rgba(0,0,0,0.1)',
+                  zIndex: 999,
+                  overflow: 'hidden'
+                }}
+              >
+                <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
+                  <Search size={16} color="#888" />
+                  <input
+                    type="text"
+                    placeholder="Buscar municipio..."
+                    value={muniSearchTerm}
+                    onChange={(e) => setMuniSearchTerm(e.target.value)}
+                    style={{
+                      width: '100%',
+                      border: 'none',
+                      outline: 'none',
+                      background: 'transparent',
+                      fontSize: '0.85rem',
+                      color: '#333'
+                    }}
+                    autoFocus
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+                <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
+                  <div
+                    onClick={() => {
+                      setSelectedMuni('TODOS');
+                      setSelectedPrg('ALL');
+                      setIsMuniDropdownOpen(false);
+                      setMuniSearchTerm('');
+                    }}
+                    style={{
+                      padding: '0.6rem 1rem',
+                      fontSize: '0.85rem',
+                      fontWeight: selectedMuni === 'TODOS' ? '800' : '500',
+                      color: selectedMuni === 'TODOS' ? '#9c0720' : '#333',
+                      background: selectedMuni === 'TODOS' ? '#fce8e8' : 'transparent',
+                      cursor: 'pointer',
+                      transition: 'background 0.15s'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (selectedMuni !== 'TODOS') e.currentTarget.style.background = '#f5f5f5';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (selectedMuni !== 'TODOS') e.currentTarget.style.background = 'transparent';
+                    }}
+                  >
+                    Todos los Municipios (Toda la Región)
+                  </div>
+                  {municipios
+                    .filter(m => m.nombre.toLowerCase().includes(muniSearchTerm.toLowerCase()))
+                    .map((muni) => (
+                      <div
+                        key={muni.id}
+                        onClick={() => {
+                          setSelectedMuni(muni.id);
+                          setSelectedPrg('ALL');
+                          setIsMuniDropdownOpen(false);
+                          setMuniSearchTerm('');
+                        }}
+                        style={{
+                          padding: '0.6rem 1rem',
+                          fontSize: '0.85rem',
+                          fontWeight: selectedMuni === muni.id ? '800' : '500',
+                          color: selectedMuni === muni.id ? '#9c0720' : '#333',
+                          background: selectedMuni === muni.id ? '#fce8e8' : 'transparent',
+                          cursor: 'pointer',
+                          transition: 'background 0.15s'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (selectedMuni !== muni.id) e.currentTarget.style.background = '#f5f5f5';
+                        }}
+                        onMouseLeave={(e) => {
+                          if (selectedMuni !== muni.id) e.currentTarget.style.background = 'transparent';
+                        }}
+                      >
+                        {muni.nombre}
+                      </div>
+                    ))}
+                  {municipios.filter(m => m.nombre.toLowerCase().includes(muniSearchTerm.toLowerCase())).length === 0 && (
+                    <div style={{ padding: '1rem', textAlign: 'center', fontSize: '0.85rem', color: '#888' }}>
+                      No se encontraron resultados
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </div>
 
           {/* Program Dropdown */}
-          <select
-            className="project-selector"
-            value={selectedPrg}
-            onChange={(e) => {
-              setSelectedPrg(e.target.value);
-              setSelectedProy('ALL');
-            }}
-          >
-            <option value="ALL">Todos los Programas</option>
-            {uniquePrograms.map((prog, idx) => {
-              const desc = prog.description || '';
-              const shortDesc = desc.length > 45 ? desc.substring(0, 45) + '...' : desc;
-              return (
-                <option key={idx} value={prog.prg}>
-                  PRG {prog.prg} : {shortDesc}
-                </option>
-              );
-            })}
-          </select>
+          <div className="muni-selector-custom" ref={prgDropdownRef} style={{ position: 'relative', width: '100%', maxWidth: '100%', marginBottom: '10px' }}>
+            <div
+              onClick={() => setIsPrgDropdownOpen(!isPrgDropdownOpen)}
+              style={{
+                width: '100%',
+                background: '#fff',
+                color: '#1a1a2e',
+                border: '1px solid #dcdcdc',
+                borderRadius: '8px',
+                padding: '0.6rem 2.5rem 0.6rem 2.3rem',
+                fontSize: '0.94rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                position: 'relative'
+              }}
+            >
+              <Layers size={16} color="#9c0720" style={{ position: 'absolute', left: '12px' }} />
+              <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                {selectedPrg === 'ALL' ? 'Todos los Programas' : (() => {
+                  const p = uniquePrograms.find(prog => prog.prg === selectedPrg);
+                  return p ? `PRG ${p.prg} : ${p.description || ''}` : selectedPrg;
+                })()}
+              </span>
+              {selectedPrg !== 'ALL' ? (
+                <X 
+                  size={16} 
+                  color="#555" 
+                  style={{ position: 'absolute', right: '35px', cursor: 'pointer' }} 
+                  onClick={(e) => { 
+                    e.stopPropagation(); 
+                    setSelectedPrg('ALL');
+                    setSelectedProy('ALL');
+                    setPrgSearchTerm('');
+                  }}
+                />
+              ) : null}
+              <ChevronDown size={18} color="#555" style={{ position: 'absolute', right: '12px', transform: isPrgDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
+            </div>
+
+            {isPrgDropdownOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.15 }}
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  marginTop: '0.5rem',
+                  background: '#ffffff',
+                  border: '1px solid #eaeaea',
+                  borderRadius: '10px',
+                  boxShadow: '0 10px 35px rgba(0,0,0,0.1)',
+                  zIndex: 999,
+                  overflow: 'hidden'
+                }}
+              >
+                <div style={{ padding: '0.5rem', borderBottom: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fcfcfc' }}>
+                  <Search size={16} color="#888" />
+                  <input
+                    type="text"
+                    placeholder="Buscar programa..."
+                    value={prgSearchTerm}
+                    onChange={(e) => setPrgSearchTerm(e.target.value)}
+                    style={{
+                      width: '100%',
+                      border: 'none',
+                      outline: 'none',
+                      background: 'transparent',
+                      fontSize: '0.85rem',
+                      color: '#333'
+                    }}
+                    autoFocus
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                </div>
+                <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
+                  <div
+                    onClick={() => {
+                      setSelectedPrg('ALL');
+                      setSelectedProy('ALL');
+                      setIsPrgDropdownOpen(false);
+                      setPrgSearchTerm('');
+                    }}
+                    style={{
+                      padding: '0.6rem 1rem',
+                      fontSize: '0.85rem',
+                      fontWeight: selectedPrg === 'ALL' ? '800' : '500',
+                      color: selectedPrg === 'ALL' ? '#9c0720' : '#333',
+                      background: selectedPrg === 'ALL' ? '#fce8e8' : 'transparent',
+                      cursor: 'pointer',
+                      transition: 'background 0.15s'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (selectedPrg !== 'ALL') e.currentTarget.style.background = '#f5f5f5';
+                    }}
+                    onMouseLeave={(e) => {
+                      if (selectedPrg !== 'ALL') e.currentTarget.style.background = 'transparent';
+                    }}
+                  >
+                    Todos los Programas
+                  </div>
+                  {uniquePrograms
+                    .filter(prog => {
+                      const desc = (prog.description || '').toLowerCase();
+                      const prgStr = (prog.prg || '').toLowerCase();
+                      const term = prgSearchTerm.toLowerCase();
+                      return desc.includes(term) || prgStr.includes(term);
+                    })
+                    .map((prog, idx) => {
+                      const desc = prog.description || '';
+                      const shortDesc = desc.length > 70 ? desc.substring(0, 70) + '...' : desc;
+                      return (
+                        <div
+                          key={idx}
+                          onClick={() => {
+                            setSelectedPrg(prog.prg);
+                            setSelectedProy('ALL');
+                            setIsPrgDropdownOpen(false);
+                            setPrgSearchTerm('');
+                          }}
+                          style={{
+                            padding: '0.6rem 1rem',
+                            fontSize: '0.85rem',
+                            fontWeight: selectedPrg === prog.prg ? '800' : '500',
+                            color: selectedPrg === prog.prg ? '#9c0720' : '#333',
+                            background: selectedPrg === prog.prg ? '#fce8e8' : 'transparent',
+                            cursor: 'pointer',
+                            transition: 'background 0.15s'
+                          }}
+                          onMouseEnter={(e) => {
+                            if (selectedPrg !== prog.prg) e.currentTarget.style.background = '#f5f5f5';
+                          }}
+                          onMouseLeave={(e) => {
+                            if (selectedPrg !== prog.prg) e.currentTarget.style.background = 'transparent';
+                          }}
+                        >
+                          <strong>PRG {prog.prg}</strong> : {shortDesc}
+                        </div>
+                      );
+                    })}
+                  {uniquePrograms.filter(prog => {
+                    const desc = (prog.description || '').toLowerCase();
+                    const prgStr = (prog.prg || '').toLowerCase();
+                    const term = prgSearchTerm.toLowerCase();
+                    return desc.includes(term) || prgStr.includes(term);
+                  }).length === 0 && (
+                    <div style={{ padding: '1rem', textAlign: 'center', fontSize: '0.85rem', color: '#888' }}>
+                      No se encontraron programas
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </div>
 
           {/* Sub-Project Dropdown */}
           {selectedPrg !== 'ALL' && (
