@@ -113,21 +113,23 @@ export default function PlanificacionSection({ secretariaId }) {
             <div style={{ 
               display: 'flex', 
               width: '100%',
-              gap: '0.2rem', 
+              gap: '0.75rem', 
               marginBottom: '2rem', 
               flexWrap: 'wrap',
-              background: '#f1f5f9',
-              padding: '0.35rem',
-              borderRadius: '12px',
-              border: '1px solid #e2e8f0',
-              boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
+              background: '#ffffff',
+              padding: '1rem',
+              borderRadius: '16px',
+              border: '1px solid #eaeaea',
+              boxShadow: '0 8px 25px rgba(0,0,0,0.06)',
+              alignItems: 'center'
             }}>
               <button
                 onClick={() => setViewMode('resumen')}
                 style={{
-                  background: viewMode === 'resumen' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  background: viewMode === 'resumen' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'resumen' ? '#ffffff' : '#475569',
-                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  border: viewMode === 'resumen' ? '1px solid transparent' : '1px solid #e2e8f0',
+                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
                   boxShadow: viewMode === 'resumen' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
@@ -136,9 +138,10 @@ export default function PlanificacionSection({ secretariaId }) {
               <button
                 onClick={() => setViewMode('dashboard')}
                 style={{
-                  background: viewMode === 'dashboard' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  background: viewMode === 'dashboard' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'dashboard' ? '#ffffff' : '#475569',
-                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  border: viewMode === 'dashboard' ? '1px solid transparent' : '1px solid #e2e8f0',
+                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
                   boxShadow: viewMode === 'dashboard' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
@@ -147,9 +150,10 @@ export default function PlanificacionSection({ secretariaId }) {
               <button
                 onClick={() => setViewMode('excel')}
                 style={{
-                  background: viewMode === 'excel' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  background: viewMode === 'excel' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'excel' ? '#ffffff' : '#475569',
-                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  border: viewMode === 'excel' ? '1px solid transparent' : '1px solid #e2e8f0',
+                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
                   boxShadow: viewMode === 'excel' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
@@ -158,9 +162,10 @@ export default function PlanificacionSection({ secretariaId }) {
               <button
                 onClick={() => setViewMode('filtros')}
                 style={{
-                  background: viewMode === 'filtros' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  background: viewMode === 'filtros' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'filtros' ? '#ffffff' : '#475569',
-                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  border: viewMode === 'filtros' ? '1px solid transparent' : '1px solid #e2e8f0',
+                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
                   boxShadow: viewMode === 'filtros' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
@@ -169,9 +174,10 @@ export default function PlanificacionSection({ secretariaId }) {
               <button
                 onClick={() => setViewMode('costos')}
                 style={{
-                  background: viewMode === 'costos' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  background: viewMode === 'costos' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'costos' ? '#ffffff' : '#475569',
-                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  border: viewMode === 'costos' ? '1px solid transparent' : '1px solid #e2e8f0',
+                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
                   boxShadow: viewMode === 'costos' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
@@ -180,9 +186,10 @@ export default function PlanificacionSection({ secretariaId }) {
               <button
                 onClick={() => setViewMode('programas2026')}
                 style={{
-                  background: viewMode === 'programas2026' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : 'transparent',
+                  background: viewMode === 'programas2026' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'programas2026' ? '#ffffff' : '#475569',
-                  border: 'none', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  border: viewMode === 'programas2026' ? '1px solid transparent' : '1px solid #e2e8f0',
+                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
                   boxShadow: viewMode === 'programas2026' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >

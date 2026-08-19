@@ -20,6 +20,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
   const setSelectedMuni = setGlobalMunicipio || setLocalMuni;
   const [isMobile, setIsMobile] = useState(false);
   const [isDrawing, setIsDrawing] = useState(true);
+  const [topCount, setTopCount] = useState(5);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -409,10 +410,19 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
               <div style={{ height: isMobile ? '270px' : '450px', position: 'relative' }}>
                 {activeView === 'programas' ? (
                   <ResponsivePie
-                    data={currentData.programas.map(item => ({
-                      ...item,
-                      value: isDrawing ? item.value : 0.001
-                    }))}
+                    data={(() => {
+                      const topProgramas = currentData.programas.slice(0, topCount);
+                      const sumTop = topProgramas.reduce((acc, p) => acc + p.value, 0);
+                      const othersValue = currentData.totalPresupuesto - sumTop;
+                      const finalData = [...topProgramas];
+                      if (othersValue > 0 && currentData.programas.length > topCount) {
+                        finalData.push({ id: 'Otros', label: 'Otros Programas', value: othersValue, color: '#e2e8f0' });
+                      }
+                      return finalData.map(item => ({
+                        ...item,
+                        value: isDrawing ? item.value : 0.001
+                      }));
+                    })()}
                     startAngle={isDrawing ? -90 : 90}
                     endAngle={isDrawing ? 270 : 90.1}
                     animate={true}
@@ -469,10 +479,13 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                   />
                 ) : (
                   <ResponsiveBar
-                    data={currentData.gruposGasto.map(item => ({
-                      ...item,
-                      value: isDrawing ? item.value : 0
-                    }))}
+                    data={(() => {
+                      const topGastos = currentData.gruposGasto.slice(0, topCount);
+                      return topGastos.map(item => ({
+                        ...item,
+                        value: isDrawing ? item.value : 0
+                      }));
+                    })()}
                     animate={true}
                     motionConfig={{ mass: 3, tension: 22, friction: 24 }}
                     keys={['value']}
@@ -566,13 +579,26 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
 
             {/* Highlights Sidebar */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', minWidth: '0' }}>
-              <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#1a1a2e', marginBottom: '0.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <TrendingUp size={18} color="#9c0720" /> Top {isMobile ? 12 : 5} Mayor Asignación ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
-              </h4>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.1rem' }}>
+                <h4 style={{ fontSize: '1rem', fontWeight: '800', color: '#1a1a2e', margin: 0, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <TrendingUp size={18} color="#9c0720" /> Top {topCount} Mayor Asignación ({activeView === 'gastos' ? 'Grupos' : 'Programas'})
+                </h4>
+                <div style={{ display: 'flex', gap: '0.3rem' }}>
+                  <button 
+                    onClick={() => setTopCount(prev => prev > 1 ? prev - 1 : 1)}
+                    style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '0.2rem 0.5rem', cursor: 'pointer', fontWeight: 'bold', color: '#1a1a2e' }}
+                    title="Reducir"
+                  >-</button>
+                  <button 
+                    onClick={() => setTopCount(prev => prev + 1)}
+                    style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '4px', padding: '0.2rem 0.5rem', cursor: 'pointer', fontWeight: 'bold', color: '#1a1a2e' }}
+                    title="Aumentar"
+                  >+</button>
+                </div>
+              </div>
               {(() => {
                 const itemsList = (activeView === 'gastos' ? currentData.gruposGasto : currentData.programas).sort((a, b) => b.value - a.value);
-                const limit = isMobile ? 12 : 5;
-                const visibleItems = itemsList.slice(0, limit);
+                const visibleItems = itemsList.slice(0, topCount);
                 
                 return (
                   <>
@@ -615,7 +641,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                         </div>
                       </motion.div>
                     ))}
-                    {itemsList.length > limit && (
+                    {itemsList.length > topCount && (
                       <button
                         onClick={() => setIsModalOpen(true)}
                         style={{
@@ -637,7 +663,7 @@ export default function BudgetDashboard({ globalMunicipio, setGlobalMunicipio })
                         onMouseEnter={(e) => { e.currentTarget.style.background = '#ffefef'; }}
                         onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
                       >
-                        Ver Todos ({itemsList.length - limit} más)
+                        Ver Todos ({itemsList.length - topCount} más)
                       </button>
                     )}
                   </>

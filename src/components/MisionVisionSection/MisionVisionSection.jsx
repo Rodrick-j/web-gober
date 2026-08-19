@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from 'react';
 import styles from './MisionVisionSection.module.css';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const MissionIcon = () => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -18,6 +19,12 @@ const VisionIcon = () => (
   </svg>
 );
 
+const ChevronIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="6 9 12 15 18 9"></polyline>
+  </svg>
+);
+
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
   visible: (i) => ({
@@ -28,6 +35,8 @@ const cardVariants = {
 };
 
 export default function MisionVisionSection({ mision, vision, titleClass, textClass }) {
+  const [openSection, setOpenSection] = useState(mision ? 'mision' : 'vision');
+
   if (!mision && !vision) return null;
 
   return (
@@ -40,21 +49,50 @@ export default function MisionVisionSection({ mision, vision, titleClass, textCl
           viewport={{ once: true, margin: '-40px' }}
           custom={0}
           variants={cardVariants}
-          whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
           <div className={styles.cardGlow} />
           <div className={styles.cardInner}>
-            <div className={styles.iconWrap}>
+            <button 
+              className={styles.iconWrap}
+              onClick={() => setOpenSection(openSection === 'mision' ? null : 'mision')}
+              style={{ width: '100%', border: 'none', background: 'transparent', padding: 0, cursor: 'pointer' }}
+            >
               <div className={styles.iconCircle}>
                 <MissionIcon />
               </div>
               <div className={styles.iconLabel}>MISIÓN</div>
-            </div>
-            <div className={styles.divider} />
-
-            <p className={`${styles.cardText} ${textClass || ''}`}>
-              {mision}
-            </p>
+              <div style={{
+                marginLeft: 'auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                background: 'rgba(139,0,0,0.05)',
+                color: '#8B0000',
+                transition: 'transform 0.3s ease',
+                transform: openSection === 'mision' ? 'rotate(180deg)' : 'rotate(0deg)'
+              }}>
+                <ChevronIcon />
+              </div>
+            </button>
+            
+            <AnimatePresence>
+              {openSection === 'mision' && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <div className={styles.divider} style={{ margin: '1.25rem 0 1rem' }} />
+                  <p className={`${styles.cardText} ${textClass || ''}`}>
+                    {mision}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           <div className={styles.cardAccent} />
         </motion.div>
@@ -68,21 +106,50 @@ export default function MisionVisionSection({ mision, vision, titleClass, textCl
           viewport={{ once: true, margin: '-40px' }}
           custom={1}
           variants={cardVariants}
-          whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
           <div className={styles.cardGlow} />
           <div className={styles.cardInner}>
-            <div className={styles.iconWrap}>
+            <button 
+              className={styles.iconWrap}
+              onClick={() => setOpenSection(openSection === 'vision' ? null : 'vision')}
+              style={{ width: '100%', border: 'none', background: 'transparent', padding: 0, cursor: 'pointer' }}
+            >
               <div className={`${styles.iconCircle} ${styles.iconCircleBlue}`}>
                 <VisionIcon />
               </div>
               <div className={`${styles.iconLabel} ${styles.iconLabelBlue}`}>VISIÓN</div>
-            </div>
-            <div className={styles.divider} />
-
-            <p className={`${styles.cardText} ${textClass || ''}`}>
-              {vision}
-            </p>
+              <div style={{
+                marginLeft: 'auto',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                background: 'rgba(30,64,175,0.05)',
+                color: '#1e40af',
+                transition: 'transform 0.3s ease',
+                transform: openSection === 'vision' ? 'rotate(180deg)' : 'rotate(0deg)'
+              }}>
+                <ChevronIcon />
+              </div>
+            </button>
+            
+            <AnimatePresence>
+              {openSection === 'vision' && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <div className={styles.divider} style={{ margin: '1.25rem 0 1rem' }} />
+                  <p className={`${styles.cardText} ${textClass || ''}`}>
+                    {vision}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           <div className={`${styles.cardAccent} ${styles.cardAccentBlue}`} />
         </motion.div>

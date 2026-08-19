@@ -18,7 +18,7 @@ export default function SecretariatTabs({ sec, slug }) {
     // Forzar lectura del nombre completo
     const nombreFull = sec.nombre || sec.nombre_corto || '';
     
-    const skipWords = ['de', 'y', 'la', 'el', 'las', 'los', 'en', 'para', 'del'];
+    const skipWords = ['de', 'y', 'e', 'la', 'el', 'las', 'los', 'en', 'para', 'del'];
     let abr = nombreFull.split(' ')
       .filter(w => w.trim() && !skipWords.includes(w.toLowerCase()))
       .map(w => w.charAt(0).toUpperCase())

@@ -23,9 +23,9 @@ export default function OrganigramaPage() {
         
         if (data && !error) {
           setSecretarias(data);
-          // Buscar Cultura y Turismo por defecto, o seleccionar la primera
-          const cultura = data.find(s => s.slug === 'cultura-turismo');
-          setSelectedSec(cultura || data[0]);
+          // Seleccionar Sec. General por defecto, o la primera si no existe
+          const secGeneral = data.find(s => s.slug.includes('general') || s.nombre_corto.includes('General'));
+          setSelectedSec(secGeneral || data[0]);
         }
       } catch (err) {
         console.error('Error cargando secretarías:', err);
@@ -84,7 +84,6 @@ export default function OrganigramaPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <p className={styles.filterLabel}>Seleccione una Secretaría Departamental</p>
               <div className={styles.chipsRow}>
                 {secretarias.map((s) => (
                   <button

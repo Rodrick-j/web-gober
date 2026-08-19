@@ -33,12 +33,12 @@ export default function GovernorSection() {
 
         <motion.div 
           className={styles.imageContent}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
+          transition={{ duration: 1.2, type: 'spring', bounce: 0.3 }}
         >
-          <div className={styles.imageWrapper}>
+          <div className={styles.imageWrapper} style={{ position: 'relative' }}>
             <Image
               src="/gober_oruro.jpg" 
               alt="Gobernador Eddgar Sánchez Aguirre"
@@ -49,6 +49,15 @@ export default function GovernorSection() {
               priority
               quality={80}
             />
+            {/* Overlay logo to cover watermark */}
+            <div style={{ position: 'absolute', bottom: '15px', left: '15px', width: '120px', height: '40px', zIndex: 10, background: 'rgba(255,255,255,0.7)', borderRadius: '8px', padding: '5px', backdropFilter: 'blur(4px)' }}>
+              <Image
+                src="/logo-gador.png"
+                alt="Gobierno Autónomo Departamental de Oruro"
+                fill
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
           </div>
         </motion.div>
       </div>
