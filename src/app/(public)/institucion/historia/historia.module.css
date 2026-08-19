@@ -11,7 +11,7 @@
 /* ============= HERO ============= */
 .hero {
   position: relative;
-  background: linear-gradient(135deg, rgba(50, 0, 0, 0.6) 0%, rgba(100, 0, 15, 0.4) 55%, rgba(150, 20, 25, 0.4) 100%), url('/banner_historia.jpg') center/cover no-repeat;
+  background: linear-gradient(135deg, rgba(50, 0, 0, 0.6) 0%, rgba(100, 0, 15, 0.4) 55%, rgba(150, 20, 25, 0.4) 100%), url('/municipios_banner.jpg') center/cover no-repeat;
   padding: calc(var(--navbar-height) + 2.5rem) 0 3rem;
   overflow: hidden;
 }
