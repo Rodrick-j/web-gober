@@ -11,7 +11,7 @@ export default function HistoriaInstitucionPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       <CenefaCultural />
-      <div style={{ paddingTop: '2rem' }}>
+      <div style={{ paddingTop: '0' }}>
         <HistorySection />
       </div>
     </div>
