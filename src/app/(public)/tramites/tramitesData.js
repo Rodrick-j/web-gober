@@ -76,7 +76,7 @@ export const catalogoTramites = [
     costo: '350 Bs. (Arancel departamental)',
     modalidad: 'Presencial',
     horario: 'Lunes a Viernes de 08:30 a 16:30',
-    ubicación: 'Palacio de la Gobernación - Plaza 10 de Febrero, Planta Baja',
+    ubicación: 'Palacio de la Gobernación - Calle Presidente Montes, Planta Baja',
     marcoLegal: 'Ley Departamental Nº 145/2018 y Código Civil Boliviano',
     requisitos: [
       'Memorial dirigido al Gobernador Departamental solicitando personería.',

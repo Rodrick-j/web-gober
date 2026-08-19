@@ -117,47 +117,13 @@ export default function HistoriaIndexClient() {
         {(() => {
           const isChakana = search === '' && filtered.length === 35;
           if (isChakana) {
-            const nonCapitals = [...filtered.filter(m => !m.esCapital)];
-            const capital = filtered.find(m => m.esCapital);
-            const layoutStructure = [
-              'E', 'E', 'M', 'M', 'M', 'E', 'E',
-              'E', 'M', 'M', 'M', 'M', 'M', 'E',
-              'M', 'M', 'M', 'M', 'M', 'M', 'M',
-              'M', 'M', 'C', 'M', 'M',
-              'M', 'M', 'M', 'M', 'M', 'M', 'M',
-              'E', 'M', 'M', 'M', 'M', 'M', 'E',
-              'E', 'E', 'M', 'M', 'M', 'E', 'E'
-            ];
-
-            let nonCapIdx = 0;
-
             return (
-              <div className={`${styles.municipiosGrid} ${styles.chakanaGrid}`}>
-                {layoutStructure.map((type, i) => {
-                  if (type === 'E') return <div key={`empty-${i}`} className={styles.emptySlot}></div>;
-                  if (type === 'C') {
-                    const m = capital;
-                    return (
-                      <Link key={m.slug} href={`/institucion/historia/${m.slug}`} className={`${styles.municipioCard} ${styles.chakanaCenter}`}>
-                        <ChakanaIcon className={styles.miniCardWatermark} />
-                        <span className={styles.capitalLabel}>Capital</span>
-                        <h3 className={styles.municipioNombre}>{m.nombre}</h3>
-                        {m.poblacion !== 'N/D' && <span className={styles.miniStats}>👥 {m.poblacion}</span>}
-                      </Link>
-                    );
-                  }
-                  if (type === 'M') {
-                    const m = nonCapitals[nonCapIdx++];
-                    return (
-                      <Link key={m.slug} href={`/institucion/historia/${m.slug}`} className={`${styles.municipioCard} ${styles.miniCard}`}>
-                        <ChakanaIcon className={styles.miniCardWatermark} />
-                        <h3 className={styles.municipioNombre}>{m.nombre}</h3>
-                        <p className={styles.municipioGentilicio}>{m.gentilicio}</p>
-                        {m.poblacion !== 'N/D' && <span className={styles.miniStats}>👥 {m.poblacion}</span>}
-                      </Link>
-                    );
-                  }
-                })}
+              <div style={{ width: '100%', height: '85vh', minHeight: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', marginTop: '2rem', marginBottom: '2rem' }}>
+                <iframe 
+                  src="/mapa/index.html" 
+                  style={{ width: '100%', height: '100%', border: 'none' }}
+                  title="Mapa Interactivo de Oruro"
+                />
               </div>
             );
           }

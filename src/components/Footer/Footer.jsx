@@ -76,7 +76,7 @@ export default async function Footer() {
           <div className={styles.contactInfo}>
             <div className={styles.contactItem}>
               <span className={styles.contactIcon}>📍</span>
-              <span>Plaza 10 de Febrero s/n<br/>Oruro, Bolivia</span>
+              <span>Calle Presidente Montes, entre Bolívar y Adolfo Mier<br/>Oruro, Bolivia</span>
             </div>
             <div className={styles.contactItem}>
               <span className={styles.contactIcon}>📞</span>
