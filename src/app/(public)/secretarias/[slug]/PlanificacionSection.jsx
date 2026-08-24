@@ -11,6 +11,7 @@ import PlanificacionFiltros from '@/components/PlanificacionFiltros/Planificacio
 import ResumenMunicipios from '@/components/ResumenMunicipios/ResumenMunicipios';
 import CostosConstruccion from '@/components/CostosConstruccion/CostosConstruccion';
 import Programas2026View from './Programas2026View';
+import PoaDbView from './PoaDbView';
 const provinciasOruro = [
   { nombre: "Cercado", municipios: ["Oruro", "Caracollo", "El Choro", "Soracachi (Paria)"] },
   { nombre: "Abaroa", municipios: ["Challapata", "Quillacas"] },
@@ -195,6 +196,18 @@ export default function PlanificacionSection({ secretariaId }) {
               >
                 <Briefcase size={18} /> Proyectos y Programas 2026
               </button>
+              <button
+                onClick={() => setViewMode('poadb')}
+                style={{
+                  background: viewMode === 'poadb' ? 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)' : '#f8f9fa',
+                  color: viewMode === 'poadb' ? '#ffffff' : '#475569',
+                  border: viewMode === 'poadb' ? '1px solid transparent' : '1px solid #e2e8f0',
+                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  boxShadow: viewMode === 'poadb' ? '0 4px 10px rgba(14,165,233,0.25)' : 'none'
+                }}
+              >
+                <BarChart3 size={18} /> POA en Tiempo Real
+              </button>
             </div>
 
             {viewMode === 'dashboard' && (
@@ -219,6 +232,10 @@ export default function PlanificacionSection({ secretariaId }) {
 
             {viewMode === 'costos' && (
               <CostosConstruccion />
+            )}
+
+            {viewMode === 'poadb' && (
+              <PoaDbView gestion={2025} />
             )}
 
 

@@ -118,10 +118,11 @@ export default function HistoriaIndexClient() {
           const isChakana = search === '' && filtered.length === 35;
           if (isChakana) {
             return (
-              <div style={{ width: '100%', height: '85vh', minHeight: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', marginTop: '2rem', marginBottom: '2rem' }}>
+              <div style={{ width: '100%', height: '85vh', minHeight: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', marginTop: '2rem', marginBottom: '2rem', position: 'relative' }}>
                 <iframe 
                   src="/mapa/index.html" 
-                  style={{ width: '100%', height: '100%', border: 'none' }}
+                  style={{ width: '100%', height: '100%', border: 'none', display: 'block', overflow: 'hidden' }}
+                  scrolling="no"
                   title="Mapa Interactivo de Oruro"
                 />
               </div>

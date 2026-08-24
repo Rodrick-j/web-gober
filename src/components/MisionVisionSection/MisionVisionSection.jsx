@@ -35,125 +35,65 @@ const cardVariants = {
 };
 
 export default function MisionVisionSection({ mision, vision, titleClass, textClass }) {
-  const [openSection, setOpenSection] = useState(mision ? 'mision' : 'vision');
+  const [activeTab, setActiveTab] = useState(mision ? 'mision' : 'vision');
 
   if (!mision && !vision) return null;
 
   return (
-    <div className={styles.container}>
-      {mision && (
-        <motion.div
-          className={`${styles.card} ${styles.misionCard}`}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-40px' }}
-          custom={0}
-          variants={cardVariants}
-        >
-          <div className={styles.cardGlow} />
-          <div className={styles.cardInner}>
-            <button 
-              className={styles.iconWrap}
-              onClick={() => setOpenSection(openSection === 'mision' ? null : 'mision')}
-              style={{ width: '100%', border: 'none', background: 'transparent', padding: 0, cursor: 'pointer' }}
-            >
-              <div className={styles.iconCircle}>
-                <MissionIcon />
-              </div>
-              <div className={styles.iconLabel}>MISIÓN</div>
-              <div style={{
-                marginLeft: 'auto',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: 'rgba(139,0,0,0.05)',
-                color: '#8B0000',
-                transition: 'transform 0.3s ease',
-                transform: openSection === 'mision' ? 'rotate(180deg)' : 'rotate(0deg)'
-              }}>
-                <ChevronIcon />
-              </div>
-            </button>
-            
-            <AnimatePresence>
-              {openSection === 'mision' && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  style={{ overflow: 'hidden' }}
-                >
-                  <div className={styles.divider} style={{ margin: '1.25rem 0 1rem' }} />
-                  <p className={`${styles.cardText} ${textClass || ''}`}>
-                    {mision}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-          <div className={styles.cardAccent} />
-        </motion.div>
-      )}
+    <div className={styles.tabsContainer}>
+      <div className={styles.tabButtons}>
+        {mision && (
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'mision' ? styles.tabBtnActiveMision : ''}`}
+            onClick={() => setActiveTab('mision')}
+          >
+            <MissionIcon />
+            <span>MISIÓN</span>
+          </button>
+        )}
+        {vision && (
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'vision' ? styles.tabBtnActiveVision : ''}`}
+            onClick={() => setActiveTab('vision')}
+          >
+            <VisionIcon />
+            <span>VISIÓN</span>
+          </button>
+        )}
+      </div>
 
-      {vision && (
-        <motion.div
-          className={`${styles.card} ${styles.visionCard}`}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-40px' }}
-          custom={1}
-          variants={cardVariants}
-        >
-          <div className={styles.cardGlow} />
-          <div className={styles.cardInner}>
-            <button 
-              className={styles.iconWrap}
-              onClick={() => setOpenSection(openSection === 'vision' ? null : 'vision')}
-              style={{ width: '100%', border: 'none', background: 'transparent', padding: 0, cursor: 'pointer' }}
+      <div className={styles.tabContentArea}>
+        <AnimatePresence mode="wait">
+          {activeTab === 'mision' && mision && (
+            <motion.div
+              key="mision"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className={`${styles.tabPanel} ${styles.tabPanelMision}`}
             >
-              <div className={`${styles.iconCircle} ${styles.iconCircleBlue}`}>
-                <VisionIcon />
-              </div>
-              <div className={`${styles.iconLabel} ${styles.iconLabelBlue}`}>VISIÓN</div>
-              <div style={{
-                marginLeft: 'auto',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                background: 'rgba(30,64,175,0.05)',
-                color: '#1e40af',
-                transition: 'transform 0.3s ease',
-                transform: openSection === 'vision' ? 'rotate(180deg)' : 'rotate(0deg)'
-              }}>
-                <ChevronIcon />
-              </div>
-            </button>
-            
-            <AnimatePresence>
-              {openSection === 'vision' && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  style={{ overflow: 'hidden' }}
-                >
-                  <div className={styles.divider} style={{ margin: '1.25rem 0 1rem' }} />
-                  <p className={`${styles.cardText} ${textClass || ''}`}>
-                    {vision}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-          <div className={`${styles.cardAccent} ${styles.cardAccentBlue}`} />
-        </motion.div>
-      )}
+              <p className={`${styles.cardText} ${textClass || ''}`}>
+                {mision}
+              </p>
+            </motion.div>
+          )}
+          {activeTab === 'vision' && vision && (
+            <motion.div
+              key="vision"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className={`${styles.tabPanel} ${styles.tabPanelVision}`}
+            >
+              <p className={`${styles.cardText} ${textClass || ''}`}>
+                {vision}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

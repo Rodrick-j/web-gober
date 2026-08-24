@@ -246,10 +246,42 @@ function selectProvince(pid) {
   const munisList = document.getElementById('municipiosList');
   munisList.innerHTML = '';
   document.getElementById('municipiosCount').innerText = `Municipios (${data.municipalities.length}):`;
+  // Helper to map municipality name to slug
+  const getSlug = (name) => {
+    let clean = name.toLowerCase().trim();
+    if (clean.includes('uru chipaya')) return 'chipaya';
+    if (clean.includes('salinas')) return 'salinas';
+    if (clean.includes('huari')) return 'santiago_de_huari';
+    if (clean.includes('huallamarca')) return 'huayllamarca';
+    if (clean.includes('eucaliptus')) return 'eucaliptos';
+    if (clean.includes('belén')) return 'belen_de_andamarca';
+    if (clean.includes('santiago de andamarca') || clean.includes('andamarca')) return 'santiago_de_andamarca';
+    if (clean.includes('pampa aullagas')) return 'pampa_aullagas';
+    if (clean.includes('yunguyo')) return 'yunyugo_de_litoral';
+    if (clean.includes('quillacas')) return 'santuario_de_quillacas';
+    
+    return clean
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove accents
+      .replace(/[^a-z0-9 ]/g, '') // remove symbols
+      .replace(/\s+/g, '_'); // replace spaces with underscores
+  };
+
   data.municipalities.forEach((m, idx) => {
-    const item = document.createElement('div');
+    const slug = getSlug(m);
+    const item = document.createElement('a');
+    item.href = `/institucion/historia/${slug}`;
+    item.target = '_parent';
     item.className = 'muni-item';
-    item.innerHTML = `<span>🏛️ ${m}</span><span class="muni-item-tag">Mun. ${idx + 1}</span>`;
+    item.style.textDecoration = 'none';
+    item.style.display = 'flex';
+    item.style.justifyContent = 'space-between';
+    item.style.color = 'inherit';
+    item.innerHTML = `<span>🏛️ ${m}</span><span class="muni-item-tag" style="background:var(--accent-cyan);color:#fff;">Ver Datos →</span>`;
+    
+    // Add hover effect since it's a link now
+    item.onmouseover = () => item.style.background = 'var(--bg-card-hover)';
+    item.onmouseout = () => item.style.background = 'transparent';
+    
     munisList.appendChild(item);
   });
 

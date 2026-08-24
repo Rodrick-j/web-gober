@@ -7,8 +7,8 @@ import Link from 'next/link';
 import { uploadFile, deleteFile } from '@/lib/supabase/storage';
 import FileUpload from '@/components/admin/FileUpload/FileUpload';
 
-// Add import at the top
 import PoaManager from './PoaManager';
+import EstadisticasManager from './EstadisticasManager';
 
 export default function EditarSecretariaPage({ params }) {
   const router = useRouter();
@@ -162,16 +162,21 @@ export default function EditarSecretariaPage({ params }) {
       <form onSubmit={handleSave} style={{ background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '14px', overflow: 'hidden' }}>
 
         {/* Tabs */}
-        <div style={{ display: 'flex', borderBottom: '1px solid var(--admin-border)', padding: '0 1.5rem', background: 'var(--admin-surface-2)' }}>
+        <div style={{ display: 'flex', borderBottom: '1px solid var(--admin-border)', padding: '0 1.5rem', background: 'var(--admin-surface-2)', overflowX: 'auto' }}>
           <button type="button" onClick={() => setActiveTab('identidad')} style={tabStyle('identidad')}>🎨 Identidad</button>
           <button type="button" onClick={() => setActiveTab('autoridad')} style={tabStyle('autoridad')}>👔 Autoridad</button>
           <button type="button" onClick={() => setActiveTab('contacto')} style={tabStyle('contacto')}>📞 Contacto</button>
+          <button type="button" onClick={() => setActiveTab('estadisticas')} style={tabStyle('estadisticas')}>📊 Estadísticas</button>
           {isPlanificacion && (
-            <button type="button" onClick={() => setActiveTab('poa')} style={tabStyle('poa')}>📄 Documentos POA</button>
+            <button type="button" onClick={() => setActiveTab('poa')} style={tabStyle('poa')}>📄 POA</button>
           )}
         </div>
 
         <div style={{ padding: '2rem' }}>
+
+          {activeTab === 'estadisticas' && (
+            <EstadisticasManager secretariaId={id} />
+          )}
 
           {activeTab === 'poa' && isPlanificacion && (
             <PoaManager secretariaId={id} />

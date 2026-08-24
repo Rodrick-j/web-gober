@@ -4,6 +4,7 @@ import Image from 'next/image';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import PlanificacionSection from '@/app/(public)/secretarias/[slug]/PlanificacionSection';
 import { secretariasContactData } from '@/data/secretariasContactData';
+import EstadisticasSection from '@/components/EstadisticasSection/EstadisticasSection';
 import styles from './SecretariatTabs.module.css';
 
 export default function SecretariatTabs({ sec, slug }) {
@@ -90,6 +91,8 @@ export default function SecretariatTabs({ sec, slug }) {
             {!sec.descripcion && !sec.mision && !sec.vision && (
               <p className={styles.emptyText}>La información detallada de esta secretaría se está actualizando.</p>
             )}
+            {/* Indicadores dinámicos desde la BD */}
+            <EstadisticasSection secretariaId={sec.id} colorAcento={sec.color_acento} />
           </div>
         )}
 
