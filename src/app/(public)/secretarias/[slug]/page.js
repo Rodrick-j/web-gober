@@ -101,6 +101,11 @@ export default async function SecretariaDetailPage({ params }) {
     sec.video_url = '/video-desarrollo-social.mp4';
   }
 
+  // Override para secretaría general
+  if (slug.includes('general')) {
+    sec.video_url = '/video-secretaria-general.mp4';
+  }
+
   const acento = sec.color_acento || '#8B0000';
   
   const hasSpecificVideo = sec.video_url && sec.video_url.trim() !== '';
