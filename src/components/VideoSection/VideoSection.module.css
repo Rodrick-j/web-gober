@@ -6,10 +6,10 @@
 
 .videosGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -150,5 +150,19 @@
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .videosGrid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 576px) {
+  .videosGrid {
+    grid-template-columns: 1fr;
   }
 }

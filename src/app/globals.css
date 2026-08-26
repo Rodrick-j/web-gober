@@ -209,7 +209,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .section {
-  padding: var(--spacing-2xl) 0;
+  padding: var(--spacing-xl) 0;
 }
 
 .section-alt {
