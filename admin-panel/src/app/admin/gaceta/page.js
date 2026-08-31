@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { getAdminUser } from '@/lib/auth';
 import Link from 'next/link';
 import { revalidatePath } from 'next/cache';
 import styles from './page.module.css';
@@ -43,6 +44,7 @@ function chipStyle(active, color) {
 }
 
 export default async function GacetaPage({ searchParams }) {
+  await getAdminUser(); // redirige a /admin/login si no hay sesión de admin
   const params = await searchParams;
   const activeTab  = params?.tab  || 'todos';
   const activeAnio = params?.anio || 'todos';

@@ -1,11 +1,22 @@
 .footer {
-  background: var(--color-primary) !important; /* Mismo color principal que en el resto de la web */
-  color: #ffffff !important;
+  background: linear-gradient(135deg, #67181a 0%, #9c0720 100%) !important; /* Rojo Carmesí Oficial con gradiente elegante */
+  color: #ffffff !important; 
   font-family: var(--font-body);
   position: relative;
   overflow: hidden;
-  border-top: 4px solid #ffd27a !important; /* Borde superior en dorado imperial */
-  box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+  border-top: 4px solid #ffb843 !important; /* Acento en oro oficial */
+  box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+}
+
+/* Pseudo-elemento para simular una textura sutil sobre el fondo carmesí */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .brandColumn {
@@ -21,23 +32,25 @@
 }
 
 .socialIconsRow a {
-  color: #ffffff;
+  color: #ffffff; /* Iconos blancos */
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.6rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 184, 67, 0.3); /* Borde dorado translúcido */
   border-radius: 50%;
+  position: relative;
+  z-index: 2;
 }
 
 .socialIconsRow a:hover {
-  color: #9c0720;
-  background: #ffd27a;
-  border-color: #ffd27a;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(255, 210, 122, 0.4);
+  color: #67181a;
+  background: #ffb843;
+  border-color: #ffb843;
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 6px 15px rgba(255, 184, 67, 0.4);
 }
 
 /* Antiguos estilos de topBand removidos porque ahora el logo está en la grilla */
@@ -56,13 +69,13 @@
   font-family: var(--font-heading);
   font-size: 0.98rem;
   font-weight: 800;
-  color: #ffffff !important;
+  color: #ffffff !important; 
   text-transform: uppercase;
   letter-spacing: 1.2px;
   margin-bottom: 1.25rem;
   position: relative;
   padding-bottom: 0.6rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .colTitle::after {
@@ -72,7 +85,7 @@
   left: 0;
   width: 45px;
   height: 3px;
-  background-color: #ffd27a; /* Dorado imperial */
+  background-color: #ffb843; /* Oro oficial */
   border-radius: 2px;
   transition: width 0.3s ease;
 }
@@ -91,26 +104,26 @@
 }
 
 .footerLink {
-  color: #ffffff !important;
-  background: rgba(255, 255, 255, 0.12) !important; /* Cápsulas translúcidas en el fondo carmesí */
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  padding: 0.4rem 0.7rem;
+  color: rgba(255, 255, 255, 0.9) !important;
+  background: rgba(0, 0, 0, 0.15) !important; /* Fondo translúcido oscuro */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 0.45rem 0.8rem;
   border-radius: 6px;
   text-decoration: none;
-  font-size: 0.78rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 500;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: inline-flex;
   align-items: center;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(4px);
 }
 
 .footerLink:hover {
-  color: #9c0720 !important;
-  background: #ffffff !important; /* Iluminación en blanco al hacer hover */
-  border-color: #ffffff !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  color: #67181a !important;
+  background: #ffb843 !important; /* Hover en oro vibrante */
+  border-color: #ffb843 !important;
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(255, 184, 67, 0.3);
 }
 
 .contactInfo {
@@ -123,35 +136,39 @@
   display: flex;
   align-items: flex-start;
   gap: 1rem;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5;
   transition: color 0.3s ease;
+  position: relative;
+  z-index: 2;
 }
 
 .contactItem:hover {
-  color: #ffd27a;
+  color: #ffb843;
 }
 
 .contactIcon {
-  color: #ffd27a;
+  color: #ffb843;
   font-size: 1.25rem;
   flex-shrink: 0;
   margin-top: 2px;
 }
 
 .bottomBar {
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.22);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  background: #2b0408; /* Rojo muy oscuro, más elegante que el plomo */
   padding: 1.5rem 2rem;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.82);
+  color: #e0e0e0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  position: relative;
+  z-index: 2;
 }
 
 .bottomBar span {
@@ -165,14 +182,14 @@
 }
 
 .bottomLinks a {
-  color: rgba(255, 255, 255, 0.85);
+  color: #ffffff;
   text-decoration: none;
   transition: color 0.2s;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .bottomLinks a:hover {
-  color: #ffd27a;
+  color: #ffb843;
 }
 
 @media (max-width: 768px) {

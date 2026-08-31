@@ -1,9 +1,11 @@
 import { createClient } from '@/lib/supabase/server';
+import { getAdminUser } from '@/lib/auth';
 import Link from 'next/link';
 
 export const metadata = { title: 'Secretarías — Admin GADOR' };
 
 export default async function SecretariasAdminPage() {
+  await getAdminUser(); // redirige a /admin/login si no hay sesión de admin
   const supabase = await createClient();
 
   const { data: secretarias, error } = await supabase

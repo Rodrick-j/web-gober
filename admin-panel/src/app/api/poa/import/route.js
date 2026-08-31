@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { verifyAdminSession } from '@/lib/auth';
 import { NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
 
@@ -13,12 +14,12 @@ function parseMonto(val) {
 // ─── POST /api/poa/import ─────────────────────────────────────────────────────
 export async function POST(request) {
   try {
-    // Auth check
-    const supabase = await createClient();
-    const { data: { user }, error: authErr } = await supabase.auth.getUser();
-    if (authErr || !user) {
+    // Auth check — debe ser un administrador activo (no basta con estar logueado)
+    const session = await verifyAdminSession();
+    if (!session) {
       return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
+    const supabase = await createClient();
 
     // Parse multipart form
     const formData = await request.formData();

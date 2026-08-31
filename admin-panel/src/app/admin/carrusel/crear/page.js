@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { uploadFile } from '@/lib/supabase/storage';
 import MultiFileUpload from '@/components/admin/FileUpload/MultiFileUpload';
+import FileUpload from '@/components/admin/FileUpload/FileUpload';
 
 export default function CrearBannerPage() {
   const router = useRouter();
   const supabase = createClient();
 
   const [imagenes, setImagenes] = useState([]);
+  const [imagenMovil, setImagenMovil] = useState(null);
   const [guardando, setGuardando] = useState(false);
   const [errorMsj, setErrorMsj] = useState('');
 
@@ -34,6 +36,13 @@ export default function CrearBannerPage() {
       
       let nextOrder = maxOrderData && maxOrderData.length > 0 ? maxOrderData[0].orden + 1 : 1;
 
+      // La imagen móvil (vertical) solo aplica cuando se sube UNA sola imagen principal.
+      // Para varias, se agrega la versión móvil por banner desde "Editar".
+      let imagenMovilUrl = null;
+      if (imagenes.length === 1 && imagenMovil) {
+        imagenMovilUrl = await uploadFile(imagenMovil, 'general');
+      }
+
       // Subir y guardar cada imagen
       for (const img of imagenes) {
         // 1. Subir imagen
@@ -45,6 +54,7 @@ export default function CrearBannerPage() {
           .insert({
             titulo: '', // Por defecto sin título cuando es subida múltiple
             imagen_url: imagenUrl,
+            imagen_movil_url: imagenMovilUrl,
             orden: nextOrder
           });
 
@@ -77,7 +87,7 @@ export default function CrearBannerPage() {
         <div>
           <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--admin-text)', marginBottom: '0.25rem' }}>Consejos de formato</h3>
           <p style={{ fontSize: '0.85rem', color: 'var(--admin-text-muted)', lineHeight: '1.5' }}>
-            Las imágenes deben ser horizontales (preferiblemente de <strong>1920x1080px</strong>). Evita fotos con mucho texto, ya que la página añade su propio texto superpuesto de forma automática.
+            Imagen de escritorio: horizontal, <strong>1920x1080px</strong> (16:9). Imagen de celular: vertical, <strong>1080x1350px</strong> (4:5), con el contenido importante centrado. Evita fotos con mucho texto pegado a los bordes: en celular se muestra la imagen completa y el texto lo añade la página.
           </p>
         </div>
       </div>
@@ -102,6 +112,22 @@ export default function CrearBannerPage() {
             />
             <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.5rem' }}>
               Puedes elegir varias imágenes a la vez. Se recomienda resolución 1920x1080px (horizontal).
+            </p>
+          </div>
+
+          <div>
+            <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.5rem' }}>
+              Imagen para celular (opcional)
+            </label>
+            <FileUpload
+              onFileSelect={setImagenMovil}
+              accept="image/*"
+              label="Versión vertical del banner para móviles"
+              icon="📱"
+            />
+            <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.5rem' }}>
+              Vertical, <strong>1080x1350px</strong> (4:5). Solo se aplica si arriba subes <strong>una sola</strong> imagen principal.
+              Si subes varias, agrega la versión móvil de cada banner después, desde <strong>Editar</strong>.
             </p>
           </div>
 

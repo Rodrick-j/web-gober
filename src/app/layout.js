@@ -1,4 +1,5 @@
 import { Inter, Outfit } from 'next/font/google';
+import ThemeInjector from '@/components/ThemeInjector/ThemeInjector';
 import './globals.css';
 import Script from 'next/script';
 
@@ -31,8 +32,9 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
-        <ConsoleSuppressor />
+        <ThemeInjector />
         {children}
+        <ConsoleSuppressor />
         <Script id="google-translate-init" strategy="afterInteractive">
           {`
             function googleTranslateElementInit() {

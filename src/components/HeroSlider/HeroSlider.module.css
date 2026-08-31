@@ -320,10 +320,13 @@
 }
 
 @media (max-width: 768px) {
-  .sliderSection { 
-    height: 60vh; /* Altura fija relativa a la pantalla para evitar recortes extremos */
-    max-height: 600px; 
-    min-height: 400px; 
+  .sliderSection {
+    /* El marco toma la proporción del banner (16:9). Así la imagen llena
+       el ancho completo, sin franjas vacías y sin fondo borroso. */
+    height: auto;
+    aspect-ratio: 16 / 9;
+    max-height: none;
+    min-height: 0;
   }
   .glassCard {
     padding: 1.5rem;
@@ -331,13 +334,21 @@
   }
   .slideTitle { font-size: 1.3rem; }
   .slideDesc { font-size: 0.9rem; margin-bottom: 1.5rem; }
-  
-  .mainImage {
-    transform: scale(1.1);
-  }
+
+  /* Imagen a lo ancho del marco. Como el marco ya es 16:9, un banner
+     1920x1080 encaja exacto: sin recorte y sin bordes. */
+  .mainImage,
   :global(.swiper-slide-active) .mainImage {
-    transform: scale(1.15);
+    object-fit: cover;
+    transform: none;
   }
+
+  /* Sin fondo borroso en celular */
+  .blurredBg { display: none !important; }
+
+  /* El contenido no empuja la altura del marco corto */
+  .slideInner { padding-bottom: 0; }
+  .gradientOverlay { background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 45%, transparent 70%); }
   
   .controlsContainer { 
     padding: 0 0.5rem; 

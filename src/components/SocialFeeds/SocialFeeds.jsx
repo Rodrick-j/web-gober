@@ -4,11 +4,6 @@ import React, { useState } from 'react';
 import styles from './SocialFeeds.module.css';
 
 export default function SocialFeeds({ redes }) {
-  const [fbLikes, setFbLikes] = useState(482);
-  const [igLikes, setIgLikes] = useState(640);
-  const [tkLikes, setTkLikes] = useState(1280);
-  const [ytLikes, setYtLikes] = useState(540);
-
   // URLs por defecto si no existen
   const fbUrl = redes?.facebook && redes.facebook !== '#' ? redes.facebook : 'https://www.facebook.com/GobernacionDeOruro';
   const igUrl = redes?.instagram && redes.instagram !== '#' ? redes.instagram : 'https://www.instagram.com/infounicom.gador/';
@@ -54,16 +49,11 @@ export default function SocialFeeds({ redes }) {
           </div>
           
           <div className={styles.postPreview}>
-            <p className={styles.postText}>Entrega oficial de equipamiento vial e insumos prioritarios para el desarrollo de nuestras 16 provincias. ¡Trabajando por Oruro en tiempo real! 🇧🇴✨</p>
-            <img src="/banner-mineria.png" alt="Post" className={styles.postImage} />
+            <p className={styles.postText}>Síguenos en nuestra página oficial de Facebook para enterarte de las últimas noticias, transmisiones en vivo y comunicados oficiales de la Gobernación.</p>
           </div>
 
           <div className={styles.cardFooter}>
-            <div className={styles.engagement}>
-              <span onClick={() => setFbLikes(l => l+1)} style={{cursor: 'pointer'}}>❤️ {fbLikes}</span>
-              <span>💬 54</span>
-            </div>
-            <a href={fbUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.fbBtn}`}>Seguir</a>
+            <a href={fbUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.fbBtn}`} style={{width: '100%', textAlign: 'center'}}>Visitar Facebook</a>
           </div>
         </div>
 
@@ -83,16 +73,11 @@ export default function SocialFeeds({ redes }) {
           </div>
           
           <div className={styles.postPreview}>
-            <p className={styles.postText}>¡Avanzando juntos por la gestión departamental! Inspección de infraestructura, salud y obras productivas en el territorio. #Oruro2026 ✨</p>
-            <img src="/gober_oruro.jpg" alt="Post" className={styles.postImage} />
+            <p className={styles.postText}>Explora nuestra galería visual. Descubre las obras, proyectos y la riqueza cultural de las 16 provincias a través de nuestras fotografías y reels oficiales.</p>
           </div>
 
           <div className={styles.cardFooter}>
-            <div className={styles.engagement}>
-              <span onClick={() => setIgLikes(l => l+1)} style={{cursor: 'pointer'}}>❤️ {igLikes}</span>
-              <span>💬 82</span>
-            </div>
-            <a href={igUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.igBtn}`}>Seguir</a>
+            <a href={igUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.igBtn}`} style={{width: '100%', textAlign: 'center'}}>Visitar Instagram</a>
           </div>
         </div>
 
@@ -102,7 +87,7 @@ export default function SocialFeeds({ redes }) {
             <div className={styles.userInfo}>
               <img loading="lazy" src="/logo-gador.png" alt="Gobernación" className={styles.avatar} />
               <div>
-                <h3 className={styles.name}>Gobierno de Unidad <span className={styles.verified} style={{background: '#000'}}>✓</span></h3>
+                <h3 className={styles.name}>Gobernación Departamental <span className={styles.verified} style={{background: '#000'}}>✓</span></h3>
                 <span className={styles.handle}>{extractHandle(tkUrl, '@')}</span>
               </div>
             </div>
@@ -112,19 +97,11 @@ export default function SocialFeeds({ redes }) {
           </div>
           
           <div className={styles.postPreview}>
-            <p className={styles.postText}>¡Oruro avanza en infraestructura vial y caminos de progreso! 🚀 Infraestructura para unir a nuestra gente.</p>
-            <div className={styles.videoWrapper}>
-              <img src="/icono-planificacion.jpg" alt="Post" className={styles.postImage} />
-              <div className={styles.playIconOverlay}>▶</div>
-            </div>
+            <p className={styles.postText}>Acompáñanos en TikTok para ver el lado dinámico de nuestra gestión, contenido interactivo y resúmenes ágiles de nuestras actividades diarias.</p>
           </div>
 
           <div className={styles.cardFooter}>
-            <div className={styles.engagement}>
-              <span onClick={() => setTkLikes(l => l+1)} style={{cursor: 'pointer'}}>❤️ {tkLikes}</span>
-              <span>💬 142</span>
-            </div>
-            <a href={tkUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.tkBtn}`}>Seguir</a>
+            <a href={tkUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.tkBtn}`} style={{width: '100%', textAlign: 'center'}}>Visitar TikTok</a>
           </div>
         </div>
 
@@ -144,24 +121,11 @@ export default function SocialFeeds({ redes }) {
           </div>
           
           <div className={styles.postPreview}>
-            <p className={styles.postText}>Resumen Semanal: Obras públicas, proyectos de electrificación y desarrollo económico departamental.</p>
-            <div className={styles.iframeWrapper}>
-              <iframe 
-                src="https://www.youtube.com/embed/J_tN0u8M3gY?rel=0&modestbranding=1" 
-                title="Canal Oficial YouTube" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen 
-              />
-            </div>
+            <p className={styles.postText}>Suscríbete a nuestro canal oficial para acceder a conferencias de prensa completas, documentales informativos y reportes semanales de gestión.</p>
           </div>
 
           <div className={styles.cardFooter}>
-            <div className={styles.engagement}>
-              <span onClick={() => setYtLikes(l => l+1)} style={{cursor: 'pointer'}}>👍 {ytLikes}</span>
-              <span>👁️ 1.4K</span>
-            </div>
-            <a href={ytUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.ytBtn}`}>Suscribirse</a>
+            <a href={ytUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.ytBtn}`} style={{width: '100%', textAlign: 'center'}}>Ir al Canal</a>
           </div>
         </div>
 

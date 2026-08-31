@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { getAdminUser } from '@/lib/auth';
 import Link from 'next/link';
 import { revalidatePath } from 'next/cache';
 import styles from './page.module.css';
@@ -25,6 +26,7 @@ function formatFecha(fechaStr) {
 }
 
 export default async function TransparenciaPage({ searchParams }) {
+  await getAdminUser(); // redirige a /admin/login si no hay sesión de admin
   try {
     const params = await searchParams;
     const activeTab = params?.tab || 'rendicion_cuentas';

@@ -1,5 +1,6 @@
 import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
+import ThemeCustomizer from '@/components/ThemeCustomizer/ThemeCustomizer';
 
 // Cloudflare Workers requiere Edge Runtime en todas las rutas
 // export const runtime = 'edge';
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         {children}
+        <ThemeCustomizer />
       </body>
     </html>
   );

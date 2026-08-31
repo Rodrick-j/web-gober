@@ -1,0 +1,118 @@
+.themeCustomizer {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+}
+
+.toggleBtn {
+  background: var(--color-primary, #1a1a1a);
+  color: white;
+  border: none;
+  border-radius: 8px 0 0 8px;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.toggleBtn:hover {
+  filter: brightness(1.2);
+}
+
+.panel {
+  background: white;
+  width: 280px;
+  padding: 20px;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+  border-radius: 12px 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.panelTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.colorGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.colorLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.colorPicker {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 0;
+  background: none;
+}
+
+.colorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.colorPicker::-webkit-color-swatch {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.hexInput {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.saveBtn {
+  margin-top: 10px;
+  background: var(--color-primary, #1a1a1a);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.saveBtn:hover {
+  opacity: 0.9;
+}
+
+.statusMsg {
+  font-size: 0.8rem;
+  text-align: center;
+  color: #4CAF50;
+  font-weight: 600;
+  margin-top: 5px;
+}

@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { getAdminUser } from '@/lib/auth';
 import { notFound } from 'next/navigation';
 import EditarCarruselForm from './EditarCarruselForm';
 import Link from 'next/link';
@@ -8,6 +9,7 @@ export const metadata = {
 };
 
 export default async function EditarBannerPage({ params }) {
+  await getAdminUser(); // redirige a /admin/login si no hay sesión de admin
   const { id } = await params;
   const supabase = await createClient();
 
