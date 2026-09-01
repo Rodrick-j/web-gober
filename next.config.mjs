@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
   // Permitir archivos grandes (hasta 50MB) en Server Actions y API Routes
   experimental: {
     serverActions: {
@@ -9,6 +8,7 @@ const nextConfig = {
   },
   images: {
     qualities: [10, 20, 30, 40, 50, 60, 70, 75, 80, 85, 90, 95, 100],
+    formats: ['image/avif', 'image/webp'],
     // Dominios remotos permitidos
     remotePatterns: [
       {
@@ -22,9 +22,7 @@ const nextConfig = {
         pathname: '/storage/v1/object/public/**',
       },
     ],
-    // Cloudflare Workers no tiene servidor de optimización de imágenes de Next.js.
-    // Las imágenes se sirven directamente desde Supabase CDN (ya optimizadas en origen).
-    unoptimized: true,
+    // Vercel optimiza las imágenes (WebP/AVIF + resize automático).
   },
   // Cabeceras de seguridad HTTP (Security Headers) para proteger contra ataques en producción
   async headers() {
