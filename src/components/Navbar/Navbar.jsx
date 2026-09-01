@@ -39,6 +39,11 @@ const navItems = [
       { label: 'Datos de Municipio', Icon: BookOpen, href: '/institucion/historia' },
       { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
       { label: 'Marco Normativo', Icon: Scale, href: '/institucion/marco-normativo' },
+      { label: 'Información Financiera', Icon: Coins, href: '/institucion/informacion-financiera' },
+      { label: 'Recursos Humanos', Icon: User, href: '/institucion/recursos-humanos' },
+      { label: 'Desarrollo Organizacional', Icon: GitMerge, href: '/institucion/desarrollo-organizacional' },
+      { label: 'Contrataciones', Icon: FileSignature, href: '/institucion/contrataciones' },
+      { label: 'Licitación Pública', Icon: Gavel, href: '/institucion/licitacion-publica' },
     ],
   },
   {
