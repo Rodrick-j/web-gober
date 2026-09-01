@@ -74,6 +74,7 @@ export default function HeroSlider({ banners, redes }) {
                   fill
                   sizes="100vw"
                   priority={index === 0}
+                  unoptimized={true}
                   className={`${styles.mainImage} ${banner.imagen_movil_url ? styles.hideOnMobile : ''}`}
                 />
                 {banner.imagen_movil_url && (
@@ -83,12 +84,15 @@ export default function HeroSlider({ banners, redes }) {
                     fill
                     sizes="100vw"
                     priority={index === 0}
+                    unoptimized={true}
                     className={`${styles.mainImage} ${styles.showOnlyOnMobile}`}
                   />
                 )}
               </div>
               
-              <div className={styles.gradientOverlay} />
+              {(banner.titulo || banner.enlace_url) && (
+                <div className={styles.gradientOverlay} />
+              )}
 
               {(banner.titulo || banner.enlace_url) && (
                 <div className={styles.slideContentContainer}>
