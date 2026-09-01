@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import PlanificacionSection from '@/app/(public)/secretarias/[slug]/PlanificacionSection';
+import Programas2026View from '@/app/(public)/secretarias/[slug]/Programas2026View';
 import { secretariasContactData } from '@/data/secretariasContactData';
 import EstadisticasSection from '@/components/EstadisticasSection/EstadisticasSection';
 import styles from './SecretariatTabs.module.css';
@@ -11,6 +12,7 @@ export default function SecretariatTabs({ sec, slug }) {
   const [activeTab, setActiveTab] = useState('acerca');
   const [showFullBio, setShowFullBio] = useState(false);
   const hasPlanificacion = slug.includes('planificacion');
+  const hasProgramas = slug.includes('finanzas');
   const contactOverride = secretariasContactData[slug];
 
   const getAbreviatura = (sec) => {
@@ -67,6 +69,15 @@ export default function SecretariatTabs({ sec, slug }) {
             style={{ '--acento': sec.color_acento || '#8b0000' }}
           >
             Planificación Departamental
+          </button>
+        )}
+        {hasProgramas && (
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'programas' ? styles.active : ''}`}
+            onClick={() => setActiveTab('programas')}
+            style={{ '--acento': sec.color_acento || '#8b0000' }}
+          >
+            Proyectos y Programas
           </button>
         )}
       </div>
@@ -240,6 +251,12 @@ export default function SecretariatTabs({ sec, slug }) {
         {activeTab === 'planificacion' && hasPlanificacion && (
           <div className={styles.contentBlockFull}>
             <PlanificacionSection secretariaId={sec.id} />
+          </div>
+        )}
+
+        {activeTab === 'programas' && hasProgramas && (
+          <div className={styles.contentBlockFull} style={{ padding: '0', background: 'transparent' }}>
+            <Programas2026View />
           </div>
         )}
       </div>

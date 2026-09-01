@@ -299,7 +299,7 @@ h1, h2, h3, h4, h5, h6 {
 .btn-outline {
   border: 2px solid var(--color-primary);
   color: var(--color-primary);
-  background: transparent;
+  background: transparent !important;
 }
 
 .btn-outline:hover {
