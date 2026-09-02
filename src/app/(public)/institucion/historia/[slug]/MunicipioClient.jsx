@@ -179,10 +179,7 @@ export default function MunicipioClient({ mun, allMunicipios }) {
                     <th>Alcalde Municipal</th>
                     <td><strong>{mun.alcalde !== 'N/D' ? mun.alcalde : <span style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>No disponible</span>}</strong></td>
                   </tr>
-                  <tr>
-                    <th>Partido Político</th>
-                    <td>{mun.partido !== 'N/D' ? <span className={styles.chip}>🌿 {mun.partido}</span> : <span style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>No disponible</span>}</td>
-                  </tr>
+
                 </tbody>
               </table>
             </div>

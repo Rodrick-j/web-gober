@@ -288,8 +288,8 @@
 }
 
 .socialIcon {
-  width: 44px;
-  height: 44px;
+  width: 34px;
+  height: 34px;
   background: var(--color-primary);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
@@ -301,7 +301,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.socialIcon svg { width: 20px; height: 20px; }
+.socialIcon svg { width: 16px; height: 16px; }
 
 /* Oruro Colors on Hover */
 .socialIcon:hover {

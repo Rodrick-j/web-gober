@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import AdminShell from '@/components/admin/AdminShell/AdminShell';
 import FileUpload from '@/components/admin/FileUpload/FileUpload';
 import styles from './InstitucionDocumentos.module.css';
 import { Plus, Trash2, FileText, Search } from 'lucide-react';
@@ -104,7 +103,7 @@ export default function InstitucionDocumentosAdmin() {
     : documentos.filter(d => d.categoria === filtroCategoria);
 
   return (
-    <AdminShell>
+    <>
       <div className={styles.container}>
         <div className={styles.header}>
           <div>
@@ -248,6 +247,6 @@ export default function InstitucionDocumentosAdmin() {
           </div>
         </div>
       )}
-    </AdminShell>
+    </>
   );
 }

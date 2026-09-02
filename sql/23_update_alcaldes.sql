@@ -1,0 +1,36 @@
+-- Actualización masiva de Alcaldes (desde Excel)
+
+UPDATE municipios SET alcalde = 'Maximo Dionicio Herrera Choque' WHERE nombre ILIKE '%Challapata%';
+UPDATE municipios SET alcalde = 'Nilton Huaylla Callahuara' WHERE nombre ILIKE '%Santuario de Quillacas%';
+UPDATE municipios SET alcalde = 'Juan Silver Quispe Choque' WHERE nombre ILIKE '%Corque%';
+UPDATE municipios SET alcalde = 'Davio Ramirez Chocata' WHERE nombre ILIKE '%Choquecota%';
+UPDATE municipios SET alcalde = 'Ivan Quispe Gutierrez' WHERE nombre ILIKE '%Oruro%';
+UPDATE municipios SET alcalde = 'Juan Carlos Pinaya Uñoja' WHERE nombre ILIKE '%Caracollo%';
+UPDATE municipios SET alcalde = 'Vladimir Eleuterio Apaza Mamani' WHERE nombre ILIKE '%El Choro%';
+UPDATE municipios SET alcalde = 'Willy Raul Montecinos Condori' WHERE nombre ILIKE '%Paria - Soracachi%';
+UPDATE municipios SET alcalde = 'Luciano Cari Condori' WHERE nombre ILIKE '%Pampa Aullagas%';
+UPDATE municipios SET alcalde = 'Isidora Irma Alconz Flores' WHERE nombre ILIKE '%Huachacalla%';
+UPDATE municipios SET alcalde = 'Remberto Condori Copa' WHERE nombre ILIKE '%Escara%';
+UPDATE municipios SET alcalde = 'Javier Adhemir Kussy Ramirez' WHERE nombre ILIKE '%Cruz de Machacamarca%';
+UPDATE municipios SET alcalde = 'Widne Walter Amaru Viza' WHERE nombre ILIKE '%Yunguyo del Litoral%';
+UPDATE municipios SET alcalde = 'Elias Contreras Arce' WHERE nombre ILIKE '%Esmeralda%';
+UPDATE municipios SET alcalde = 'Benjamin David Aguilar Gonzales' WHERE nombre ILIKE '%La Rivera%';
+UPDATE municipios SET alcalde = 'Florentino Sandoval Colque' WHERE nombre ILIKE '%Todos Santos%';
+UPDATE municipios SET alcalde = 'Osvaldo Choque Viza' WHERE nombre ILIKE '%Carangas%';
+UPDATE municipios SET alcalde = 'Wilder Chavez Terrazas' WHERE nombre ILIKE '%Santiago de Huayllamarca%';
+UPDATE municipios SET alcalde = 'Lily Rossemary Ardaya Claure' WHERE nombre ILIKE '%Huanuni%';
+UPDATE municipios SET alcalde = 'Gary Erick Yucra Arce' WHERE nombre ILIKE '%Machacamarca%';
+UPDATE municipios SET alcalde = 'Nicanor Lopez Choque' WHERE nombre ILIKE '%Poopó%';
+UPDATE municipios SET alcalde = 'Diony Achacollo Velasquez' WHERE nombre ILIKE '%Pazña%';
+UPDATE municipios SET alcalde = 'Adela Aviza Fuertes' WHERE nombre ILIKE '%Antequera%';
+UPDATE municipios SET alcalde = 'Gregorio Atora Zegarra' WHERE nombre ILIKE '%Sabaya%';
+UPDATE municipios SET alcalde = 'Willson Franz Perez Choque' WHERE nombre ILIKE '%Coipasa%';
+UPDATE municipios SET alcalde = 'Santiago Lopez Lazaro' WHERE nombre ILIKE '%Uru Chipaya%';
+UPDATE municipios SET alcalde = 'Lalo Alconz Sarmiento' WHERE nombre ILIKE '%Curahuara de Carangas%';
+UPDATE municipios SET alcalde = 'Grover Perez Marca' WHERE nombre ILIKE '%Turco%';
+UPDATE municipios SET alcalde = 'Guillermo Eloy Berrios Ventura' WHERE nombre ILIKE '%San Pedro de Totora%';
+UPDATE municipios SET alcalde = 'Noel Gonzales Ayala' WHERE nombre ILIKE '%Toledo%';
+UPDATE municipios SET alcalde = 'Jorge Edgar Lopez Ocsa' WHERE nombre ILIKE '%Huari%';
+UPDATE municipios SET alcalde = 'Jhetter Nauro Choque Choque' WHERE nombre ILIKE '%Andamarca%';
+UPDATE municipios SET alcalde = 'Oscar Choque Marca' WHERE nombre ILIKE '%Belén de Andamarca%';
+UPDATE municipios SET alcalde = 'Limbert Pacheco Inca' WHERE nombre ILIKE '%Eucaliptus%';

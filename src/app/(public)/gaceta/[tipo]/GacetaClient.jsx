@@ -25,7 +25,8 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
   // Filtrar documentos
   const filteredDocs = useMemo(() => {
     return documentos.filter(doc => {
-      const matchYear = selectedYear === 'Todos' || doc.anio === parseInt(selectedYear);
+      // Coincidencia parcial para que al escribir "202" vaya filtrando
+      const matchYear = selectedYear === 'Todos' || doc.anio.toString().includes(selectedYear.toString());
       const matchSearch = doc.numero_documento?.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           doc.titulo?.toLowerCase().includes(searchTerm.toLowerCase());
       return matchYear && matchSearch;
@@ -81,22 +82,32 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
         {/* Sidebar con Filtros (Chips) */}
         <aside className={styles.filtersSidebar}>
           <h3 className={styles.filterTitle}>Filtrar por Gestión</h3>
+          
+          {/* Buscador de Año en Móvil */}
           <div className={styles.mobileSelectContainer}>
-            <select
-              className={styles.yearSelect}
-              value={selectedYear}
-              onChange={(e) => {
-                setSelectedYear(e.target.value);
-                setCurrentPage(1);
-              }}
-            >
-              {years.map(year => (
-                <option key={year} value={year.toString()}>
-                  {year === 'Todos' ? 'Todos' : year}
-                  {year !== 'Todos' && ` (${documentos.filter(d => d.anio === year).length})`}
-                </option>
-              ))}
-            </select>
+            <div className={styles.yearSearchWrapper}>
+              <span className={styles.yearSearchIcon}>📅</span>
+              <span className={styles.yearPrefix}>20</span>
+              <input
+                type="number"
+                placeholder="26"
+                className={styles.yearSearchInput}
+                value={selectedYear === 'Todos' ? '' : (selectedYear.toString().startsWith('20') ? selectedYear.toString().substring(2) : selectedYear)}
+                onChange={(e) => {
+                  let val = e.target.value;
+                  // Limitar a 2 dígitos
+                  if (val.length > 2) val = val.slice(0, 2);
+                  
+                  if (!val) {
+                    setSelectedYear('Todos');
+                  } else {
+                    setSelectedYear('20' + val);
+                  }
+                  setCurrentPage(1);
+                }}
+              />
+            </div>
+            <p className={styles.yearHelperText}>Archivos desde 2010 en adelante</p>
           </div>
 
           <div className={styles.chipsContainer}>

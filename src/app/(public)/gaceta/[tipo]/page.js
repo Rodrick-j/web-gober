@@ -88,7 +88,7 @@ export default async function GacetaPage({ params }) {
   const documentos = (data || []).map(doc => ({
     id: doc.id,
     tipo: tipo,
-    anio: new Date(doc.fecha_publicacion).getFullYear(),
+    anio: parseInt(doc.fecha_publicacion?.substring(0, 4) || new Date().getFullYear()),
     numero_documento: doc.numero,
     titulo: doc.titulo,
     descripcion: doc.descripcion || '',
@@ -105,6 +105,7 @@ export default async function GacetaPage({ params }) {
           <header className={styles.headerSection}>
             <div className={styles.headerIcon}>{config.icon}</div>
             <h1 className={styles.headerTitle}>{config.title}</h1>
+            <div className={styles.headerDivider}></div>
             <p className={styles.headerSubtitle}>{config.subtitle}</p>
           </header>
 

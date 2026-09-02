@@ -53,6 +53,24 @@ export default function CrearDocumentoPage() {
     setError('');
 
     try {
+      // ── Verificar si ya existe un documento con el mismo tipo + número ──
+      const { data: existente } = await supabase
+        .from('documentos')
+        .select('id, titulo')
+        .eq('tipo', tipo)
+        .eq('numero', numero)
+        .maybeSingle();
+
+      if (existente) {
+        setError(
+          `⚠️ Ya existe un documento con el número "${numero}" en esta categoría.\n` +
+          `Título actual: "${existente.titulo}".\n` +
+          `Si quieres corregirlo, usa la opción Editar en la lista.`
+        );
+        setIsSubmitting(false);
+        return;
+      }
+
       const archivoUrl = normalizarUrlDrive(driveUrl);
 
       const { error: insertError } = await supabase
