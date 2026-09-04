@@ -50,11 +50,12 @@ export default function GovernorSection() {
               quality={80}
             />
             {/* Overlay logo to cover watermark */}
-            <div style={{ position: 'absolute', bottom: '15px', left: '15px', width: '120px', height: '40px', zIndex: 10, background: 'rgba(255,255,255,0.7)', borderRadius: '8px', padding: '5px', backdropFilter: 'blur(4px)' }}>
-              <Image
+            <div className={styles.decorativeLogo}>
+              <Image 
                 src="/logo-gador.png"
-                alt="Gobierno Autónomo Departamental de Oruro"
+                alt="Escudo del Departamento de Oruro"
                 fill
+                sizes="(max-width: 768px) 150px, 300px"
                 style={{ objectFit: 'contain' }}
               />
             </div>

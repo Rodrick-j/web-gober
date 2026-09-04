@@ -6,7 +6,7 @@ import GacetaClient from './GacetaClient';
 import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackground';
 import styles from './gaceta.module.css';
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 // Configuración de los tipos permitidos y su metadata
 // dbTipo: el valor exacto del ENUM en la tabla "documentos"

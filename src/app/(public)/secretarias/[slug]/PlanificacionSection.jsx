@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { FileText, Database, MapPin, ChevronDown, Building, Search, ArrowLeft, Download, Eye, X, PieChart, BarChart3, Briefcase } from 'lucide-react';
 import styles from './SecretariaDetail.module.css'; // Reusing styles from the page
 import { createClient } from '@/lib/supabase/client';
@@ -96,7 +97,7 @@ export default function PlanificacionSection({ secretariaId }) {
               <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1rem 1.5rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
                 {/* Decorative background element */}
                 <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '50%', opacity: 0.4, mixBlendMode: 'multiply', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
-                  <img loading="lazy" src="/icono-planificacion.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', transform: 'scale(1.2)' }} />
+                  <Image src="/icono-planificacion.jpg" alt="" width={400} height={400} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', transform: 'scale(1.2)' }} />
                 </div>
                 
                 <div style={{ position: 'relative', zIndex: 1 }}>

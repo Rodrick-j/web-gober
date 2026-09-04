@@ -18,7 +18,7 @@ export default function VideoSection({ urls = [] }) {
       videoId = match[1];
     }
     return videoId;
-  }).filter(id => id !== null);
+  }).filter(id => id !== null).reverse();
 
   const totalPages = Math.ceil(videoIds.length / videosPerPage);
   const currentVideos = videoIds.slice((currentPage - 1) * videosPerPage, currentPage * videosPerPage);

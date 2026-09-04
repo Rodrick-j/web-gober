@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
-import ShareButtons from './ShareButtons';
 import FacebookEmbed from '@/components/FacebookEmbed/FacebookEmbed';
 import styles from './noticia-detail.module.css';
 
@@ -97,14 +96,27 @@ export default async function NoticiaDetailPage({ params }) {
     notFound();
   }
 
-  // Obtener 3 noticias relacionadas (últimas publicadas que no sean esta)
-  const { data: relacionadas } = await supabase
+  // Obtener 6 noticias relacionadas (últimas publicadas que no sean esta)
+  const { data: todasRelacionadas } = await supabase
     .from('noticias')
     .select('id, titulo, fecha_publicacion, imagen_portada_url')
     .eq('estado', 'publicado')
     .neq('id', id)
     .order('fecha_publicacion', { ascending: false })
-    .limit(3);
+    .limit(6);
+
+  const relacionadasBottom = todasRelacionadas ? todasRelacionadas.slice(0, 3) : [];
+  const relacionadasSidebar = todasRelacionadas && todasRelacionadas.length > 3 
+    ? todasRelacionadas.slice(3, 6) 
+    : (todasRelacionadas ? todasRelacionadas.slice(0, 3) : []);
+
+  // Obtener redes sociales de la Gobernación
+  const { data: configData } = await supabase
+    .from('configuracion_global')
+    .select('valor')
+    .eq('clave', 'redes_sociales')
+    .single();
+  const redesGobernacion = configData?.valor || { facebook: '#', instagram: '#', tiktok: '#', youtube: '#' };
 
   const fechaStr = formatFecha(noticia.fecha_publicacion, {
     weekday: 'long',
@@ -190,6 +202,38 @@ export default async function NoticiaDetailPage({ params }) {
                   <FacebookEmbed url={noticia.enlace_facebook} />
                 )}
               </div>
+
+              {/* --- NUEVO: Noticias Relacionadas abajo del artículo --- */}
+              {relacionadasBottom && relacionadasBottom.length > 0 && (
+                <div className={styles.bottomRelatedSection}>
+                  <h3 className={styles.bottomRelatedTitle}>Otras noticias de interés</h3>
+                  <div className={styles.bottomRelatedGrid}>
+                    {relacionadasBottom.map((rel) => (
+                      <Link href={`/noticias/${rel.id}`} key={rel.id} className={styles.bottomRelatedCard}>
+                        {rel.imagen_portada_url ? (
+                          <div className={styles.bottomRelatedImageWrapper}>
+                            <Image 
+                              src={rel.imagen_portada_url} 
+                              alt={rel.titulo} 
+                              fill
+                              className={styles.bottomRelatedImage} 
+                              sizes="(max-width: 768px) 100vw, 300px"
+                            />
+                          </div>
+                        ) : (
+                          <div className={styles.bottomRelatedImageWrapper} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', background: 'var(--color-surface-2)' }}>
+                            📰
+                          </div>
+                        )}
+                        <div className={styles.bottomRelatedContent}>
+                          <h4>{rel.titulo}</h4>
+                          <span>{formatFecha(rel.fecha_publicacion, { day: 'numeric', month: 'short' })}</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </article>
 
             <aside className={styles.sidebar}>
@@ -230,8 +274,29 @@ export default async function NoticiaDetailPage({ params }) {
               )}
 
               <div className={styles.sidebarWidget}>
-                <h3 className={styles.widgetTitle}>Compartir Noticia</h3>
-                <ShareButtons title={noticia.titulo} />
+                <h3 className={styles.widgetTitle}>Redes Oficiales GADOR</h3>
+                <div className={styles.officialSocialGrid}>
+                  {redesGobernacion.facebook !== '#' && (
+                    <a href={redesGobernacion.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className={styles.socialGadorBtn} style={{ background: '#1877F2' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                    </a>
+                  )}
+                  {redesGobernacion.instagram !== '#' && (
+                    <a href={redesGobernacion.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className={styles.socialGadorBtn} style={{ background: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                    </a>
+                  )}
+                  {redesGobernacion.tiktok !== '#' && (
+                    <a href={redesGobernacion.tiktok} target="_blank" rel="noreferrer" aria-label="TikTok" className={styles.socialGadorBtn} style={{ background: '#000000' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
+                    </a>
+                  )}
+                  {redesGobernacion.youtube !== '#' && (
+                    <a href={redesGobernacion.youtube} target="_blank" rel="noreferrer" aria-label="YouTube" className={styles.socialGadorBtn} style={{ background: '#FF0000' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33 2.78 2.78 0 0 0 1.94 2c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+                    </a>
+                  )}
+                </div>
               </div>
 
               {noticia.enlace_facebook && (
@@ -279,11 +344,11 @@ export default async function NoticiaDetailPage({ params }) {
                 </div>
               )}
 
-              {relacionadas && relacionadas.length > 0 && (
+              {relacionadasSidebar && relacionadasSidebar.length > 0 && (
                 <div className={styles.sidebarWidget}>
                   <h3 className={styles.widgetTitle}>Últimas Noticias</h3>
                   <div className={styles.relatedNewsList}>
-                    {relacionadas.map((rel) => (
+                    {relacionadasSidebar.map((rel) => (
                       <Link href={`/noticias/${rel.id}`} key={rel.id} className={styles.relatedCard}>
                         {rel.imagen_portada_url ? (
                           <Image 

@@ -13,7 +13,7 @@ export default function ThemeInjector() {
           .from('configuracion_global')
           .select('valor')
           .eq('clave', 'tema_web')
-          .single();
+          .maybeSingle();
 
         if (data && data.valor) {
           const colors = data.valor;

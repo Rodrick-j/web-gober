@@ -10,7 +10,7 @@ import EstadisticasChartWrapper from '@/components/EstadisticasChart/Estadistica
 import PlanificacionSection from './PlanificacionSection';
 import SecretariatTabs from '@/components/SecretariatTabs/SecretariatTabs';
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 function getYouTubeData(url) {
   if (!url) return { id: null, start: null };

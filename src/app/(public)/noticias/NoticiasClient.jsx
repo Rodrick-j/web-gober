@@ -17,6 +17,8 @@ function formatFecha(fechaStr, opts = { day: 'numeric', month: 'long', year: 'nu
 export default function NoticiasClient() {
   const [allNoticias, setAllNoticias] = useState([]);
   const [comunicados, setComunicados] = useState([]);
+  const [globalComunicado, setGlobalComunicado] = useState(null);
+  const [isZoomed, setIsZoomed] = useState(false);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Todas');
   const [loading, setLoading] = useState(true);
@@ -33,6 +35,17 @@ export default function NoticiasClient() {
         setComunicados(noticias.filter(n => n.es_comunicado_rapido).slice(0, 5));
         setAllNoticias(noticias.filter(n => !n.es_comunicado_rapido));
         setLoading(false);
+      });
+
+    supabase
+      .from('configuracion_global')
+      .select('valor')
+      .eq('clave', 'comunicado_popup')
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.valor?.activo && data?.valor?.imagen_url) {
+          setGlobalComunicado(data.valor);
+        }
       });
   }, []);
 
@@ -171,15 +184,38 @@ export default function NoticiasClient() {
                 Comunicados Oficiales
               </h3>
               <div className={styles.comunicadoList}>
-                {comunicados.length > 0 ? (
-                  comunicados.map((comunicado) => (
-                    <Link href={`/noticias/${comunicado.id}`} key={comunicado.id} className={styles.comunicadoItem}>
-                      <span className={styles.comunicadoDate}>{formatFecha(comunicado.fecha_publicacion, { day: 'numeric', month: 'short' })}</span>
-                      <h4 className={styles.comunicadoTitle}>{comunicado.titulo}</h4>
-                    </Link>
-                  ))
+                {globalComunicado ? (
+                  <div style={{ marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div 
+                      onClick={() => setIsZoomed(true)}
+                      className={styles.pulsingComunicado}
+                      style={{ borderRadius: '8px', overflow: 'hidden', boxShadow: '0 4px 12px rgba(0,0,0,0.1)', cursor: 'pointer' }}
+                    >
+                      <Image src={globalComunicado.imagen_url} alt="Comunicado Oficial" width={400} height={560} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                    </div>
+                    {comunicados.length > 0 && (
+                      <div style={{ marginTop: '1rem', borderTop: '1px solid #eee', paddingTop: '1rem' }}>
+                        <h4 style={{ fontSize: '0.85rem', color: '#666', marginBottom: '0.8rem', textTransform: 'uppercase' }}>Otros comunicados</h4>
+                        {comunicados.map((comunicado) => (
+                          <Link href={`/noticias/${comunicado.id}`} key={comunicado.id} className={styles.comunicadoItem}>
+                            <span className={styles.comunicadoDate}>{formatFecha(comunicado.fecha_publicacion, { day: 'numeric', month: 'short' })}</span>
+                            <h4 className={styles.comunicadoTitle}>{comunicado.titulo}</h4>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 ) : (
-                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>No hay avisos recientes.</p>
+                  comunicados.length > 0 ? (
+                    comunicados.map((comunicado) => (
+                      <Link href={`/noticias/${comunicado.id}`} key={comunicado.id} className={styles.comunicadoItem}>
+                        <span className={styles.comunicadoDate}>{formatFecha(comunicado.fecha_publicacion, { day: 'numeric', month: 'short' })}</span>
+                        <h4 className={styles.comunicadoTitle}>{comunicado.titulo}</h4>
+                      </Link>
+                    ))
+                  ) : (
+                    <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>No hay avisos recientes.</p>
+                  )
                 )}
               </div>
             </div>
@@ -187,6 +223,26 @@ export default function NoticiasClient() {
         </div>
 
       </div>
+
+      {/* Modal de Zoom para el Comunicado */}
+      {isZoomed && globalComunicado && (
+        <div className={styles.zoomModalOverlay} onClick={() => setIsZoomed(false)}>
+          <button className={styles.zoomModalClose} onClick={() => setIsZoomed(false)}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div className={styles.zoomModalContent} onClick={e => e.stopPropagation()}>
+            <Image src={globalComunicado.imagen_url} alt="Comunicado Oficial Zoom" width={800} height={1120} className={styles.zoomModalImage} style={{ maxWidth: '100%', height: 'auto' }} />
+            {globalComunicado.enlace && (
+              <a href={globalComunicado.enlace} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ marginTop: '1rem', alignSelf: 'center', fontSize: '1.1rem', padding: '0.75rem 2rem' }}>
+                Ver más información
+              </a>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   );
 }

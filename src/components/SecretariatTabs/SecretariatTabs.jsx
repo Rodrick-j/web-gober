@@ -8,12 +8,61 @@ import { secretariasContactData } from '@/data/secretariasContactData';
 import EstadisticasSection from '@/components/EstadisticasSection/EstadisticasSection';
 import styles from './SecretariatTabs.module.css';
 
+const unidadesMock = [
+  { 
+    id: 1, 
+    nombre: 'Unidad de Transparencia y Lucha Contra la Corrupción', 
+    tipo: 'Dependiente', 
+    descripcion: 'Encargada de velar por la transparencia y ética en la gestión pública departamental.', 
+    objetivo: 'Garantizar una administración pública honesta y eficiente para el beneficio y confianza de toda la población orureña.',
+    ubicacion: 'Edificio Central de la Gobernación, Piso 2', 
+    mapa_query: 'Gobernacion de Oruro',
+    facebook: 'https://facebook.com/gobernaciondeoruro'
+  },
+  { 
+    id: 2, 
+    nombre: 'Servicio Departamental de Caminos (SEDCAM)', 
+    tipo: 'Descentralizada', 
+    descripcion: 'Entidad responsable de la construcción y mantenimiento de la red vial departamental.', 
+    objetivo: 'Integrar las provincias y municipios del departamento a través de vías seguras, impulsando el desarrollo económico local.',
+    ubicacion: 'Av. Circunvalación y Calle 1', 
+    mapa_query: 'SEDCAM Oruro',
+    facebook: 'https://facebook.com/sedcamoruro'
+  },
+  { 
+    id: 3, 
+    nombre: 'Servicio Departamental de Salud (SEDES)', 
+    tipo: 'Descentralizada', 
+    descripcion: 'Rector de la salud a nivel departamental, coordinando hospitales y centros médicos en la región.', 
+    objetivo: 'Proteger y promover la salud y bienestar integral de las familias, asegurando atención médica oportuna y de calidad.',
+    ubicacion: 'Velasco Galvarro entre Aldana y Sanjines', 
+    mapa_query: 'SEDES Oruro',
+    facebook: 'https://facebook.com/sedesorurooficial'
+  },
+  { 
+    id: 4, 
+    nombre: 'Unidad de Asuntos Jurídicos', 
+    tipo: 'Dependiente', 
+    descripcion: 'Brinda asesoramiento legal y patrocina procesos a favor de la gobernación.', 
+    objetivo: 'Defender los intereses del Estado y asegurar que todas las obras y proyectos se ejecuten en el marco estricto de la legalidad.',
+    ubicacion: 'Edificio Central de la Gobernación, Planta Baja', 
+    mapa_query: 'Gobernacion de Oruro',
+    facebook: null
+  },
+];
+
 export default function SecretariatTabs({ sec, slug }) {
   const [activeTab, setActiveTab] = useState('acerca');
   const [showFullBio, setShowFullBio] = useState(false);
+  const [expandedUnidad, setExpandedUnidad] = useState(null);
+
   const hasPlanificacion = slug.includes('planificacion');
   const hasProgramas = slug.includes('finanzas');
   const contactOverride = secretariasContactData[slug];
+
+  const toggleUnidad = (id) => {
+    setExpandedUnidad(expandedUnidad === id ? null : id);
+  };
 
   const getAbreviatura = (sec) => {
     if (sec.sigla) return sec.sigla.toUpperCase();
@@ -61,6 +110,13 @@ export default function SecretariatTabs({ sec, slug }) {
           style={{ '--acento': sec.color_acento || '#8b0000' }}
         >
           Atención al Ciudadano
+        </button>
+        <button 
+          className={`${styles.tabBtn} ${activeTab === 'unidades' ? styles.active : ''}`}
+          onClick={() => setActiveTab('unidades')}
+          style={{ '--acento': sec.color_acento || '#8b0000' }}
+        >
+          Unidades Descentralizadas y Dependientes
         </button>
         {hasPlanificacion && (
           <button 
@@ -245,6 +301,68 @@ export default function SecretariatTabs({ sec, slug }) {
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === 'unidades' && (
+          <div className={styles.contentBlockFull}>
+            <div className={styles.unidadesHeader}>
+              <h2 className={styles.sectionTitle}>Unidades Descentralizadas y Dependientes</h2>
+              <p className={styles.unidadesSubtitle}>
+                Esta secretaría coordina y supervisa el trabajo de las siguientes entidades: <strong>{unidadesMock.map(u => u.nombre).join(', ')}</strong>.
+              </p>
+            </div>
+
+            <div className={styles.unidadesGridCompact}>
+              {unidadesMock.map(unidad => (
+                <div key={unidad.id} className={`${styles.unidadCardCompact} ${expandedUnidad === unidad.id ? styles.unidadCardExpanded : ''}`}>
+                  <div className={styles.unidadCardHeaderCompact} onClick={() => toggleUnidad(unidad.id)}>
+                    <div className={styles.unidadInfoLeft}>
+                      <div className={styles.unidadTipoBadgeCompact}>{unidad.tipo}</div>
+                      <h3 className={styles.unidadNombreCompact}>{unidad.nombre}</h3>
+                      <p className={styles.unidadDescCompact}>{unidad.descripcion}</p>
+                    </div>
+                    <div className={styles.unidadActionRight}>
+                      <button className={styles.unidadExpandBtnCompact} aria-label="Expandir">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2.5" fill="none" className={expandedUnidad === unidad.id ? styles.rotated : ''}>
+                          <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className={`${styles.unidadCardBodyCompact} ${expandedUnidad === unidad.id ? styles.expanded : ''}`}>
+                    <div className={styles.unidadObjetivo}>
+                      <strong>🌟 Objetivo Principal:</strong>
+                      <p>{unidad.objetivo}</p>
+                    </div>
+                    
+                    <div className={styles.unidadUbicacion}>
+                      <strong>📍 Ubicación:</strong> {unidad.ubicacion}
+                    </div>
+
+                    {unidad.facebook && (
+                      <a href={unidad.facebook} target="_blank" rel="noopener noreferrer" className={styles.unidadFbLink}>
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        Visitar Facebook
+                      </a>
+                    )}
+
+                    <div className={styles.unidadMapContainer}>
+                      {activeTab === 'unidades' && (
+                        <iframe 
+                          src={`https://maps.google.com/maps?q=${encodeURIComponent(unidad.mapa_query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                          width="100%" 
+                          height="100%" 
+                          style={{ border: 0, borderRadius: '12px' }} 
+                          allowFullScreen="" 
+                        ></iframe>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

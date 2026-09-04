@@ -4,7 +4,7 @@ import { FileText, Download, Calendar } from 'lucide-react';
 import CategoriaHeader from './CategoriaHeader';
 import styles from './CategoriaInstitucion.module.css';
 
-export const revalidate = 0;
+export const revalidate = 60;
 
 const CATEGORIAS_VALIDAS = {
   'informacion-financiera': 'Información Financiera',
