@@ -92,20 +92,20 @@ export default function PlanificacionSection({ secretariaId }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
           >
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
               {/* Card POA */}
-              <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '1rem 1.5rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ background: 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)', border: 'none', borderRadius: '12px', padding: '0.85rem 1.25rem', boxShadow: '0 8px 16px rgba(156, 7, 32, 0.2)', transition: 'transform 0.2s', color: '#fff', position: 'relative', overflow: 'hidden' }}>
                 {/* Decorative background element */}
                 <div style={{ position: 'absolute', right: '0', top: '0', height: '100%', width: '50%', opacity: 0.4, mixBlendMode: 'multiply', WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)', maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)' }}>
                   <Image src="/icono-planificacion.jpg" alt="" width={400} height={400} style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'right center', transform: 'scale(1.2)' }} />
                 </div>
                 
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                  <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '0.8rem' }}>
-                    <FileText size={20} />
+                  <div style={{ background: 'rgba(255, 255, 255, 0.2)', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', marginBottom: '0.5rem' }}>
+                    <FileText size={16} />
                   </div>
-                  <h3 style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#fff', marginBottom: '0.5rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
-                  <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.9rem', marginBottom: '0', lineHeight: '1.4', maxWidth: '60%' }}>
+                  <h3 style={{ fontSize: 'clamp(0.85rem, 2.5vw, 1.1rem)', fontWeight: 'bold', color: '#fff', marginBottom: '0.35rem' }}>Presupuesto Institucional por Municipio del Departamento de Oruro Gestión 2026</h3>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: 'clamp(0.7rem, 2vw, 0.85rem)', marginBottom: '0', lineHeight: '1.4', maxWidth: '60%' }}>
                     Acceda a los documentos e instrumentos de planificación anual del Gobierno Autónomo Departamental de Oruro.
                   </p>
                 </div>
@@ -115,14 +115,14 @@ export default function PlanificacionSection({ secretariaId }) {
             <div style={{ 
               display: 'flex', 
               width: '100%',
-              gap: '0.75rem', 
-              marginBottom: '2rem', 
+              gap: '0.4rem', 
+              marginBottom: '1.5rem', 
               flexWrap: 'wrap',
               background: '#ffffff',
-              padding: '1rem',
-              borderRadius: '16px',
+              padding: '0.6rem',
+              borderRadius: '12px',
               border: '1px solid #eaeaea',
-              boxShadow: '0 8px 25px rgba(0,0,0,0.06)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
               alignItems: 'center'
             }}>
               <button
@@ -131,11 +131,11 @@ export default function PlanificacionSection({ secretariaId }) {
                   background: viewMode === 'resumen' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'resumen' ? '#ffffff' : '#475569',
                   border: viewMode === 'resumen' ? '1px solid transparent' : '1px solid #e2e8f0',
-                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  padding: '0.4rem 0.75rem', borderRadius: '8px', fontWeight: '700', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.3rem',
                   boxShadow: viewMode === 'resumen' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
-                <BarChart3 size={18} /> Resumen de Municipios
+                <BarChart3 size={14} /> Resumen de Municipios
               </button>
               <button
                 onClick={() => setViewMode('dashboard')}
@@ -143,11 +143,11 @@ export default function PlanificacionSection({ secretariaId }) {
                   background: viewMode === 'dashboard' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'dashboard' ? '#ffffff' : '#475569',
                   border: viewMode === 'dashboard' ? '1px solid transparent' : '1px solid #e2e8f0',
-                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  padding: '0.4rem 0.75rem', borderRadius: '8px', fontWeight: '700', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.3rem',
                   boxShadow: viewMode === 'dashboard' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
-                <PieChart size={18} /> Vista Interactiva
+                <PieChart size={14} /> Vista Interactiva
               </button>
               <button
                 onClick={() => setViewMode('excel')}
@@ -155,11 +155,11 @@ export default function PlanificacionSection({ secretariaId }) {
                   background: viewMode === 'excel' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'excel' ? '#ffffff' : '#475569',
                   border: viewMode === 'excel' ? '1px solid transparent' : '1px solid #e2e8f0',
-                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  padding: '0.4rem 0.75rem', borderRadius: '8px', fontWeight: '700', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.3rem',
                   boxShadow: viewMode === 'excel' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
-                <Database size={18} /> POA por Municipio
+                <Database size={14} /> POA por Municipio
               </button>
               <button
                 onClick={() => setViewMode('filtros')}
@@ -167,11 +167,11 @@ export default function PlanificacionSection({ secretariaId }) {
                   background: viewMode === 'filtros' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'filtros' ? '#ffffff' : '#475569',
                   border: viewMode === 'filtros' ? '1px solid transparent' : '1px solid #e2e8f0',
-                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  padding: '0.4rem 0.75rem', borderRadius: '8px', fontWeight: '700', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.3rem',
                   boxShadow: viewMode === 'filtros' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
-                <Search size={18} /> Proyectos de Municipio
+                <Search size={14} /> Proyectos de Municipio
               </button>
               <button
                 onClick={() => setViewMode('costos')}
@@ -179,11 +179,11 @@ export default function PlanificacionSection({ secretariaId }) {
                   background: viewMode === 'costos' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'costos' ? '#ffffff' : '#475569',
                   border: viewMode === 'costos' ? '1px solid transparent' : '1px solid #e2e8f0',
-                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  padding: '0.4rem 0.75rem', borderRadius: '8px', fontWeight: '700', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.3rem',
                   boxShadow: viewMode === 'costos' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
-                <Building size={18} /> Índice de Costos de Construcción
+                <Building size={14} /> Índice de Costos de Construcción
               </button>
               <button
                 onClick={() => setViewMode('programas2026')}
@@ -191,11 +191,11 @@ export default function PlanificacionSection({ secretariaId }) {
                   background: viewMode === 'programas2026' ? 'linear-gradient(135deg, #9c0720 0%, #7a0518 100%)' : '#f8f9fa',
                   color: viewMode === 'programas2026' ? '#ffffff' : '#475569',
                   border: viewMode === 'programas2026' ? '1px solid transparent' : '1px solid #e2e8f0',
-                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  padding: '0.4rem 0.75rem', borderRadius: '8px', fontWeight: '700', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.3rem',
                   boxShadow: viewMode === 'programas2026' ? '0 4px 10px rgba(156,7,32,0.25)' : 'none'
                 }}
               >
-                <Briefcase size={18} /> Proyectos y Programas 2026
+                <Briefcase size={14} /> Proyectos y Programas 2026
               </button>
               <button
                 onClick={() => setViewMode('poadb')}
@@ -203,13 +203,15 @@ export default function PlanificacionSection({ secretariaId }) {
                   background: viewMode === 'poadb' ? 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)' : '#f8f9fa',
                   color: viewMode === 'poadb' ? '#ffffff' : '#475569',
                   border: viewMode === 'poadb' ? '1px solid transparent' : '1px solid #e2e8f0',
-                  padding: '0.65rem 1.25rem', borderRadius: '10px', fontWeight: '800', fontSize: '0.9rem', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.5rem',
+                  padding: '0.4rem 0.75rem', borderRadius: '8px', fontWeight: '700', fontSize: 'clamp(0.65rem, 2vw, 0.8rem)', cursor: 'pointer', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '0.3rem',
                   boxShadow: viewMode === 'poadb' ? '0 4px 10px rgba(14,165,233,0.25)' : 'none'
                 }}
               >
-                <BarChart3 size={18} /> POA en Tiempo Real
+                <BarChart3 size={14} /> POA en Tiempo Real
               </button>
             </div>
+
+
 
             {viewMode === 'dashboard' && (
               <BudgetDashboard globalMunicipio={globalMunicipio} setGlobalMunicipio={setGlobalMunicipio} />

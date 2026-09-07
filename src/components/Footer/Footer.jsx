@@ -103,14 +103,7 @@ export default async function Footer() {
             ))}
           </ul>
         </div>
-        <div>
-          <h4 className={styles.colTitle}>Gaceta Oficial</h4>
-          <ul>
-            {gaceta.map((g) => (
-              <li key={g.label}><Link href={g.href} className={styles.footerLink}>{g.label}</Link></li>
-            ))}
-          </ul>
-        </div>
+
         <div>
           <h4 className={styles.colTitle}>Institución</h4>
           <ul>

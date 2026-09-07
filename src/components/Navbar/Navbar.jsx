@@ -357,19 +357,19 @@ export default function Navbar() {
           {mobileOpen && (
             <motion.div
               className={styles.mobileMenu}
-              initial={{ opacity: 0, y: -15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.2, ease: 'easeOut' }}
-              style={{ transformOrigin: 'top' }}
+              initial={{ opacity: 0, rotateX: -15, y: -20, scale: 0.98 }}
+              animate={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
+              exit={{ opacity: 0, rotateX: -15, y: -20, scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              style={{ transformOrigin: 'top center', perspective: '1000px' }}
             >
               <div className={styles.mobileMenuInner}>
                 {dynamicNavItems.map((item, i) => (
                   <motion.div
                     key={item.label}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.02, duration: 0.2 }}
+                    initial={{ opacity: 0, x: -20, filter: 'blur(4px)' }}
+                    animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                    transition={{ delay: i * 0.04, type: 'spring', stiffness: 400, damping: 30 }}
                   >
                   {item.children ? (
                     <button
@@ -403,7 +403,7 @@ export default function Navbar() {
                         style={{ overflow: 'hidden' }}
                       >
                         <div 
-                          className={item.label === 'Secretarías' ? styles.mobileChipsGrid : ''}
+                          className={item.label === 'Secretarías' ? styles.mobileChipsGrid : styles.mobileSubGrid}
                           style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}
                         >
                           {item.children.map((child) => {

@@ -90,16 +90,19 @@ export default function NoticiasClient() {
         <div className="divider divider-left" style={{ marginBottom: '1rem' }} />
 
         {/* Filtros de Categorías */}
-        <div className={styles.filtersWrapper}>
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setCategory(cat)}
-              className={`${styles.filterPill} ${category === cat ? styles.active : ''}`}
-            >
-              {cat === 'Todas' ? 'Todas las noticias' : cat}
-            </button>
-          ))}
+        <div className={styles.filtersContainer}>
+          <div className={styles.filtersWrapper}>
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`${styles.filterPill} ${category === cat ? styles.active : ''}`}
+              >
+                {cat === 'Todas' ? 'Todas las noticias' : cat}
+              </button>
+            ))}
+          </div>
+          <div className={styles.scrollHint}>← Desliza horizontalmente para ver más categorías →</div>
         </div>
 
         <div className={styles.layoutGrid}>
