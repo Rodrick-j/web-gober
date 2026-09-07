@@ -7,6 +7,8 @@ import Footer from '@/components/Footer/Footer';
 import FacebookEmbed from '@/components/FacebookEmbed/FacebookEmbed';
 import styles from './noticia-detail.module.css';
 
+export const revalidate = 0; // Disable caching so edits show up instantly
+
 export async function generateStaticParams() {
   const supabase = createClient();
   const { data: noticias } = await supabase.from('noticias').select('id');
@@ -298,6 +300,42 @@ export default async function NoticiaDetailPage({ params }) {
                   )}
                 </div>
               </div>
+
+              {/* ── GALERÍA DE IMÁGENES ── */}
+              {noticia.galeria_urls && noticia.galeria_urls.length > 0 && (
+                <div className={styles.galeria}>
+                  <h3 className={styles.galeriaTitle}>
+                    <span>📸</span> Galería de imágenes
+                    <span className={styles.galeriaCount}>{noticia.galeria_urls.length} fotos</span>
+                  </h3>
+                  <div className={`${styles.galeriaGrid} ${noticia.galeria_urls.length === 1 ? styles.galeriaGridOne : noticia.galeria_urls.length === 2 ? styles.galeriaGridTwo : noticia.galeria_urls.length === 3 ? styles.galeriaGridThree : styles.galeriaGridMany}`}>
+                    {noticia.galeria_urls.map((url, idx) => (
+                      <a
+                        key={idx}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.galeriaItem}
+                        style={noticia.galeria_urls.length >= 4 && idx === 0 ? { gridColumn: 'span 2' } : {}}
+                      >
+                        <Image
+                          src={url}
+                          alt={`${noticia.titulo} — foto ${idx + 1}`}
+                          fill
+                          className={styles.galeriaImg}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
+                          quality={90}
+                        />
+                        <div className={styles.galeriaOverlay}>
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                            <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1"/>
+                          </svg>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {noticia.enlace_facebook && (
                 <div className={styles.sidebarWidget} style={{ padding: 0, overflow: 'hidden', border: 'none' }}>

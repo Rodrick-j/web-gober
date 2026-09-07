@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { uploadFile } from '@/lib/supabase/storage';
 import RichTextEditor from '@/components/admin/RichTextEditor/RichTextEditor';
 import FileUpload from '@/components/admin/FileUpload/FileUpload';
+import GaleriaUploader from '@/components/admin/GaleriaUploader/GaleriaUploader';
 import Link from 'next/link';
 import styles from './page.module.css';
 
@@ -19,6 +20,7 @@ export default function CrearNoticiaPage() {
   const [categoria, setCategoria] = useState('Todas');
   const [esComunicado, setEsComunicado] = useState(false);
   const [imagen, setImagen] = useState(null);
+  const [galeriaUrls, setGaleriaUrls] = useState([]);
   const [fechaPublicacion, setFechaPublicacion] = useState('');
   const [enlaceFacebook, setEnlaceFacebook] = useState('');
   const [enlaceTwitter, setEnlaceTwitter] = useState('');
@@ -68,6 +70,7 @@ export default function CrearNoticiaPage() {
           resumen,
           contenido,
           imagen_portada_url: imagenUrl,
+          galeria_urls: galeriaUrls.length > 0 ? galeriaUrls : null,
           estado,
           categoria,
           es_comunicado_rapido: esComunicado,
@@ -214,6 +217,19 @@ export default function CrearNoticiaPage() {
                   label={esComunicado ? "Opcional para comunicados" : ""}
                   icon="📸"
                   maxSizeMB={5}
+                />
+              </div>
+
+              {/* ── GALERÍA DE IMÁGENES ── */}
+              <div className="formGroup" style={{ background: 'var(--admin-surface-2)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--admin-border)' }}>
+                <label className="formLabel" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+                  🖼️ Galería de Imágenes
+                  <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--admin-text-muted)', marginLeft: 'auto' }}>Mín. 2</span>
+                </label>
+                <GaleriaUploader
+                  urlsIniciales={[]}
+                  onChange={setGaleriaUrls}
+                  maxImagenes={10}
                 />
               </div>
 

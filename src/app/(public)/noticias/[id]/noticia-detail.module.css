@@ -478,3 +478,132 @@
   color: var(--color-text-muted);
   font-weight: 500;
 }
+
+/* ── GALERÍA DE IMÁGENES ── */
+.galeria {
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border: 1px solid #E5E7EB;
+}
+
+.galeriaTitle {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.galeriaCount {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.625rem;
+  background: var(--color-surface-2);
+  border: 1px solid #E5E7EB;
+  border-radius: 20px;
+  color: var(--color-text-muted);
+}
+
+/* Grid base */
+.galeriaGrid {
+  display: grid;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+/* 1 imagen: full width */
+.galeriaGridOne {
+  grid-template-columns: 1fr;
+}
+.galeriaGridOne .galeriaItem {
+  aspect-ratio: 16/9;
+}
+
+/* 2 imágenes: lado a lado */
+.galeriaGridTwo {
+  grid-template-columns: 1fr 1fr;
+}
+.galeriaGridTwo .galeriaItem {
+  aspect-ratio: 4/3;
+}
+
+/* 3 imágenes: primera ancha arriba, dos abajo */
+.galeriaGridThree {
+  grid-template-columns: 1fr 1fr;
+}
+.galeriaGridThree .galeriaItem {
+  aspect-ratio: 4/3;
+}
+.galeriaGridThree .galeriaItem:first-child {
+  grid-column: span 2;
+  aspect-ratio: 16/7;
+}
+
+/* 4+ imágenes: primera grande + resto en grid */
+.galeriaGridMany {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.galeriaGridMany .galeriaItem {
+  aspect-ratio: 4/3;
+}
+
+/* Cada celda de imagen */
+.galeriaItem {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  display: block;
+  background: var(--color-surface-2);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.galeriaImg {
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.galeriaOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease;
+  opacity: 0;
+}
+
+.galeriaItem:hover .galeriaImg {
+  transform: scale(1.04);
+}
+
+.galeriaItem:hover .galeriaOverlay {
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .galeria {
+    padding: 1.25rem 1rem;
+  }
+  .galeriaGridThree,
+  .galeriaGridMany {
+    grid-template-columns: 1fr 1fr;
+  }
+  .galeriaGridMany .galeriaItem:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16/7;
+  }
+  .galeriaGridThree .galeriaItem:first-child {
+    aspect-ratio: 4/3;
+  }
+}
+

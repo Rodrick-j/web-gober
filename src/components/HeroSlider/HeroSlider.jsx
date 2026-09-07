@@ -32,7 +32,7 @@ export default function HeroSlider({ banners, redes }) {
         effect="fade"
         speed={1400}
         fadeEffect={{ crossFade: true }}
-        autoplay={{ delay: 6000, disableOnInteraction: false }}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
         pagination={{
           clickable: true,
           bulletClass: `swiper-pagination-bullet ${styles.customBullet}`,

@@ -1,106 +1,170 @@
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.75);
+  inset: 0;
+  background-color: rgba(10, 15, 30, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   box-sizing: border-box;
-  animation: overlayFadeIn 0.2s ease forwards;
 }
 
-@keyframes overlayFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.popupContainer {
+.modalContent {
   position: relative;
-  background: transparent;
+  background: var(--color-surface);
   width: 100%;
-  max-width: 800px;
+  max-width: 650px;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
+  align-items: stretch;
+  justify-content: flex-start;
+  border-radius: 16px;
   overflow: visible;
   will-change: transform, opacity;
-  transform: translateZ(0);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255,255,255,0.1);
 }
 
 .closeButton {
   position: absolute;
-  top: -15px;
-  right: -15px;
-  width: 35px;
-  height: 35px;
-  background-color: var(--color-primary);
-  color: white;
-  border: 2px solid white;
+  top: -16px;
+  right: -16px;
+  width: 38px;
+  height: 38px;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid rgba(0,0,0,0.1);
   border-radius: 50%;
-  font-size: 1.2rem;
-  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  z-index: 10;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s, background-color 0.2s;
+  z-index: 50;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .closeButton:hover {
-  transform: scale(1.1);
-  background-color: #7a0519; /* Un rojo más oscuro */
+  transform: scale(1.15) rotate(90deg);
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+  box-shadow: 0 6px 16px rgba(var(--color-primary-rgb), 0.4);
+}
+
+.modalHeader {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #7a0519 100%);
+  color: #ffffff;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.4rem;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de brillo sutil animado en el header */
+.modalHeader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shine 4s ease-in-out infinite;
+  transform: skewX(-20deg);
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 200%; }
+  100% { left: 200%; }
+}
+
+.headerIcon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
 .imageLink {
   display: block;
   width: 100%;
-  height: 100%;
-  border-radius: 8px;
+  flex: 1;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  cursor: pointer; /* Siempre parece clickable */
+  background: #f3f4f6;
+  cursor: pointer;
+  position: relative;
 }
 
-a.imageLink:hover .imageWrapper {
-  transform: scale(1.02);
+.imageLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.02);
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+.imageLink:hover::after {
+  background: rgba(0,0,0,0);
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
-  /* Usamos aspect ratio para mantener proporción, pero dependemos de Next/Image contain */
-  height: 75vh; 
-  min-height: 300px;
-  background-color: rgba(255,255,255,0.05); /* fondo muy tenue si la imagen no llena todo */
-  transition: transform 0.3s ease;
-  border-radius: 8px;
+  height: 70vh; 
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (max-width: 768px) {
-  .popupContainer {
-    width: calc(100% - 20px);
-    max-width: 100%;
+.imageWrapper img {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.imageLink:hover .imageWrapper img {
+  transform: scale(1.02);
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: 1rem;
+  }
+  
+  .modalContent {
+    max-height: 85vh;
   }
   
   .imageWrapper {
     height: 60vh;
+    min-height: 300px;
   }
   
   .closeButton {
-    top: -10px;
-    right: -10px;
-    width: 30px;
-    height: 30px;
-    font-size: 1rem;
+    top: -12px;
+    right: -12px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .modalHeader {
+    font-size: 1.2rem;
+    padding: 0.8rem 1rem;
   }
 }

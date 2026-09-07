@@ -5,107 +5,182 @@ import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import styles from './AdminShell.module.css';
 
-const navPrincipal = [
+// ── GRUPOS DE NAVEGACIÓN ──────────────────────────────
+// Cada grupo tiene: id, label, icon, items[], soloSuperAdmin?
+const buildNavGroups = () => [
   {
-    href: '/admin',
-    label: 'Dashboard',
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
-        <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
-      </svg>
-    )
+    id: 'general',
+    label: null, // sin label = item suelto arriba
+    items: [
+      {
+        href: '/admin',
+        label: 'Dashboard',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
+          </svg>
+        ),
+      },
+    ],
   },
   {
-    href: '/admin/noticias',
-    label: 'Noticias',
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
-        <path d="M18 14h-8"/><path d="M10 6h8v4h-8V6Z"/>
-      </svg>
-    )
+    id: 'estadisticas',
+    label: null,
+    items: [
+      {
+        href: '/admin/estadisticas',
+        label: 'Estadísticas',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
+          </svg>
+        ),
+      },
+    ],
   },
   {
-    href: '/admin/gaceta',
-    label: 'Gaceta Oficial',
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
-      </svg>
-    )
+    id: 'comunicacion',
+    label: 'Comunicación',
+    emoji: '📢',
+    items: [
+      {
+        href: '/admin/noticias',
+        label: 'Noticias',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
+            <path d="M18 14h-8"/><path d="M10 6h8v4h-8V6Z"/>
+          </svg>
+        ),
+      },
+      {
+        href: '/admin/carrusel',
+        label: 'Carrusel',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/>
+            <path d="M16 3H8"/><path d="m8 11 4 4 4-4"/>
+          </svg>
+        ),
+      },
+    ],
   },
   {
-    href: '/admin/carrusel',
-    label: 'Carrusel',
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="7" width="20" height="14" rx="2"/>
-        <path d="M16 3H8"/><path d="m8 11 4 4 4-4"/>
-      </svg>
-    )
+    id: 'documentos',
+    label: 'Documentos Públicos',
+    emoji: '📄',
+    items: [
+      {
+        href: '/admin/gaceta',
+        label: 'Gaceta Oficial',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/>
+          </svg>
+        ),
+      },
+      {
+        href: '/admin/transparencia',
+        label: 'Transparencia',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        ),
+      },
+    ],
   },
   {
-    href: '/admin/transparencia',
-    label: 'Transparencia',
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-      </svg>
-    )
+    id: 'planificacion',
+    label: 'Planificación',
+    emoji: '📊',
+    items: [
+      {
+        href: '/admin/poa',
+        label: 'POA',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+          </svg>
+        ),
+      },
+    ],
   },
   {
-    href: '/admin/poa',
-    label: 'POA',
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
-      </svg>
-    )
+    id: 'institucion',
+    label: 'Institución',
+    emoji: '🏛️',
+    items: [
+      {
+        href: '/admin/secretarias',
+        label: 'Secretarías',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        ),
+      },
+      {
+        href: '/admin/institucion-documentos',
+        label: 'Docs. Institución',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <line x1="10" y1="9" x2="8" y2="9"/>
+          </svg>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'usuarios',
+    label: 'Usuarios & Roles',
+    emoji: '👥',
+    soloSuperAdmin: true,
+    items: [
+      {
+        href: '/admin/usuarios',
+        label: 'Administradores',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'sistema',
+    label: 'Sistema',
+    emoji: '⚙️',
+    soloSuperAdmin: true,
+    items: [
+      {
+        href: '/admin/configuracion',
+        label: 'Configuración',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        ),
+      },
+    ],
   },
 ];
 
-const navAdmin = [
-  {
-    href: '/admin/secretarias',
-    label: 'Secretarías',
-    soloSuperAdmin: false,
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    )
-  },
-  {
-    href: '/admin/institucion-documentos',
-    label: 'Docs. Institución',
-    soloSuperAdmin: false,
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-        <polyline points="14 2 14 8 20 8"/>
-        <line x1="16" y1="13" x2="8" y2="13"/>
-        <line x1="16" y1="17" x2="8" y2="17"/>
-        <line x1="10" y1="9" x2="8" y2="9"/>
-      </svg>
-    )
-  },
-  {
-    href: '/admin/configuracion',
-    label: 'Configuración',
-    soloSuperAdmin: true,
-    icon: (
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3"/>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-      </svg>
-    )
-  },
-];
+// Todos los items aplanados para el breadcrumb
+const allNavItems = buildNavGroups().flatMap(g => g.items);
 
 export default function AdminShell({ perfil, secretarias, children }) {
   const pathname = usePathname();
@@ -114,16 +189,35 @@ export default function AdminShell({ perfil, secretarias, children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  // Grupos colapsados: array de ids de grupos cerrados
+  const [closedGroups, setClosedGroups] = useState([]);
 
   const esSuperAdmin = perfil?.rol === 'super_admin';
   const nombreMostrar = perfil ? `${perfil.nombre}${perfil.apellido ? ' ' + perfil.apellido : ''}` : 'Admin';
   const iniciales = perfil ? `${perfil.nombre?.[0] || ''}${perfil.apellido?.[0] || perfil.nombre?.[1] || ''}`.toUpperCase() : 'AD';
 
+  // Cargar preferencias guardadas
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('admin-closed-groups');
+      if (saved) setClosedGroups(JSON.parse(saved));
+      const savedTheme = localStorage.getItem('admin-theme');
+      if (savedTheme) setIsDarkMode(savedTheme === 'dark');
+      const savedCollapsed = localStorage.getItem('admin-sidebar-collapsed');
+      if (savedCollapsed) setCollapsed(savedCollapsed === 'true');
+    } catch { /* ignore */ }
+  }, []);
+
   useEffect(() => {
     document.documentElement.setAttribute('data-admin-theme', isDarkMode ? 'dark' : 'light');
+    try { localStorage.setItem('admin-theme', isDarkMode ? 'dark' : 'light'); } catch { /* ignore */ }
   }, [isDarkMode]);
 
-  // Close mobile sidebar on route change
+  useEffect(() => {
+    try { localStorage.setItem('admin-sidebar-collapsed', String(collapsed)); } catch { /* ignore */ }
+  }, [collapsed]);
+
+  // Cerrar sidebar mobile al cambiar de ruta
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
   const handleLogout = async () => {
@@ -139,8 +233,20 @@ export default function AdminShell({ perfil, secretarias, children }) {
     return pathname.startsWith(href);
   };
 
-  // Build current page label for breadcrumb
-  const currentPage = [...navPrincipal, ...navAdmin].find(item => isActive(item.href));
+  const toggleGroup = (groupId) => {
+    setClosedGroups(prev => {
+      const next = prev.includes(groupId)
+        ? prev.filter(g => g !== groupId)
+        : [...prev, groupId];
+      try { localStorage.setItem('admin-closed-groups', JSON.stringify(next)); } catch { /* ignore */ }
+      return next;
+    });
+  };
+
+  // Breadcrumb: busca el item activo
+  const currentPage = allNavItems.find(item => isActive(item.href));
+
+  const navGroups = buildNavGroups();
 
   return (
     <div className={`${styles.shell} ${isDarkMode ? styles.dark : styles.light}`}>
@@ -176,33 +282,71 @@ export default function AdminShell({ perfil, secretarias, children }) {
 
         {/* Navigation */}
         <nav className={styles.nav} role="navigation" aria-label="Navegación principal">
-          {!collapsed && <div className={styles.navLabel}>General</div>}
-          {navPrincipal.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`${styles.navItem} ${isActive(item.href) ? styles.active : ''} ${collapsed ? styles.navItemCollapsed : ''}`}
-              title={collapsed ? item.label : undefined}
-            >
-              <span className={styles.navIcon}>{item.icon}</span>
-              {!collapsed && item.label}
-            </Link>
-          ))}
+          {navGroups.map((group) => {
+            // Filtrar grupos de super admin
+            if (group.soloSuperAdmin && !esSuperAdmin) return null;
 
-          <div className={styles.navDivider} />
-          {!collapsed && <div className={styles.navLabel}>Administración</div>}
+            const isGroupClosed = closedGroups.includes(group.id);
+            const hasActiveItem = group.items.some(item => isActive(item.href));
 
-          {navAdmin.filter(item => !item.soloSuperAdmin || esSuperAdmin).map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`${styles.navItem} ${isActive(item.href) ? styles.active : ''} ${collapsed ? styles.navItemCollapsed : ''}`}
-              title={collapsed ? item.label : undefined}
-            >
-              <span className={styles.navIcon}>{item.icon}</span>
-              {!collapsed && item.label}
-            </Link>
-          ))}
+            // Grupos sin label (items sueltos)
+            if (!group.label) {
+              return group.items.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`${styles.navItem} ${isActive(item.href) ? styles.active : ''} ${collapsed ? styles.navItemCollapsed : ''}`}
+                  title={collapsed ? item.label : undefined}
+                >
+                  <span className={styles.navIcon}>{item.icon}</span>
+                  {!collapsed && item.label}
+                </Link>
+              ));
+            }
+
+            // Grupos con label (colapsables)
+            return (
+              <div key={group.id} className={styles.navGroup}>
+                {!collapsed ? (
+                  <button
+                    className={`${styles.navGroupHeader} ${hasActiveItem ? styles.navGroupHeaderActive : ''}`}
+                    onClick={() => toggleGroup(group.id)}
+                    aria-expanded={!isGroupClosed}
+                  >
+                    <span className={styles.navGroupEmoji}>{group.emoji}</span>
+                    <span className={styles.navGroupLabel}>{group.label}</span>
+                    <svg
+                      className={`${styles.navGroupChevron} ${isGroupClosed ? styles.navGroupChevronClosed : ''}`}
+                      width="12" height="12" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2.5"
+                    >
+                      <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                  </button>
+                ) : (
+                  // En modo collapsed: mostrar divisor en vez del header
+                  <div className={styles.navDividerCollapsed} title={group.label} />
+                )}
+
+                {/* Items del grupo */}
+                {(!isGroupClosed || collapsed) && (
+                  <div className={`${styles.navGroupItems} ${!collapsed ? styles.navGroupItemsExpanded : ''}`}>
+                    {group.items.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={`${styles.navItem} ${!collapsed ? styles.navItemIndented : ''} ${isActive(item.href) ? styles.active : ''} ${collapsed ? styles.navItemCollapsed : ''}`}
+                        title={collapsed ? item.label : undefined}
+                      >
+                        <span className={styles.navIcon}>{item.icon}</span>
+                        {!collapsed && item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
         {/* Footer */}

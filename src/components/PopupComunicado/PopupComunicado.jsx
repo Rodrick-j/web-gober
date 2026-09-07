@@ -49,53 +49,28 @@ export default function PopupComunicado({ config }) {
         <div 
           className={styles.overlay} 
           onClick={handleClose} 
-          style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(0,0,0,0.75)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 16px', boxSizing: 'border-box' }}
         >
           <motion.div
-            className={styles.popupContainer}
-            onClick={(e) => e.stopPropagation()} // Evitar que clic adentro cierre el modal
-            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 50 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            style={{ position: 'relative', width: '100%', maxWidth: '500px', background: 'transparent' }}
+            exit={{ opacity: 0, scale: 0.9, y: 30 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
           >
             <button 
               className={styles.closeButton} 
               onClick={handleClose}
               aria-label="Cerrar comunicado"
-              style={{ zIndex: 30, position: 'absolute', top: '-12px', right: '0px', width: '32px', height: '32px', borderRadius: '50%', border: '2px solid white', background: '#9c0720', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1rem', cursor: 'pointer', boxShadow: '0 2px 10px rgba(0,0,0,0.3)' }}
             >
-              ✕
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             
-            {/* Banner superior de ancho completo que NO tapa la imagen */}
-            <div style={{
-              width: '100%',
-              background: 'var(--color-primary)',
-              color: '#ffffff',
-              fontWeight: '900',
-              fontSize: '1.5rem',
-              padding: '0.75rem',
-              textAlign: 'center',
-              borderTopLeftRadius: '12px',
-              borderTopRightRadius: '12px',
-              letterSpacing: '2px',
-              textTransform: 'uppercase',
-              boxShadow: '0 -5px 15px rgba(0, 0, 0, 0.2)',
-              animation: 'pulseBg 3s infinite',
-              zIndex: 20
-            }}>
-              ¡Comunicado!
+            {/* Banner superior más profesional */}
+            <div className={styles.modalHeader}>
+              <span className={styles.headerIcon}>📢</span>
+              Comunicado Oficial
             </div>
-            
-            <style>{`
-              @keyframes pulseBg {
-                0% { background-color: var(--color-primary); }
-                50% { background-color: var(--color-primary-dark); }
-                100% { background-color: var(--color-primary); }
-              }
-            `}</style>
             
             <ContentWrapper {...wrapperProps} style={{ ...wrapperProps.style, display: 'block', width: '100%', borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
               <div className={styles.imageWrapper} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
