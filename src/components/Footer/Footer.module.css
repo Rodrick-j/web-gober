@@ -57,7 +57,7 @@
 .linksGrid {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 3.5rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
@@ -99,31 +99,28 @@
   padding: 0;
   margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
 .footerLink {
-  color: rgba(255, 255, 255, 0.9) !important;
-  background: rgba(0, 0, 0, 0.15) !important; /* Fondo translúcido oscuro */
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding: 0.45rem 0.8rem;
-  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.8) !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0;
+  border-radius: 0;
   text-decoration: none;
-  font-size: 0.82rem;
-  font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
-  align-items: center;
-  backdrop-filter: blur(4px);
+  font-size: 0.88rem;
+  font-weight: 400;
+  transition: all 0.2s ease;
+  display: inline-block;
 }
 
 .footerLink:hover {
-  color: #67181a !important;
-  background: #ffb843 !important; /* Hover en oro vibrante */
-  border-color: #ffb843 !important;
-  transform: translateX(5px);
-  box-shadow: 0 4px 12px rgba(255, 184, 67, 0.3);
+  color: #ffb843 !important;
+  background: transparent !important;
+  transform: translateX(4px);
+  box-shadow: none;
 }
 
 .contactInfo {

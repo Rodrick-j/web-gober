@@ -25,12 +25,6 @@ function getAcronym(nombre) {
 const navItems = [
   { label: 'Inicio', Icon: Home, href: '/' },
   {
-    label: 'Secretarías',
-    Icon: Building2,
-    href: '#',
-    children: [], // Se llenará dinámicamente desde la base de datos
-  },
-  {
     label: 'Institución',
     Icon: Landmark,
     href: '#',
@@ -45,6 +39,12 @@ const navItems = [
       { label: 'Contrataciones', Icon: FileSignature, href: '/institucion/contrataciones' },
       { label: 'Licitación Pública', Icon: Gavel, href: '/institucion/licitacion-publica' },
     ],
+  },
+  {
+    label: 'Secretarías',
+    Icon: Building2,
+    href: '#',
+    children: [], // Se llenará dinámicamente desde la base de datos
   },
   {
     label: 'Transparencia',
