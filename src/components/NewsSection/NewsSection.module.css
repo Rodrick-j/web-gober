@@ -315,4 +315,19 @@
 @media (max-width: 768px) {
   .newsGrid { grid-template-columns: 1fr; }
   .videoGrid { grid-template-columns: 1fr; }
+  
+  .featuredCard {
+    min-height: 420px;
+  }
+  .featuredContent {
+    padding: 1.5rem;
+    gap: 0.75rem;
+  }
+  .featuredTitle {
+    font-size: 1.35rem;
+  }
+  .featuredExcerpt {
+    font-size: 0.95rem;
+    -webkit-line-clamp: 3;
+  }
 }

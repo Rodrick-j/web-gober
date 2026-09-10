@@ -541,13 +541,19 @@
   gap: 2rem;
 }
 
+.filtersContainer {
+  position: relative;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
 /* Filtros (Píldoras) */
 .filtersWrapper {
   display: flex;
   gap: 0.5rem;
   overflow-x: auto;
   padding-bottom: 0.5rem;
-  margin-bottom: 2rem;
+  -webkit-overflow-scrolling: touch;
   /* Ocultar scrollbar */
   scrollbar-width: none; 
 }
@@ -580,6 +586,22 @@
   background: var(--color-primary);
   color: white;
   border-color: var(--color-primary);
+}
+
+.scrollHint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .scrollHint {
+    display: block;
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    opacity: 0.8;
+    margin-top: 0.25rem;
+    font-style: italic;
+  }
 }
 
 /* Comunicados Rápidos (Sidebar) */
