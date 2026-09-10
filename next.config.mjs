@@ -5,6 +5,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '50mb',
     },
+    optimizePackageImports: ['!lucide-react'],
   },
   images: {
     qualities: [10, 20, 30, 40, 50, 60, 70, 75, 80, 85, 90, 95, 100],

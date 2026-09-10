@@ -37,6 +37,18 @@ export default function ConfiguracionPage() {
   });
   const [comunicadoFile, setComunicadoFile] = useState(null);
 
+  // Estado para Contacto Oficial (RM 067/2025 — Medios de Contacto)
+  const [contacto, setContacto] = useState({
+    direccion: '',
+    telefono: '',
+    call_center: '',
+    fax: '',
+    whatsapp: '',
+    email: '',
+    latitud: '',
+    longitud: ''
+  });
+
   // Estado para Videos de Inicio
   const [videosInicio, setVideosInicio] = useState([]);
   const [nuevoVideo, setNuevoVideo] = useState('');
@@ -71,6 +83,18 @@ export default function ConfiguracionPage() {
           }
           if (config.clave === 'video_inicio') {
             setVideosInicio(config.valor.urls || (config.valor.url ? [config.valor.url] : []));
+          }
+          if (config.clave === 'contacto_oficial') {
+            setContacto({
+              direccion: config.valor.direccion || '',
+              telefono: config.valor.telefono || '',
+              call_center: config.valor.call_center || '',
+              fax: config.valor.fax || '',
+              whatsapp: config.valor.whatsapp || '',
+              email: config.valor.email || '',
+              latitud: config.valor.latitud ?? '',
+              longitud: config.valor.longitud ?? ''
+            });
           }
         });
       }
@@ -160,6 +184,22 @@ export default function ConfiguracionPage() {
     await supabase.from('configuracion_global').upsert({
       clave: 'video_inicio',
       valor: { urls: videosInicio }
+    });
+
+    // Upsert Contacto Oficial (se preserva el resto del JSON si existiera)
+    const contactoData = {
+      direccion: contacto.direccion.trim(),
+      telefono: contacto.telefono.trim(),
+      call_center: contacto.call_center.trim(),
+      fax: contacto.fax.trim(),
+      whatsapp: contacto.whatsapp.trim(),
+      email: contacto.email.trim(),
+      latitud: contacto.latitud === '' ? null : parseFloat(contacto.latitud),
+      longitud: contacto.longitud === '' ? null : parseFloat(contacto.longitud)
+    };
+    await supabase.from('configuracion_global').upsert({
+      clave: 'contacto_oficial',
+      valor: contactoData
     });
 
     // Limpiar caché de Next.js para reflejar los cambios en público inmediatamente
@@ -341,6 +381,68 @@ export default function ConfiguracionPage() {
                 placeholder="https://tiktok.com/..."
                 style={{ width: '100%', maxWidth: '500px', padding: '0.5rem' }}
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Contacto Oficial Section (RM 067/2025 — Medios de Contacto) */}
+        <div className="tableCard" style={{ padding: '2rem' }}>
+          <h2 style={{ marginBottom: '0.5rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
+            Contacto Oficial
+          </h2>
+          <p style={{ fontSize: '0.85rem', color: '#666', marginBottom: '1.5rem' }}>
+            Datos que se muestran en la sección de ubicación y contacto del portal. Exigidos por la RM 067/2025 (Medios de Contacto).
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+            <div style={{ gridColumn: '1 / -1' }}>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>Dirección</label>
+              <input type="text" className="input" value={contacto.direccion}
+                onChange={(e) => setContacto({ ...contacto, direccion: e.target.value })}
+                placeholder="Calle Presidente Montes, entre Bolívar y Adolfo Mier, Oruro"
+                style={{ width: '100%', padding: '0.5rem' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>Teléfono</label>
+              <input type="text" className="input" value={contacto.telefono}
+                onChange={(e) => setContacto({ ...contacto, telefono: e.target.value })}
+                placeholder="(591-2) 5270-000" style={{ width: '100%', padding: '0.5rem' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>Call Center / Línea gratuita</label>
+              <input type="text" className="input" value={contacto.call_center}
+                onChange={(e) => setContacto({ ...contacto, call_center: e.target.value })}
+                placeholder="800-10-XXXX" style={{ width: '100%', padding: '0.5rem' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>Fax</label>
+              <input type="text" className="input" value={contacto.fax}
+                onChange={(e) => setContacto({ ...contacto, fax: e.target.value })}
+                placeholder="(591-2) 5270-001" style={{ width: '100%', padding: '0.5rem' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>WhatsApp</label>
+              <input type="text" className="input" value={contacto.whatsapp}
+                onChange={(e) => setContacto({ ...contacto, whatsapp: e.target.value })}
+                placeholder="+591 7XXXXXXX" style={{ width: '100%', padding: '0.5rem' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>Correo electrónico</label>
+              <input type="email" className="input" value={contacto.email}
+                onChange={(e) => setContacto({ ...contacto, email: e.target.value })}
+                placeholder="contacto@oruro.gob.bo" style={{ width: '100%', padding: '0.5rem' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>Latitud (mapa)</label>
+              <input type="text" className="input" value={contacto.latitud}
+                onChange={(e) => setContacto({ ...contacto, latitud: e.target.value })}
+                placeholder="-17.9695" style={{ width: '100%', padding: '0.5rem' }} />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontWeight: 'bold', marginBottom: '0.25rem' }}>Longitud (mapa)</label>
+              <input type="text" className="input" value={contacto.longitud}
+                onChange={(e) => setContacto({ ...contacto, longitud: e.target.value })}
+                placeholder="-67.1151" style={{ width: '100%', padding: '0.5rem' }} />
             </div>
           </div>
         </div>

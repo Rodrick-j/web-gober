@@ -42,7 +42,11 @@ export default function RootLayout({ children }) {
             }
           `}
         </Script>
-        <Script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" strategy="afterInteractive" />
+        {/* lazyOnload: evita el <link rel="preload"> que el navegador reporta como "preloaded but not used" */}
+        <Script
+          src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

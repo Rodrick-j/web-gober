@@ -67,6 +67,7 @@ export default async function EstadisticasPage() {
 
   return (
     <div style={{ maxWidth: '1100px', display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+      <style>{`.statCardHover:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }`}</style>
 
       {/* Header */}
       <div>
@@ -84,13 +85,12 @@ export default async function EstadisticasPage() {
           <a
             key={stat.label}
             href={stat.href}
+            className="statCardHover"
             style={{
               background: 'var(--admin-surface)', border: '1px solid var(--admin-border)',
               borderTop: `3px solid ${stat.color}`, borderRadius: '14px', padding: '1.25rem 1.5rem',
               textDecoration: 'none', display: 'block', transition: 'all 0.2s', cursor: 'pointer',
             }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = `0 8px 24px ${stat.color}20`; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}
           >
             <div style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{stat.icon}</div>
             <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--admin-text)', lineHeight: 1, fontFamily: 'Outfit, sans-serif' }}>

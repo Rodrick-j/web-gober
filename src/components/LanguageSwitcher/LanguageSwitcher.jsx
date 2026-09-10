@@ -78,7 +78,7 @@ export default function LanguageSwitcher() {
       </select>
 
       {/* Widget original de Google Translate oculto para procesar la traducción en segundo plano */}
-      <div id="google_translate_element" className={styles.hiddenTranslator}></div>
+      <div id="google_translate_element" className={styles.hiddenTranslator} suppressHydrationWarning></div>
     </div>
   );
 }

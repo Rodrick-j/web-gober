@@ -7,11 +7,34 @@ import styles from './CategoriaInstitucion.module.css';
 export const revalidate = 60;
 
 const CATEGORIAS_VALIDAS = {
+  // Categorías originales
   'informacion-financiera': 'Información Financiera',
   'recursos-humanos': 'Recursos Humanos',
   'desarrollo-organizacional': 'Desarrollo Organizacional',
   'contrataciones': 'Contrataciones',
   'licitacion-publica': 'Licitación Pública',
+
+  // ── RM 067/2025 · Contenidos Mínimos ──
+  // Marco normativo (ítems 40, 41, 42) — 'marco-normativo' además corrige el enlace roto del navbar
+  'marco-normativo': 'Marco Normativo',
+  'normativa-nacional': 'Normativa Nacional',
+  'normativa-internacional': 'Normativa Internacional',
+  'reglamentos-vigentes': 'Reglamentos Vigentes',
+  // Plan estratégico y POA (ítems 7, 9, 10)
+  'plan-estrategico': 'Plan Estratégico Institucional',
+  'poa-documento': 'Programación Operativa Anual (POA)',
+  'seguimiento-poa': 'Seguimiento y Evaluación al POA',
+  'flujos-procesos': 'Flujos de Procesos',
+  // Información financiera (ítems 11, 12, 14)
+  'presupuesto': 'Presupuesto Institucional',
+  'ejecucion-presupuestaria': 'Ejecución Presupuestaria',
+  'fuentes-financiamiento': 'Fuentes de Financiamiento',
+  // Recursos humanos (ítems 32, 33, 34, 35, 36)
+  'mof': 'Manual de Organización de Funciones (MOF)',
+  'mpp': 'Manual de Procesos y Procedimientos (MPP)',
+  'poai': 'Plan Operativo Anual Individual (POAI)',
+  'escala-salarial': 'Escala Salarial',
+  'nomina-servidores': 'Nómina de Servidores Públicos',
 };
 
 export async function generateMetadata({ params }) {

@@ -143,8 +143,11 @@ export default function LocationSection({ contacto }) {
                       { label: 'Sede Principal',    value: 'Gobierno Autónomo Departamental de Oruro', icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10' },
                       { label: 'Dirección',         value: contacto?.direccion || 'Plaza 10 de Febrero s/n, Oruro', icon: 'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' },
                       { label: 'Teléfono',          value: contacto?.telefono  || '(591-2) 5270-000', icon: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z' },
+                      contacto?.call_center && { label: 'Call Center',       value: contacto.call_center, icon: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z' },
+                      contacto?.whatsapp && { label: 'WhatsApp',           value: contacto.whatsapp, icon: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z' },
+                      contacto?.fax && { label: 'Fax',                     value: contacto.fax, icon: 'M6 9V2h12v7M6 18h12v4H6zM6 14h12M18 9H6a2 2 0 0 0-2 2v3h16v-3a2 2 0 0 0-2-2z' },
                       { label: 'Atención Ciudadana',value: contacto?.email     || 'contacto@oruro.gob.bo', icon: 'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zM22 6l-10 7L2 6' },
-                    ].map(item => (
+                    ].filter(Boolean).map(item => (
                       <div key={item.label} className="info-item">
                         <div className="info-icon"><Icon d={item.icon} /></div>
                         <div className="info-text">

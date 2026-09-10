@@ -97,10 +97,27 @@
   0% {
     background-position: 0% 0;
   }
-
   100% {
-    background-position: -200% 0;
+    background-position: 200% 0;
   }
+}
+
+.logoCrossfade1 {
+  animation: crossfade1 8s ease-in-out infinite;
+}
+
+.logoCrossfade2 {
+  animation: crossfade2 8s ease-in-out infinite;
+}
+
+@keyframes crossfade1 {
+  0%, 45%, 100% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+}
+
+@keyframes crossfade2 {
+  0%, 45%, 100% { opacity: 0; }
+  50%, 95% { opacity: 1; }
 }
 
 .navbar.scrolled {
@@ -350,6 +367,106 @@
   color: var(--color-text-muted);
   line-height: 1.25;
   font-weight: 500;
+}
+
+/* =====================================================
+   Megamenú en columnas — Institución
+   Los 14 enlaces se agrupan por tema y quedan todos
+   visibles, sin submenús que haya que abrir aparte.
+   ===================================================== */
+.groupMenu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: -10px;
+  width: min(760px, calc(100vw - 2rem));
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 1.1rem 1.25rem;
+  z-index: 1000;
+  column-count: 3;
+  column-gap: 1.5rem;
+}
+
+.groupColumn {
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-bottom: 1.15rem;
+}
+
+.groupColumn:last-child {
+  margin-bottom: 0;
+}
+
+.groupTitle {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  padding: 0 0.4rem 0.45rem;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(156, 7, 32, 0.15);
+}
+
+.groupLink {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.4rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.groupLink:hover {
+  background: #f8f9fa;
+  color: var(--color-primary);
+  transform: translateX(3px);
+}
+
+.groupLink:hover .dropdownEmoji {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* En pantallas de escritorio angostas el panel baja a 2 columnas */
+@media (max-width: 1150px) {
+  .groupMenu {
+    width: min(520px, calc(100vw - 2rem));
+    column-count: 2;
+  }
+}
+
+/* Mismos grupos dentro del acordeón móvil */
+.mobileGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  margin-bottom: 0.8rem;
+}
+
+.mobileGroup:last-child {
+  margin-bottom: 0;
+}
+
+.mobileGroupTitle {
+  font-family: var(--font-heading);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  padding: 0.45rem 0.75rem 0.3rem;
+  opacity: 0.85;
 }
 
 
@@ -728,6 +845,16 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
   text-decoration: none;
   text-align: left;
+}
+
+.logoContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
 }
 
 .mobileChip:hover,

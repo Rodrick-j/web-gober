@@ -8,7 +8,7 @@ export default function SocialFeeds({ redes }) {
   const fbUrl = redes?.facebook && redes.facebook !== '#' ? redes.facebook : 'https://www.facebook.com/GobernacionDeOruro';
   const igUrl = redes?.instagram && redes.instagram !== '#' ? redes.instagram : 'https://www.instagram.com/infounicom.gador/';
   const tkUrl = redes?.tiktok && redes.tiktok !== '#' ? redes.tiktok : 'https://www.tiktok.com/@gobiernodeunidad';
-  const ytUrl = redes?.youtube && redes.youtube !== '#' ? redes.youtube : 'https://www.youtube.com/channel/UC5q5rDsXdlXm3fbYSk-AcuA';
+  const ytUrl = redes?.youtube && redes.youtube !== '#' ? redes.youtube : 'https://www.youtube.com/@Gobernaci%C3%B3ndeOruro';
 
   // Helper para extraer un "username" limpio
   const extractHandle = (url, prefix = '@') => {

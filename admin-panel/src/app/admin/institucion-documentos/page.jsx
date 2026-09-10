@@ -1,16 +1,40 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { uploadFile } from '@/lib/supabase/storage';
 import FileUpload from '@/components/admin/FileUpload/FileUpload';
 import styles from './InstitucionDocumentos.module.css';
 import { Plus, Trash2, FileText, Search } from 'lucide-react';
 
+// Categorías del repositorio de documentos institucionales.
+// Las marcadas "RM 067/2025" corresponden a contenidos mínimos exigidos por la
+// Resolución Ministerial N° 067/2025 (Lineamientos de Contenidos Mínimos).
 const CATEGORIAS = [
   { id: 'informacion-financiera', label: 'Información Financiera' },
   { id: 'recursos-humanos', label: 'Recursos Humanos' },
   { id: 'desarrollo-organizacional', label: 'Desarrollo Organizacional' },
   { id: 'contrataciones', label: 'Contrataciones' },
   { id: 'licitacion-publica', label: 'Licitación Pública' },
+  // ── Marco Normativo (RM 067/2025) ──
+  { id: 'marco-normativo', label: 'Marco Normativo (general)' },
+  { id: 'normativa-nacional', label: 'Normativa Nacional' },
+  { id: 'normativa-internacional', label: 'Normativa Internacional' },
+  { id: 'reglamentos-vigentes', label: 'Reglamentos Vigentes' },
+  // ── Plan Estratégico y POA (RM 067/2025) ──
+  { id: 'plan-estrategico', label: 'Plan Estratégico Institucional' },
+  { id: 'poa-documento', label: 'Programación Operativa Anual (POA)' },
+  { id: 'seguimiento-poa', label: 'Seguimiento y Evaluación al POA' },
+  { id: 'flujos-procesos', label: 'Flujos de Procesos' },
+  // ── Información Financiera detallada (RM 067/2025) ──
+  { id: 'presupuesto', label: 'Presupuesto Institucional' },
+  { id: 'ejecucion-presupuestaria', label: 'Ejecución Presupuestaria' },
+  { id: 'fuentes-financiamiento', label: 'Fuentes de Financiamiento' },
+  // ── Recursos Humanos detallado (RM 067/2025) ──
+  { id: 'mof', label: 'Manual de Organización de Funciones (MOF)' },
+  { id: 'mpp', label: 'Manual de Procesos y Procedimientos (MPP)' },
+  { id: 'poai', label: 'Plan Operativo Anual Individual (POAI)' },
+  { id: 'escala-salarial', label: 'Escala Salarial' },
+  { id: 'nomina-servidores', label: 'Nómina de Servidores Públicos' },
 ];
 
 export default function InstitucionDocumentosAdmin() {
@@ -21,11 +45,11 @@ export default function InstitucionDocumentosAdmin() {
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [archivoFile, setArchivoFile] = useState(null);
   const [formData, setFormData] = useState({
     titulo: '',
     descripcion: '',
     categoria: 'informacion-financiera',
-    archivo_url: ''
   });
 
   const supabase = createClient();
@@ -48,41 +72,44 @@ export default function InstitucionDocumentosAdmin() {
     setLoading(false);
   };
 
-  const handleFileUpload = (url) => {
-    setFormData({ ...formData, archivo_url: url });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.titulo || !formData.archivo_url) {
+    if (!formData.titulo || !archivoFile) {
       alert('El título y el archivo PDF son obligatorios.');
       return;
     }
-    
+
     setIsSubmitting(true);
-    
-    const { data: userData } = await supabase.auth.getUser();
-    
-    const { error } = await supabase
-      .from('institucion_documentos')
-      .insert([
-        {
-          titulo: formData.titulo,
-          descripcion: formData.descripcion,
-          categoria: formData.categoria,
-          archivo_url: formData.archivo_url,
-          creado_por: userData?.user?.id
-        }
-      ]);
-      
-    if (error) {
-      alert('Error al guardar documento: ' + error.message);
-    } else {
+
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+
+      // Subir el PDF al bucket documentos-pdf y obtener su URL pública
+      const archivo_url = await uploadFile(archivoFile, 'documentos');
+
+      const { error } = await supabase
+        .from('institucion_documentos')
+        .insert([
+          {
+            titulo: formData.titulo,
+            descripcion: formData.descripcion,
+            categoria: formData.categoria,
+            archivo_url,
+            creado_por: userData?.user?.id
+          }
+        ]);
+
+      if (error) throw error;
+
       setIsModalOpen(false);
-      setFormData({ titulo: '', descripcion: '', categoria: 'informacion-financiera', archivo_url: '' });
+      setFormData({ titulo: '', descripcion: '', categoria: 'informacion-financiera' });
+      setArchivoFile(null);
       fetchDocumentos();
+    } catch (err) {
+      alert('Error al guardar documento: ' + (err.message || err));
+    } finally {
+      setIsSubmitting(false);
     }
-    setIsSubmitting(false);
   };
 
   const handleDelete = async (id) => {
@@ -225,13 +252,15 @@ export default function InstitucionDocumentosAdmin() {
 
               <div className={styles.formGroup}>
                 <label>Archivo PDF</label>
-                <FileUpload 
-                  bucket="institucion_pdfs"
-                  onUploadComplete={handleFileUpload}
+                <FileUpload
+                  onFileSelect={setArchivoFile}
                   accept="application/pdf"
+                  label="Seleccionar PDF"
+                  icon="📄"
+                  maxSizeMB={10}
                 />
-                {formData.archivo_url && (
-                  <p className={styles.uploadSuccess}>✓ Archivo cargado correctamente</p>
+                {archivoFile && (
+                  <p className={styles.uploadSuccess}>✓ {archivoFile.name}</p>
                 )}
               </div>
 
@@ -239,7 +268,7 @@ export default function InstitucionDocumentosAdmin() {
                 <button type="button" className={styles.btnSecondary} onClick={() => setIsModalOpen(false)}>
                   Cancelar
                 </button>
-                <button type="submit" className={styles.btnPrimary} disabled={isSubmitting || !formData.archivo_url}>
+                <button type="submit" className={styles.btnPrimary} disabled={isSubmitting || !archivoFile}>
                   {isSubmitting ? 'Guardando...' : 'Guardar Documento'}
                 </button>
               </div>

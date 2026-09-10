@@ -22,8 +22,55 @@ function getAcronym(nombre) {
   return words.map(w => w[0].toUpperCase()).join('');
 }
 
+// Los 14 enlaces de Institución se agrupan por tema y se muestran en columnas,
+// todos visibles a la vez, en lugar de una única lista larga.
+const institucionGroups = [
+  {
+    title: 'Acerca de Nosotros',
+    items: [
+      { label: 'Historia, Misión y Visión', Icon: Landmark, href: '/institucion/historia-institucion' },
+      { label: 'Datos de Municipio', Icon: BookOpen, href: '/institucion/historia' },
+      { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
+      { label: 'Nómina de Autoridades', Icon: User, href: '/institucion/autoridades' },
+    ],
+  },
+  {
+    title: 'Planificación',
+    items: [
+      { label: 'Plan Estratégico Institucional', Icon: ScrollText, href: '/institucion/plan-estrategico' },
+      { label: 'Seguimiento al POA', Icon: ClipboardList, href: '/institucion/seguimiento-poa' },
+      { label: 'Marco Normativo', Icon: Scale, href: '/institucion/marco-normativo' },
+    ],
+  },
+  {
+    title: 'Contrataciones',
+    items: [
+      { label: 'Contrataciones y Convocatorias', Icon: FileSignature, href: '/contrataciones' },
+      { label: 'Licitación Pública', Icon: Gavel, href: '/institucion/licitacion-publica' },
+    ],
+  },
+  {
+    title: 'Administración',
+    items: [
+      { label: 'Información Financiera', Icon: Coins, href: '/institucion/informacion-financiera' },
+      { label: 'Presupuesto y Ejecución', Icon: Coins, href: '/institucion/presupuesto' },
+      { label: 'Recursos Humanos', Icon: User, href: '/institucion/recursos-humanos' },
+      { label: 'Escala Salarial', Icon: Coins, href: '/institucion/escala-salarial' },
+      { label: 'Desarrollo Organizacional', Icon: GitMerge, href: '/institucion/desarrollo-organizacional' },
+    ],
+  },
+];
+
 const navItems = [
   { label: 'Inicio', Icon: Home, href: '/' },
+  {
+    label: 'Institución',
+    Icon: Landmark,
+    href: '#',
+    groups: institucionGroups,
+    // children plano: lo siguen usando el indicador de flecha y el menú móvil.
+    children: institucionGroups.flatMap((group) => group.items),
+  },
   {
     label: 'Secretarías',
     Icon: Building2,
@@ -31,31 +78,20 @@ const navItems = [
     children: [], // Se llenará dinámicamente desde la base de datos
   },
   {
-    label: 'Institución',
-    Icon: Landmark,
-    href: '#',
-    children: [
-      { label: 'Historia de la Institución', Icon: Landmark, href: '/institucion/historia-institucion' },
-      { label: 'Datos de Municipio', Icon: BookOpen, href: '/institucion/historia' },
-      { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
-      { label: 'Marco Normativo', Icon: Scale, href: '/institucion/marco-normativo' },
-      { label: 'Información Financiera', Icon: Coins, href: '/institucion/informacion-financiera' },
-      { label: 'Recursos Humanos', Icon: User, href: '/institucion/recursos-humanos' },
-      { label: 'Desarrollo Organizacional', Icon: GitMerge, href: '/institucion/desarrollo-organizacional' },
-      { label: 'Contrataciones', Icon: FileSignature, href: '/institucion/contrataciones' },
-      { label: 'Licitación Pública', Icon: Gavel, href: '/institucion/licitacion-publica' },
-    ],
-  },
-  {
     label: 'Transparencia',
     Icon: Search,
     href: '/transparencia',
     children: [
-      { label: 'Lucha contra la Corrupción', Icon: Scale, href: '/transparencia' },
+      { label: 'Portal de Transparencia', Icon: Scale, href: '/transparencia' },
+      { label: 'Unidad de Transparencia (UTLCC)', Icon: Landmark, href: '/transparencia/unidad' },
+      { label: 'Solicitud de Información', Icon: FileText, href: '/transparencia/solicitud-informacion' },
+      { label: 'Rendición Pública de Cuentas', Icon: FileSignature, href: '/transparencia/rendicion_cuentas' },
+      { label: 'Datos y Estadísticas', Icon: BookOpen, href: '/datos-estadisticas' },
       { label: 'Auditoria Interna', Icon: ClipboardList, href: '/auditoria' },
     ],
   },
   { label: 'Noticias', Icon: Newspaper, href: '/noticias' },
+  { label: 'Publicaciones', Icon: BookOpen, href: '/publicaciones' },
   {
     label: 'Gaceta Oficial',
     Icon: ScrollText,
@@ -94,12 +130,16 @@ export default function Navbar() {
   const supabase = useMemo(() => createClient(), []);
 
   const fallbackSecretarias = [
+    { nombre: 'Secretaría General', nombre_corto: 'Sec. General', slug: 'secretaria-general', icono: '🏛️' },
+    { nombre: 'Secretaría Departamental de Desarrollo Productivo e Industria', nombre_corto: 'Desarrollo Productivo', slug: 'desarrollo-productivo-industria', icono: '🌾' },
+    { nombre: 'Secretaría Departamental de Cultura y Turismo', nombre_corto: 'Cultura y Turismo', slug: 'cultura-turismo', icono: '🎭' },
+    { nombre: 'Secretaría Departamental de Obras Públicas', nombre_corto: 'Obras Públicas', slug: 'obras-publicas', icono: '🏗️' },
     { nombre: 'Secretaría Departamental de Minería y Metalurgia', nombre_corto: 'Minería y Metalurgia', slug: 'mineria-y-metalurgia', icono: '⛏️' },
-    { nombre: 'Secretaría Departamental de Medio Ambiente, Agua y Madre Tierra', nombre_corto: 'Medio Ambiente y Madre Tierra', slug: 'medio-ambiente', icono: '🌿' },
+    { nombre: 'Secretaría Departamental de Medio Ambiente, Agua y Madre Tierra', nombre_corto: 'Medio Ambiente', slug: 'medio-ambiente-agua-madre-tierra', icono: '🌿' },
     { nombre: 'Secretaría Departamental de Asuntos Jurídicos', nombre_corto: 'Asuntos Jurídicos', slug: 'asuntos-juridicos', icono: '⚖️' },
-    { nombre: 'Secretaría Departamental de Obras Públicas e Infraestructura', nombre_corto: 'Obras e Infraestructura', slug: 'obras-publicas', icono: '🏗️' },
-    { nombre: 'Secretaría Departamental de Desarrollo Social y Salud', nombre_corto: 'Desarrollo Social', slug: 'desarrollo-social', icono: '🏥' },
-    { nombre: 'Secretaría Departamental de Economía y Finanzas', nombre_corto: 'Economía y Finanzas', slug: 'economia-y-finanzas', icono: '💰' }
+    { nombre: 'Secretaría Departamental de Desarrollo Social y Seguridad Alimentaria', nombre_corto: 'Desarrollo Social', slug: 'desarrollo-social-seguridad-alimentaria', icono: '🏥' },
+    { nombre: 'Secretaría Departamental de Planificación del Desarrollo', nombre_corto: 'Planificación', slug: 'planificacion-desarrollo', icono: '📊' },
+    { nombre: 'Secretaría Departamental de Administración y Finanzas Públicas', nombre_corto: 'Administración y Finanzas', slug: 'administracion-finanzas-publicas', icono: '💰' }
   ];
 
   useEffect(() => {
@@ -222,58 +262,34 @@ export default function Navbar() {
             href="/" 
             className={styles.logo}
           >
-            <motion.div
-              style={{
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                perspective: '1200px'
-              }}
-            >
+            <div className={styles.logoContainer}>
               {/* Primer Logo: Logo Institucional */}
-              <motion.div 
-                animate={{ opacity: [1, 1, 0, 0, 1] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 8,
-                  times: [0, 0.45, 0.5, 0.95, 1],
-                  ease: "easeInOut",
-                }}
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
-              >
-                  <Image
-                    src="/imagotipo_gador_2026.png"
-                    alt="Gobierno Autónomo Departamental de Oruro"
-                    height={90}
-                    width={180}
-                    style={{ objectFit: 'contain', width: 'auto', height: '64px' }}
-                    priority
-                  />
-              </motion.div>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <div className={styles.logoCrossfade1}>
+                    <Image
+                      src="/imagotipo_gador_2026.png"
+                      alt="Gobierno Autónomo Departamental de Oruro"
+                      height={90}
+                      width={180}
+                      style={{ objectFit: 'contain', width: 'auto', height: '64px' }}
+                      priority
+                    />
+                </div>
+              </div>
 
               {/* Segundo Logo: Marca de Gobierno */}
-              <motion.div 
-                animate={{ opacity: [0, 0, 1, 1, 0] }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 8,
-                  times: [0, 0.45, 0.5, 0.95, 1],
-                  ease: "easeInOut",
-                }}
-                style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
-              >
-                <Image
-                  src="/marca_gobierno_2.png"
-                  alt="¡Gobierno de Unidad!"
-                  width={310}
-                  height={68}
-                  style={{ objectFit: 'contain', width: 'auto', height: '64px' }}
-                />
-              </motion.div>
-            </motion.div>
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
+                <div className={styles.logoCrossfade2}>
+                  <Image
+                    src="/marca_gobierno_2.png"
+                    alt="¡Gobierno de Unidad!"
+                    width={310}
+                    height={68}
+                    style={{ objectFit: 'contain', width: 'auto', height: '64px' }}
+                  />
+                </div>
+              </div>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -304,7 +320,13 @@ export default function Navbar() {
                 <AnimatePresence>
                   {item.children && activeDropdown === item.label && (
                     <motion.div
-                      className={item.label === 'Secretarías' ? styles.megaMenu : styles.dropdown}
+                      className={
+                        item.groups
+                          ? styles.groupMenu
+                          : item.label === 'Secretarías'
+                            ? styles.megaMenu
+                            : styles.dropdown
+                      }
                       initial={{ opacity: 0, y: 15, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 15, scale: 0.95 }}
@@ -312,22 +334,36 @@ export default function Navbar() {
                       onMouseEnter={() => clearTimeout(timeoutRef.current)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      {item.children.map((child) => (
-                        item.label === 'Secretarías' ? (
-                          <Link key={child.label} href={child.href} className={styles.megaLink}>
-                            <div className={styles.megaEmoji}><child.Icon size={24} strokeWidth={2} /></div>
-                            <div className={styles.megaText}>
-                              <span className={styles.megaAcronym}>{child.acronym}</span>
-                              <span className={styles.megaFullName}>{child.fullLabel}</span>
-                            </div>
-                          </Link>
-                        ) : (
-                          <Link key={child.label} href={child.href} className={styles.dropdownLink}>
-                            <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
-                            {child.label}
-                          </Link>
-                        )
-                      ))}
+                      {item.groups ? (
+                        item.groups.map((group) => (
+                          <div key={group.title} className={styles.groupColumn}>
+                            <span className={styles.groupTitle}>{group.title}</span>
+                            {group.items.map((child) => (
+                              <Link key={child.label} href={child.href} className={styles.groupLink}>
+                                <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        ))
+                      ) : (
+                        item.children.map((child) => (
+                          item.label === 'Secretarías' ? (
+                            <Link key={child.label} href={child.href} className={styles.megaLink}>
+                              <div className={styles.megaEmoji}><child.Icon size={24} strokeWidth={2} /></div>
+                              <div className={styles.megaText}>
+                                <span className={styles.megaAcronym}>{child.acronym}</span>
+                                <span className={styles.megaFullName}>{child.fullLabel}</span>
+                              </div>
+                            </Link>
+                          ) : (
+                            <Link key={child.label} href={child.href} className={styles.dropdownLink}>
+                              <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
+                              {child.label}
+                            </Link>
+                          )
+                        ))
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -406,19 +442,32 @@ export default function Navbar() {
                           className={item.label === 'Secretarías' ? styles.mobileChipsGrid : ''}
                           style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}
                         >
-                          {item.children.map((child) => {
-                            const isSecretarias = item.label === 'Secretarías';
-                            return isSecretarias ? (
-                              <Link key={child.label} href={child.href} className={styles.mobileChip} onClick={() => setMobileOpen(false)}>
-                                <span className={styles.chipEmoji}><child.Icon size={14} strokeWidth={2.5} /></span>
-                                <span className={styles.chipText}>{child.fullLabel || child.label}</span>
-                              </Link>
-                            ) : (
-                              <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
-                                <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
-                              </Link>
-                            );
-                          })}
+                          {item.groups ? (
+                            item.groups.map((group) => (
+                              <div key={group.title} className={styles.mobileGroup}>
+                                <span className={styles.mobileGroupTitle}>{group.title}</span>
+                                {group.items.map((child) => (
+                                  <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
+                                    <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
+                                  </Link>
+                                ))}
+                              </div>
+                            ))
+                          ) : (
+                            item.children.map((child) => {
+                              const isSecretarias = item.label === 'Secretarías';
+                              return isSecretarias ? (
+                                <Link key={child.label} href={child.href} className={styles.mobileChip} onClick={() => setMobileOpen(false)}>
+                                  <span className={styles.chipEmoji}><child.Icon size={14} strokeWidth={2.5} /></span>
+                                  <span className={styles.chipText}>{child.fullLabel || child.label}</span>
+                                </Link>
+                              ) : (
+                                <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
+                                  <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
+                                </Link>
+                              );
+                            })
+                          )}
                         </div>
                       </motion.div>
                     )}

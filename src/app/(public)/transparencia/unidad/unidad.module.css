@@ -1,0 +1,60 @@
+.main {
+  background: transparent;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+  position: relative;
+}
+
+.heroBanner {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, rgba(107, 0, 0, 0.7), rgba(58, 0, 0, 0.8));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+  z-index: 1;
+}
+
+.heroTitle {
+  color: white;
+  font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.btnVolver {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  transition: all 0.3s ease;
+}
+.btnVolver:hover { background: rgba(255, 255, 255, 0.22); color: #fff; }
+
+.container {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
+  z-index: 10;
+  display: grid;
+  gap: 1.5rem;
+}

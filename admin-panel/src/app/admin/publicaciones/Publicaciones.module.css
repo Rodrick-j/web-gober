@@ -1,0 +1,78 @@
+.container { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+
+.header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.35rem; }
+.subtitle { color: var(--text-muted, #64748b); font-size: 0.95rem; max-width: 640px; }
+
+.btnPrimary {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--primary, #9c0720); color: #fff;
+  padding: 0.7rem 1.2rem; border-radius: 8px; border: none;
+  font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.btnPrimary:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+.btnPrimary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btnSecondary {
+  padding: 0.7rem 1.2rem; background: #fff; color: #475569;
+  border: 1px solid #cbd5e1; border-radius: 8px; font-weight: 600; cursor: pointer;
+}
+.btnSecondary:hover { background: #f8fafc; }
+
+.filters { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.select {
+  border: 1px solid #cbd5e1; background: #fff; border-radius: 8px;
+  padding: 0.5rem 0.9rem; font-size: 0.9rem; color: #334155; cursor: pointer; outline: none;
+}
+
+.tableContainer { background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; min-width: 680px; }
+.table th, .table td { padding: 0.85rem 1rem; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 0.9rem; }
+.table th { background: #f8fafc; font-weight: 600; color: #475569; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.badge { display: inline-block; padding: 0.2rem 0.65rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; background: #f1f5f9; color: #475569; }
+.badgeOff { background: #fee2e2; color: #b91c1c; }
+.badgeStar { background: #fef9c3; color: #a16207; }
+
+.actions { display: flex; gap: 0.5rem; }
+.btnIcon { padding: 0.4rem 0.8rem; background: #f1f5f9; color: #334155; border-radius: 6px; border: none; text-decoration: none; font-size: 0.82rem; font-weight: 500; cursor: pointer; }
+.btnIcon:hover { background: #e2e8f0; }
+.btnIconDanger { padding: 0.4rem; background: transparent; color: #ef4444; border: 1px solid transparent; border-radius: 6px; cursor: pointer; }
+.btnIconDanger:hover { background: #fef2f2; border-color: #fca5a5; }
+
+.emptyState, .loading { text-align: center; padding: 4rem; color: #64748b; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; }
+
+/* Modal */
+.modalOverlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); display: flex; align-items: flex-start; justify-content: center; z-index: 1000; padding: 2rem 1rem; overflow-y: auto; }
+.modal { background: #fff; width: 100%; max-width: 640px; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); overflow: hidden; }
+.modalHeader { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; border-bottom: 1px solid #e2e8f0; }
+.modalHeader h2 { font-size: 1.1rem; font-weight: 700; margin: 0; }
+.closeBtn { background: transparent; border: none; font-size: 1.25rem; color: #64748b; cursor: pointer; }
+.modalBody { padding: 1.5rem; }
+
+.formGroup { margin-bottom: 1.1rem; }
+.formRow { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.formGroup label { display: block; font-size: 0.85rem; font-weight: 600; color: #334155; margin-bottom: 0.4rem; }
+.formGroup input[type='text'], .formGroup input[type='url'], .formGroup input[type='date'], .formGroup textarea, .formGroup select {
+  width: 100%; padding: 0.7rem; border: 1px solid #cbd5e1; border-radius: 8px;
+  font-family: inherit; font-size: 0.92rem; outline: none;
+}
+.formGroup input:focus, .formGroup textarea:focus, .formGroup select:focus { border-color: var(--primary, #9c0720); }
+.checkRow { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: #334155; }
+.checkRow input { width: auto; }
+.uploadSuccess { margin-top: 0.5rem; color: #10b981; font-size: 0.85rem; font-weight: 500; }
+.currentLink { font-size: 0.82rem; margin-top: 0.35rem; }
+.currentLink a { color: var(--primary, #9c0720); font-weight: 600; }
+
+.modalFooter { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid #e2e8f0; }
+
+/* Dark mode */
+:global([data-admin-theme='dark']) .tableContainer,
+:global([data-admin-theme='dark']) .modal,
+:global([data-admin-theme='dark']) .emptyState,
+:global([data-admin-theme='dark']) .loading { background: var(--bg-card, #1e293b); border-color: #334155; }
+:global([data-admin-theme='dark']) .table th { background: #0f172a; color: #94a3b8; border-color: #334155; }
+:global([data-admin-theme='dark']) .table td { border-color: #334155; color: #e2e8f0; }
+:global([data-admin-theme='dark']) .modalHeader, :global([data-admin-theme='dark']) .modalFooter { border-color: #334155; }
+:global([data-admin-theme='dark']) .formGroup label, :global([data-admin-theme='dark']) .checkRow { color: #e2e8f0; }
+:global([data-admin-theme='dark']) .formGroup input, :global([data-admin-theme='dark']) .formGroup textarea, :global([data-admin-theme='dark']) .formGroup select { background: #0f172a; border-color: #334155; color: #fff; }

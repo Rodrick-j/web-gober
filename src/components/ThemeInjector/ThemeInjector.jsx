@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
 export default function ThemeInjector() {
-  const supabase = createClient();
+  // useMemo: sin esto el efecto se re-ejecuta en cada render y recrea la suscripción realtime.
+  const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
     async function loadTheme() {

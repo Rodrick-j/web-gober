@@ -39,6 +39,7 @@ export default async function UsuariosAdminPage() {
 
   return (
     <div style={{ maxWidth: '1100px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      <style>{`.usuariosRow:hover { background: var(--admin-surface-2); }`}</style>
 
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
@@ -149,9 +150,8 @@ export default async function UsuariosAdminPage() {
                   return (
                     <tr
                       key={u.id}
+                      className="usuariosRow"
                       style={{ borderBottom: '1px solid var(--admin-border)', transition: 'background 0.15s' }}
-                      onMouseEnter={e => e.currentTarget.style.background = 'var(--admin-surface-2)'}
-                      onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                     >
                       {/* Usuario */}
                       <td style={{ padding: '0.875rem 1rem' }}>

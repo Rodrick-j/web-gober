@@ -10,31 +10,43 @@ export default function OrganigramaPage() {
   const [secretarias, setSecretarias] = useState([]);
   const [selectedSec, setSelectedSec] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [organigramaOficial, setOrganigramaOficial] = useState(null); // { archivo_url, cuerpo, titulo }
 
   useEffect(() => {
-    async function loadSecretarias() {
+    async function loadData() {
       try {
         const supabase = createClient();
-        const { data, error } = await supabase
-          .from('secretarias')
-          .select('id, nombre, nombre_corto, slug, color_acento')
-          .eq('activo', true)
-          .order('orden');
-        
+
+        const [{ data, error }, { data: orgRow }] = await Promise.all([
+          supabase
+            .from('secretarias')
+            .select('id, nombre, nombre_corto, slug, color_acento')
+            .eq('activo', true)
+            .order('orden'),
+          supabase
+            .from('contenido_institucional')
+            .select('titulo, cuerpo, archivo_url')
+            .eq('clave', 'organigrama_archivo')
+            .maybeSingle(),
+        ]);
+
         if (data && !error) {
           setSecretarias(data);
           // Seleccionar Sec. General por defecto, o la primera si no existe
           const secGeneral = data.find(s => s.slug.includes('general') || s.nombre_corto.includes('General'));
           setSelectedSec(secGeneral || data[0]);
         }
+        if (orgRow?.archivo_url) setOrganigramaOficial(orgRow);
       } catch (err) {
-        console.error('Error cargando secretarías:', err);
+        console.error('Error cargando datos de organigrama:', err);
       } finally {
         setLoading(false);
       }
     }
-    loadSecretarias();
+    loadData();
   }, []);
+
+  const esImagen = organigramaOficial?.archivo_url && /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(organigramaOficial.archivo_url);
 
   const handleSecChange = (e) => {
     const sec = secretarias.find(s => s.slug === e.target.value);
@@ -106,6 +118,61 @@ export default function OrganigramaPage() {
             </motion.div>
           )}
         </div>
+
+        {/* Organigrama oficial aprobado (RM 067/2025 · ítem 13.1.1) */}
+        {organigramaOficial && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{
+              maxWidth: '1100px',
+              margin: '0 auto 2.5rem',
+              padding: '1.75rem',
+              background: '#fff',
+              border: '1px solid #ececec',
+              borderRadius: '16px',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.05)',
+              textAlign: 'center',
+            }}
+          >
+            <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#1a1a1a', marginBottom: '1rem' }}>
+              {organigramaOficial.titulo || 'Organigrama Oficial Aprobado'}
+            </h2>
+            {esImagen ? (
+              <img
+                src={organigramaOficial.archivo_url}
+                alt="Organigrama institucional oficial del Gobierno Autónomo Departamental de Oruro"
+                style={{ maxWidth: '100%', height: 'auto', borderRadius: '10px' }}
+              />
+            ) : (
+              <a
+                href={organigramaOficial.archivo_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.8rem 1.6rem',
+                  background: '#8B0000',
+                  color: '#fff',
+                  borderRadius: '10px',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                }}
+              >
+                ⬇ Ver organigrama oficial (PDF)
+              </a>
+            )}
+          </motion.div>
+        )}
+
+        {organigramaOficial && !loading && secretarias.length > 0 && (
+          <p style={{ textAlign: 'center', color: '#666', fontWeight: 600, margin: '0 0 1.5rem', fontSize: '0.95rem' }}>
+            Explorador interactivo por Secretaría
+          </p>
+        )}
 
         {/* Carga */}
         {loading ? (
