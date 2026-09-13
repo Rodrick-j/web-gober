@@ -1,0 +1,243 @@
+.socialSection {
+  margin-top: clamp(2rem, 5vw, 3rem);
+  padding-top: clamp(1.75rem, 4vw, 2.5rem);
+  border-top: 1px solid #e5e7eb;
+}
+
+.sectionHeading {
+  max-width: 680px;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #a3001d;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sectionHeading h2 {
+  margin: 0;
+  color: #111827;
+  font-family: var(--font-heading);
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.sectionHeading p {
+  margin: 0.55rem 0 0;
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.socialGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  align-items: stretch;
+  gap: 1.25rem;
+}
+
+.networkCard {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.07);
+}
+
+.networkCard::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: var(--network-color);
+  content: '';
+}
+
+.facebook {
+  --network-color: #1877f2;
+  --network-soft: #eaf3ff;
+}
+
+.tiktok {
+  --network-color: #111827;
+  --network-soft: #f1f5f9;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.15rem 1.2rem 1rem;
+}
+
+.networkIcon {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--network-soft);
+  color: var(--network-color);
+}
+
+.networkIcon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.cardHeader h3 {
+  margin: 0;
+  color: #111827;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.cardHeader div > span {
+  display: block;
+  margin-top: 0.15rem;
+  color: #64748b;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.embedViewport {
+  display: flex;
+  min-height: 650px;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+  padding: 1rem;
+  border-block: 1px solid #e8edf3;
+  background:
+    radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.96), transparent 42%),
+    #f6f8fb;
+}
+
+.facebookFrame {
+  display: block;
+  width: min(100%, 360px);
+  height: 620px;
+  border: 0;
+  background: #ffffff;
+}
+
+.tiktokFrameShell {
+  width: min(100%, 355px);
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #050505;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
+}
+
+.tiktokFrame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.embedFallback {
+  display: flex;
+  width: min(100%, 355px);
+  min-height: 520px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  border-radius: 14px;
+  background: #111827;
+  color: #ffffff;
+  text-align: center;
+}
+
+.embedFallback svg {
+  width: 48px;
+  height: 48px;
+}
+
+.embedFallback p {
+  max-width: 240px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.networkLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.2rem;
+  color: #334155;
+  font-size: 0.86rem;
+  font-weight: 750;
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.networkLink svg {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 19px;
+  color: var(--network-color);
+  transition: transform 160ms ease;
+}
+
+.networkLink:hover {
+  background: var(--network-soft);
+  color: var(--network-color);
+}
+
+.networkLink:hover svg {
+  transform: translateX(3px);
+}
+
+.networkLink:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--network-color) 35%, transparent);
+  outline-offset: -3px;
+}
+
+@media (max-width: 520px) {
+  .sectionHeading p {
+    font-size: 0.9rem;
+  }
+
+  .cardHeader {
+    padding-inline: 1rem;
+  }
+
+  .embedViewport {
+    min-height: 0;
+    padding: 0.75rem;
+  }
+
+  .facebookFrame {
+    height: 580px;
+  }
+
+  .networkLink {
+    padding-inline: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .networkLink,
+  .networkLink svg {
+    transition: none;
+  }
+}

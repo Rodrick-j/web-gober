@@ -17,7 +17,7 @@ export default function NewsSection({ noticias = [] }) {
     excerpt: displayNoticias[0].resumen,
     readTime: '3 min', // Placeholder or calculated
     emoji: displayNoticias[0].secretarias?.icono || '📰',
-    imagen: displayNoticias[0].imagen_portada_url || '/placeholder-news.jpg',
+    image: displayNoticias[0].imagen_portada_url,
     video: displayNoticias[0].video_youtube_url || null,
   } : null;
 
@@ -28,7 +28,7 @@ export default function NewsSection({ noticias = [] }) {
     title: n.titulo,
     excerpt: n.resumen,
     emoji: n.secretarias?.icono || '📰',
-    imagen: n.imagen_portada_url || '/placeholder-news.jpg',
+    image: n.imagen_portada_url,
     video: n.video_youtube_url || null,
   })) : [];
 
@@ -63,15 +63,20 @@ export default function NewsSection({ noticias = [] }) {
             <ScrollReveal direction="left" className={styles.featuredReveal}>
               <article className={`${styles.featuredCard} card`} id={`news-featured-${featured.id}`}>
                 <div className={styles.featuredImageWrapper}>
-                  <Image 
-                    src={featured.imagen} 
-                    alt={featured.title} 
-                    fill
-                    priority
-                    className={styles.featuredImage}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    quality={80}
-                  />                </div>
+                  {featured.image ? (
+                    <Image
+                      src={featured.image}
+                      alt={featured.title}
+                      fill
+                      className={styles.featuredImage}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority
+                      quality={82}
+                    />
+                  ) : (
+                    <div className={styles.featuredEmoji}>{featured.emoji}</div>
+                  )}
+                </div>
                 <div className={styles.featuredContent}>
                   <div className={styles.cardMeta}>
                     <span className="badge badge-red">{featured.category}</span>
@@ -95,19 +100,26 @@ export default function NewsSection({ noticias = [] }) {
           {news.length > 0 && (
             <ScrollReveal direction="right" wrapChildren stagger={0.1} className={styles.newsList}>
               {news.map((item) => (
-                <Link href={`/noticias/${item.id}`}
+                <article
                   key={item.id}
                   className={`${styles.newsCard} card`}
                   id={`news-card-${item.id}`}
                 >
                   <div className={styles.newsImageWrapper}>
-                    {item.imagen && item.imagen !== '/placeholder-news.jpg' ? (
-                      <Image src={item.imagen} alt={item.title} fill className={styles.newsCardImage} sizes="(max-width: 768px) 100vw, 25vw" quality={80} />
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className={styles.newsCardImage}
+                        sizes="(max-width: 768px) 100vw, 25vw"
+                        quality={82}
+                      />
                     ) : (
                       <div className={styles.newsEmoji}>{item.emoji}</div>
                     )}
                   </div>
-                  <div className={styles.newsCardContent}>
+                  <Link href={`/noticias/${item.id}`} className={styles.newsCardContent}>
                     <div className={styles.cardMeta}>
                       <span className="badge badge-gray">{item.category}</span>
                       <span className={styles.cardDate}>{item.date}</span>
@@ -120,8 +132,8 @@ export default function NewsSection({ noticias = [] }) {
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                       </svg>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                </article>
               ))}
             </ScrollReveal>
           )}

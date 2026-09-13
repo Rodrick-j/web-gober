@@ -22,10 +22,10 @@ export default function CrearNoticiaPage() {
   const [imagen, setImagen] = useState(null);
   const [galeriaUrls, setGaleriaUrls] = useState([]);
   const [fechaPublicacion, setFechaPublicacion] = useState('');
-  const [enlaceFacebook, setEnlaceFacebook] = useState('');
-  const [enlaceTwitter, setEnlaceTwitter] = useState('');
+  const [codigoFacebook, setCodigoFacebook] = useState('');
+  const [videoYoutubeUrl, setVideoYoutubeUrl] = useState('');
   const [enlaceInstagram, setEnlaceInstagram] = useState('');
-  const [enlaceTiktok, setEnlaceTiktok] = useState('');
+  const [codigoTiktok, setCodigoTiktok] = useState('');
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -75,10 +75,10 @@ export default function CrearNoticiaPage() {
           categoria,
           es_comunicado_rapido: esComunicado,
           fecha_publicacion: finalFechaPublicacion,
-          enlace_facebook: enlaceFacebook || null,
-          enlace_twitter: enlaceTwitter || null,
+          codigo_facebook: codigoFacebook || null,
+          video_youtube_url: videoYoutubeUrl || null,
           enlace_instagram: enlaceInstagram || null,
-          enlace_tiktok: enlaceTiktok || null,
+          codigo_tiktok: codigoTiktok || null,
           autor_id: user.id,
           secretaria_id: perfil?.secretaria_id || null // Automáticamente se enlaza a su secretaría
         });
@@ -163,24 +163,24 @@ export default function CrearNoticiaPage() {
                 <h4 style={{ fontSize: '1.1rem', marginBottom: '1rem', color: 'var(--admin-text)' }}>Enlaces a Redes Sociales (Opcional)</h4>
                 
                 <div className="formGroup">
-                  <label className="formLabel">Enlace de Facebook</label>
-                  <input 
-                    type="url" 
+                  <label className="formLabel">Código de Inserción (Embed) de Facebook</label>
+                  <textarea
                     className="formInput" 
-                    placeholder="https://facebook.com/..."
-                    value={enlaceFacebook}
-                    onChange={(e) => setEnlaceFacebook(e.target.value)}
+                    placeholder='<iframe src="https://www.facebook.com/plugins/post.php?...'
+                    value={codigoFacebook}
+                    onChange={(e) => setCodigoFacebook(e.target.value)}
+                    style={{ minHeight: '80px', fontFamily: 'monospace' }}
                   />
                 </div>
 
                 <div className="formGroup">
-                  <label className="formLabel">Enlace de X (Twitter)</label>
+                  <label className="formLabel">Enlace de YouTube</label>
                   <input 
                     type="url" 
                     className="formInput" 
-                    placeholder="https://x.com/..."
-                    value={enlaceTwitter}
-                    onChange={(e) => setEnlaceTwitter(e.target.value)}
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    value={videoYoutubeUrl}
+                    onChange={(e) => setVideoYoutubeUrl(e.target.value)}
                   />
                 </div>
 
@@ -196,13 +196,13 @@ export default function CrearNoticiaPage() {
                 </div>
 
                 <div className="formGroup">
-                  <label className="formLabel">Enlace de TikTok</label>
-                  <input 
-                    type="url" 
+                  <label className="formLabel">Código de Inserción (Embed) de TikTok</label>
+                  <textarea
                     className="formInput" 
-                    placeholder="https://tiktok.com/..."
-                    value={enlaceTiktok}
-                    onChange={(e) => setEnlaceTiktok(e.target.value)}
+                    placeholder='<blockquote class="tiktok-embed" cite="https://www.tiktok.com/... '
+                    value={codigoTiktok}
+                    onChange={(e) => setCodigoTiktok(e.target.value)}
+                    style={{ minHeight: '80px', fontFamily: 'monospace' }}
                   />
                 </div>
               </div>
@@ -224,12 +224,12 @@ export default function CrearNoticiaPage() {
               <div className="formGroup" style={{ background: 'var(--admin-surface-2)', padding: '1rem', borderRadius: '12px', border: '1px solid var(--admin-border)' }}>
                 <label className="formLabel" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
                   🖼️ Galería de Imágenes
-                  <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--admin-text-muted)', marginLeft: 'auto' }}>Mín. 2</span>
+                  <span style={{ fontSize: '0.65rem', fontWeight: 600, color: 'var(--admin-text-muted)', marginLeft: 'auto' }}>Máx. 3</span>
                 </label>
                 <GaleriaUploader
                   urlsIniciales={[]}
                   onChange={setGaleriaUrls}
-                  maxImagenes={10}
+                  maxImagenes={3}
                 />
               </div>
 

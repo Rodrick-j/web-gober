@@ -55,8 +55,13 @@ export default function SolicitudForm() {
 
   if (done) {
     return (
-      <div className={styles.successCard}>
-        <div className={styles.successIcon}>✅</div>
+      <div className={styles.successCard} role="status">
+        <div className={styles.successIcon}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="M22 11.1V12a10 10 0 1 1-5.9-9.1" />
+            <path d="m9 11 3 3L22 4" />
+          </svg>
+        </div>
         <h2>Solicitud registrada</h2>
         <p>
           Su solicitud de información fue recibida correctamente. La Unidad de Transparencia
@@ -64,43 +69,52 @@ export default function SolicitudForm() {
           proporcionado, conforme a los plazos establecidos en la normativa de acceso a la
           información pública.
         </p>
+        <button type="button" onClick={() => setDone(false)} className={styles.newRequest}>
+          Realizar otra solicitud
+        </button>
       </div>
     );
   }
 
   return (
     <form className={styles.card} onSubmit={handleSubmit} noValidate>
-      {error && <div className={styles.error}>{error}</div>}
+      <div className={styles.formHeader}>
+        <span>Formulario oficial</span>
+        <h2>Datos de la solicitud</h2>
+        <p>Los campos marcados con <strong>*</strong> son obligatorios.</p>
+      </div>
+
+      {error && <div className={styles.error} role="alert">{error}</div>}
 
       <div className={styles.group}>
-        <label>Nombre completo <span className={styles.req}>*</span></label>
-        <input type="text" value={form.nombre} onChange={set('nombre')} required maxLength={150} />
+        <label htmlFor="solicitud-nombre">Nombre completo <span className={styles.req}>*</span></label>
+        <input id="solicitud-nombre" type="text" value={form.nombre} onChange={set('nombre')} required maxLength={150} autoComplete="name" placeholder="Ej. María López Quispe" />
       </div>
 
       <div className={styles.row}>
         <div className={styles.group}>
-          <label>Cédula de Identidad / NIT</label>
-          <input type="text" value={form.documento_id} onChange={set('documento_id')} maxLength={30} />
+          <label htmlFor="solicitud-documento">Cédula de Identidad / NIT</label>
+          <input id="solicitud-documento" type="text" value={form.documento_id} onChange={set('documento_id')} maxLength={30} placeholder="Número de documento" />
         </div>
         <div className={styles.group}>
-          <label>Teléfono / celular</label>
-          <input type="tel" value={form.telefono} onChange={set('telefono')} maxLength={30} />
+          <label htmlFor="solicitud-telefono">Teléfono / celular</label>
+          <input id="solicitud-telefono" type="tel" value={form.telefono} onChange={set('telefono')} maxLength={30} autoComplete="tel" placeholder="Ej. 71234567" />
         </div>
       </div>
 
       <div className={styles.group}>
-        <label>Correo electrónico</label>
-        <input type="email" value={form.email} onChange={set('email')} maxLength={150} />
+        <label htmlFor="solicitud-email">Correo electrónico</label>
+        <input id="solicitud-email" type="email" value={form.email} onChange={set('email')} maxLength={150} autoComplete="email" placeholder="nombre@correo.com" />
       </div>
 
       <div className={styles.group}>
-        <label>Asunto <span className={styles.req}>*</span></label>
-        <input type="text" value={form.asunto} onChange={set('asunto')} required maxLength={200} />
+        <label htmlFor="solicitud-asunto">Asunto <span className={styles.req}>*</span></label>
+        <input id="solicitud-asunto" type="text" value={form.asunto} onChange={set('asunto')} required maxLength={200} placeholder="Resume brevemente tu solicitud" />
       </div>
 
       <div className={styles.group}>
-        <label>Detalle de la información solicitada <span className={styles.req}>*</span></label>
-        <textarea rows={6} value={form.detalle} onChange={set('detalle')} required maxLength={4000} />
+        <label htmlFor="solicitud-detalle">Detalle de la información solicitada <span className={styles.req}>*</span></label>
+        <textarea id="solicitud-detalle" rows={6} value={form.detalle} onChange={set('detalle')} required maxLength={4000} placeholder="Describe de forma clara qué información o documentos necesitas..." />
       </div>
 
       {/* Honeypot: oculto para personas, tentador para bots */}
@@ -111,7 +125,16 @@ export default function SolicitudForm() {
 
       <button type="submit" className={styles.submit} disabled={sending}>
         {sending ? 'Enviando…' : 'Enviar solicitud'}
+        {!sending && (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
+          </svg>
+        )}
       </button>
+
+      <p className={styles.privacyNote}>
+        Tus datos serán utilizados únicamente para gestionar y responder esta solicitud.
+      </p>
     </form>
   );
 }

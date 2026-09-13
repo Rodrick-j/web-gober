@@ -1,33 +1,53 @@
-import React from 'react';
-import Link from 'next/link';
 import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackground';
+import TransparencyHero from '@/components/TransparencyHero/TransparencyHero';
 import SolicitudForm from './SolicitudForm';
 import styles from './page.module.css';
 
 export const metadata = {
   title: 'Solicitud de Información Pública | Transparencia | GADOR',
-  description: 'Formulario en línea para solicitar acceso a información pública del Gobierno Autónomo Departamental de Oruro, bajo los principios de transparencia y rendición de cuentas.',
+  description: 'Formulario en línea para solicitar acceso a información pública del Gobierno Autónomo Departamental de Oruro.',
 };
+
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+    <path d="m5 12 4 4L19 6" />
+  </svg>
+);
 
 export default function SolicitudInformacionPage() {
   return (
     <main className={styles.main}>
       <AnimatedBackground />
-
-      <div className={styles.heroBanner}>
-        <Link href="/transparencia" className={styles.btnVolver}>← Volver a Transparencia</Link>
-        <h1 className={styles.heroTitle}>Solicitud de Información Pública</h1>
-      </div>
+      <TransparencyHero
+        eyebrow="Acceso a la información"
+        title="Solicitud de Información Pública"
+        description="Presenta tu solicitud en línea de manera clara, segura y directa."
+      />
 
       <div className={styles.container}>
-        <p className={styles.intro}>
-          A través de este formulario cualquier persona puede solicitar de manera formal el
-          acceso a información pública en poder del Gobierno Autónomo Departamental de Oruro,
-          bajo los principios de <strong>transparencia</strong>, <strong>acceso a la información</strong> y
-          <strong> rendición de cuentas</strong>. Los campos marcados con <span style={{ color: '#8B0000' }}>*</span> son obligatorios.
-        </p>
+        <div className={styles.layout}>
+          <aside className={styles.guideCard}>
+            <span className={styles.guideBadge}>Orientación ciudadana</span>
+            <h2>Antes de enviar tu solicitud</h2>
+            <p>
+              Describe con precisión la información que necesitas. Esto ayudará a identificarla y responder tu solicitud de manera adecuada.
+            </p>
 
-        <SolicitudForm />
+            <ol className={styles.steps}>
+              <li><span>1</span><div><strong>Completa tus datos</strong><small>Ingresa un correo o teléfono para recibir la respuesta.</small></div></li>
+              <li><span>2</span><div><strong>Explica tu solicitud</strong><small>Indica claramente el documento o la información requerida.</small></div></li>
+              <li><span>3</span><div><strong>Envía el formulario</strong><small>La Unidad de Transparencia realizará el seguimiento correspondiente.</small></div></li>
+            </ol>
+
+            <div className={styles.guarantees}>
+              <span><CheckIcon /> Trámite gratuito</span>
+              <span><CheckIcon /> Información protegida</span>
+              <span><CheckIcon /> Seguimiento institucional</span>
+            </div>
+          </aside>
+
+          <SolicitudForm />
+        </div>
       </div>
     </main>
   );

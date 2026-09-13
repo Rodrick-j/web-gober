@@ -4,7 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
-import FacebookEmbed from '@/components/FacebookEmbed/FacebookEmbed';
+import ArticleSocialEmbeds from '@/components/ArticleSocialEmbeds/ArticleSocialEmbeds';
+import NewsHeroCarousel from '@/components/NewsHeroCarousel/NewsHeroCarousel';
 import styles from './noticia-detail.module.css';
 
 export const revalidate = 0; // Disable caching so edits show up instantly
@@ -98,6 +99,11 @@ export default async function NoticiaDetailPage({ params }) {
     notFound();
   }
 
+  const galleryImages = Array.isArray(noticia.galeria_urls)
+    ? noticia.galeria_urls.filter(Boolean).slice(0, 3)
+    : [];
+  const heroImages = [...new Set([noticia.imagen_portada_url, ...galleryImages].filter(Boolean))];
+
   // Obtener 6 noticias relacionadas (últimas publicadas que no sean esta)
   const { data: todasRelacionadas } = await supabase
     .from('noticias')
@@ -134,21 +140,10 @@ export default async function NoticiaDetailPage({ params }) {
       <main className={styles.articlePage}>
         {/* Hero Section */}
         <section className={styles.heroSection}>
-          {noticia.imagen_portada_url && (
-            <div className={styles.heroBlurredBg} style={{ backgroundImage: `url(${noticia.imagen_portada_url})` }}></div>
-          )}
-          {noticia.imagen_portada_url ? (
-            <Image 
-              src={noticia.imagen_portada_url} 
-              alt={noticia.titulo} 
-              fill
-              className={styles.heroImage} 
-              sizes="100vw"
-              priority
-              quality={100}
-            />
+          {heroImages.length > 0 ? (
+            <NewsHeroCarousel images={heroImages} title={noticia.titulo} />
           ) : (
-            <div className={styles.heroImage} style={{ background: 'var(--color-surface-2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '5rem', opacity: 0.5 }}>
+            <div className={styles.heroFallback}>
               {noticia.secretarias?.icono || '📰'}
             </div>
           )}
@@ -199,10 +194,12 @@ export default async function NoticiaDetailPage({ params }) {
                   dangerouslySetInnerHTML={{ __html: sanitizeHtml(noticia.contenido) }}
                 />
                 
-                {/* Embed interactivo de la publicación oficial de Facebook */}
-                {noticia.enlace_facebook && (
-                  <FacebookEmbed url={noticia.enlace_facebook} />
-                )}
+                <ArticleSocialEmbeds
+                  facebookCode={noticia.codigo_facebook}
+                  facebookUrl={noticia.enlace_facebook}
+                  tiktokCode={noticia.codigo_tiktok}
+                  tiktokUrl={noticia.enlace_tiktok}
+                />
               </div>
 
               {/* --- NUEVO: Noticias Relacionadas abajo del artículo --- */}
@@ -301,69 +298,14 @@ export default async function NoticiaDetailPage({ params }) {
                 </div>
               </div>
 
-              {/* ── GALERÍA DE IMÁGENES ── */}
-              {noticia.galeria_urls && noticia.galeria_urls.length > 0 && (
-                <div className={styles.galeria}>
-                  <h3 className={styles.galeriaTitle}>
-                    <span>📸</span> Galería de imágenes
-                    <span className={styles.galeriaCount}>{noticia.galeria_urls.length} fotos</span>
-                  </h3>
-                  <div className={`${styles.galeriaGrid} ${noticia.galeria_urls.length === 1 ? styles.galeriaGridOne : noticia.galeria_urls.length === 2 ? styles.galeriaGridTwo : noticia.galeria_urls.length === 3 ? styles.galeriaGridThree : styles.galeriaGridMany}`}>
-                    {noticia.galeria_urls.map((url, idx) => (
-                      <a
-                        key={idx}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={styles.galeriaItem}
-                        style={noticia.galeria_urls.length >= 4 && idx === 0 ? { gridColumn: 'span 2' } : {}}
-                      >
-                        <Image
-                          src={url}
-                          alt={`${noticia.titulo} — foto ${idx + 1}`}
-                          fill
-                          className={styles.galeriaImg}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                          quality={90}
-                        />
-                        <div className={styles.galeriaOverlay}>
-                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                            <path d="M15 3h6v6M14 10l6.1-6.1M9 21H3v-6M10 14l-6.1 6.1"/>
-                          </svg>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {noticia.enlace_facebook && (
-                <div className={styles.sidebarWidget} style={{ padding: 0, overflow: 'hidden', border: 'none' }}>
-                  <a 
-                    href={noticia.enlace_facebook} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={styles.facebookCard}
-                  >
-                    <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                    <div>
-                      <h4 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, fontFamily: 'var(--font-heading)' }}>SÍGUENOS EN FACEBOOK</h4>
-                      <p style={{ margin: '0.5rem 0 0 0', opacity: 0.9, fontSize: '0.95rem' }}>Interactúa con esta noticia oficial</p>
-                    </div>
-                  </a>
-                </div>
-              )}
-
-              {(noticia.enlace_twitter || noticia.enlace_instagram || noticia.enlace_tiktok) && (
+              {(noticia.video_youtube_url || noticia.enlace_instagram) && (
                 <div className={styles.sidebarWidget}>
                   <h3 className={styles.widgetTitle}>Redes Sociales</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                    {noticia.enlace_twitter && (
-                      <a href={noticia.enlace_twitter} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#000', fontWeight: 600, textDecoration: 'none', padding: '0.5rem 0.8rem', background: '#E5E7EB', borderRadius: '8px' }}>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-                        Ver en X (Twitter)
+                    {noticia.video_youtube_url && (
+                      <a href={noticia.video_youtube_url} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#FF0000', fontWeight: 600, textDecoration: 'none', padding: '0.5rem 0.8rem', background: '#FFF0F0', borderRadius: '8px' }}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.6V8.4L15.8 12l-6.2 3.6Z"/></svg>
+                        Ver en YouTube
                       </a>
                     )}
                     {noticia.enlace_instagram && (
@@ -372,12 +314,7 @@ export default async function NoticiaDetailPage({ params }) {
                         Ver en Instagram
                       </a>
                     )}
-                    {noticia.enlace_tiktok && (
-                      <a href={noticia.enlace_tiktok} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#000', fontWeight: 600, textDecoration: 'none', padding: '0.5rem 0.8rem', background: '#FCE4EC', borderRadius: '8px' }}>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.04.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-                        Ver en TikTok
-                      </a>
-                    )}
+
                   </div>
                 </div>
               )}

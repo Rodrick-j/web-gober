@@ -1,46 +1,63 @@
-/**
- * Convierte un link de Google Drive en una URL de visualización directa.
- *
- * Formatos de Drive que acepta:
- *   https://drive.google.com/file/d/FILE_ID/view?usp=sharing
- *   https://drive.google.com/open?id=FILE_ID
- *   https://drive.google.com/uc?id=FILE_ID
- *
- * Devuelve:
- *   https://drive.google.com/file/d/FILE_ID/preview  ← embeds bien en iframe
- *
- * Si el link no es de Drive, lo devuelve tal cual (links externos normales).
- */
-export function normalizarUrlDrive(url) {
-  if (!url) return url;
-  url = url.trim();
+const DRIVE_HOST = 'drive.google.com';
+const DOCS_HOST = 'docs.google.com';
+const GOOGLE_FILE_ID_PATTERN = '[a-zA-Z0-9_-]+';
 
-  // Extraer FILE_ID de los distintos formatos
-  let fileId = null;
+function getGoogleDriveReference(value) {
+  if (typeof value !== 'string' || !value.trim()) return null;
 
-  // Formato: /file/d/FILE_ID/
-  const matchFile = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-  if (matchFile) fileId = matchFile[1];
+  try {
+    const parsedUrl = new URL(value.trim());
+    const hostname = parsedUrl.hostname.toLowerCase().replace(/^www\./, '');
 
-  // Formato: ?id=FILE_ID o &id=FILE_ID
-  if (!fileId) {
-    const matchId = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (matchId) fileId = matchId[1];
+    if (hostname === DRIVE_HOST) {
+      const fileMatch = parsedUrl.pathname.match(
+        new RegExp(`/file/(?:u/\\d+/)?d/(${GOOGLE_FILE_ID_PATTERN})`)
+      );
+      const fileId = fileMatch?.[1] || parsedUrl.searchParams.get('id');
+
+      return fileId && new RegExp(`^${GOOGLE_FILE_ID_PATTERN}$`).test(fileId)
+        ? { type: 'drive-file', fileId }
+        : null;
+    }
+
+    if (hostname === DOCS_HOST) {
+      const documentMatch = parsedUrl.pathname.match(
+        new RegExp(`/document/(?:u/\\d+/)?d/(${GOOGLE_FILE_ID_PATTERN})`)
+      );
+
+      return documentMatch
+        ? { type: 'google-document', fileId: documentMatch[1] }
+        : null;
+    }
+  } catch {
+    return null;
   }
 
-  if (fileId) {
-    // URL de visualización directa (funciona como enlace, no iframe)
-    return `https://drive.google.com/file/d/${fileId}/view`;
-  }
-
-  // No es un link de Drive, devolver intacto
-  return url;
+  return null;
 }
 
 /**
- * Valida si el texto ingresado es un link de Google Drive válido.
+ * Convierte enlaces compartidos de Google Drive y Documentos de Google en una
+ * URL estable para el portal público.
+ */
+export function normalizarUrlDrive(url) {
+  if (!url) return url;
+
+  const trimmedUrl = url.trim();
+  const reference = getGoogleDriveReference(trimmedUrl);
+
+  if (!reference) return trimmedUrl;
+
+  if (reference.type === 'google-document') {
+    return `https://docs.google.com/document/d/${reference.fileId}/export?format=pdf`;
+  }
+
+  return `https://drive.google.com/file/d/${reference.fileId}/view`;
+}
+
+/**
+ * Acepta archivos de Drive y documentos nativos de Google Docs.
  */
 export function esDriveUrl(url) {
-  if (!url) return false;
-  return url.includes('drive.google.com');
+  return Boolean(getGoogleDriveReference(url));
 }

@@ -1,175 +1,395 @@
 .main {
-  background: transparent;
   min-height: 100vh;
-  padding-bottom: 5rem;
+  padding-bottom: 6rem;
+  background: transparent;
   position: relative;
-}
-
-.heroBanner {
-  position: relative;
-  width: 100%;
-  height: 25vh;
-  min-height: 200px;
-  background: linear-gradient(135deg, rgba(107, 0, 0, 0.7), rgba(58, 0, 0, 0.8));
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 3rem;
-  z-index: 1;
-}
-
-.heroTitle {
-  color: white;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-shadow: 0 4px 15px rgba(0,0,0,0.8);
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 1rem;
-}
-
-.btnVolver {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: rgba(255,255,255,0.8);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.1);
-  transition: all 0.3s ease;
-}
-
-.btnVolver:hover {
-  background: rgba(255,255,255,0.2);
-  color: white;
 }
 
 .container {
   position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  z-index: 10;
+  z-index: 5;
+  width: min(calc(100% - 2rem), 1180px);
+  margin: -3rem auto 0;
 }
 
-.yearSection {
-  margin-bottom: 3rem;
+.explorer {
+  width: 100%;
+  min-width: 0;
 }
 
-.yearTitle {
-  color: var(--color-primary, #8b0000);
-  font-size: 2rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid rgba(139, 0, 0, 0.2);
-  padding-bottom: 0.5rem;
+.toolbar {
+  width: 100%;
+  min-width: 0;
+  padding: clamp(1.35rem, 3vw, 2rem);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(103, 24, 26, 0.1);
+  border-radius: 22px;
+  box-shadow: 0 22px 55px rgba(74, 72, 72, 0.14);
+  backdrop-filter: blur(18px);
+}
+
+.toolbarHeading { margin-bottom: 1.5rem; }
+
+.toolbarEyebrow {
+  margin: 0 0 0.35rem;
+  color: #9c0720;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.toolbarHeading h2 {
+  margin: 0;
+  color: #242326;
+  font-size: clamp(1.35rem, 2.8vw, 1.9rem);
+  font-weight: 820;
+  letter-spacing: -0.025em;
+}
+
+.toolbarHeading > p:last-child {
+  margin: 0.45rem 0 0;
+  color: #68676b;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(230px, auto);
+  gap: 0.85rem;
+}
+
+.filters > * { min-width: 0; }
+
+.searchField,
+.yearFilter {
+  height: 52px;
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 0 1rem;
+  color: #77767a;
+  background: #f8f7f7;
+  border: 1px solid #dedbdd;
+  border-radius: 13px;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
-.yearTitle::before {
-  content: "📅";
-  font-size: 1.5rem;
+.searchField:focus-within,
+.yearFilter:focus-within {
+  color: #9c0720;
+  background: #fff;
+  border-color: #9c0720;
+  box-shadow: 0 0 0 4px rgba(156, 7, 32, 0.09);
 }
 
-.docsList {
+.searchField svg,
+.yearFilter svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+}
+
+.searchField input,
+.yearFilter select {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  color: #2f2e31;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  font-size: 0.92rem;
+}
+
+.searchField input::placeholder { color: #969499; }
+.yearFilter select { cursor: pointer; font-weight: 700; }
+
+.resultBar {
+  min-height: 37px;
   display: flex;
-  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
   gap: 1rem;
+  margin-top: 0.75rem;
+  color: #747277;
+  font-size: 0.82rem;
 }
+
+.resultBar strong { color: #67181a; }
+
+.clearButton {
+  padding: 0;
+  color: #9c0720;
+  background: transparent;
+  border: 0;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.clearButton:hover { text-decoration: underline; }
+
+.results {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.yearSection {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(103, 24, 26, 0.09);
+  border-radius: 20px;
+  box-shadow: 0 14px 38px rgba(74, 72, 72, 0.09);
+}
+
+.yearHeading {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 1.35rem;
+  background: linear-gradient(90deg, rgba(103, 24, 26, 0.055), rgba(255, 184, 67, 0.055));
+  border-bottom: 1px solid rgba(103, 24, 26, 0.1);
+}
+
+.yearIcon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(145deg, #9c0720, #67181a);
+  border-radius: 12px;
+  box-shadow: 0 7px 18px rgba(103, 24, 26, 0.22);
+}
+
+.yearIcon svg { width: 21px; height: 21px; }
+
+.yearHeading > div:nth-child(2) { display: flex; align-items: baseline; gap: 0.45rem; }
+
+.yearHeading span {
+  color: #777579;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.yearHeading h3 {
+  margin: 0;
+  color: #67181a;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.yearHeading .yearCount {
+  margin-left: auto;
+  padding: 0.45rem 0.75rem;
+  color: #67181a;
+  background: #fff;
+  border: 1px solid rgba(103, 24, 26, 0.12);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.docsList { display: grid; }
 
 .docItem {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 1.5rem;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  gap: 1.15rem;
+  padding: 1.35rem;
+  background: #fff;
+  border-bottom: 1px solid #ece9ea;
+  transition: background 180ms ease, transform 180ms ease;
 }
 
-.docItem:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-  border-color: rgba(139, 0, 0, 0.2);
+.docItem:last-child { border-bottom: 0; }
+
+.docItem:hover { background: #fdfafb; }
+
+.documentNumber {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: #9c0720;
+  background: rgba(156, 7, 32, 0.07);
+  border: 1px solid rgba(156, 7, 32, 0.11);
+  border-radius: 12px;
+  font-size: 0.78rem;
+  font-weight: 850;
 }
 
-.docInfo {
-  flex-grow: 1;
+.docInfo { min-width: 0; }
+
+.pdfLabel {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #9c0720;
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
 }
 
 .docTitle {
-  color: #1a1a1a;
-  font-size: 1.1rem;
-  font-weight: 800;
-  margin-bottom: 0.25rem;
+  margin: 0;
+  color: #29282b;
+  font-size: 1rem;
+  font-weight: 750;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
 }
 
 .docDate {
-  color: #666666;
-  font-size: 0.85rem;
+  display: block;
+  margin-top: 0.35rem;
+  color: #777579;
+  font-size: 0.78rem;
 }
 
-.btnDescargar {
+.docActions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.btnView,
+.btnDownload {
+  min-height: 43px;
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  background-color: var(--color-primary, #8b0000);
-  color: white;
-  padding: 0.6rem 1.25rem;
-  border-radius: 8px;
+  justify-content: center;
+  gap: 0.48rem;
+  padding: 0.7rem 0.95rem;
+  border-radius: 11px;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
   white-space: nowrap;
+  font-size: 0.82rem;
+  font-weight: 780;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
 
-.btnDescargar:hover {
-  background-color: #5c0000;
-  box-shadow: 0 4px 12px rgba(139,0,0,0.4);
+.btnView svg,
+.btnDownload svg { width: 18px; height: 18px; }
+
+.btnView {
+  color: #67181a;
+  background: #fff;
+  border: 1px solid rgba(103, 24, 26, 0.25);
 }
+
+.btnDownload {
+  color: #fff;
+  background: linear-gradient(135deg, #9c0720, #67181a);
+  border: 1px solid #9c0720;
+  box-shadow: 0 7px 17px rgba(103, 24, 26, 0.16);
+}
+
+.btnView:hover,
+.btnDownload:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 9px 20px rgba(103, 24, 26, 0.18);
+}
+
+.btnView:hover { color: #fff; background: #67181a; }
 
 .emptyState {
+  margin-top: 2rem;
+  padding: clamp(3rem, 8vw, 5rem) 1rem;
   text-align: center;
-  padding: 4rem 1rem;
-  background: white;
-  border-radius: 12px;
-  border: 1px dashed rgba(0,0,0,0.2);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px dashed rgba(103, 24, 26, 0.25);
+  border-radius: 20px;
+  box-shadow: 0 14px 38px rgba(74, 72, 72, 0.08);
 }
 
 .emptyStateIcon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  opacity: 0.7;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 1rem;
+  color: #9c0720;
+  background: rgba(156, 7, 32, 0.08);
+  border-radius: 18px;
 }
 
-.emptyStateText {
-  color: #666666;
-  font-size: 1.1rem;
+.emptyStateIcon svg { width: 28px; height: 28px; }
+.emptyState h3 { margin: 0; color: #29282b; font-size: 1.25rem; }
+.emptyState p { margin: 0.5rem 0 1.2rem; color: #747277; }
+
+.emptyState button {
+  padding: 0.7rem 1rem;
+  color: #fff;
+  background: #9c0720;
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
 }
 
-@media (max-width: 600px) {
-  .docItem {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  .btnDescargar {
-    width: 100%;
-    justify-content: center;
-  }
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.searchField:focus-within,
+.yearFilter:focus-within,
+.clearButton:focus-visible,
+.btnView:focus-visible,
+.btnDownload:focus-visible,
+.emptyState button:focus-visible {
+  outline: 3px solid rgba(255, 184, 67, 0.8);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .docItem { grid-template-columns: 44px minmax(0, 1fr); }
+  .docActions { grid-column: 2; }
+}
+
+@media (max-width: 680px) {
+  .container { width: min(calc(100% - 1.25rem), 1180px); }
+  .toolbar { border-radius: 18px; }
+  .filters { grid-template-columns: minmax(0, 1fr); }
+  .resultBar { align-items: center; }
+  .yearSection { border-radius: 16px; }
+  .yearHeading { padding: 1rem; }
+  .yearHeading .yearCount { display: none; }
+  .docItem { grid-template-columns: 1fr; gap: 0.8rem; padding: 1.15rem; }
+  .documentNumber { display: none; }
+  .docActions { grid-column: 1; width: 100%; }
+  .btnView,
+  .btnDownload { flex: 1; padding-inline: 0.7rem; }
+}
+
+@media (max-width: 390px) {
+  .docActions { flex-direction: column; }
+  .btnView,
+  .btnDownload { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docItem,
+  .btnView,
+  .btnDownload { transition: none; }
 }

@@ -1,31 +1,40 @@
-import React from 'react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/public';
-import styles from './page.module.css';
 import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackground';
+import TransparencyHero from '@/components/TransparencyHero/TransparencyHero';
+import styles from './page.module.css';
 
 export const revalidate = 60;
 
 export const metadata = {
   title: 'Transparencia | GADOR',
-  description: 'Portal de Transparencia del Gobierno Autónomo Departamental de Oruro. Unidad de Transparencia, denuncia de corrupción, solicitud de información y rendición pública de cuentas.',
+  description: 'Portal de Transparencia del Gobierno Autónomo Departamental de Oruro. Acceso a información pública, rendición de cuentas y lucha contra la corrupción.',
 };
 
 const OBS_FALLBACK = 'https://observatorio.gob.bo/#/';
 
-const IconDoc = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={styles.auditIconSVG}>
-    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-    <polyline points="14 2 14 8 20 8"></polyline>
-    <circle cx="11.5" cy="14.5" r="2.5"></circle>
-    <line x1="13.27" y1="16.27" x2="16" y2="19"></line>
-  </svg>
-);
+function PortalIcon({ name }) {
+  const common = {
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: '1.8',
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    'aria-hidden': true,
+  };
 
-const Arrow = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-    <polyline points="12 5 19 12 12 19"></polyline>
+  if (name === 'shield') return <svg {...common}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" /><path d="m9 12 2 2 4-4" /></svg>;
+  if (name === 'alert') return <svg {...common}><path d="M10.3 3.7 2.2 18a2 2 0 0 0 1.8 3h16a2 2 0 0 0 1.8-3L13.7 3.7a2 2 0 0 0-3.4 0Z" /><path d="M12 9v4M12 17h.01" /></svg>;
+  if (name === 'message') return <svg {...common}><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z" /><path d="M8 9h8M8 13h5" /></svg>;
+  if (name === 'chart') return <svg {...common}><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>;
+  if (name === 'external') return <svg {...common}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" /></svg>;
+  return <svg {...common}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" /><path d="M14 2v6h6M8 13h8M8 17h6" /></svg>;
+}
+
+const ArrowIcon = ({ external }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+    {external ? <><path d="M15 3h6v6" /><path d="m10 14 11-11" /><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /></> : <><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></>}
   </svg>
 );
 
@@ -39,81 +48,114 @@ export default async function TransparenciaPage() {
       .eq('clave', 'enlaces_transparencia')
       .maybeSingle();
     if (data?.valor?.observatorio_url) observatorioUrl = data.valor.observatorio_url;
-  } catch { /* usa fallback */ }
+  } catch {
+    // Se mantiene el enlace oficial de respaldo.
+  }
 
   const items = [
     {
-      title: 'UNIDAD DE TRANSPARENCIA Y LUCHA CONTRA LA CORRUPCIÓN',
-      subtitle: 'Responsable, funciones y contacto (Ley N° 974)',
+      title: 'Unidad de Transparencia y Lucha Contra la Corrupción',
+      subtitle: 'Conoce sus funciones, responsable y canales de atención conforme a la Ley N.º 974.',
       href: '/transparencia/unidad',
-      external: false,
+      icon: 'shield',
+      tag: 'Información institucional',
     },
     {
-      title: 'DENUNCIAR HECHOS DE CORRUPCIÓN',
-      subtitle: 'Sistema SITPRECO S2+ · Observatorio Ciudadano de Transparencia',
+      title: 'Denunciar hechos de corrupción',
+      subtitle: 'Accede al sistema SITPRECO S2+ del Observatorio Ciudadano de Transparencia.',
       href: observatorioUrl,
+      icon: 'alert',
+      tag: 'Servicio externo',
       external: true,
     },
     {
-      title: 'SOLICITUD DE INFORMACIÓN PÚBLICA',
-      subtitle: 'Formulario en línea para solicitar acceso a información pública',
+      title: 'Solicitud de información pública',
+      subtitle: 'Presenta una solicitud formal de acceso a información mediante el formulario en línea.',
       href: '/transparencia/solicitud-informacion',
-      external: false,
+      icon: 'message',
+      tag: 'Trámite en línea',
     },
     {
-      title: 'RENDICIÓN PÚBLICA DE CUENTAS',
-      subtitle: 'Informes de rendición de cuentas de la Gobernación',
+      title: 'Rendición Pública de Cuentas',
+      subtitle: 'Consulta informes y documentos oficiales de rendición de cuentas por gestión.',
       href: '/transparencia/rendicion_cuentas',
-      external: false,
+      icon: 'chart',
+      tag: 'Repositorio documental',
     },
     {
-      title: 'RENDICIÓN DE CUENTAS EN EL OBSERVATORIO',
-      subtitle: 'Portal nacional de rendición pública de cuentas',
+      title: 'Rendición de cuentas en el Observatorio',
+      subtitle: 'Consulta la información publicada por la institución en el portal nacional.',
       href: observatorioUrl,
+      icon: 'external',
+      tag: 'Portal nacional',
       external: true,
     },
     {
-      title: 'ACTIVIDADES Y CAMPAÑAS',
-      subtitle: 'Documentación de actividades institucionales',
+      title: 'Actividades y campañas',
+      subtitle: 'Revisa la documentación de actividades institucionales de transparencia.',
       href: '/transparencia/actividades',
-      external: false,
+      icon: 'document',
+      tag: 'Archivo institucional',
     },
   ];
 
   return (
     <main className={styles.main}>
       <AnimatedBackground />
-      <div className={styles.heroBanner}>
-        <div className={styles.heroOverlay}></div>
-        <div className={styles.heroContent}>
-          <h1 className={styles.heroTitle}>TRANSPARENCIA INSTITUCIONAL</h1>
-        </div>
-      </div>
+      <TransparencyHero
+        showBack={false}
+        eyebrow="Gobierno Autónomo Departamental de Oruro"
+        title="Transparencia institucional"
+        description="Información pública clara, accesible y organizada para fortalecer la confianza y el control ciudadano."
+      />
 
       <div className={styles.container}>
-        <section className={styles.section} id="lucha">
-          <h2 className={styles.sectionTitle}>ACCESO A LA INFORMACIÓN Y LUCHA CONTRA LA CORRUPCIÓN</h2>
-          <div className={styles.auditoriaGrid}>
-            {items.map((item, idx) => {
-              const inner = (
+        <section className={styles.commitmentBar} aria-label="Compromisos del portal">
+          <div className={styles.commitmentItem}>
+            <span className={styles.commitmentIcon}><PortalIcon name="shield" /></span>
+            <div><strong>Información oficial</strong><small>Fuentes institucionales verificadas</small></div>
+          </div>
+          <div className={styles.commitmentItem}>
+            <span className={styles.commitmentIcon}><PortalIcon name="document" /></span>
+            <div><strong>Acceso directo</strong><small>Documentos organizados por gestión</small></div>
+          </div>
+          <div className={styles.commitmentItem}>
+            <span className={styles.commitmentIcon}><PortalIcon name="message" /></span>
+            <div><strong>Atención ciudadana</strong><small>Canales y trámites disponibles</small></div>
+          </div>
+        </section>
+
+        <section className={styles.services} aria-labelledby="transparency-services-title">
+          <header className={styles.sectionHeader}>
+            <p>Servicios de transparencia</p>
+            <h2 id="transparency-services-title">¿Qué información necesitas?</h2>
+            <span>Selecciona una opción para consultar documentos, iniciar un trámite o acceder a los canales oficiales.</span>
+          </header>
+
+          <div className={styles.servicesGrid}>
+            {items.map((item) => {
+              const cardContent = (
                 <>
-                  <div className={styles.auditoriaIconWrapper}>
-                    <IconDoc />
+                  <div className={styles.cardTop}>
+                    <span className={styles.cardIcon}><PortalIcon name={item.icon} /></span>
+                    <span className={styles.cardTag}>{item.tag}</span>
                   </div>
-                  <div className={styles.auditoriaContent}>
-                    <h3 className={styles.auditoriaTitle}>{item.title}</h3>
-                    <p className={styles.auditoriaSubtitle}>{item.subtitle}</p>
-                  </div>
-                  <div className={styles.auditoriaArrow}><Arrow /></div>
+                  <h3>{item.title}</h3>
+                  <p>{item.subtitle}</p>
+                  <span className={styles.cardAction}>
+                    {item.external ? 'Abrir portal oficial' : 'Consultar información'}
+                    <ArrowIcon external={item.external} />
+                  </span>
                 </>
               );
+
               return item.external ? (
-                <a href={item.href} key={idx} target="_blank" rel="noopener noreferrer" className={styles.auditoriaCard}>
-                  {inner}
+                <a key={item.title} href={item.href} target="_blank" rel="noopener noreferrer" className={styles.serviceCard}>
+                  {cardContent}
                 </a>
               ) : (
-                <Link href={item.href} key={idx} className={styles.auditoriaCard}>
-                  {inner}
+                <Link key={item.title} href={item.href} className={styles.serviceCard}>
+                  {cardContent}
                 </Link>
               );
             })}

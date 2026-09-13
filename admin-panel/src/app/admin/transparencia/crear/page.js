@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { normalizarUrlDrive } from '@/lib/driveUtils';
+import { esDriveUrl, normalizarUrlDrive } from '@/lib/driveUtils';
 import Link from 'next/link';
 import styles from '../page.module.css';
 
@@ -28,6 +28,10 @@ export default function CrearDocumentoTransparenciaPage() {
     }
     if (!driveUrl.trim()) {
       setError('Debes pegar el link de Google Drive del PDF.');
+      return;
+    }
+    if (!esDriveUrl(driveUrl)) {
+      setError('Pega un enlace válido de Google Drive o Documentos de Google.');
       return;
     }
 
@@ -138,19 +142,19 @@ export default function CrearDocumentoTransparenciaPage() {
                 <input
                   type="url"
                   className="formInput"
-                  placeholder="https://drive.google.com/file/d/..."
+                  placeholder="https://drive.google.com/file/d/... o https://docs.google.com/document/d/..."
                   value={driveUrl}
                   onChange={(e) => setDriveUrl(e.target.value)}
                   disabled={isSubmitting}
                 />
-                {driveUrl && !driveUrl.includes('drive.google.com') && (
+                {driveUrl && !esDriveUrl(driveUrl) && (
                   <p style={{ fontSize: '0.78rem', color: '#d97706', marginTop: '0.3rem' }}>
-                    ⚠️ El link no parece ser de Google Drive.
+                    ⚠️ El enlace no parece ser un archivo válido de Google Drive o Google Docs.
                   </p>
                 )}
-                {driveUrl && driveUrl.includes('drive.google.com') && (
+                {driveUrl && esDriveUrl(driveUrl) && (
                   <p style={{ fontSize: '0.78rem', color: '#059669', marginTop: '0.3rem' }}>
-                    ✅ Link de Drive detectado.
+                    ✅ Enlace de Google Drive detectado.
                   </p>
                 )}
               </div>

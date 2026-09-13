@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { normalizarUrlDrive } from '@/lib/driveUtils';
+import { esDriveUrl, normalizarUrlDrive } from '@/lib/driveUtils';
 import styles from '../../page.module.css';
 
 export default function EditarForm({ documento }) {
@@ -26,6 +26,10 @@ export default function EditarForm({ documento }) {
     e.preventDefault();
     if (!titulo || !tipo || !gestion) {
       setError('El tipo, gestión y título son obligatorios.');
+      return;
+    }
+    if (driveUrl.trim() && !esDriveUrl(driveUrl)) {
+      setError('Pega un enlace válido de Google Drive o Documentos de Google.');
       return;
     }
 
@@ -113,16 +117,16 @@ export default function EditarForm({ documento }) {
             <input
               type="url"
               className="formInput"
-              placeholder="https://drive.google.com/file/d/..."
+              placeholder="https://drive.google.com/file/d/... o https://docs.google.com/document/d/..."
               value={driveUrl}
               onChange={(e) => setDriveUrl(e.target.value)}
               disabled={isSubmitting}
             />
-            {driveUrl && driveUrl.includes('drive.google.com') && (
-              <p style={{ fontSize: '0.78rem', color: '#059669', marginTop: '0.3rem' }}>✅ Link de Drive detectado.</p>
+            {driveUrl && esDriveUrl(driveUrl) && (
+              <p style={{ fontSize: '0.78rem', color: '#059669', marginTop: '0.3rem' }}>✅ Enlace de Google Drive detectado.</p>
             )}
-            {driveUrl && !driveUrl.includes('drive.google.com') && driveUrl.startsWith('http') && (
-              <p style={{ fontSize: '0.78rem', color: '#d97706', marginTop: '0.3rem' }}>⚠️ El link no parece ser de Google Drive.</p>
+            {driveUrl && !esDriveUrl(driveUrl) && driveUrl.startsWith('http') && (
+              <p style={{ fontSize: '0.78rem', color: '#d97706', marginTop: '0.3rem' }}>⚠️ El enlace no parece ser un archivo válido de Google Drive o Google Docs.</p>
             )}
           </div>
         </div>

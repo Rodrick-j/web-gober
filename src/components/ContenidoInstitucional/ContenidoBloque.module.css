@@ -14,7 +14,7 @@
   color: #1a1a1a;
   margin: 0 0 1.5rem;
   padding-bottom: 0.75rem;
-  border-bottom: 3px solid #8B0000;
+  border-bottom: 3px solid #9c0720;
 }
 
 .prosa {
@@ -43,7 +43,7 @@
 
 .prosa :global(li) { margin-bottom: 0.4rem; }
 
-.prosa :global(a) { color: #8B0000; text-decoration: underline; }
+.prosa :global(a) { color: #9c0720; text-decoration: underline; }
 
 .prosa :global(strong) { color: #1a1a1a; }
 
@@ -58,7 +58,7 @@
   gap: 0.5rem;
   margin-top: 1.75rem;
   padding: 0.7rem 1.4rem;
-  background: #8B0000;
+  background: #9c0720;
   color: #fff;
   border-radius: 10px;
   font-weight: 600;
@@ -68,7 +68,7 @@
 }
 
 .descarga:hover {
-  background: #6d0000;
+  background: #67181a;
   transform: translateY(-1px);
 }
 

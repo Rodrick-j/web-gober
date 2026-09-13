@@ -94,16 +94,18 @@ export default function GaleriaUploader({ urlsIniciales = [], onChange, maxImage
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{ fontSize: '0.72rem', color: 'var(--admin-text-muted)' }}>
-          {urls.length} de {maxImagenes} imágenes · mínimo 2 recomendadas
+          {urls.length} de {maxImagenes} imágenes · usa hasta 3 en el carrusel
         </span>
         {urls.length > 0 && (
           <span style={{
             fontSize: '0.65rem', fontWeight: 700, padding: '2px 8px', borderRadius: '20px',
-            background: urls.length >= 2 ? 'rgba(16,185,129,0.12)' : 'rgba(245,158,11,0.12)',
-            color: urls.length >= 2 ? '#10b981' : '#f59e0b',
-            border: `1px solid ${urls.length >= 2 ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`,
+            background: urls.length >= maxImagenes ? 'rgba(16,185,129,0.12)' : 'rgba(245,158,11,0.12)',
+            color: urls.length >= maxImagenes ? '#10b981' : '#f59e0b',
+            border: `1px solid ${urls.length >= maxImagenes ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'}`,
           }}>
-            {urls.length >= 2 ? '✓ Completo' : '⚠ Mín. 2'}
+            {urls.length >= maxImagenes
+              ? '✓ Carrusel listo'
+              : `${maxImagenes - urls.length === 1 ? 'Falta' : 'Faltan'} ${maxImagenes - urls.length}`}
           </span>
         )}
       </div>
