@@ -124,6 +124,7 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeMobileAccordion, setActiveMobileAccordion] = useState(null);
+  const [activeMobileGroup, setActiveMobileGroup] = useState(null);
   const [secretariasList, setSecretariasList] = useState([]);
   const [currentDateTime, setCurrentDateTime] = useState(null);
   const timeoutRef = useRef(null);
@@ -156,6 +157,8 @@ export default function Navbar() {
     const handleResize = () => {
       if (window.innerWidth > 900) {
         setMobileOpen(false);
+        setActiveMobileAccordion(null);
+        setActiveMobileGroup(null);
       }
     };
     window.addEventListener('resize', handleResize);
@@ -214,12 +217,32 @@ export default function Navbar() {
     timeoutRef.current = setTimeout(() => setActiveDropdown(null), 100);
   };
 
-  const toggleMobileAccordion = (label) => {
-    if (activeMobileAccordion === label) {
-      setActiveMobileAccordion(null);
-    } else {
-      setActiveMobileAccordion(label);
+  const toggleMobileAccordion = (label, hasNestedGroups = false) => {
+    const isClosing = activeMobileAccordion === label;
+    setActiveMobileAccordion(isClosing ? null : label);
+
+    if (isClosing || !hasNestedGroups) {
+      setActiveMobileGroup(null);
     }
+  };
+
+  const toggleMobileGroup = (groupTitle) => {
+    setActiveMobileGroup((current) => current === groupTitle ? null : groupTitle);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileOpen(false);
+    setActiveMobileAccordion(null);
+    setActiveMobileGroup(null);
+  };
+
+  const toggleMobileMenu = () => {
+    if (mobileOpen) {
+      closeMobileMenu();
+      return;
+    }
+
+    setMobileOpen(true);
   };
 
   return (
@@ -380,8 +403,9 @@ export default function Navbar() {
             </button>
             <button
               className={styles.mobileToggle}
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={toggleMobileMenu}
               aria-label="Menú"
+              aria-expanded={mobileOpen}
             >
               <span className={`${styles.hamburger} ${mobileOpen ? styles.open : ''}`} />
             </button>
@@ -410,7 +434,8 @@ export default function Navbar() {
                   {item.children ? (
                     <button
                       className={styles.mobileLink}
-                      onClick={() => toggleMobileAccordion(item.label)}
+                      onClick={() => toggleMobileAccordion(item.label, Boolean(item.groups))}
+                      aria-expanded={activeMobileAccordion === item.label}
                       style={{ width: '100%', textAlign: 'left', border: 'none', background: 'transparent', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
                     >
                       <span><span className={styles.navEmoji}><item.Icon size={18} strokeWidth={2.2} /></span> {item.label}</span>
@@ -422,7 +447,7 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       className={styles.mobileLink}
-                      onClick={() => setMobileOpen(false)}
+                      onClick={closeMobileMenu}
                     >
                       <span className={styles.navEmoji}><item.Icon size={18} strokeWidth={2.2} /></span> {item.label}
                     </Link>
@@ -443,26 +468,65 @@ export default function Navbar() {
                           style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}
                         >
                           {item.groups ? (
-                            item.groups.map((group) => (
-                              <div key={group.title} className={styles.mobileGroup}>
-                                <span className={styles.mobileGroupTitle}>{group.title}</span>
-                                {group.items.map((child) => (
-                                  <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
-                                    <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
-                                  </Link>
-                                ))}
-                              </div>
-                            ))
+                            item.groups.map((group, groupIndex) => {
+                              const isGroupOpen = activeMobileGroup === group.title;
+                              const groupId = `mobile-institution-group-${groupIndex}`;
+
+                              return (
+                                <div key={group.title} className={styles.mobileGroup}>
+                                  <button
+                                    type="button"
+                                    className={styles.mobileGroupButton}
+                                    onClick={() => toggleMobileGroup(group.title)}
+                                    aria-expanded={isGroupOpen}
+                                    aria-controls={groupId}
+                                  >
+                                    <span className={styles.mobileGroupTitle}>{group.title}</span>
+                                    <svg
+                                      className={`${styles.mobileGroupChevron} ${isGroupOpen ? styles.mobileGroupChevronOpen : ''}`}
+                                      width="15"
+                                      height="15"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2"
+                                      aria-hidden="true"
+                                    >
+                                      <path d="M6 9l6 6 6-6" />
+                                    </svg>
+                                  </button>
+
+                                  <AnimatePresence initial={false}>
+                                    {isGroupOpen && (
+                                      <motion.div
+                                        id={groupId}
+                                        className={styles.mobileGroupItems}
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.16, ease: 'easeOut' }}
+                                      >
+                                        {group.items.map((child) => (
+                                          <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={closeMobileMenu}>
+                                            <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
+                                          </Link>
+                                        ))}
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+                              );
+                            })
                           ) : (
                             item.children.map((child) => {
                               const isSecretarias = item.label === 'Secretarías';
                               return isSecretarias ? (
-                                <Link key={child.label} href={child.href} className={styles.mobileChip} onClick={() => setMobileOpen(false)}>
+                                <Link key={child.label} href={child.href} className={styles.mobileChip} onClick={closeMobileMenu}>
                                   <span className={styles.chipEmoji}><child.Icon size={14} strokeWidth={2.5} /></span>
                                   <span className={styles.chipText}>{child.fullLabel || child.label}</span>
                                 </Link>
                               ) : (
-                                <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={() => setMobileOpen(false)}>
+                                <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={closeMobileMenu}>
                                   <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
                                 </Link>
                               );

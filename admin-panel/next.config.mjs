@@ -1,6 +1,14 @@
+import { fileURLToPath } from 'node:url';
+
+const adminRoot = fileURLToPath(new URL('.', import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  assetPrefix: '/_admin_next',
+  turbopack: {
+    root: adminRoot,
+  },
   // Permitir archivos grandes (hasta 50MB) en Server Actions
   experimental: {
     serverActions: {

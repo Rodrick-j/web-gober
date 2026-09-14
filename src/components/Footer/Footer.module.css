@@ -254,6 +254,10 @@
   flex-direction: column;
 }
 
+.mobileQuickLinks {
+  display: none;
+}
+
 .logoWrap {
   position: relative;
   width: fit-content;
@@ -726,7 +730,7 @@ a.contactItem:hover {
 
 @media (max-width: 760px) {
   .footerInner {
-    padding: 2rem 1rem 2.5rem;
+    padding: 1.5rem 1rem 1.75rem;
   }
 
   .serviceBanner {
@@ -754,19 +758,52 @@ a.contactItem:hover {
 
   .linksGrid {
     grid-template-columns: 1fr;
-    gap: 2.4rem;
+    gap: 0;
   }
 
   .brandColumn {
-    padding-bottom: 0.25rem;
+    padding-bottom: 0;
+  }
+
+  .mobileQuickLinks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin-top: 1.15rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mobileQuickLink {
+    display: flex;
+    min-width: 0;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.65rem 0.55rem;
+    color: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.055);
+    font-size: 0.66rem;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .mobileQuickLink svg {
+    flex: 0 0 auto;
+    color: #f4c55f;
+  }
+
+  .mobileQuickLink:active {
+    background: rgba(255, 255, 255, 0.1);
   }
 
   .linkColumn {
-    padding-top: 0;
-  }
-
-  .linkColumn .secretariasList {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: none;
   }
 
   .bottomInner {
@@ -777,23 +814,30 @@ a.contactItem:hover {
   }
 
   .bottomLinks {
-    gap: 0.7rem 1rem;
-    justify-content: flex-start;
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
-  .linkColumn .secretariasList {
-    grid-template-columns: 1fr;
-  }
-
-  .footerLink {
-    min-height: 38px;
-    font-size: 0.7rem;
-  }
-
   .logoWrap {
-    width: 100%;
+    margin-bottom: 0.9rem;
+    padding: 0.65rem 0.8rem;
+  }
+
+  .logo {
+    max-height: 105px;
+  }
+
+  .brandDescription {
+    margin-bottom: 0.9rem;
+  }
+
+  .contactInfo {
+    gap: 0.35rem;
+  }
+
+  .socialBlock {
+    margin-top: 0.9rem;
   }
 
   .copyright {

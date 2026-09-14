@@ -249,7 +249,7 @@ export default async function NoticiaDetailPage({ params }) {
                           width={70}
                           height={70}
                           style={{ objectFit: 'cover' }}
-                          quality={100}
+                          quality={82}
                         />
                       ) : (
                         <div className={styles.authorityPlaceholder}>
@@ -332,7 +332,7 @@ export default async function NoticiaDetailPage({ params }) {
                             width={300}
                             height={160}
                             className={styles.relatedImage} 
-                            quality={100}
+                            quality={75}
                           />
                         ) : (
                           <div className={styles.relatedImage} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', opacity: 0.5 }}>

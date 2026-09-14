@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal';
+import ProgressiveImage from '@/components/MediaLoader/ProgressiveImage';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 import styles from './NewsSection.module.css';
 
 export default function NewsSection({ noticias = [] }) {
@@ -64,14 +65,14 @@ export default function NewsSection({ noticias = [] }) {
               <article className={`${styles.featuredCard} card`} id={`news-featured-${featured.id}`}>
                 <div className={styles.featuredImageWrapper}>
                   {featured.image ? (
-                    <Image
+                    <ProgressiveImage
                       src={featured.image}
                       alt={featured.title}
                       fill
                       className={styles.featuredImage}
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      priority
-                      quality={82}
+                      quality={80}
+                      loaderLabel="Cargando noticia"
                     />
                   ) : (
                     <div className={styles.featuredEmoji}>{featured.emoji}</div>
@@ -107,13 +108,15 @@ export default function NewsSection({ noticias = [] }) {
                 >
                   <div className={styles.newsImageWrapper}>
                     {item.image ? (
-                      <Image
+                      <ProgressiveImage
                         src={item.image}
                         alt={item.title}
                         fill
                         className={styles.newsCardImage}
-                        sizes="(max-width: 768px) 100vw, 25vw"
-                        quality={82}
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        quality={75}
+                        loaderLabel="Cargando imagen"
+                        showLoaderLabel={false}
                       />
                     ) : (
                       <div className={styles.newsEmoji}>{item.emoji}</div>
@@ -156,15 +159,17 @@ export default function NewsSection({ noticias = [] }) {
                 const isShort = v.video_youtube_url?.includes('shorts');
                 return (
                   <div key={v.id} className={`${styles.videoCard} ${isShort ? styles.videoShort : ''}`}>
-                    <iframe 
-                      src={v.video_youtube_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/').replace('/shorts/', '/embed/')}
-                      title="YouTube video player" 
-                      style={{ border: 0 }} 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                      allowFullScreen
-                      loading="lazy"
-                      className={styles.videoIframe}
-                    ></iframe>
+                    <div className={styles.videoFrameShell}>
+                      <LazyEmbed
+                        src={v.video_youtube_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'www.youtube.com/embed/').replace('/shorts/', '/embed/')}
+                        title={`Video: ${v.titulo}`}
+                        style={{ border: 0 }}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className={styles.videoIframe}
+                        loaderLabel="Conectando con YouTube"
+                      />
+                    </div>
                     <div className={styles.videoMeta}>
                       <h4>{v.titulo}</h4>
                     </div>

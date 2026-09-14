@@ -1,4 +1,5 @@
 import styles from './ArticleSocialEmbeds.module.css';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 
 const NETWORK_HOSTS = {
   facebook: ['facebook.com', 'fb.watch'],
@@ -173,15 +174,15 @@ export default function ArticleSocialEmbeds({
             name="Facebook"
             url={resolvedFacebookUrl}
           >
-            <iframe
+            <LazyEmbed
               className={styles.facebookFrame}
               src={facebookEmbedUrl}
               title="Publicación oficial en Facebook"
               width="360"
               height="620"
-              loading="lazy"
               allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
               allowFullScreen
+              loaderLabel="Cargando Facebook"
             />
           </NetworkCard>
         )}
@@ -194,13 +195,13 @@ export default function ArticleSocialEmbeds({
           >
             {tiktokEmbedUrl ? (
               <div className={styles.tiktokFrameShell}>
-                <iframe
+                <LazyEmbed
                   className={styles.tiktokFrame}
                   src={tiktokEmbedUrl}
                   title="Publicación oficial en TikTok"
-                  loading="lazy"
                   allow="fullscreen; autoplay; encrypted-media; picture-in-picture"
                   allowFullScreen
+                  loaderLabel="Cargando TikTok"
                 />
               </div>
             ) : (

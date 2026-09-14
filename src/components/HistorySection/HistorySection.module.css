@@ -57,6 +57,9 @@
   color: #444;
   line-height: 1.8;
   margin: 0 auto;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 .videoContainer {
@@ -77,13 +80,21 @@
 
 .watermarkOverlay {
   position: absolute;
-  bottom: 30px;
-  right: 45px;
-  width: 65px;
-  height: auto;
+  right: 3.5%;
+  bottom: 3.5%;
+  width: clamp(58px, 15%, 100px);
+  aspect-ratio: 1;
+  overflow: hidden;
   z-index: 10;
   pointer-events: none;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.55));
+}
+
+.watermarkImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* Timeline */
@@ -164,6 +175,9 @@
   color: #555;
   font-size: 0.95rem;
   line-height: 1.6;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 @media (max-width: 768px) {

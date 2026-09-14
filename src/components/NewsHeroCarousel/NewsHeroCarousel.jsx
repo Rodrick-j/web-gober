@@ -2,12 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import MediaLoader from '@/components/MediaLoader/MediaLoader';
 import styles from './NewsHeroCarousel.module.css';
 
 export default function NewsHeroCarousel({ images, title }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [loadedSource, setLoadedSource] = useState(null);
   const hasMultipleImages = images.length > 1;
+  const activeSource = images[activeIndex];
 
   useEffect(() => {
     if (!hasMultipleImages || isPaused) return undefined;
@@ -50,33 +53,38 @@ export default function NewsHeroCarousel({ images, title }) {
       }}
     >
       <div className={styles.backgroundLayer} aria-hidden="true">
-        {images.map((src, index) => (
-          <div
-            key={`${src}-background`}
-            className={`${styles.backgroundSlide} ${index === activeIndex ? styles.activeSlide : ''}`}
-          >
-            <Image src={src} alt="" fill sizes="100vw" className={styles.backgroundImage} priority={index === 0} />
-          </div>
-        ))}
-      </div>
-
-      {images.map((src, index) => (
-        <div
-          key={src}
-          className={`${styles.slide} ${index === activeIndex ? styles.activeSlide : ''}`}
-          aria-hidden={index !== activeIndex}
-        >
+        <div key={`${activeSource}-background`} className={`${styles.backgroundSlide} ${styles.activeSlide}`}>
           <Image
-            src={src}
-            alt={index === activeIndex ? `${title} — imagen ${index + 1} de ${images.length}` : ''}
+            src={activeSource}
+            alt=""
             fill
             sizes="100vw"
-            className={styles.image}
-            priority={index === 0}
-            quality={90}
+            className={styles.backgroundImage}
+            priority={activeIndex === 0}
+            quality={80}
           />
         </div>
-      ))}
+      </div>
+
+      <MediaLoader
+        active={loadedSource !== activeSource}
+        kind="image"
+        label="Cargando galería"
+        className={styles.carouselLoader}
+      />
+
+      <div key={activeSource} className={`${styles.slide} ${styles.activeSlide}`}>
+        <Image
+          src={activeSource}
+          alt={`${title} — imagen ${activeIndex + 1} de ${images.length}`}
+          fill
+          sizes="100vw"
+          className={styles.image}
+          priority={activeIndex === 0}
+          quality={80}
+          onLoad={() => setLoadedSource(activeSource)}
+        />
+      </div>
 
       {hasMultipleImages && (
         <>

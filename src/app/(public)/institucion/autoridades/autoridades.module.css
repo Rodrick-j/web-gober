@@ -42,15 +42,19 @@
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
-.photo {
+.photoWrap {
+  position: relative;
   width: 110px;
   height: 110px;
   border-radius: 50%;
-  object-fit: cover;
   margin: 0 auto 1rem;
   border: 3px solid #8B0000;
   background: #eee;
-  display: block;
+  overflow: hidden;
+}
+
+.photo {
+  object-fit: cover;
 }
 .photoPlaceholder {
   width: 110px;

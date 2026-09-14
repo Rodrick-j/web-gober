@@ -22,6 +22,16 @@ const nextConfig = {
         hostname: '*.supabase.in',
         pathname: '/storage/v1/object/public/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+        pathname: '/vi/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+        pathname: '/vi/**',
+      },
     ],
     // Vercel optimiza las imágenes (WebP/AVIF + resize automático).
   },
@@ -58,6 +68,22 @@ const nextConfig = {
         ],
       },
     ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/admin',
+        destination: 'http://localhost:3001/admin',
+      },
+      {
+        source: '/admin/:path*',
+        destination: 'http://localhost:3001/admin/:path*',
+      },
+      {
+        source: '/_admin_next/_next/:path*',
+        destination: 'http://localhost:3001/_next/:path*',
+      },
+    ]
   },
 };
 

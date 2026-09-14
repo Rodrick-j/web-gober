@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay, Navigation } from 'swiper/modules';
 import Link from 'next/link';
+import ProgressiveImage from '@/components/MediaLoader/ProgressiveImage';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -22,17 +23,16 @@ export default function SecretariatsSection({ secretarias = [] }) {
     // if (banner_url) return banner_url; 
     
     if (!slug) return null;
-    const cacheBuster = '?v=2';
-    if (slug.includes('general')) return '/images/secretarias/sec_general.png' + cacheBuster;
-    if (slug.includes('productiv')) return '/images/secretarias/desarrollo_productivo.png' + cacheBuster;
-    if (slug.includes('cultur')) return '/images/secretarias/cultura_turismo.png' + cacheBuster;
-    if (slug.includes('obras')) return '/images/secretarias/obras_publicas.png' + cacheBuster;
-    if (slug.includes('miner')) return '/images/secretarias/mineria.png' + cacheBuster;
-    if (slug.includes('medio-ambiente')) return '/images/secretarias/medio_ambiente.png' + cacheBuster;
-    if (slug.includes('desarrollo-social')) return '/images/secretarias/desarrollo_social.png' + cacheBuster;
-    if (slug.includes('planificacion')) return '/images/secretarias/planificacion.jpg' + cacheBuster;
-    if (slug.includes('juridicos')) return '/images/secretarias/asuntos_juridicos.jpg' + cacheBuster;
-    if (slug.includes('finanzas')) return '/images/secretarias/admin_finanzas.jpg' + cacheBuster;
+    if (slug.includes('general')) return '/images/secretarias/sec_general.png';
+    if (slug.includes('productiv')) return '/images/secretarias/desarrollo_productivo.png';
+    if (slug.includes('cultur')) return '/images/secretarias/cultura_turismo.png';
+    if (slug.includes('obras')) return '/images/secretarias/obras_publicas.png';
+    if (slug.includes('miner')) return '/images/secretarias/mineria.png';
+    if (slug.includes('medio-ambiente')) return '/images/secretarias/medio_ambiente.png';
+    if (slug.includes('desarrollo-social')) return '/images/secretarias/desarrollo_social.png';
+    if (slug.includes('planificacion')) return '/images/secretarias/planificacion.jpg';
+    if (slug.includes('juridicos')) return '/images/secretarias/asuntos_juridicos.jpg';
+    if (slug.includes('finanzas')) return '/images/secretarias/admin_finanzas.jpg';
     return null;
   };
 
@@ -94,7 +94,15 @@ export default function SecretariatsSection({ secretarias = [] }) {
                   {/* Background Image Container */}
                   <div className="secretariat-card-bg">
                     {getSecretariaImage(sec.slug, sec.banner_url) ? (
-                      <img loading="lazy" src={getSecretariaImage(sec.slug, sec.banner_url)} alt={sec.nombre_corto || sec.nombre} className="secretariat-image" />
+                      <ProgressiveImage
+                        src={getSecretariaImage(sec.slug, sec.banner_url)}
+                        alt={sec.nombre_corto || sec.nombre}
+                        fill
+                        sizes="(max-width: 576px) 100vw, (max-width: 1024px) 33vw, 20vw"
+                        quality={72}
+                        className="secretariat-image"
+                        loaderLabel="Cargando secretaría"
+                      />
                     ) : (
                       <div className="secretariat-card-fallback-bg" style={{ background: `linear-gradient(135deg, ${sec.color_acento || '#C1272D'} 0%, #1a1a2e 100%)` }}>
                         <span className="fallback-icon">{sec.icono || '🏛️'}</span>
@@ -180,7 +188,15 @@ export default function SecretariatsSection({ secretarias = [] }) {
                 <div className="sec-modal-left" style={{ background: `linear-gradient(135deg, var(--theme-color) 0%, #0d0d11 100%)` }}>
                   <div className="sec-modal-photo-wrapper">
                     {selectedSec.secretario_foto_url ? (
-                      <img loading="lazy" src={selectedSec.secretario_foto_url} alt={selectedSec.secretario_nombre} className="sec-modal-photo" />
+                      <ProgressiveImage
+                        src={selectedSec.secretario_foto_url}
+                        alt={selectedSec.secretario_nombre}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 45vw"
+                        quality={75}
+                        className="sec-modal-photo"
+                        loaderLabel="Cargando autoridad"
+                      />
                     ) : (
                       <div className="sec-modal-photo-placeholder">
                         <span className="sec-modal-icon">{selectedSec.icono || '🏛️'}</span>

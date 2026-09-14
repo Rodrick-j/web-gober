@@ -184,6 +184,22 @@ export default async function Footer() {
             </div>
           </section>
 
+          <nav className={styles.mobileQuickLinks} aria-label="Accesos rápidos del pie de página">
+            <Link href="/institucion/historia-institucion" className={styles.mobileQuickLink}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
+                <path d="M3 10h18M5 10v9M9 10v9M15 10v9M19 10v9M2 21h20M12 3 2 8h20L12 3Z" />
+              </svg>
+              <span>Historia institucional</span>
+            </Link>
+            <Link href="/gaceta/leyes" className={styles.mobileQuickLink}>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
+                <path d="M6 2h9l4 4v16H6z" />
+                <path d="M14 2v5h5M9 12h7M9 16h7" />
+              </svg>
+              <span>Gaceta Oficial</span>
+            </Link>
+          </nav>
+
           <nav className={[styles.linkColumn, styles.secretariasColumn].join(' ')} aria-labelledby="footer-secretarias">
             <div className={styles.columnHeading}>
               <span className={styles.headingIcon} aria-hidden="true">

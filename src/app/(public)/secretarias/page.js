@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/public';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
+import ProgressiveImage from '@/components/MediaLoader/ProgressiveImage';
 import styles from './Secretarias.module.css';
 
 export const metadata = {
@@ -57,11 +58,17 @@ export default async function SecretariasHubPage() {
                   <div className={styles.cardFooter}>
                     <div className={styles.autoridad}>
                       {sec.secretario_foto_url ? (
-                        <img
+                        <span className={styles.autoridadFotoWrap}>
+                          <ProgressiveImage
                           src={sec.secretario_foto_url}
                           alt={sec.secretario_nombre || 'Autoridad'}
+                          fill
+                          sizes="30px"
+                          quality={70}
                           className={styles.autoridadFoto}
-                        />
+                          showLoaderLabel={false}
+                          />
+                        </span>
                       ) : (
                         <div className={styles.autoridadFoto} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>👤</div>
                       )}

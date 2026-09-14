@@ -1,5 +1,6 @@
 'use client';
 import { useState, useMemo } from 'react';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 import styles from './gaceta.module.css';
 
 function formatFecha(fechaStr, opts = { day: 'numeric', month: 'long', year: 'numeric' }) {
@@ -68,11 +69,15 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
                 </button>
               </div>
             </div>
-            <iframe
-              src={`${previewUrl}#toolbar=1&navpanes=0`}
-              className={styles.previewFrame}
-              title={previewTitle}
-            />
+            <div className={styles.previewFrameShell}>
+              <LazyEmbed
+                src={`${previewUrl}#toolbar=1&navpanes=0`}
+                className={styles.previewFrame}
+                title={previewTitle}
+                eager
+                loaderLabel="Preparando documento"
+              />
+            </div>
           </div>
         </div>
       )}

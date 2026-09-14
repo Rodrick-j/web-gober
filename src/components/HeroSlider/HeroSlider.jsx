@@ -1,9 +1,11 @@
 'use client';
 
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules';
 import Link from 'next/link';
 import Image from 'next/image';
+import MediaLoader from '@/components/MediaLoader/MediaLoader';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -13,6 +15,12 @@ import 'swiper/css/navigation';
 import styles from './HeroSlider.module.css';
 
 export default function HeroSlider({ banners, redes }) {
+  const [loadedBanners, setLoadedBanners] = useState({});
+
+  const markBannerLoaded = (id) => {
+    setLoadedBanners((current) => (current[id] ? current : { ...current, [id]: true }));
+  };
+
   if (!banners || banners.length === 0) {
     return (
       <section className={styles.heroFallback}>
@@ -49,23 +57,21 @@ export default function HeroSlider({ banners, redes }) {
           <SwiperSlide key={banner.id}>
             <div className={styles.slideInner}>
               <div className={styles.bgImageWrapper}>
+                <MediaLoader
+                  active={!loadedBanners[banner.id]}
+                  kind="image"
+                  label="Preparando portada"
+                />
                 {/* Blurred Background for Cinematic Effect */}
                 <Image
                   src={banner.imagen_url}
-                  alt="Background Blur"
+                  alt=""
                   fill
-                  sizes="100vw"
+                  sizes="(max-width: 768px) 1px, 100vw"
+                  aria-hidden="true"
+                  quality={30}
                   className={`${styles.blurredBg} ${banner.imagen_movil_url ? styles.hideOnMobile : ''}`}
                 />
-                {banner.imagen_movil_url && (
-                  <Image
-                    src={banner.imagen_movil_url}
-                    alt="Background Blur Mobile"
-                    fill
-                    sizes="100vw"
-                    className={`${styles.blurredBg} ${styles.showOnlyOnMobile}`}
-                  />
-                )}
 
                 {/* Main Responsive Image */}
                 <Image
@@ -74,7 +80,8 @@ export default function HeroSlider({ banners, redes }) {
                   fill
                   sizes="100vw"
                   priority={index === 0}
-                  unoptimized={true}
+                  quality={80}
+                  onLoad={() => markBannerLoaded(banner.id)}
                   className={`${styles.mainImage} ${banner.imagen_movil_url ? styles.hideOnMobile : ''}`}
                 />
                 {banner.imagen_movil_url && (
@@ -84,7 +91,8 @@ export default function HeroSlider({ banners, redes }) {
                     fill
                     sizes="100vw"
                     priority={index === 0}
-                    unoptimized={true}
+                    quality={80}
+                    onLoad={() => markBannerLoaded(banner.id)}
                     className={`${styles.mainImage} ${styles.showOnlyOnMobile}`}
                   />
                 )}

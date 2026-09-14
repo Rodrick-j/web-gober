@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import ScrollReveal from '@/components/ScrollReveal/ScrollReveal';
 import styles from './VideoSection.module.css';
 import { Play, X } from 'lucide-react';
+import ProgressiveImage from '@/components/MediaLoader/ProgressiveImage';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 
 export default function VideoSection({ urls = [] }) {
   const [activeVideo, setActiveVideo] = useState(null);
@@ -44,14 +46,26 @@ export default function VideoSection({ urls = [] }) {
                 key={index} 
                 className={styles.videoContainerWrapper}
                 onClick={() => setActiveVideo(id)}
+                role="button"
+                tabIndex={0}
+                aria-label="Reproducir video"
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') setActiveVideo(id);
+                }}
               >
                 <div className={styles.thumbnailContainer}>
-                  <img 
-                    src={`https://img.youtube.com/vi/${id}/maxresdefault.jpg`} 
-                    onError={(e) => { e.target.src = `https://img.youtube.com/vi/${id}/hqdefault.jpg`; }}
-                    alt="Miniatura del video" 
+                  <ProgressiveImage
+                    src={`https://img.youtube.com/vi/${id}/hqdefault.jpg`}
+                    alt="Miniatura del video"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    quality={60}
                     className={styles.thumbnail}
+                    loaderLabel="Cargando miniatura"
                   />
+                  <span className={styles.playOverlay} aria-hidden="true">
+                    <span className={styles.playButton}><Play size={28} fill="currentColor" /></span>
+                  </span>
                 </div>
               </div>
             ))}
@@ -89,13 +103,15 @@ export default function VideoSection({ urls = [] }) {
           </button>
           <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
             <div className={styles.videoContainer}>
-              <iframe
+              <LazyEmbed
                 src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0&modestbranding=1`}
                 title="Video Modal"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
-              ></iframe>
+                eager
+                loaderLabel="Abriendo video"
+              />
             </div>
           </div>
         </div>

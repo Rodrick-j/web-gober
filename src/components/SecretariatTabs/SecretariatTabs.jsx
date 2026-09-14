@@ -6,6 +6,7 @@ import PlanificacionSection from '@/app/(public)/secretarias/[slug]/Planificacio
 import Programas2026View from '@/app/(public)/secretarias/[slug]/Programas2026View';
 import { secretariasContactData } from '@/data/secretariasContactData';
 import EstadisticasSection from '@/components/EstadisticasSection/EstadisticasSection';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 import styles from './SecretariatTabs.module.css';
 
 const unidadesMock = [
@@ -254,15 +255,16 @@ export default function SecretariatTabs({ sec, slug }) {
 
               {contactOverride?.contacto?.mapa_query && (
                 <div className={styles.contactoMapCol}>
-                  <iframe 
+                  <LazyEmbed
                     src={`https://maps.google.com/maps?q=${encodeURIComponent(contactOverride.contacto.mapa_query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
                     width="100%" 
                     height="100%" 
                     style={{ border: 0, borderRadius: '16px' }} 
                     allowFullScreen="" 
-                    loading="lazy" 
                     referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
+                    title={`Ubicación de ${sec.nombre_corto || sec.nombre}`}
+                    loaderLabel="Preparando mapa"
+                  />
                 </div>
               )}
             </div>
@@ -350,13 +352,15 @@ export default function SecretariatTabs({ sec, slug }) {
 
                     <div className={styles.unidadMapContainer}>
                       {activeTab === 'unidades' && (
-                        <iframe 
+                        <LazyEmbed
                           src={`https://maps.google.com/maps?q=${encodeURIComponent(unidad.mapa_query)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
                           width="100%" 
                           height="100%" 
                           style={{ border: 0, borderRadius: '12px' }} 
                           allowFullScreen="" 
-                        ></iframe>
+                          title={`Ubicación de ${unidad.nombre}`}
+                          loaderLabel="Preparando mapa"
+                        />
                       )}
                     </div>
                   </div>

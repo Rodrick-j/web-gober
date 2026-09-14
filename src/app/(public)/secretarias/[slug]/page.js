@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
+import { LazyEmbed, LazyVideo } from '@/components/MediaLoader/LazyMedia';
 import styles from './SecretariaDetail.module.css';
 
 import EstadisticasChartWrapper from '@/components/EstadisticasChart/EstadisticasChartWrapper';
@@ -73,37 +74,37 @@ export default async function SecretariaDetailPage({ params }) {
 
   // Override para secretaría de planificación
   if (slug.includes('planificacion')) {
-    sec.video_url = '/video-planificacion.mp4';
+    sec.video_url = '/video-planificacion-optimized.mp4';
   }
 
   // Override para secretaría de desarrollo productivo e industria
   if (slug.includes('productiv') || slug.includes('industria')) {
-    sec.video_url = '/video-desarrollo-productivo.mp4';
+    sec.video_url = '/video-desarrollo-productivo-optimized.mp4';
   }
 
   // Override para secretaría de obras públicas
   if (slug.includes('obras')) {
-    sec.video_url = '/video-obras-publicas.mp4';
+    sec.video_url = '/video-obras-publicas-optimized.mp4';
   }
 
   // Override para secretaría de medio ambiente
   if (slug.includes('medio-ambiente') || slug.includes('madre-tierra') || slug.includes('agua')) {
-    sec.video_url = '/video-medio-ambiente.mp4';
+    sec.video_url = '/video-medio-ambiente-optimized.mp4';
   }
 
   // Override para secretaría de minería
   if (slug.includes('mineria') || slug.includes('metalurgia')) {
-    sec.video_url = '/video-mineria.mp4';
+    sec.video_url = '/video-mineria-optimized.mp4';
   }
 
   // Override para secretaría de desarrollo social
   if (slug.includes('social')) {
-    sec.video_url = '/video-desarrollo-social.mp4';
+    sec.video_url = '/video-desarrollo-social-optimized.mp4';
   }
 
   // Override para secretaría general
   if (slug.includes('general')) {
-    sec.video_url = '/video-secretaria-general.mp4';
+    sec.video_url = '/video-secretaria-general-optimized.mp4';
   }
 
   const acento = sec.color_acento || '#8B0000';
@@ -112,7 +113,7 @@ export default async function SecretariaDetailPage({ params }) {
   const isDefaultBanner = !sec.banner_url || sec.banner_url === '/secretaria_default_banner.png';
   
   // Si no tiene video específico y usa el banner estático, lo reemplazamos por el video
-  const finalVideoUrl = hasSpecificVideo ? sec.video_url : (isDefaultBanner ? '/default_banner_video.mp4' : null);
+  const finalVideoUrl = hasSpecificVideo ? sec.video_url : (isDefaultBanner ? '/default_banner_video-optimized.mp4' : null);
   
   const hasVideo = finalVideoUrl !== null;
   const isDirectMp4 = hasVideo && finalVideoUrl.toLowerCase().includes('.mp4');
@@ -143,39 +144,31 @@ export default async function SecretariaDetailPage({ params }) {
       <div className={styles.hero}>
         {isDirectMp4 ? (
           <div className={styles.videoWrapper}>
-            <video
+            <LazyVideo
               src={finalVideoUrl}
+              eager
               autoPlay
               muted
               loop
               playsInline
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              className={styles.directVideo}
+              loaderLabel="Preparando video institucional"
             />
 
           </div>
         ) : youtubeId ? (
           <div className={styles.videoWrapper}>
-            <iframe
+            <LazyEmbed
               src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0${youtubeStart}`}
               frameBorder="0"
               allow="autoplay; encrypted-media"
               allowFullScreen
               className={styles.heroVideo}
+              title={`Video de ${sec.nombre}`}
+              eager
+              loaderLabel="Conectando video institucional"
             />
             {/* Telón estético (usa el banner si existe) para ocultar la carga de YouTube */}
-            <div 
-              className={styles.videoCurtain}
-              style={{ 
-                position: 'absolute', 
-                top: 0, 
-                left: 0, 
-                width: '100%', 
-                height: '100%', 
-                backgroundImage: `url(${sec.banner_url || '/secretaria_default_banner.png'})`, 
-                backgroundSize: 'cover', 
-                backgroundPosition: 'center' 
-              }}
-            ></div>
           </div>
         ) : (
           <Image 

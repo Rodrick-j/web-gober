@@ -113,6 +113,9 @@
   color: #475569;
   font-size: clamp(0.95rem, 2vw, 1.05rem);
   line-height: 1.8;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 @media (max-width: 640px) {

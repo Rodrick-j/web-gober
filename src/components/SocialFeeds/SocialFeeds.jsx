@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
+import Image from 'next/image';
 import styles from './SocialFeeds.module.css';
 
 export default function SocialFeeds({ redes }) {
@@ -34,10 +35,10 @@ export default function SocialFeeds({ redes }) {
       <div className={styles.grid}>
 
         {/* FACEBOOK CARD */}
-        <div className={styles.card}>
+        <div className={`${styles.card} ${styles.facebookCard}`}>
           <div className={styles.cardHeader}>
             <div className={styles.userInfo}>
-              <img loading="lazy" src="/logo-gador.png" alt="Gobernación" className={styles.avatar} />
+              <Image src="/logo-gador.png" alt="Gobernación" width={44} height={44} quality={60} className={styles.avatar} />
               <div>
                 <h3 className={styles.name}>Gobernación de Oruro <span className={styles.verified} style={{background: '#1877F2'}}>✓</span></h3>
                 <span className={styles.handle}>{extractHandle(fbUrl, '@')}</span>
@@ -53,15 +54,15 @@ export default function SocialFeeds({ redes }) {
           </div>
 
           <div className={styles.cardFooter}>
-            <a href={fbUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.fbBtn}`} style={{width: '100%', textAlign: 'center'}}>Visitar Facebook</a>
+            <a href={fbUrl} target="_blank" rel="noopener noreferrer" aria-label="Visitar Facebook oficial de la Gobernación de Oruro" className={`${styles.btn} ${styles.fbBtn}`}>Visitar Facebook</a>
           </div>
         </div>
 
         {/* INSTAGRAM CARD */}
-        <div className={styles.card}>
+        <div className={`${styles.card} ${styles.instagramCard}`}>
           <div className={styles.cardHeader}>
             <div className={styles.userInfo}>
-              <img loading="lazy" src="/logo-gador.png" alt="Gobernación" className={styles.avatar} />
+              <Image src="/logo-gador.png" alt="Gobernación" width={44} height={44} quality={60} className={styles.avatar} />
               <div>
                 <h3 className={styles.name}>GADOR Oruro <span className={styles.verified} style={{background: '#E1306C'}}>✓</span></h3>
                 <span className={styles.handle}>{extractHandle(igUrl, '@')}</span>
@@ -77,15 +78,15 @@ export default function SocialFeeds({ redes }) {
           </div>
 
           <div className={styles.cardFooter}>
-            <a href={igUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.igBtn}`} style={{width: '100%', textAlign: 'center'}}>Visitar Instagram</a>
+            <a href={igUrl} target="_blank" rel="noopener noreferrer" aria-label="Visitar Instagram oficial de la Gobernación de Oruro" className={`${styles.btn} ${styles.igBtn}`}>Visitar Instagram</a>
           </div>
         </div>
 
         {/* TIKTOK CARD */}
-        <div className={styles.card}>
+        <div className={`${styles.card} ${styles.tiktokCard}`}>
           <div className={styles.cardHeader}>
             <div className={styles.userInfo}>
-              <img loading="lazy" src="/logo-gador.png" alt="Gobernación" className={styles.avatar} />
+              <Image src="/logo-gador.png" alt="Gobernación" width={44} height={44} quality={60} className={styles.avatar} />
               <div>
                 <h3 className={styles.name}>Gobernación Departamental <span className={styles.verified} style={{background: '#000'}}>✓</span></h3>
                 <span className={styles.handle}>{extractHandle(tkUrl, '@')}</span>
@@ -101,15 +102,15 @@ export default function SocialFeeds({ redes }) {
           </div>
 
           <div className={styles.cardFooter}>
-            <a href={tkUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.tkBtn}`} style={{width: '100%', textAlign: 'center'}}>Visitar TikTok</a>
+            <a href={tkUrl} target="_blank" rel="noopener noreferrer" aria-label="Visitar TikTok oficial de la Gobernación de Oruro" className={`${styles.btn} ${styles.tkBtn}`}>Visitar TikTok</a>
           </div>
         </div>
 
         {/* YOUTUBE CARD */}
-        <div className={styles.card}>
+        <div className={`${styles.card} ${styles.youtubeCard}`}>
           <div className={styles.cardHeader}>
             <div className={styles.userInfo}>
-              <img loading="lazy" src="/logo-gador.png" alt="Gobernación" className={styles.avatar} />
+              <Image src="/logo-gador.png" alt="Gobernación" width={44} height={44} quality={60} className={styles.avatar} />
               <div>
                 <h3 className={styles.name}>Gobernación Oruro <span className={styles.verified} style={{background: '#FF0000'}}>✓</span></h3>
                 <span className={styles.handle}>{extractHandle(ytUrl, '@')}</span>
@@ -125,7 +126,7 @@ export default function SocialFeeds({ redes }) {
           </div>
 
           <div className={styles.cardFooter}>
-            <a href={ytUrl} target="_blank" rel="noopener noreferrer" className={`${styles.btn} ${styles.ytBtn}`} style={{width: '100%', textAlign: 'center'}}>Ir al Canal</a>
+            <a href={ytUrl} target="_blank" rel="noopener noreferrer" aria-label="Visitar YouTube oficial de la Gobernación de Oruro" className={`${styles.btn} ${styles.ytBtn}`}>Ir al Canal</a>
           </div>
         </div>
 

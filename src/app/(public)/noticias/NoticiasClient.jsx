@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import ProgressiveImage from '@/components/MediaLoader/ProgressiveImage';
 import { createClient } from '@/lib/supabase/public';
 import styles from './noticias.module.css';
 
@@ -129,7 +130,16 @@ export default function NoticiasClient() {
               <Link href={`/noticias/${featured.id}`} className={styles.featuredCard}>
                 <div className={styles.featuredImage}>
                   {featured.imagen_portada_url ? (
-                    <Image src={featured.imagen_portada_url} alt={featured.titulo} fill style={{ objectFit: 'cover' }} sizes="(max-width: 992px) 100vw, 60vw" priority quality={100} />
+                    <ProgressiveImage
+                      src={featured.imagen_portada_url}
+                      alt={featured.titulo}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      sizes="(max-width: 992px) 100vw, 60vw"
+                      priority
+                      quality={82}
+                      loaderLabel="Cargando noticia destacada"
+                    />
                   ) : (
                     <div className={styles.noImage}>GADOR</div>
                   )}
@@ -153,7 +163,16 @@ export default function NoticiasClient() {
                   <Link href={`/noticias/${noticia.id}`} key={noticia.id} className={`${styles.newsCard} card`}>
                     <div className={styles.cardImageWrapper}>
                       {noticia.imagen_portada_url ? (
-                        <Image src={noticia.imagen_portada_url} alt={noticia.titulo} fill className={styles.cardImage} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" quality={100} />
+                        <ProgressiveImage
+                          src={noticia.imagen_portada_url}
+                          alt={noticia.titulo}
+                          fill
+                          className={styles.cardImage}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          quality={75}
+                          loaderLabel="Cargando noticia"
+                          showLoaderLabel={false}
+                        />
                       ) : (
                         <div className={styles.cardNoImage}>{noticia.secretarias?.icono || '📰'}</div>
                       )}

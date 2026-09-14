@@ -24,6 +24,10 @@
 .slide { z-index: 1; }
 .activeSlide { opacity: 1; }
 
+.carouselLoader {
+  z-index: 3;
+}
+
 .backgroundImage {
   object-fit: cover;
   filter: blur(17px) brightness(0.78) saturate(0.88);

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 import './LocationSection.css';
 
 /* ── Icono SVG reutilizable ── */
@@ -27,10 +28,14 @@ const HORARIOS = [
 ];
 
 export default function LocationSection({ contacto }) {
-  const lat    = contacto?.latitud   || -17.969520017575668;
-  const lon    = contacto?.longitud  || -67.11512711053955;
-  const mapUrl = `https://maps.google.com/maps?q=${lat},${lon}&hl=es&z=17&output=embed`;
+  const lat = -17.969520017575668;
+  const lon = -67.11512711053955;
+  const placeName = 'Gobernación de Oruro';
+  const address = contacto?.direccion || 'Plaza 10 de Febrero s/n, Oruro';
+  const coordinateLabel = encodeURIComponent(`${lat},${lon} (${placeName})`);
+  const mapUrl = `https://maps.google.com/maps?q=${coordinateLabel}&hl=es&z=17&iwloc=A&output=embed`;
   const mapsDirectUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
+  const mapsSearchUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
 
   const [activeTab,   setActiveTab]   = useState('mapa');
   const [formData,    setFormData]    = useState({ nombre: '', email: '', asunto: '', mensaje: '' });
@@ -61,20 +66,34 @@ export default function LocationSection({ contacto }) {
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="contact-card"
       >
+        <div className="contact-glow contact-glow--one" aria-hidden="true" />
+        <div className="contact-glow contact-glow--two" aria-hidden="true" />
+
         {/* ── Header ── */}
         <div className="contact-header">
           <div>
+            <div className="contact-eyebrow">
+              <span className="contact-eyebrow-icon"><Icon d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10" /></span>
+              Atención ciudadana · Sede central
+            </div>
             <h2 className="contact-title">Contáctanos</h2>
             <p className="contact-subtitle">Estamos para servirte, ciudadano</p>
           </div>
-          <div className="contact-badge">SEDE – CIUDAD DE ORURO</div>
+          <div className="contact-header-status">
+            <div className="contact-badge">SEDE – CIUDAD DE ORURO</div>
+            <span className="contact-verified">Ubicación institucional verificada</span>
+          </div>
         </div>
 
         {/* ── Tabs ── */}
-        <div className="loc-tabs">
+        <div className="loc-tabs" role="tablist" aria-label="Información de contacto">
           {TABS.map(tab => (
             <button
               key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              aria-controls={`loc-panel-${tab.id}`}
               className={`loc-tab${activeTab === tab.id ? ' loc-tab--active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
               id={`loc-tab-${tab.id}`}
@@ -94,6 +113,9 @@ export default function LocationSection({ contacto }) {
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
             className="contact-content"
+            id={`loc-panel-${activeTab}`}
+            role="tabpanel"
+            aria-labelledby={`loc-tab-${activeTab}`}
           >
 
             {/* ════ TAB MAPA ════ */}
@@ -101,13 +123,22 @@ export default function LocationSection({ contacto }) {
               <div className="tab-mapa">
                 {/* Mapa grande */}
                 <div className="map-container">
-                  <iframe
+                  <div className="map-frame-label">
+                    <span className="map-frame-label__icon"><Icon d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10" /></span>
+                    <span>
+                      <small>Ubicación oficial</small>
+                      <strong>Gobernación de Oruro</strong>
+                    </span>
+                  </div>
+
+                  <LazyEmbed
                     src={mapUrl}
                     allowFullScreen=""
-                    loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
+                    loaderLabel="Cargando mapa"
                     title="Ubicación Gobernación de Oruro"
                   />
+
                   {/* Overlay de acciones sobre el mapa */}
                   <div className="map-actions">
                     <a
@@ -121,7 +152,7 @@ export default function LocationSection({ contacto }) {
                       Cómo llegar
                     </a>
                     <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${lat},${lon}`}
+                      href={mapsSearchUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="map-action-btn"
@@ -141,7 +172,7 @@ export default function LocationSection({ contacto }) {
                   <div className="info-container">
                     {[
                       { label: 'Sede Principal',    value: 'Gobierno Autónomo Departamental de Oruro', icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM9 22V12h6v10' },
-                      { label: 'Dirección',         value: contacto?.direccion || 'Plaza 10 de Febrero s/n, Oruro', icon: 'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' },
+                      { label: 'Dirección',         value: address, icon: 'M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0zM12 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' },
                       { label: 'Teléfono',          value: contacto?.telefono  || '(591-2) 5270-000', icon: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z' },
                       contacto?.call_center && { label: 'Call Center',       value: contacto.call_center, icon: 'M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z' },
                       contacto?.whatsapp && { label: 'WhatsApp',           value: contacto.whatsapp, icon: 'M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z' },

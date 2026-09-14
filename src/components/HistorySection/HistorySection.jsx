@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { LazyVideo } from '@/components/MediaLoader/LazyMedia';
 import styles from './HistorySection.module.css';
 
 export default function HistorySection() {
@@ -69,16 +71,19 @@ export default function HistorySection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <video
-            src="/videos/oruro.mp4"
+          <LazyVideo
+            src="/videos/oruro-optimized.mp4"
             poster="/videos/oruro-poster.jpg"
             autoPlay 
             loop 
             muted 
             playsInline
             className={styles.historyVideo}
+            loaderLabel="Preparando video histórico"
           />
-          <img src="/logo-gador.png" alt="" className={styles.watermarkOverlay} />
+          <div className={styles.watermarkOverlay} aria-hidden="true">
+            <Image src="/logo-gador.png" alt="" fill sizes="100px" className={styles.watermarkImage} />
+          </div>
         </motion.div>
 
         <div className={styles.timeline}>

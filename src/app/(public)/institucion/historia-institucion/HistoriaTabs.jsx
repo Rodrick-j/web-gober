@@ -5,6 +5,7 @@ import HistorySection from '@/components/HistorySection/HistorySection';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import ContenidoBloque from '@/components/ContenidoInstitucional/ContenidoBloque';
 import { motion, AnimatePresence } from 'framer-motion';
+import styles from './HistoriaTabs.module.css';
 
 // Textos por defecto (se usan si el bloque aún no fue cargado desde el panel admin)
 const FALLBACK_MISION =
@@ -13,32 +14,31 @@ const FALLBACK_VISION =
   'Gobierno Autónomo Departamental de Oruro, una entidad pública autónoma con identidad propia, que planifica, inicia, ejecuta políticas, planes, programas y proyectos promoviendo la construcción colectiva del desarrollo productivo, económico, social, comunitario y territorial del departamento de Oruro articulando el desarrollo con alianzas estratégicas institucionales.';
 
 const TABS = [
-  { id: 'historia', label: '📜 Historia de la Institución' },
-  { id: 'mision_vision', label: '🎯 Misión y Visión' },
-  { id: 'valores', label: '⚖️ Valores y Principios' },
-  { id: 'objetivos', label: '🏹 Objetivos Institucionales' },
-  { id: 'memoria', label: '📊 Memoria Institucional' },
+  { id: 'historia', icon: '📜', label: 'Historia de la Institución', mobileLabel: 'Historia' },
+  { id: 'mision_vision', icon: '🎯', label: 'Misión y Visión', mobileLabel: 'Misión y Visión' },
+  { id: 'valores', icon: '⚖️', label: 'Valores y Principios', mobileLabel: 'Valores' },
+  { id: 'objetivos', icon: '🏹', label: 'Objetivos Institucionales', mobileLabel: 'Objetivos' },
+  { id: 'memoria', icon: '📊', label: 'Memoria Institucional', mobileLabel: 'Memoria' },
 ];
 
 const tieneContenido = (b) =>
   Boolean(b && ((b.cuerpo && b.cuerpo.replace(/<[^>]*>/g, '').trim().length > 30) || b.archivo_url));
 
+const tieneResenaPersonalizada = (bloque) => {
+  const texto = bloque?.cuerpo
+    ?.replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return Boolean(
+    texto &&
+    texto.length > 30 &&
+    !/complete desde el panel administrativo|contenido en actualizaci[oó]n/i.test(texto)
+  );
+};
+
 export default function HistoriaTabs({ contenido = {} }) {
   const [activeTab, setActiveTab] = useState('historia');
-
-  const btnStyle = (active) => ({
-    padding: '0.7rem 1.5rem',
-    fontSize: '1rem',
-    fontWeight: 600,
-    borderRadius: '50px',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    background: active ? '#8B0000' : '#f0f0f0',
-    color: active ? '#fff' : '#333',
-    boxShadow: active ? '0 4px 10px rgba(139, 0, 0, 0.3)' : 'none',
-    whiteSpace: 'nowrap',
-  });
 
   const panelWrap = { maxWidth: '1200px', margin: '0 auto', padding: '3.5rem 1.5rem' };
   const fade = {
@@ -51,23 +51,20 @@ export default function HistoriaTabs({ contenido = {} }) {
   return (
     <div style={{ paddingBottom: '4rem' }}>
       {/* Tab Buttons */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          gap: '0.75rem',
-          padding: '2rem 1rem',
-          background: '#fff',
-          borderBottom: '1px solid #eaeaea',
-          position: 'sticky',
-          top: '80px',
-          zIndex: 10,
-        }}
-      >
+      <div className={styles.tabsNav} role="tablist" aria-label="Contenido institucional">
         {TABS.map((t) => (
-          <button key={t.id} onClick={() => setActiveTab(t.id)} style={btnStyle(activeTab === t.id)}>
-            {t.label}
+          <button
+            key={t.id}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === t.id}
+            aria-label={t.label}
+            onClick={() => setActiveTab(t.id)}
+            className={`${styles.tabButton} ${activeTab === t.id ? styles.tabButtonActive : ''}`}
+          >
+            <span aria-hidden="true" className={styles.tabIcon}>{t.icon}</span>
+            <span className={styles.tabLabel}>{t.label}</span>
+            <span className={styles.tabLabelMobile}>{t.mobileLabel}</span>
           </button>
         ))}
       </div>
@@ -77,7 +74,7 @@ export default function HistoriaTabs({ contenido = {} }) {
         <AnimatePresence mode="wait">
           {activeTab === 'historia' && (
             <motion.div key="historia" {...fade}>
-              {tieneContenido(contenido.resena_historica) ? (
+              {tieneResenaPersonalizada(contenido.resena_historica) ? (
                 <div style={panelWrap}>
                   <ContenidoBloque
                     titulo={contenido.resena_historica.titulo || 'Reseña Histórica'}

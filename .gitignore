@@ -36,3 +36,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# cache and temp
+.npm-cache
+*-optimized.mp4

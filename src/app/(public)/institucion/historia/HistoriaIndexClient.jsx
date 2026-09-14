@@ -5,6 +5,7 @@ import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackgrou
 import styles from './historia.module.css';
 import { municipios } from './municipiosData';
 import Link from 'next/link';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 
 const ChakanaIcon = ({ className }) => (
   <svg viewBox="0 0 100 100" className={className} fill="currentColor">
@@ -38,8 +39,8 @@ export default function HistoriaIndexClient() {
 
         <div className={styles.heroContent}>
           <nav className={styles.heroBreadcrumb}>
-            <a href="/">Inicio</a><span>›</span>
-            <a href="/institucion">Institución</a><span>›</span>
+            <Link href="/">Inicio</Link><span>›</span>
+            <Link href="/institucion">Institución</Link><span>›</span>
             <span style={{ color: 'rgba(255,255,255,0.9)' }}>Historia</span>
           </nav>
 
@@ -119,11 +120,12 @@ export default function HistoriaIndexClient() {
           if (isChakana) {
             return (
               <div style={{ width: '100%', height: '85vh', minHeight: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', marginTop: '2rem', marginBottom: '2rem', position: 'relative' }}>
-                <iframe 
+                <LazyEmbed
                   src="/mapa/index.html" 
                   style={{ width: '100%', height: '100%', border: 'none', display: 'block', overflow: 'hidden' }}
                   scrolling="no"
                   title="Mapa Interactivo de Oruro"
+                  loaderLabel="Preparando mapa interactivo"
                 />
               </div>
             );

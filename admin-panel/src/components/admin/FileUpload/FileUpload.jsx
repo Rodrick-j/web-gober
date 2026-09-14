@@ -1,5 +1,6 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import imageCompression from 'browser-image-compression';
 import styles from './FileUpload.module.css';
 
@@ -16,6 +17,12 @@ export default function FileUpload({
   const [fileName, setFileName] = useState('');
   const [error, setError] = useState('');
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
 
   const handleFile = async (file) => {
     setError('');
@@ -83,7 +90,7 @@ export default function FileUpload({
   };
 
   const onButtonClick = () => {
-    inputRef.current.click();
+    inputRef.current?.click();
   };
 
   return (
@@ -108,19 +115,20 @@ export default function FileUpload({
 
         {preview ? (
           <div className={styles.previewContainer}>
-            <img src={preview} alt="Vista previa" className={styles.previewImage} />
+            <Image src={preview} alt="Vista previa del archivo seleccionado" fill sizes="(max-width: 720px) 100vw, 420px" className={styles.previewImage} unoptimized />
             <div className={styles.previewOverlay}>
-              <span>Cambiar imagen</span>
+              <span>Elegir otra imagen</span>
             </div>
           </div>
         ) : (
           <div className={styles.uploadContent}>
             <span className={styles.icon}>{icon}</span>
             <p className={styles.text}>
-              <strong>Haz clic para subir</strong> o arrastra y suelta el archivo aquí
+              <strong>Haz clic para seleccionar</strong>
+              <span>o arrastra el archivo hasta aquí</span>
             </p>
             <p className={styles.subtext}>
-              {accept.includes('pdf') ? 'Solo PDF' : 'Solo imágenes'} (Máx. {maxSizeMB}MB)
+              {accept.includes('pdf') ? 'Solo PDF' : 'JPG, PNG o WebP'} · Máximo {maxSizeMB} MB
             </p>
           </div>
         )}

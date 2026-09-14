@@ -1,6 +1,7 @@
 import React from 'react';
 import { createClient } from '@/lib/supabase/public';
 import CenefaCultural from '@/components/CenefaCultural/CenefaCultural';
+import ProgressiveImage from '@/components/MediaLoader/ProgressiveImage';
 import styles from './autoridades.module.css';
 
 export const revalidate = 60;
@@ -59,7 +60,17 @@ export default async function AutoridadesPage() {
                   {items.map((a) => (
                     <article key={a.id} className={styles.card}>
                       {a.foto_url ? (
-                        <img className={styles.photo} src={a.foto_url} alt={a.nombre} loading="lazy" />
+                        <div className={styles.photoWrap}>
+                          <ProgressiveImage
+                            className={styles.photo}
+                            src={a.foto_url}
+                            alt={a.nombre}
+                            fill
+                            sizes="110px"
+                            quality={75}
+                            showLoaderLabel={false}
+                          />
+                        </div>
                       ) : (
                         <div className={styles.photoPlaceholder}>👤</div>
                       )}

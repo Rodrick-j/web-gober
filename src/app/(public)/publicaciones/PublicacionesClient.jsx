@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import ProgressiveImage from '@/components/MediaLoader/ProgressiveImage';
 import styles from './publicaciones.module.css';
 
 const TIPOS = [
@@ -55,7 +56,17 @@ export default function PublicacionesClient({ publicaciones = [] }) {
             return (
               <article key={p.id} className={styles.card}>
                 {p.imagen_url ? (
-                  <img className={styles.cardImg} src={p.imagen_url} alt={p.titulo} loading="lazy" />
+                  <div className={styles.cardMedia}>
+                    <ProgressiveImage
+                      className={styles.cardImg}
+                      src={p.imagen_url}
+                      alt={p.titulo}
+                      fill
+                      sizes="(max-width: 600px) 100vw, 33vw"
+                      quality={75}
+                      showLoaderLabel={false}
+                    />
+                  </div>
                 ) : (
                   <div className={styles.cardImgPlaceholder}>{iconOf(p.tipo)}</div>
                 )}

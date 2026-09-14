@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { CloudRain, Wind, Thermometer, Cloud, Droplet, Zap, Maximize, Minimize } from 'lucide-react';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 import styles from './ClimaWidget.module.css';
 
 export default function ClimaWidget() {
@@ -65,7 +67,7 @@ export default function ClimaWidget() {
 
       <div className={`${styles.iframeWrapper} ${isFullscreen ? styles.fullscreenWrapper : ''}`}>
         <div className={styles.overlayTopLeft}>
-          <img src="/imagotipo_gador_2026.png" alt="Gobernación de Oruro" className={styles.overlayLogo} />
+          <Image src="/imagotipo_gador_2026.png" alt="Gobernación de Oruro" width={215} height={60} className={styles.overlayLogo} />
         </div>
         
         <button 
@@ -77,16 +79,16 @@ export default function ClimaWidget() {
         </button>
 
         <div className={styles.overlayTopRight}>
-          <img src="/logo-gador.png" alt="Escudo" className={styles.overlayLogo} />
+          <Image src="/logo-gador.png" alt="Escudo" width={37} height={55} className={styles.overlayLogo} />
         </div>
         
-        <iframe 
+        <LazyEmbed
           src={ventuskyUrl}
           className={styles.iframe}
           title="Mapa Climático Interactivo de Oruro - Ventusky"
-          loading="lazy"
           allowFullScreen
-        ></iframe>
+          loaderLabel="Cargando clima en tiempo real"
+        />
       </div>
     </div>
   );

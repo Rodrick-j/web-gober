@@ -1,15 +1,8 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Script from 'next/script';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 
 export default function FacebookEmbed({ url, className = '' }) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   if (!url) return null;
 
   // Determinar si es un video para usar el plugin correcto
@@ -21,12 +14,7 @@ export default function FacebookEmbed({ url, className = '' }) {
 
   return (
     <div className={className} style={wrapperStyle}>
-      {!isClient ? (
-        <div style={skeletonStyle}>
-          <span style={{ color: '#aaa', fontSize: '0.8rem' }}>Cargando publicación oficial...</span>
-        </div>
-      ) : (
-        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
           {/* Botón arriba para que siempre sea visible sin importar si el iframe falla o deja mucho espacio en blanco */}
           <div style={{ padding: '0 1rem', width: '100%', display: 'flex', justifyContent: 'center' }}>
             <a 
@@ -54,18 +42,21 @@ export default function FacebookEmbed({ url, className = '' }) {
             </a>
           </div>
 
-          <iframe
-            src={iframeSrc}
-            width="500"
-            height={isVideo ? "600" : "550"}
-            style={{ border: 'none', overflow: 'hidden', maxWidth: '100%', background: 'transparent' }}
-            scrolling="no"
-            frameBorder="0"
-            allowFullScreen={true}
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          ></iframe>
-        </div>
-      )}
+          <div style={{ position: 'relative', width: 'min(100%, 500px)', height: isVideo ? 600 : 550, overflow: 'hidden' }}>
+            <LazyEmbed
+              src={iframeSrc}
+              width="500"
+              height={isVideo ? "600" : "550"}
+              style={{ border: 'none', overflow: 'hidden', width: '100%', height: '100%', background: 'transparent' }}
+              scrolling="no"
+              frameBorder="0"
+              allowFullScreen={true}
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              title="Publicación oficial en Facebook"
+              loaderLabel="Cargando Facebook"
+            />
+          </div>
+      </div>
     </div>
   );
 }
@@ -80,15 +71,4 @@ const wrapperStyle = {
   padding: '1rem 0',
   boxShadow: '0 4px 15px rgba(0,0,0,0.05)',
   border: '1px solid #E5E7EB'
-};
-
-const skeletonStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-  minHeight: '200px',
-  background: '#F0F2F5',
-  width: '100%',
-  borderRadius: '8px'
 };

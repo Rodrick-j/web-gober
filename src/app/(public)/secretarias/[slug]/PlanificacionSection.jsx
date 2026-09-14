@@ -13,6 +13,7 @@ import ResumenMunicipios from '@/components/ResumenMunicipios/ResumenMunicipios'
 import CostosConstruccion from '@/components/CostosConstruccion/CostosConstruccion';
 import Programas2026View from './Programas2026View';
 import PoaDbView from './PoaDbView';
+import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 const provinciasOruro = [
   { nombre: "Cercado", municipios: ["Oruro", "Caracollo", "El Choro", "Soracachi (Paria)"] },
   { nombre: "Abaroa", municipios: ["Challapata", "Quillacas"] },
@@ -363,7 +364,13 @@ export default function PlanificacionSection({ secretariaId }) {
                       </div>
                     </div>
                     <div style={{ flex: 1, position: 'relative', background: '#e0e0e0' }}>
-                      <iframe src={`${previewDoc.archivo_url}#toolbar=0`} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }} title={previewDoc.nombre} />
+                      <LazyEmbed
+                        src={`${previewDoc.archivo_url}#toolbar=0`}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+                        title={previewDoc.nombre}
+                        eager
+                        loaderLabel="Preparando documento"
+                      />
                     </div>
                   </motion.div>
                 </motion.div>
@@ -474,10 +481,11 @@ export default function PlanificacionSection({ secretariaId }) {
                     A continuación puede visualizar o descargar el mapa oficial del Órgano Electoral Plurinacional con la distribución de las circunscripciones uninominales y los municipios correspondientes al departamento de Oruro.
                   </p>
                   
-                  <div style={{ width: '100%', height: '75vh', minHeight: '600px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #ddd', background: '#f5f5f5' }}>
-                    <iframe 
+                  <div style={{ position: 'relative', width: '100%', height: '75vh', minHeight: '600px', borderRadius: '12px', overflow: 'hidden', border: '1px solid #ddd', background: '#f5f5f5' }}>
+                    <LazyEmbed
                       src="/documents/Circunscripciones_Uninominales_Oruro.pdf#zoom=FitH" 
                       width="100%" height="100%" style={{ border: 'none' }} title="Mapa de Circunscripciones de Oruro"
+                      loaderLabel="Preparando mapa electoral"
                     />
                   </div>
 

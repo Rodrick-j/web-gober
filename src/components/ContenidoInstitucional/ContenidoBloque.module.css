@@ -36,12 +36,22 @@
 .prosa :global(h2) { font-size: 1.35rem; }
 .prosa :global(h3) { font-size: 1.15rem; }
 
-.prosa :global(p) { margin: 0 0 1rem; }
+.prosa :global(p) {
+  margin: 0 0 1rem;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
 
 .prosa :global(ul),
 .prosa :global(ol) { margin: 0 0 1rem; padding-left: 1.5rem; }
 
-.prosa :global(li) { margin-bottom: 0.4rem; }
+.prosa :global(li) {
+  margin-bottom: 0.4rem;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
 
 .prosa :global(a) { color: #9c0720; text-decoration: underline; }
 
@@ -50,6 +60,9 @@
 .vacio {
   color: #888;
   font-style: italic;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
 }
 
 .descarga {
