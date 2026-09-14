@@ -44,15 +44,15 @@ const SOCIAL_FIELDS = [
 
 function withTimeout(request, milliseconds, message) {
   return new Promise((resolve, reject) => {
-    const timeoutId = window.setTimeout(() => reject(new Error(message)), milliseconds);
+    const timeoutId = setTimeout(() => reject(new Error(message)), milliseconds);
 
     Promise.resolve(request).then(
       (result) => {
-        window.clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
         resolve(result);
       },
       (error) => {
-        window.clearTimeout(timeoutId);
+        clearTimeout(timeoutId);
         reject(error);
       },
     );
@@ -150,17 +150,18 @@ export default function ConfiguracionPage() {
   const [nuevoVideo, setNuevoVideo] = useState('');
   const [videoError, setVideoError] = useState('');
 
-  const cargarConfiguracion = useCallback(async () => {
+  const cargarConfiguracion = useCallback(async (signal) => {
     setLoading(true);
     setLoadError('');
 
     try {
       const { data, error } = await withTimeout(
         supabase.from('configuracion_global').select('clave, valor'),
-        12000,
-        'La conexión tardó demasiado. Verifica Supabase o tu conexión a internet.',
+        5000,
+        'La conexión tardó demasiado. Verifica que la tabla existe y Supabase está activo.',
       );
 
+      if (signal?.aborted) return;
       if (error) throw new Error(error.message || 'No se pudo leer la configuración.');
 
       const configs = Object.fromEntries(
@@ -172,6 +173,8 @@ export default function ConfiguracionPage() {
       const notice = configs.comunicado_popup || {};
       const homeVideo = configs.video_inicio || {};
       const officialContact = configs.contacto_oficial || {};
+
+      if (signal?.aborted) return;
 
       setConfigSnapshot(configs);
       setVelocidad(ticker.velocidad_segundos || 60);
@@ -202,19 +205,35 @@ export default function ConfiguracionPage() {
         longitud: officialContact.longitud ?? '',
       });
     } catch (error) {
+      if (signal?.aborted) return;
       console.error('[Configuración] Error de carga:', error);
       setLoadError(error.message || 'No fue posible cargar la configuración.');
     } finally {
-      setLoading(false);
+      if (!signal?.aborted) setLoading(false);
     }
   }, [supabase]);
 
   useEffect(() => {
-    const startTimer = window.setTimeout(() => {
-      void cargarConfiguracion();
-    }, 0);
+    const controller = new AbortController();
 
-    return () => window.clearTimeout(startTimer);
+    // Seguro anti-congelamiento: si en 6s loading sigue true, mostramos error
+    const safetyTimer = setTimeout(() => {
+      if (!controller.signal.aborted) {
+        setLoading(false);
+        setLoadError(
+          'No fue posible conectar con la base de datos. Verifica las credenciales en .env.local y que el proyecto Supabase esté activo.'
+        );
+      }
+    }, 6000);
+
+    void cargarConfiguracion(controller.signal).finally(() => {
+      clearTimeout(safetyTimer);
+    });
+
+    return () => {
+      controller.abort();
+      clearTimeout(safetyTimer);
+    };
   }, [cargarConfiguracion]);
 
   const handleAgregarMensaje = () => {
@@ -340,7 +359,7 @@ export default function ConfiguracionPage() {
           <span className={styles.eyebrow}>Conexión interrumpida</span>
           <h1>No pudimos cargar la configuración</h1>
           <p>{loadError}</p>
-          <button type="button" className={styles.retryButton} onClick={cargarConfiguracion}>
+          <button type="button" className={styles.retryButton} onClick={() => cargarConfiguracion(new AbortController().signal)}>
             <SectionIcon name="refresh" /> Reintentar conexión
           </button>
         </div>
