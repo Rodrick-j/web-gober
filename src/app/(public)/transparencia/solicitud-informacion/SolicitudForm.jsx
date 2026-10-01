@@ -81,6 +81,7 @@ export default function SolicitudForm() {
       <div className={styles.formHeader}>
         <span>Formulario oficial</span>
         <h2>Datos de la solicitud</h2>
+        <p>Tu solicitud será enviada directamente a <strong>gador@oruro.gob.bo</strong>.</p>
         <p>Los campos marcados con <strong>*</strong> son obligatorios.</p>
       </div>
 

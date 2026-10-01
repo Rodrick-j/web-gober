@@ -378,49 +378,53 @@
   position: absolute;
   top: calc(100% + 0.5rem);
   left: -10px;
-  width: min(760px, calc(100vw - 2rem));
-  background: #ffffff;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  padding: 1.1rem 1.25rem;
+  width: min(880px, calc(100vw - 2rem));
+  background: linear-gradient(180deg, #ffffff 0%, #fdfdfd 100%);
+  border: 1px solid rgba(35, 41, 56, 0.1);
+  border-top: 3px solid var(--color-primary);
+  border-radius: 18px;
+  box-shadow: 0 20px 46px rgba(20, 24, 38, 0.18), 0 4px 12px rgba(156, 7, 32, 0.08);
+  padding: 1.4rem;
   z-index: 1000;
-  column-count: 3;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
 }
 
 .groupColumn {
-  break-inside: avoid;
   display: flex;
   flex-direction: column;
-  gap: 0.1rem;
-  margin-bottom: 1.15rem;
+  gap: 0.25rem;
+  min-width: 0;
+  padding: 0.15rem 0.25rem;
 }
 
-.groupColumn:last-child {
-  margin-bottom: 0;
+.groupColumn + .groupColumn {
+  border-left: 1px solid rgba(35, 41, 56, 0.09);
+  padding-left: 1.35rem;
 }
 
 .groupTitle {
   font-family: var(--font-heading);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-primary);
-  padding: 0 0.4rem 0.45rem;
-  margin-bottom: 0.35rem;
-  border-bottom: 1px solid rgba(156, 7, 32, 0.15);
+  padding: 0 0.35rem 0.65rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(156, 7, 32, 0.2);
 }
 
 .groupLink {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.5rem 0.4rem;
-  border-radius: 8px;
-  font-size: 0.82rem;
-  font-weight: 500;
+  gap: 0.65rem;
+  min-height: 42px;
+  padding: 0.5rem 0.55rem;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 550;
   line-height: 1.3;
   color: var(--color-text);
   text-decoration: none;
@@ -428,9 +432,9 @@
 }
 
 .groupLink:hover {
-  background: #f8f9fa;
+  background: linear-gradient(90deg, rgba(156, 7, 32, 0.08), rgba(156, 7, 32, 0.015));
   color: var(--color-primary);
-  transform: translateX(3px);
+  transform: translateX(4px);
 }
 
 .groupLink:hover .dropdownEmoji {
@@ -441,8 +445,16 @@
 /* En pantallas de escritorio angostas el panel baja a 2 columnas */
 @media (max-width: 1150px) {
   .groupMenu {
-    width: min(520px, calc(100vw - 2rem));
-    column-count: 2;
+    width: min(620px, calc(100vw - 2rem));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .groupColumn:last-child {
+    grid-column: span 2;
+    border-left: 0;
+    border-top: 1px solid rgba(35, 41, 56, 0.09);
+    padding-left: 0.25rem;
+    padding-top: 1rem;
   }
 }
 

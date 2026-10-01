@@ -40,3 +40,5 @@ next-env.d.ts
 # cache and temp
 .npm-cache
 *-optimized.mp4
+
+.vercel

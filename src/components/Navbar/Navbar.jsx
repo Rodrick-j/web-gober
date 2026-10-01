@@ -31,7 +31,6 @@ const institucionGroups = [
       { label: 'Historia, Misión y Visión', Icon: Landmark, href: '/institucion/historia-institucion' },
       { label: 'Datos de Municipio', Icon: BookOpen, href: '/institucion/historia' },
       { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
-      { label: 'Nómina de Autoridades', Icon: User, href: '/institucion/autoridades' },
     ],
   },
   {
@@ -43,20 +42,13 @@ const institucionGroups = [
     ],
   },
   {
-    title: 'Contrataciones',
-    items: [
-      { label: 'Contrataciones y Convocatorias', Icon: FileSignature, href: '/contrataciones' },
-      { label: 'Licitación Pública', Icon: Gavel, href: '/institucion/licitacion-publica' },
-    ],
-  },
-  {
-    title: 'Administración',
+    title: 'Administración y Gestión',
     items: [
       { label: 'Información Financiera', Icon: Coins, href: '/institucion/informacion-financiera' },
       { label: 'Presupuesto y Ejecución', Icon: Coins, href: '/institucion/presupuesto' },
       { label: 'Recursos Humanos', Icon: User, href: '/institucion/recursos-humanos' },
-      { label: 'Escala Salarial', Icon: Coins, href: '/institucion/escala-salarial' },
       { label: 'Desarrollo Organizacional', Icon: GitMerge, href: '/institucion/desarrollo-organizacional' },
+      { label: 'Contrataciones y Convocatorias', Icon: FileSignature, href: '/contrataciones' },
     ],
   },
 ];
@@ -83,15 +75,15 @@ const navItems = [
     href: '/transparencia',
     children: [
       { label: 'Portal de Transparencia', Icon: Scale, href: '/transparencia' },
-      { label: 'Unidad de Transparencia (UTLCC)', Icon: Landmark, href: '/transparencia/unidad' },
-      { label: 'Solicitud de Información', Icon: FileText, href: '/transparencia/solicitud-informacion' },
+      // { label: 'Unidad de Transparencia (UTLCC)', Icon: Landmark, href: '/transparencia/unidad' },
+      // { label: 'Solicitud de Información', Icon: FileText, href: '/transparencia/solicitud-informacion' },
       { label: 'Rendición Pública de Cuentas', Icon: FileSignature, href: '/transparencia/rendicion_cuentas' },
-      { label: 'Datos y Estadísticas', Icon: BookOpen, href: '/datos-estadisticas' },
+      // { label: 'Datos y Estadísticas', Icon: BookOpen, href: '/datos-estadisticas' },
       { label: 'Auditoria Interna', Icon: ClipboardList, href: '/auditoria' },
     ],
   },
   { label: 'Noticias', Icon: Newspaper, href: '/noticias' },
-  { label: 'Publicaciones', Icon: BookOpen, href: '/publicaciones' },
+  // { label: 'Publicaciones', Icon: BookOpen, href: '/publicaciones' },
   {
     label: 'Gaceta Oficial',
     Icon: ScrollText,

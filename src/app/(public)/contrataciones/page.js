@@ -76,6 +76,21 @@ export default async function ContratacionesPage() {
       </header>
 
       <div className={styles.container}>
+        
+        {/* Módulos Especiales (Avisos) */}
+        <div className={styles.modalidadesGrid}>
+          <Link href="/contrataciones/menor" className={styles.modalidadCard}>
+            <div className={styles.modalidadImg} style={{backgroundImage: "url('/contrataciones/img-menor.jpg')"}}>
+              <h3 className={styles.modalidadTitleBanner}>Ver Contratación Menor</h3>
+            </div>
+          </Link>
+          <Link href="/contrataciones/directa" className={styles.modalidadCard}>
+            <div className={styles.modalidadImg} style={{backgroundImage: "url('/contrataciones/img-directa.jpg')"}}>
+              <h3 className={styles.modalidadTitleBanner}>Ver Contratación Directa</h3>
+            </div>
+          </Link>
+        </div>
+
         <h2 className={styles.sectionTitle}>Convocatorias vigentes</h2>
         {vigentes.length === 0 ? (
           <div className={styles.empty}>No hay convocatorias vigentes en este momento.</div>

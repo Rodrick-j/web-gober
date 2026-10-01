@@ -133,3 +133,51 @@
   color: white;
   border-color: var(--color-primary);
 }
+
+/* Estilos para la tabla de Marco Normativo */
+.tableContainer {
+  background: #fff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-top: 2rem;
+}
+
+.docsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.docsTable th {
+  background: #f8f9fa;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-weight: 700;
+  color: #1a1a2e;
+  border-bottom: 2px solid #eaeaea;
+}
+
+.docsTable td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+  color: #4a5568;
+}
+
+.docsTable tr:hover {
+  background: #fafafa;
+}
+
+.pdfLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0ea5e9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pdfLink:hover {
+  color: #0284c7;
+  text-decoration: underline;
+}

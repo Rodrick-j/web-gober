@@ -1,0 +1,109 @@
+.loader {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  overflow: hidden;
+  color: #9c0720;
+  background: linear-gradient(135deg, #f8f5f5 0%, #ffffff 48%, #f5eeee 100%);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: none;
+  transition: opacity 420ms ease, visibility 420ms ease;
+}
+
+.complete {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, 0.82) 48%, transparent 64%);
+  transform: translateX(-110%);
+  animation: mediaShimmer 1.7s ease-in-out infinite;
+}
+
+.visual {
+  position: relative;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+}
+
+.visual svg {
+  position: relative;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.video .visual svg path {
+  fill: currentColor;
+  stroke: none;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(156, 7, 32, 0.18);
+  border-top-color: #f59e0b;
+  border-radius: 50%;
+  animation: mediaSpin 1.15s linear infinite;
+}
+
+.video .ring {
+  animation: mediaPulse 1.35s ease-out infinite;
+}
+
+.embed .ring {
+  border-style: dashed;
+  animation-duration: 1.8s;
+}
+
+.label {
+  position: relative;
+  z-index: 2;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  color: #5f2630;
+  background: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.68rem, 2vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+@keyframes mediaShimmer {
+  to { transform: translateX(110%); }
+}
+
+@keyframes mediaSpin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mediaPulse {
+  0% { opacity: 0.9; transform: scale(0.78); }
+  75%, 100% { opacity: 0; transform: scale(1.18); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer,
+  .ring {
+    animation: none;
+  }
+
+  .loader {
+    transition-duration: 80ms;
+  }
+}

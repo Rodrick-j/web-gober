@@ -16,7 +16,7 @@ const CATEGORIAS = [
   { id: 'contrataciones', label: 'Contrataciones' },
   { id: 'licitacion-publica', label: 'Licitación Pública' },
   // ── Marco Normativo (RM 067/2025) ──
-  { id: 'marco-normativo', label: 'Marco Normativo (general)' },
+  { id: 'marco-normativo', label: 'Marco Normativo Institucional' },
   { id: 'normativa-nacional', label: 'Normativa Nacional' },
   { id: 'normativa-internacional', label: 'Normativa Internacional' },
   { id: 'reglamentos-vigentes', label: 'Reglamentos Vigentes' },

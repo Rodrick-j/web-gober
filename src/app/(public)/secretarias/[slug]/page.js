@@ -107,6 +107,18 @@ export default async function SecretariaDetailPage({ params }) {
     sec.video_url = '/video-secretaria-general-optimized.mp4';
   }
 
+  if (slug.includes('juridicos')) {
+    sec.video_url = '/banner-juridicos-optimized.mp4';
+  }
+
+  if (slug.includes('cultura') || slug.includes('turismo')) {
+    sec.video_url = '/banner-cultura-optimized.mp4';
+  }
+
+  if (slug.includes('finanzas') || slug.includes('administracion')) {
+    sec.video_url = '/banner-finanzas-optimized.mp4';
+  }
+
   const acento = sec.color_acento || '#8B0000';
   
   const hasSpecificVideo = sec.video_url && sec.video_url.trim() !== '';

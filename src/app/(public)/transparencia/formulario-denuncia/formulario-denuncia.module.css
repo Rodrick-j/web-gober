@@ -1,0 +1,278 @@
+.main {
+  min-height: 100vh;
+  padding-bottom: 6rem;
+  position: relative;
+}
+
+.container {
+  position: relative;
+  z-index: 5;
+  width: min(calc(100% - 2rem), 1120px);
+  margin: -3rem auto 0;
+}
+
+.formSection {
+  padding: clamp(1rem, 3vw, 1.7rem);
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(103, 24, 26, 0.12);
+  border-radius: 23px;
+  box-shadow: 0 22px 55px rgba(74, 72, 72, 0.15);
+}
+
+.introCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.1rem 1.5rem;
+  border-bottom: 1px solid #ece9ea;
+}
+
+.iconBadge {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(145deg, #9c0720, #67181a);
+  border-radius: 15px;
+  box-shadow: 0 9px 20px rgba(103, 24, 26, 0.24);
+}
+
+.iconBadge svg { width: 27px; height: 27px; }
+
+.eyebrow {
+  margin: 0 0 0.28rem;
+  color: #9c0720;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.introCard h2 {
+  margin: 0;
+  color: #29282b;
+  font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+  line-height: 1.2;
+}
+
+.introCard p:last-child {
+  max-width: 720px;
+  margin: 0.5rem 0 0;
+  color: #716f73;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 1.5rem;
+  align-items: start;
+  padding: 1.5rem 1.1rem 0.4rem;
+}
+
+.previewCard {
+  overflow: hidden;
+  background: #f6f4f3;
+  border: 1px solid #e3dfe0;
+  border-radius: 16px;
+}
+
+.previewHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: #fff;
+  border-bottom: 1px solid #e3dfe0;
+}
+
+.previewHeader div { display: grid; gap: 0.15rem; }
+.previewHeader span { color: #777579; font-size: 0.74rem; }
+.previewHeader strong { color: #3d3b3f; font-size: 0.8rem; }
+
+.expandButton,
+.primaryAction,
+.secondaryAction,
+.printAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 0;
+  border-radius: 11px;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.expandButton {
+  min-height: 37px;
+  padding: 0.5rem 0.7rem;
+  color: #67181a;
+  background: #fff;
+  border: 1px solid rgba(103, 24, 26, 0.25);
+}
+
+.expandButton svg { width: 16px; height: 16px; }
+
+.previewButton {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  position: relative;
+  background: transparent;
+  border: 0;
+  cursor: zoom-in;
+}
+
+.previewButton img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 8px 20px rgba(32, 24, 24, 0.16);
+}
+
+.previewOverlay {
+  position: absolute;
+  right: 50%;
+  bottom: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 0.85rem;
+  color: #fff;
+  background: rgba(40, 20, 22, 0.88);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  opacity: 0;
+  transform: translateX(50%) translateY(7px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.previewOverlay svg { width: 16px; height: 16px; }
+.previewButton:hover .previewOverlay,
+.previewButton:focus-visible .previewOverlay { opacity: 1; transform: translateX(50%) translateY(0); }
+
+.actionsCard {
+  padding: 1.35rem;
+  position: sticky;
+  top: 100px;
+  background: linear-gradient(155deg, #fff 0%, #fff8ec 100%);
+  border: 1px solid rgba(255, 184, 67, 0.4);
+  border-radius: 16px;
+}
+
+.actionsCard h3 { margin: 0; color: #322f33; font-size: 1.15rem; }
+.actionsCard > p:not(.note) { margin: 0.55rem 0 1.2rem; color: #716f73; font-size: 0.84rem; line-height: 1.55; }
+
+.primaryAction,
+.secondaryAction,
+.printAction {
+  width: 100%;
+  min-height: 47px;
+  margin-top: 0.65rem;
+}
+
+.primaryAction {
+  color: #fff;
+  background: linear-gradient(135deg, #9c0720, #67181a);
+  box-shadow: 0 7px 17px rgba(103, 24, 26, 0.18);
+}
+
+.secondaryAction { color: #67181a; background: #fff; border: 1px solid rgba(103, 24, 26, 0.25); }
+.printAction { color: #514e52; background: rgba(255, 255, 255, 0.68); border: 1px solid rgba(81, 78, 82, 0.18); }
+.primaryAction svg, .secondaryAction svg, .printAction svg { width: 18px; height: 18px; }
+
+.expandButton:hover,
+.primaryAction:hover,
+.secondaryAction:hover,
+.printAction:hover { transform: translateY(-2px); box-shadow: 0 9px 20px rgba(103, 24, 26, 0.16); }
+
+.note {
+  margin: 1rem 0 0;
+  padding-top: 1rem;
+  color: #777579;
+  border-top: 1px solid rgba(103, 24, 26, 0.12);
+  font-size: 0.73rem;
+  line-height: 1.55;
+}
+
+.modal {
+  position: fixed;
+  z-index: 9500;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(23, 14, 16, 0.82);
+  backdrop-filter: blur(5px);
+}
+
+.modalContent {
+  width: min(100%, 940px);
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #252124;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 17px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.48);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  color: #fff;
+}
+
+.modalHeader div { display: grid; gap: 0.15rem; min-width: 0; }
+.modalHeader span { color: rgba(255,255,255,0.65); font-size: 0.72rem; }
+.modalHeader strong { overflow: hidden; font-size: 0.9rem; text-overflow: ellipsis; white-space: nowrap; }
+.modalHeader button { width: 38px; height: 38px; display: grid; flex: 0 0 auto; place-items: center; color: #fff; background: rgba(255,255,255,0.1); border: 0; border-radius: 50%; cursor: pointer; }
+.modalHeader button:hover { background: rgba(255,255,255,0.2); }
+.modalHeader button svg { width: 19px; height: 19px; }
+
+.modalPreview {
+  min-height: 0;
+  overflow: auto;
+  padding: 1.25rem;
+  background: #e6e3e1;
+  text-align: center;
+}
+
+.modalPreview img { width: min(100%, 790px); height: auto; box-shadow: 0 12px 32px rgba(0,0,0,0.28); }
+
+@media (max-width: 800px) {
+  .contentGrid { grid-template-columns: 1fr; }
+  .actionsCard { position: static; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; }
+  .actionsCard h3, .actionsCard > p:not(.note), .note { grid-column: 1 / -1; }
+  .primaryAction, .secondaryAction, .printAction { margin-top: 0; }
+}
+
+@media (max-width: 560px) {
+  .container { width: min(calc(100% - 1.25rem), 1120px); }
+  .formSection { border-radius: 18px; padding: 0.8rem; }
+  .introCard { padding: 0.75rem 0.55rem 1.1rem; }
+  .contentGrid { padding: 1rem 0.1rem 0.2rem; }
+  .previewHeader { align-items: flex-start; flex-direction: column; }
+  .actionsCard { grid-template-columns: 1fr; }
+  .actionsCard h3, .actionsCard > p:not(.note), .note { grid-column: 1; }
+  .modal { padding: 0.5rem; }
+  .modalPreview { padding: 0.7rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expandButton, .primaryAction, .secondaryAction, .printAction, .previewOverlay { transition: none; }
+}

@@ -75,15 +75,15 @@ const institutionLinks = [
   { label: 'Historia, Misión y Visión', href: '/institucion/historia-institucion' },
   { label: 'Organigrama', href: '/institucion/organigrama' },
   { label: 'Nómina de Autoridades', href: '/institucion/autoridades' },
-  { label: 'Publicaciones', href: '/publicaciones' },
+  // { label: 'Publicaciones', href: '/publicaciones' },
   { label: 'Contrataciones', href: '/contrataciones' },
-  { label: 'Datos y Estadísticas', href: '/datos-estadisticas' },
+  // { label: 'Datos y Estadísticas', href: '/datos-estadisticas' },
 ];
 
 const transparencyLinks = [
   { label: 'Portal de Transparencia', href: '/transparencia' },
-  { label: 'Unidad de Transparencia (UTLCC)', href: '/transparencia/unidad' },
-  { label: 'Solicitud de Información', href: '/transparencia/solicitud-informacion' },
+  // { label: 'Unidad de Transparencia (UTLCC)', href: '/transparencia/unidad' },
+  // { label: 'Solicitud de Información', href: '/transparencia/solicitud-informacion' },
   { label: 'Rendición Pública de Cuentas', href: '/transparencia/rendicion_cuentas' },
   { label: 'Auditoría Interna', href: '/auditoria' },
 ];

@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackground';
 import TransparencyHero from '@/components/TransparencyHero/TransparencyHero';
-import DocumentosExplorer from './DocumentosExplorer';
+import GacetaClient from '@/app/(public)/gaceta/[tipo]/GacetaClient';
+import { getDocumentosRendicionCuentas } from '@/data/transparenciaRendicionCuentas';
 import styles from './page.module.css';
 
 const TIPO_LABELS = {
@@ -29,16 +30,32 @@ export default async function DocumentosPorTipoPage({ params }) {
 
   if (!TIPO_LABELS[tipo]) notFound();
 
-  const supabase = await createClient();
-  const { data: documentos, error } = await supabase
-    .from('transparencia_documentos')
-    .select('id, gestion, titulo, fecha_publicacion, archivo_url')
-    .eq('tipo', tipo)
-    .eq('es_publico', true)
-    .order('gestion', { ascending: false })
-    .order('fecha_publicacion', { ascending: false });
+  let gacetaDocumentos;
 
-  if (error) console.error('Error fetching documentos:', error);
+  if (tipo === 'rendicion_cuentas') {
+    gacetaDocumentos = getDocumentosRendicionCuentas();
+  } else {
+    const supabase = await createClient();
+    const { data: documentos, error } = await supabase
+      .from('transparencia_documentos')
+      .select('id, gestion, titulo, fecha_publicacion, archivo_url')
+      .eq('tipo', tipo)
+      .eq('es_publico', true)
+      .order('gestion', { ascending: false })
+      .order('fecha_publicacion', { ascending: false });
+
+    if (error) console.error('Error fetching documentos:', error);
+
+    gacetaDocumentos = (documentos || []).map(doc => ({
+      id: doc.id,
+      anio: doc.gestion || parseInt(doc.fecha_publicacion?.substring(0, 4) || new Date().getFullYear()),
+      numero_documento: 'Transparencia',
+      titulo: doc.titulo,
+      descripcion: '',
+      fecha_publicacion: doc.fecha_publicacion,
+      archivo_pdf_url: encodeURI(doc.archivo_url || ''),
+    }));
+  }
 
   return (
     <main className={styles.main}>
@@ -48,8 +65,12 @@ export default async function DocumentosPorTipoPage({ params }) {
         description="Consulta, visualiza y descarga documentación institucional organizada por gestión."
       />
 
-      <div className={styles.container}>
-        <DocumentosExplorer documentos={documentos || []} />
+      <div style={{ backgroundColor: '#fcfcfc', paddingTop: '2rem' }}>
+        <GacetaClient
+          documentos={gacetaDocumentos}
+          tipoLabel={TIPO_LABELS[tipo]}
+          icon="👁️"
+        />
       </div>
     </main>
   );

@@ -4,53 +4,11 @@ import Image from 'next/image';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import PlanificacionSection from '@/app/(public)/secretarias/[slug]/PlanificacionSection';
 import Programas2026View from '@/app/(public)/secretarias/[slug]/Programas2026View';
+import ProductivoSection from '@/app/(public)/secretarias/[slug]/ProductivoSection';
 import { secretariasContactData } from '@/data/secretariasContactData';
 import EstadisticasSection from '@/components/EstadisticasSection/EstadisticasSection';
 import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 import styles from './SecretariatTabs.module.css';
-
-const unidadesMock = [
-  { 
-    id: 1, 
-    nombre: 'Unidad de Transparencia y Lucha Contra la Corrupción', 
-    tipo: 'Dependiente', 
-    descripcion: 'Encargada de velar por la transparencia y ética en la gestión pública departamental.', 
-    objetivo: 'Garantizar una administración pública honesta y eficiente para el beneficio y confianza de toda la población orureña.',
-    ubicacion: 'Edificio Central de la Gobernación, Piso 2', 
-    mapa_query: 'Gobernacion de Oruro',
-    facebook: 'https://facebook.com/gobernaciondeoruro'
-  },
-  { 
-    id: 2, 
-    nombre: 'Servicio Departamental de Caminos (SEDCAM)', 
-    tipo: 'Descentralizada', 
-    descripcion: 'Entidad responsable de la construcción y mantenimiento de la red vial departamental.', 
-    objetivo: 'Integrar las provincias y municipios del departamento a través de vías seguras, impulsando el desarrollo económico local.',
-    ubicacion: 'Av. Circunvalación y Calle 1', 
-    mapa_query: 'SEDCAM Oruro',
-    facebook: 'https://facebook.com/sedcamoruro'
-  },
-  { 
-    id: 3, 
-    nombre: 'Servicio Departamental de Salud (SEDES)', 
-    tipo: 'Descentralizada', 
-    descripcion: 'Rector de la salud a nivel departamental, coordinando hospitales y centros médicos en la región.', 
-    objetivo: 'Proteger y promover la salud y bienestar integral de las familias, asegurando atención médica oportuna y de calidad.',
-    ubicacion: 'Velasco Galvarro entre Aldana y Sanjines', 
-    mapa_query: 'SEDES Oruro',
-    facebook: 'https://facebook.com/sedesorurooficial'
-  },
-  { 
-    id: 4, 
-    nombre: 'Unidad de Asuntos Jurídicos', 
-    tipo: 'Dependiente', 
-    descripcion: 'Brinda asesoramiento legal y patrocina procesos a favor de la gobernación.', 
-    objetivo: 'Defender los intereses del Estado y asegurar que todas las obras y proyectos se ejecuten en el marco estricto de la legalidad.',
-    ubicacion: 'Edificio Central de la Gobernación, Planta Baja', 
-    mapa_query: 'Gobernacion de Oruro',
-    facebook: null
-  },
-];
 
 export default function SecretariatTabs({ sec, slug }) {
   const [activeTab, setActiveTab] = useState('acerca');
@@ -59,19 +17,22 @@ export default function SecretariatTabs({ sec, slug }) {
 
   const hasPlanificacion = slug.includes('planificacion');
   const hasProgramas = slug.includes('finanzas');
-  const contactOverride = secretariasContactData[slug];
+  const hasProductivo = slug.includes('desarrollo-productivo');
+  const contactOverride = secretariasContactData[slug] || {};
+  const unidadesList = contactOverride.unidades || [];
 
   const toggleUnidad = (id) => {
     setExpandedUnidad(expandedUnidad === id ? null : id);
   };
 
   const getAbreviatura = (sec) => {
+    if (contactOverride.sigla) return contactOverride.sigla.toUpperCase();
     if (sec.sigla) return sec.sigla.toUpperCase();
     
     // Forzar lectura del nombre completo
     const nombreFull = sec.nombre || sec.nombre_corto || '';
     
-    const skipWords = ['de', 'e', 'la', 'el', 'las', 'los', 'en', 'para', 'del'];
+    const skipWords = ['de', 'e', 'y', 'la', 'el', 'las', 'los', 'en', 'para', 'del'];
     let abr = nombreFull.split(' ')
       .filter(w => w.trim() && !skipWords.includes(w.toLowerCase()))
       .map(w => w.charAt(0).toUpperCase())
@@ -112,14 +73,16 @@ export default function SecretariatTabs({ sec, slug }) {
         >
           Atención al Ciudadano
         </button>
-        <button 
-          className={`${styles.tabBtn} ${activeTab === 'unidades' ? styles.active : ''}`}
-          onClick={() => setActiveTab('unidades')}
-          style={{ '--acento': sec.color_acento || '#8b0000' }}
-        >
-          Unidades Descentralizadas y Dependientes
-        </button>
-        {hasPlanificacion && (
+        {unidadesList.length > 0 && (
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'unidades' ? styles.active : ''}`}
+            onClick={() => setActiveTab('unidades')}
+            style={{ '--acento': sec.color_acento || '#8b0000' }}
+          >
+            Unidades Descentralizadas y Dependientes
+          </button>
+        )}
+        {false && hasPlanificacion && (
           <button 
             className={`${styles.tabBtn} ${activeTab === 'planificacion' ? styles.active : ''}`}
             onClick={() => setActiveTab('planificacion')}
@@ -137,6 +100,15 @@ export default function SecretariatTabs({ sec, slug }) {
             Proyectos y Programas
           </button>
         )}
+        {hasProductivo && (
+          <button 
+            className={`${styles.tabBtn} ${activeTab === 'productivo' ? styles.active : ''}`}
+            onClick={() => setActiveTab('productivo')}
+            style={{ '--acento': '#9c0720' }}
+          >
+            UP Reactiva TIC (Emprendedores)
+          </button>
+        )}
       </div>
 
       <div className={styles.tabContent}>
@@ -151,7 +123,7 @@ export default function SecretariatTabs({ sec, slug }) {
               </>
             )}
             <MisionVisionSection 
-              mision={sec.mision} 
+              mision={contactOverride?.objetivo || sec.mision} 
               vision={sec.vision} 
               titleClass={styles.sectionTitle} 
               textClass={styles.textBody} 
@@ -191,7 +163,13 @@ export default function SecretariatTabs({ sec, slug }) {
                 {sec.secretario_bio && (
                   <>
                     <p className={`${styles.secretarioBio} ${!showFullBio ? styles.bioTruncated : ''}`}>
-                      {sec.secretario_bio}
+                      {sec.secretario_bio.split(/(\[.*?\]\(.*?\))/g).map((part, i) => {
+                        const match = part.match(/\[(.*?)\]\((.*?)\)/);
+                        if (match) {
+                          return <a key={i} href={match[2]} target="_blank" rel="noopener noreferrer" style={{ color: sec.color_acento || '#0066cc', textDecoration: 'underline' }}>{match[1]}</a>;
+                        }
+                        return part;
+                      })}
                     </p>
                     {sec.secretario_bio.length > 250 && (
                       <button 
@@ -311,12 +289,12 @@ export default function SecretariatTabs({ sec, slug }) {
             <div className={styles.unidadesHeader}>
               <h2 className={styles.sectionTitle}>Unidades Descentralizadas y Dependientes</h2>
               <p className={styles.unidadesSubtitle}>
-                Esta secretaría coordina y supervisa el trabajo de las siguientes entidades: <strong>{unidadesMock.map(u => u.nombre).join(', ')}</strong>.
+                Esta secretaría coordina y supervisa el trabajo de las siguientes entidades: <strong>{unidadesList.map(u => u.nombre).join(', ')}</strong>.
               </p>
             </div>
 
             <div className={styles.unidadesGridCompact}>
-              {unidadesMock.map(unidad => (
+              {unidadesList.map(unidad => (
                 <div key={unidad.id} className={`${styles.unidadCardCompact} ${expandedUnidad === unidad.id ? styles.unidadCardExpanded : ''}`}>
                   <div className={styles.unidadCardHeaderCompact} onClick={() => toggleUnidad(unidad.id)}>
                     <div className={styles.unidadInfoLeft}>
@@ -379,6 +357,12 @@ export default function SecretariatTabs({ sec, slug }) {
         {activeTab === 'programas' && hasProgramas && (
           <div className={styles.contentBlockFull} style={{ padding: '0', background: 'transparent' }}>
             <Programas2026View />
+          </div>
+        )}
+
+        {activeTab === 'productivo' && hasProductivo && (
+          <div className={styles.contentBlockFull}>
+            <ProductivoSection secretariaId={sec.id} colorAcento="#9c0720" />
           </div>
         )}
       </div>

@@ -92,18 +92,18 @@
   z-index: 1;
   width: min(100%, 1480px);
   margin: 0 auto;
-  padding: 3rem clamp(1.2rem, 4vw, 3rem) 3.4rem;
+  padding: 2.15rem clamp(1.2rem, 4vw, 3rem) 2.3rem;
 }
 
 .serviceBanner {
   position: relative;
   display: flex;
-  min-height: 92px;
+  min-height: 76px;
   align-items: center;
   gap: 1rem;
   overflow: hidden;
-  margin-bottom: 3.2rem;
-  padding: 1.05rem 1.15rem;
+  margin-bottom: 2.2rem;
+  padding: 0.8rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.11);
   border-radius: 20px;
   background:
@@ -144,9 +144,9 @@
   position: relative;
   z-index: 1;
   display: grid;
-  width: 52px;
-  height: 52px;
-  flex: 0 0 52px;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
   place-items: center;
   color: #ffe1a2;
   border: 1px solid rgba(255, 207, 111, 0.22);
@@ -263,8 +263,8 @@
   width: fit-content;
   max-width: 100%;
   overflow: hidden;
-  margin-bottom: 1.15rem;
-  padding: 0.85rem 1.1rem;
+  margin-bottom: 0.8rem;
+  padding: 0.55rem 0.8rem;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 17px;
   background: rgba(255, 255, 255, 0.045);
@@ -286,16 +286,16 @@
 
 .logo {
   width: auto;
-  max-width: min(245px, 100%);
+  max-width: min(220px, 100%);
   height: auto;
-  max-height: 135px;
+  max-height: 105px;
   object-fit: contain;
   filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
 }
 
 .brandDescription {
   max-width: 31rem;
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.85rem;
   color: rgba(255, 255, 255, 0.65);
   font-size: 0.76rem;
   line-height: 1.65;
@@ -304,7 +304,7 @@
 .contactInfo {
   display: flex;
   flex-direction: column;
-  gap: 0.58rem;
+  gap: 0.38rem;
 }
 
 .contactItem {
@@ -312,7 +312,7 @@
   min-width: 0;
   align-items: center;
   gap: 0.62rem;
-  padding: 0.24rem 0;
+  padding: 0.16rem 0;
   color: rgba(255, 255, 255, 0.76);
   font-size: 0.7rem;
   font-weight: 530;
@@ -333,9 +333,9 @@ a.contactItem:hover {
 
 .contactIcon {
   display: grid;
-  width: 31px;
-  height: 31px;
-  flex: 0 0 31px;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
   place-items: center;
   color: #f4c55f;
   border: 1px solid rgba(255, 199, 87, 0.13);
@@ -351,7 +351,7 @@ a.contactItem:hover {
 }
 
 .socialBlock {
-  margin-top: 1.3rem;
+  margin-top: 0.9rem;
 }
 
 .socialLabel {
@@ -373,8 +373,8 @@ a.contactItem:hover {
 .socialIconsRow a {
   position: relative;
   display: grid;
-  width: 39px;
-  height: 39px;
+  width: 35px;
+  height: 35px;
   place-items: center;
   color: rgba(255, 255, 255, 0.84);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -413,8 +413,8 @@ a.contactItem:hover {
   display: flex;
   align-items: center;
   gap: 0.62rem;
-  margin-bottom: 1.25rem;
-  padding-bottom: 0.85rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.6rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.085);
 }
 
@@ -475,12 +475,12 @@ a.contactItem:hover {
   position: relative;
   display: flex;
   min-width: 0;
-  min-height: 36px;
+  min-height: 31px;
   align-items: center;
   gap: 0.45rem;
   justify-content: space-between;
   overflow: hidden;
-  padding: 0.42rem 0.44rem 0.42rem 0.68rem;
+  padding: 0.3rem 0.44rem 0.3rem 0.6rem;
   color: rgba(255, 255, 255, 0.68);
   border: 1px solid transparent;
   border-radius: 9px;
@@ -549,12 +549,12 @@ a.contactItem:hover {
 .bottomInner {
   display: flex;
   width: min(100%, 1480px);
-  min-height: 82px;
+  min-height: 64px;
   align-items: center;
   gap: 1.5rem;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 1rem clamp(1.2rem, 4vw, 3rem);
+  padding: 0.7rem clamp(1.2rem, 4vw, 3rem);
 }
 
 .copyright {
@@ -730,13 +730,13 @@ a.contactItem:hover {
 
 @media (max-width: 760px) {
   .footerInner {
-    padding: 1.5rem 1rem 1.75rem;
+    padding: 1.15rem 1rem 1.35rem;
   }
 
   .serviceBanner {
     align-items: flex-start;
     flex-wrap: wrap;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.75rem;
     border-radius: 17px;
   }
 
@@ -810,7 +810,7 @@ a.contactItem:hover {
     min-height: auto;
     flex-direction: column;
     align-items: flex-start;
-    padding: 1.25rem 1rem;
+    padding: 0.9rem 1rem;
   }
 
   .bottomLinks {
