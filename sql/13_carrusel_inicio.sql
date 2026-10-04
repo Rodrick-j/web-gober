@@ -7,9 +7,13 @@ CREATE TABLE IF NOT EXISTS banners_inicio (
   id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   titulo          TEXT,                          -- Opcional, para accesibilidad o texto flotante
   imagen_url      TEXT NOT NULL,                 -- URL de la imagen en Supabase Storage
+  imagen_tablet_url TEXT,                        -- Optional tablet-specific banner URL
+  imagen_movil_url  TEXT,                        -- Optional mobile-specific banner URL
   enlace_url      TEXT,                          -- Opcional, si al hacer clic debe llevar a una noticia o página
   orden           INTEGER DEFAULT 0,             -- 1 sale primero, 2 después, etc.
   activo          BOOLEAN DEFAULT true,          -- Para ocultar sin borrar
+  animacion_texto TEXT DEFAULT 'fade-in',
+  animacion_carrusel TEXT DEFAULT 'creative',
   created_at      TIMESTAMPTZ DEFAULT NOW(),
   updated_at      TIMESTAMPTZ DEFAULT NOW()
 );

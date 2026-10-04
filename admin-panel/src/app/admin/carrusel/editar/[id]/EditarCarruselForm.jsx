@@ -5,6 +5,16 @@ import { createClient } from '@/lib/supabase/client';
 import { uploadFile } from '@/lib/supabase/storage';
 import Image from 'next/image';
 
+function getSaveErrorMessage(error) {
+  const message = typeof error?.message === 'string' ? error.message : '';
+
+  if (message.includes('imagen_tablet_url')) {
+    return 'La base de datos todavía no tiene habilitada la imagen para tablet. Ejecuta la migración SQL 33_carrusel_variantes_responsive.sql en Supabase y vuelve a intentarlo.';
+  }
+
+  return message || 'No se pudo guardar la imagen. Inténtalo nuevamente.';
+}
+
 export default function EditarCarruselForm({ banner }) {
   const router = useRouter();
   const supabase = createClient();
@@ -14,7 +24,9 @@ export default function EditarCarruselForm({ banner }) {
   const [animacionTexto, setAnimacionTexto] = useState(banner.animacion_texto || 'fade-in');
   const [animacionCarrusel, setAnimacionCarrusel] = useState(banner.animacion_carrusel || 'creative');
   const [activo, setActivo] = useState(banner.activo !== false);
+  const [imagenTablet, setImagenTablet] = useState(null);
   const [imagenMovil, setImagenMovil] = useState(null);
+  const [removeImagenTablet, setRemoveImagenTablet] = useState(false);
   const [removeImagenMovil, setRemoveImagenMovil] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -26,6 +38,13 @@ export default function EditarCarruselForm({ banner }) {
     setError('');
 
     try {
+      let nuevaImagenTabletUrl = banner.imagen_tablet_url;
+      if (removeImagenTablet) {
+        nuevaImagenTabletUrl = null;
+      } else if (imagenTablet) {
+        nuevaImagenTabletUrl = await uploadFile(imagenTablet, 'general');
+      }
+
       let nuevaImagenMovilUrl = banner.imagen_movil_url;
       
       if (removeImagenMovil) {
@@ -42,6 +61,7 @@ export default function EditarCarruselForm({ banner }) {
           animacion_texto: animacionTexto,
           animacion_carrusel: animacionCarrusel,
           activo,
+          imagen_tablet_url: nuevaImagenTabletUrl,
           imagen_movil_url: nuevaImagenMovilUrl
         })
         .eq('id', banner.id);
@@ -51,8 +71,15 @@ export default function EditarCarruselForm({ banner }) {
       router.push('/admin/carrusel');
       router.refresh();
     } catch (err) {
-      console.error(err);
-      setError('Ocurrió un error al actualizar: ' + err.message);
+      const message = getSaveErrorMessage(err);
+
+      // Next muestra un overlay vacío para algunos errores de Supabase y oculta
+      // el detalle útil para quien está administrando el sitio.
+      console.warn('No se pudo actualizar el carrusel:', {
+        code: err?.code,
+        message: err?.message
+      });
+      setError(message);
       setIsSubmitting(false);
     }
   };
@@ -92,7 +119,7 @@ export default function EditarCarruselForm({ banner }) {
               onChange={(e) => setEnlaceUrl(e.target.value)}
               disabled={isSubmitting}
             />
-            <small style={{ color: 'var(--admin-text-muted)', marginTop: '0.5rem', display: 'block' }}>Si lo llenas, aparecerá un botón "Ver Detalles" sobre la foto.</small>
+            <small style={{ color: 'var(--admin-text-muted)', marginTop: '0.5rem', display: 'block' }}>Si lo llenas, aparecerá un botón &quot;Ver Detalles&quot; sobre la foto.</small>
           </div>
 
           <div className="formGroup">
@@ -142,7 +169,7 @@ export default function EditarCarruselForm({ banner }) {
           </div>
 
           <div style={{ marginTop: 'auto', background: '#111', padding: '0.5rem', borderRadius: '12px', border: '1px solid var(--admin-border)', textAlign: 'center' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '0.5rem' }}>
               <div style={{ position: 'relative', width: '100%', height: '100px', borderRadius: '8px', overflow: 'hidden' }}>
                 <Image 
                   src={banner.imagen_url} 
@@ -150,6 +177,30 @@ export default function EditarCarruselForm({ banner }) {
                   fill
                   style={{ objectFit: 'cover' }} 
                 />
+              </div>
+              <div style={{ position: 'relative', width: '100%', height: '100px', borderRadius: '8px', overflow: 'hidden', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.8rem', flexDirection: 'column' }}>
+                {(banner.imagen_tablet_url && !removeImagenTablet) || imagenTablet ? (
+                  <>
+                    <Image
+                      src={imagenTablet ? URL.createObjectURL(imagenTablet) : banner.imagen_tablet_url}
+                      alt="Banner Tablet"
+                      fill
+                      unoptimized={Boolean(imagenTablet)}
+                      style={{ objectFit: 'cover' }}
+                    />
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', opacity: 0, transition: 'opacity 0.2s', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.opacity = 1} onMouseLeave={(e) => e.currentTarget.style.opacity = 0}>
+                      <button
+                        type="button"
+                        onClick={() => { setRemoveImagenTablet(true); setImagenTablet(null); }}
+                        style={{ background: '#ef4444', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.75rem', fontWeight: 'bold' }}
+                      >
+                        Quitar Imagen
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <span style={{ padding: '0 0.4rem', textAlign: 'center' }}>{removeImagenTablet ? 'Imagen eliminada' : 'Sin imagen tablet'}</span>
+                )}
               </div>
               <div style={{ position: 'relative', width: '100%', height: '100px', borderRadius: '8px', overflow: 'hidden', background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666', fontSize: '0.8rem', flexDirection: 'column' }}>
                 {(banner.imagen_movil_url && !removeImagenMovil) || imagenMovil ? (
@@ -176,6 +227,33 @@ export default function EditarCarruselForm({ banner }) {
               </div>
             </div>
             <p style={{ fontSize: '0.75rem', color: '#999', margin: '0.5rem 0' }}>Para cambiar la imagen principal de PC, debes subir un banner nuevo.</p>
+
+            <div style={{ marginTop: '1rem', textAlign: 'left' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <label className="formLabel" style={{ color: 'white', fontSize: '0.85rem' }}>Cambiar Imagen Tablet Vertical</label>
+                {(banner.imagen_tablet_url || imagenTablet) && !removeImagenTablet && (
+                  <button
+                    type="button"
+                    onClick={() => { setRemoveImagenTablet(true); setImagenTablet(null); }}
+                    style={{ background: 'transparent', border: '1px solid #ef4444', color: '#ef4444', fontSize: '0.7rem', padding: '2px 8px', borderRadius: '4px', cursor: 'pointer' }}
+                  >
+                    Quitar
+                  </button>
+                )}
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  setImagenTablet(file);
+                  if (file) setRemoveImagenTablet(false);
+                }}
+                disabled={isSubmitting}
+                style={{ marginTop: '0.5rem', width: '100%', fontSize: '0.8rem', color: '#ccc' }}
+              />
+              <small style={{ color: '#999', display: 'block', marginTop: '0.35rem' }}>Recomendada: 1440x1920px (3:4), con el contenido importante centrado. Se usa en Surface Pro e iPad vertical.</small>
+            </div>
 
             <div style={{ marginTop: '1rem', textAlign: 'left' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

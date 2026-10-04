@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules';
 import Link from 'next/link';
-import Image from 'next/image';
+import { getImageProps } from 'next/image';
 import MediaLoader from '@/components/MediaLoader/MediaLoader';
+import BreakingNews from '@/components/BreakingNews/BreakingNews';
+import ComunicadosPanel from './ComunicadosPanel';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -14,8 +16,49 @@ import 'swiper/css/navigation';
 
 import styles from './HeroSlider.module.css';
 
-export default function HeroSlider({ banners, redes }) {
+function ResponsiveBannerImage({ banner, index, onLoad }) {
+  const imageOptions = {
+    alt: banner.titulo || 'Banner',
+    fill: true,
+    sizes: '100vw',
+    quality: 85,
+    loading: 'eager',
+    ...(index === 0 ? { fetchPriority: 'high' } : {}),
+  };
+
+  const { props: desktopImageProps } = getImageProps({
+    ...imageOptions,
+    src: banner.imagen_url,
+  });
+  const tabletImageProps = banner.imagen_tablet_url
+    ? getImageProps({ ...imageOptions, src: banner.imagen_tablet_url, alt: `${banner.titulo || 'Banner'} tablet` }).props
+    : null;
+  const mobileImageProps = banner.imagen_movil_url
+    ? getImageProps({ ...imageOptions, src: banner.imagen_movil_url, alt: `${banner.titulo || 'Banner'} móvil` }).props
+    : null;
+
+  return (
+    <picture className={styles.responsivePicture}>
+      {mobileImageProps && (
+        <source media="(max-width: 768px)" srcSet={mobileImageProps.srcSet} sizes={mobileImageProps.sizes} />
+      )}
+      {tabletImageProps && !mobileImageProps && (
+        <source media="(max-width: 768px)" srcSet={tabletImageProps.srcSet} sizes={tabletImageProps.sizes} />
+      )}
+      {tabletImageProps && (
+        <source media="(min-width: 769px) and (max-width: 1100px) and (orientation: portrait)" srcSet={tabletImageProps.srcSet} sizes={tabletImageProps.sizes} />
+      )}
+      {mobileImageProps && (
+        <source media="(min-width: 769px) and (max-width: 1100px) and (orientation: portrait)" srcSet={mobileImageProps.srcSet} sizes={mobileImageProps.sizes} />
+      )}
+      <img {...desktopImageProps} alt={desktopImageProps.alt} className={styles.mainImage} onLoad={onLoad} />
+    </picture>
+  );
+}
+
+export default function HeroSlider({ banners, redes, ticker, comunicado, comunicados = [] }) {
   const [loadedBanners, setLoadedBanners] = useState({});
+  const areBannersReady = banners?.every((banner) => loadedBanners[banner.id]);
 
   const markBannerLoaded = (id) => {
     setLoadedBanners((current) => (current[id] ? current : { ...current, [id]: true }));
@@ -29,6 +72,9 @@ export default function HeroSlider({ banners, redes }) {
             Gobierno Autónomo<br />Departamental de <span className={styles.highlight}>Oruro</span>
           </h1>
         </div>
+        <div className={styles.breakingNews}>
+          <BreakingNews config={ticker} />
+        </div>
       </section>
     );
   }
@@ -38,9 +84,9 @@ export default function HeroSlider({ banners, redes }) {
       <Swiper
         modules={[Autoplay, EffectFade, Pagination, Navigation]}
         effect="fade"
-        speed={1400}
+        speed={600}
         fadeEffect={{ crossFade: true }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        autoplay={areBannersReady ? { delay: 6500, disableOnInteraction: false } : false}
         pagination={{
           clickable: true,
           bulletClass: `swiper-pagination-bullet ${styles.customBullet}`,
@@ -62,45 +108,14 @@ export default function HeroSlider({ banners, redes }) {
                   kind="image"
                   label="Preparando portada"
                 />
-                {/* Blurred Background for Cinematic Effect */}
-                <Image
-                  src={banner.imagen_url}
-                  alt=""
-                  fill
-                  sizes="(max-width: 768px) 1px, 100vw"
-                  aria-hidden="true"
-                  quality={30}
-                  className={`${styles.blurredBg} ${banner.imagen_movil_url ? styles.hideOnMobile : ''}`}
-                />
-
-                {/* Main Responsive Image */}
-                <Image
-                  src={banner.imagen_url}
-                  alt={banner.titulo || 'Banner'}
-                  fill
-                  sizes="100vw"
-                  priority={index === 0}
-                  quality={80}
+                <ResponsiveBannerImage
+                  banner={banner}
+                  index={index}
                   onLoad={() => markBannerLoaded(banner.id)}
-                  className={`${styles.mainImage} ${banner.imagen_movil_url ? styles.hideOnMobile : ''}`}
                 />
-                {banner.imagen_movil_url && (
-                  <Image
-                    src={banner.imagen_movil_url}
-                    alt={`${banner.titulo || 'Banner'} móvil`}
-                    fill
-                    sizes="100vw"
-                    priority={index === 0}
-                    quality={80}
-                    onLoad={() => markBannerLoaded(banner.id)}
-                    className={`${styles.mainImage} ${styles.showOnlyOnMobile}`}
-                  />
-                )}
               </div>
               
-              {(banner.titulo || banner.enlace_url) && (
-                <div className={styles.gradientOverlay} />
-              )}
+              <div className={styles.gradientOverlay} />
 
               {(banner.titulo || banner.enlace_url) && (
                 <div className={styles.slideContentContainer}>
@@ -166,6 +181,12 @@ export default function HeroSlider({ banners, redes }) {
           </a>
         </div>
       )}
+
+      <ComunicadosPanel comunicado={comunicado} comunicados={comunicados} />
+
+      <div className={styles.breakingNews}>
+        <BreakingNews config={ticker} />
+      </div>
     </section>
   );
 }

@@ -3,7 +3,10 @@
 import React, { useState } from 'react';
 import AnimatedBackground from '@/components/AnimatedBackground/AnimatedBackground';
 import styles from './historia.module.css';
-import { municipios } from './municipiosData';
+import { municipios as _municipios } from './municipiosData';
+
+// Guarda defensiva: evita el TypeError si el módulo aún no cargó
+const municipios = Array.isArray(_municipios) ? _municipios : [];
 import Link from 'next/link';
 import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
 
@@ -119,13 +122,13 @@ export default function HistoriaIndexClient() {
           const isChakana = search === '' && filtered.length === 35;
           if (isChakana) {
             return (
-              <div style={{ width: '100%', height: '85vh', minHeight: '600px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', marginTop: '2rem', marginBottom: '2rem', position: 'relative' }}>
+              <div className={styles.mapEmbed}>
                 <LazyEmbed
                   src="/mapa/index.html" 
                   style={{ width: '100%', height: '100%', border: 'none', display: 'block', overflow: 'hidden' }}
                   scrolling="no"
-                  title="Mapa Interactivo de Oruro"
-                  loaderLabel="Preparando mapa interactivo"
+                  title="Mapa de provincias de Oruro"
+                  loaderLabel="Preparando mapa de provincias"
                 />
               </div>
             );

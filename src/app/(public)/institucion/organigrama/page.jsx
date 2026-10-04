@@ -119,59 +119,113 @@ export default function OrganigramaPage() {
           )}
         </div>
 
-        {/* Organigrama oficial aprobado (RM 067/2025 · ítem 13.1.1) */}
-        {organigramaOficial && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            style={{
-              maxWidth: '1100px',
-              margin: '0 auto 2.5rem',
-              padding: '1.75rem',
-              background: '#fff',
-              border: '1px solid #ececec',
-              borderRadius: '16px',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.05)',
-              textAlign: 'center',
-            }}
-          >
-            <h2 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#1a1a1a', marginBottom: '1rem' }}>
-              {organigramaOficial.titulo || 'Organigrama Oficial Aprobado'}
-            </h2>
-            {esImagen ? (
-              <img
-                src={organigramaOficial.archivo_url}
-                alt="Organigrama institucional oficial del Gobierno Autónomo Departamental de Oruro"
-                style={{ maxWidth: '100%', height: 'auto', borderRadius: '10px' }}
-              />
-            ) : (
-              <a
-                href={organigramaOficial.archivo_url}
-                target="_blank"
-                rel="noopener noreferrer"
+        {/* MÓDULO ESPECIAL PREMIUM DEL ORGANIGRAMA GENERAL */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          style={{
+            maxWidth: '1300px',
+            margin: '0 auto 3rem',
+            padding: '2.5rem',
+            background: 'linear-gradient(145deg, #ffffff, #fdfdfd)',
+            border: '1px solid #eaeaea',
+            borderRadius: '24px',
+            boxShadow: '0 20px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.02)',
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden'
+          }}
+        >
+          {/* Detalles decorativos */}
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '6px', background: 'linear-gradient(90deg, #8B0000, #C21807)' }} />
+          <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'radial-gradient(circle, rgba(139,0,0,0.04) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%' }} />
+
+          <h2 style={{ 
+            fontSize: '1.8rem', 
+            fontWeight: 800, 
+            color: '#1a1a1a', 
+            marginBottom: '0.5rem',
+            letterSpacing: '-0.03em'
+          }}>
+            Estructura Organizacional del Gobierno Autónomo Departamental de Oruro
+          </h2>
+          <p style={{ color: '#666', marginBottom: '2.5rem', fontSize: '1.05rem' }}>
+            Aprobada mediante normativa vigente. Jerarquía administrativa, secretarías, direcciones y unidades desconcentradas.
+          </p>
+
+          <div style={{
+            background: '#fcfcfc',
+            border: '1px solid #f0f0f0',
+            borderRadius: '16px',
+            padding: '1rem',
+            boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.02)'
+          }}>
+            <img
+              src="/organigrama-oficial-nuevo.png"
+              alt="Organigrama Institucional GADOR"
+              style={{ 
+                maxWidth: '100%', 
+                height: 'auto', 
+                borderRadius: '8px',
+                display: 'block',
+                margin: '0 auto'
+              }}
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'flex';
+              }}
+            />
+            {/* Fallback si la imagen no está */}
+            <div style={{
+              display: 'none',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '4rem 2rem',
+              background: '#f8f9fa',
+              borderRadius: '8px',
+              border: '2px dashed #d1d5db'
+            }}>
+              <span style={{ fontSize: '3rem', marginBottom: '1rem' }}>🖼️</span>
+              <h3 style={{ color: '#4b5563', margin: '0 0 0.5rem' }}>Falta la imagen del Organigrama</h3>
+              <p style={{ color: '#6b7280', margin: 0 }}>Guarda la imagen de tu computadora como <strong>organigrama-oficial-nuevo.png</strong> dentro de la carpeta <strong>public</strong> del proyecto para que aparezca aquí de forma automática.</p>
+            </div>
+          </div>
+          
+          <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+             <a
+                href="/organigrama-oficial-nuevo.png"
+                download
+                className="btn btn-primary"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  padding: '0.8rem 1.6rem',
+                  padding: '0.75rem 1.5rem',
                   background: '#8B0000',
                   color: '#fff',
-                  borderRadius: '10px',
+                  borderRadius: '12px',
                   fontWeight: 600,
                   textDecoration: 'none',
+                  transition: 'all 0.2s',
+                  boxShadow: '0 4px 12px rgba(139,0,0,0.2)'
                 }}
               >
-                ⬇ Ver organigrama oficial (PDF)
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Descargar Organigrama
               </a>
-            )}
-          </motion.div>
-        )}
+          </div>
+        </motion.div>
 
-        {organigramaOficial && !loading && secretarias.length > 0 && (
-          <p style={{ textAlign: 'center', color: '#666', fontWeight: 600, margin: '0 0 1.5rem', fontSize: '0.95rem' }}>
-            Explorador interactivo por Secretaría
-          </p>
+        {!loading && secretarias.length > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', margin: '4rem 0 2rem' }}>
+            <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, #ddd)', flex: 1, maxWidth: '200px' }} />
+            <h3 style={{ textAlign: 'center', color: '#8b0000', fontWeight: 700, margin: 0, fontSize: '1.2rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+              Explorador Interactivo Detallado
+            </h3>
+            <div style={{ height: '1px', background: 'linear-gradient(270deg, transparent, #ddd)', flex: 1, maxWidth: '200px' }} />
+          </div>
         )}
 
         {/* Carga */}

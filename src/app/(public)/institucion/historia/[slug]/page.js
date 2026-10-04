@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { notFound } from 'next/navigation';
 import { municipios, getMunicipio } from '../municipiosData';
 import MunicipioClient from './MunicipioClient';
@@ -22,5 +24,9 @@ export default async function MunicipioPage({ params }) {
   const mun = getMunicipio(slug);
   if (!mun) notFound();
 
-  return <MunicipioClient mun={mun} allMunicipios={municipios} />;
+  const mediaDisponibles = (mun.media || []).filter(({ src }) =>
+    existsSync(join(process.cwd(), 'public', src.replace(/^\//, '')))
+  );
+
+  return <MunicipioClient mun={{ ...mun, media: mediaDisponibles }} allMunicipios={municipios} />;
 }

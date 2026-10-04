@@ -31,6 +31,7 @@ Ejecutar en orden, **después** de los anteriores. Requieren que existan `usuari
 | 27 | `27_contrataciones_proveedores.sql` | Convocatorias (TdR / bienes y servicios / empleo) + Lista de Proveedores |
 | 28 | `28_autoridades.sql` | Nómina de autoridades (hasta directores) con foto y biografía |
 | 29 | `29_seed_config_rm067.sql` | Enlaces al Observatorio/SITPRECO S2+ y campos fax/WhatsApp/call center |
+| 33 | `33_carrusel_variantes_responsive.sql` | Añade variantes de carrusel para tablet, móvil y animaciones |
 
 Verificación:
 ```sql

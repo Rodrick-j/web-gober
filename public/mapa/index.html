@@ -11,9 +11,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   
-  <!-- Leaflet GIS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-  
   <!-- App Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -42,47 +39,7 @@
         <div id="searchResults" class="search-dropdown"></div>
       </div>
 
-      <!-- Actions -->
-      <div class="nav-actions">
-        <!-- View Toggle -->
-        <div class="view-switch-group">
-          <button id="btnViewVector" class="switch-btn active" onclick="setViewMode('vector')">
-            <span>🎨</span> Vectorial (Original)
-          </button>
-          <button id="btnViewLeaflet" class="switch-btn" onclick="setViewMode('leaflet')">
-            <span>🌍</span> GIS / Satelital
-          </button>
-        </div>
-
-        <!-- Theme Toggle -->
-        <button id="themeToggle" class="icon-action-btn" onclick="toggleTheme()" title="Cambiar tema Claro/Oscuro">
-          <span id="themeIcon">🌙</span>
-        </button>
-
-        <!-- Sound Toggle -->
-        <button id="soundToggle" class="icon-action-btn" onclick="toggleSound()" title="Sonidos de interfaz">
-          <span id="soundIcon">🔊</span>
-        </button>
-      </div>
     </header>
-
-    <!-- Zone Filter Pills Bar -->
-    <div class="filters-bar">
-      <div class="zone-pills">
-        <span class="filter-label">Filtrar por Zona:</span>
-        <button class="zone-pill active" onclick="filterByZone('all')">Todas (16)</button>
-        <button class="zone-pill" onclick="filterByZone('Norte')">🧭 Norte (4)</button>
-        <button class="zone-pill" onclick="filterByZone('Centro')">⭐ Centro (5)</button>
-        <button class="zone-pill" onclick="filterByZone('Sur')">🌾 Sur (4)</button>
-        <button class="zone-pill" onclick="filterByZone('Occidente')">🏔️ Occidente (3)</button>
-      </div>
-
-      <div class="quick-stats-pills">
-        <div class="stat-badge">📐 <strong>53.588 km²</strong> Total</div>
-        <div class="stat-badge">👥 <strong>~525.000</strong> Habitantes</div>
-        <div class="stat-badge">🏛️ <strong>35</strong> Municipios</div>
-      </div>
-    </div>
 
     <!-- Main Workspace Grid -->
     <main class="main-content">
@@ -94,15 +51,7 @@
           <span class="map-hero-sub">Departamento de Oruro • Estado Plurinacional de Bolivia</span>
         </div>
 
-        <!-- Map Controls (Zoom, Pan, Reset) -->
-        <div class="map-floating-controls">
-          <button class="map-control-btn" onclick="zoomMap(1.2)" title="Acercar (+)">➕</button>
-          <button class="map-control-btn" onclick="zoomMap(0.8)" title="Alejar (-)">➖</button>
-          <button class="map-control-btn" onclick="resetMapTransform()" title="Restablecer vista (🎯)">🎯</button>
-          <button class="map-control-btn" onclick="downloadGeoJSON()" title="Descargar GeoJSON">💾</button>
-        </div>
-
-        <!-- 1. Vector Map Stage -->
+        <!-- Mapa vectorial fijo -->
         <div id="vectorStage" class="map-stage active">
           <div id="svgContainer" class="svg-pan-zoom-container">
             <svg id="oruroSvg" viewBox="0 0 1024 681" preserveAspectRatio="xMidYMid meet">
@@ -158,16 +107,6 @@
           <!-- <div class="watermark-tag">paintmaps.com</div> -->
         </div>
 
-        <!-- 2. Leaflet GIS Map Stage -->
-        <div id="leafletStage" class="map-stage">
-          <div id="leafletMap"></div>
-        </div>
-
-        <!-- Quick Province Selection Carousel at Bottom of Map -->
-        <div class="provinces-chips-row">
-          <span class="chips-row-label">Selección rápida:</span>
-          <div id="provinceChipsList" class="chips-scrollable"></div>
-        </div>
       </div>
 
       <!-- Right: Detailed Information Drawer / Panel -->
@@ -176,20 +115,12 @@
         <div id="emptyDrawer" class="drawer-card empty-state">
           <div class="empty-glow-icon">🗺️</div>
           <h3>Selecciona una Provincia</h3>
-          <p>Haz clic en cualquier provincia del mapa, usa la barra de búsqueda o selecciona los botones inferiores para explorar sus datos, municipios, atractivos y opciones de viaje.</p>
+          <p>Usa la barra de búsqueda o selecciona una provincia del mapa para consultar sus datos y municipios.</p>
           
           <div class="guide-box">
             <div class="guide-item">
               <span class="guide-icon">👆</span>
               <div><strong>Interactividad total:</strong> Haz clic en el mapa para inspeccionar.</div>
-            </div>
-            <div class="guide-item">
-              <span class="guide-icon">🔍</span>
-              <div><strong>Zoom y arrastre:</strong> Usa la rueda del ratón o los botones para explorar.</div>
-            </div>
-            <div class="guide-item">
-              <span class="guide-icon">🌍</span>
-              <div><strong>Vista Satelital:</strong> Alterna a la vista GIS para ver relieve real.</div>
             </div>
           </div>
         </div>
@@ -265,17 +196,9 @@
 
           <!-- Drawer Action Footer -->
           <div class="drawer-footer">
-            <a id="btnGoToProvince" href="#" target="_blank" rel="noopener" class="btn btn-primary-action">
-              <span>🚀 Ir a la Provincia / Más Info</span>
+            <a id="btnGoToProvince" href="#" target="_parent" rel="noopener" class="btn btn-primary-action">
+              <span>🚀 Ver ficha provincial</span>
             </a>
-            <div class="btn-group-row">
-              <button class="btn btn-secondary-action" onclick="copyProvinceData()">
-                <span>📋 Copiar Ficha</span>
-              </button>
-              <button class="btn btn-secondary-action" onclick="centerProvinceOnLeaflet()">
-                <span>📍 Ubicar en GIS</span>
-              </button>
-            </div>
           </div>
         </div>
       </aside>
@@ -294,9 +217,6 @@
     </div>
   </div>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  
   <!-- Injected JSON Data -->
   <script>
     const PROVINCES_DATA = {
@@ -332,21 +252,21 @@
     "capital": "Corque",
     "icon": "🦙",
     "zone": "Centro",
-    "population": "11,071 hab.",
+    "population": "19.000 hab. · Censo 2024",
     "altitude": "3,770 msnm",
-    "climate": "Frío andino con vientos",
-    "area": "4.135.0 km²",
+    "climate": "Frío y seco de alta montaña",
+    "area": "≈ 3.700 km²",
     "municipalities": [
       "Corque",
       "Choquecota"
     ],
     "highlights": [
-      "Cuna y corazón ancestral de la Nación Carangas",
-      "Población de Corque 'Capital de la Llama' de Bolivia",
-      "Paisajes de sabana andina y serranías de Choquecota"
+      "Corque, capital de la ancestral Marka Carangas",
+      "Templo de San Juan Bautista de Corque, con retablos y torre colonial",
+      "Tarqueada, zampoñada y chovena regional en sus festividades"
     ],
-    "description": "Corazón geográfico y cultural del occidente orureño. Famosa por sus extensas pampas dedicadas a la crianza de camélidos de alta pureza genética.",
-    "link": "https://es.wikipedia.org/wiki/Provincia_de_Carangas"
+    "description": "Provincia del Altiplano Central boliviano conformada por Corque, Primera Sección Municipal y capital provincial, y Choquecota, Segunda Sección Municipal. Su territorio reúne planicies áridas, serranías moderadas y la cuenca de los ríos Barras y Lauca.",
+    "link": "/institucion/historia/corque"
   },
   "cercado": {
     "id": "cercado",
@@ -382,13 +302,13 @@
     "capital": "Salinas de Garci Mendoza",
     "icon": "🌋",
     "zone": "Sur",
-    "population": "14,851 hab.",
-    "altitude": "3,730 msnm",
+    "population": "19.131 hab. · Censo 2024",
+    "altitude": "3.740 msnm",
     "climate": "Seco y frío con alta radiación solar",
-    "area": "6.603.1 km²",
+    "area": "6.533 km²",
     "municipalities": [
-      "Salinas de Garci Mendoza (Autonomía Indígena Originario Campesina de Salinas)",
-      "Pampa Aullagas"
+      "Salinas (GAIOCSA) · 15.934 hab.",
+      "Pampa Aullagas · 3.197 hab."
     ],
     "highlights": [
       "Capital Mundial de la Quinua Real Orgánica",
@@ -458,12 +378,12 @@
     "capital": "Santiago de Huayllamarca",
     "icon": "⛰️",
     "zone": "Norte",
-    "population": "5,502 hab.",
+    "population": "5.980 hab. · Censo 2024",
     "altitude": "3,890 msnm",
     "climate": "Frío y seco",
     "area": "897.7 km²",
     "municipalities": [
-      "Santiago de Huayllamarca"
+      "Santiago de Huayllamarca · único municipio · 5.980 hab."
     ],
     "highlights": [
       "Hermosas serranías y colinas andinas de Huayllamarca",

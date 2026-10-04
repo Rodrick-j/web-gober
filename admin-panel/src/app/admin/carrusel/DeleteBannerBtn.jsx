@@ -24,10 +24,13 @@ export default function DeleteBannerBtn({ banner }) {
         
       if (error) throw error;
 
-      // 2. Borrar del Storage (para no dejar basura)
-      if (banner.imagen_url) {
-        await deleteFile(banner.imagen_url);
-      }
+      // 2. Borrar todas las variantes del Storage (PC, tablet y celular).
+      const imageUrls = [...new Set([
+        banner.imagen_url,
+        banner.imagen_tablet_url,
+        banner.imagen_movil_url,
+      ].filter(Boolean))];
+      await Promise.all(imageUrls.map((imageUrl) => deleteFile(imageUrl)));
 
       router.refresh();
     } catch (err) {

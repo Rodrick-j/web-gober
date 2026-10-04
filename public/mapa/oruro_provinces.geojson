@@ -2499,21 +2499,21 @@
         "capital": "Corque",
         "icon": "🦙",
         "zone": "Centro",
-        "population": "11,071 hab.",
+        "population": "19.000 hab. · Censo 2024",
         "altitude": "3,770 msnm",
-        "climate": "Frío andino con vientos",
-        "area": "4.135.0 km²",
+        "climate": "Frío y seco de alta montaña",
+        "area": "≈ 3.700 km²",
         "municipalities": [
           "Corque",
           "Choquecota"
         ],
         "highlights": [
-          "Cuna y corazón ancestral de la Nación Carangas",
-          "Población de Corque 'Capital de la Llama' de Bolivia",
-          "Paisajes de sabana andina y serranías de Choquecota"
+          "Corque, capital de la ancestral Marka Carangas",
+          "Templo de San Juan Bautista de Corque, con retablos y torre colonial",
+          "Tarqueada, zampoñada y chovena regional en sus festividades"
         ],
-        "description": "Corazón geográfico y cultural del occidente orureño. Famosa por sus extensas pampas dedicadas a la crianza de camélidos de alta pureza genética.",
-        "link": "https://es.wikipedia.org/wiki/Provincia_de_Carangas"
+        "description": "Provincia del Altiplano Central boliviano conformada por Corque, Primera Sección Municipal y capital provincial, y Choquecota, Segunda Sección Municipal. Su territorio reúne planicies áridas, serranías moderadas y la cuenca de los ríos Barras y Lauca.",
+        "link": "/institucion/historia/corque"
       },
       "geometry": {
         "type": "Polygon",
@@ -6859,13 +6859,13 @@
         "capital": "Salinas de Garci Mendoza",
         "icon": "🌋",
         "zone": "Sur",
-        "population": "14,851 hab.",
-        "altitude": "3,730 msnm",
+        "population": "19.131 hab. · Censo 2024",
+        "altitude": "3.740 msnm",
         "climate": "Seco y frío con alta radiación solar",
-        "area": "6.603.1 km²",
+        "area": "6.533 km²",
         "municipalities": [
-          "Salinas de Garci Mendoza (Autonomía Indígena Originario Campesina de Salinas)",
-          "Pampa Aullagas"
+          "Salinas (GAIOCSA) · 15.934 hab.",
+          "Pampa Aullagas · 3.197 hab."
         ],
         "highlights": [
           "Capital Mundial de la Quinua Real Orgánica",
@@ -11434,12 +11434,12 @@
         "capital": "Santiago de Huayllamarca",
         "icon": "⛰️",
         "zone": "Norte",
-        "population": "5,502 hab.",
+        "population": "5.980 hab. · Censo 2024",
         "altitude": "3,890 msnm",
         "climate": "Frío y seco",
         "area": "897.7 km²",
         "municipalities": [
-          "Santiago de Huayllamarca"
+          "Santiago de Huayllamarca · único municipio · 5.980 hab."
         ],
         "highlights": [
           "Hermosas serranías y colinas andinas de Huayllamarca",

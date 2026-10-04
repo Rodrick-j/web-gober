@@ -1,18 +1,21 @@
-/* =============================================
-   HERO SLIDER – Cinematic Premium (Apple-Style)
-   ============================================= */
+/* Full-screen institutional cover. The header stays in normal flow above it. */
+.sliderSection,
+.heroFallback {
+  --hero-header-height: calc(var(--navbar-height) + 2rem);
+  --ticker-height: 44px;
+
+  width: 100%;
+  height: calc(100vh - var(--hero-header-height));
+  height: calc(100svh - var(--hero-header-height));
+  height: calc(100dvh - var(--hero-header-height));
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
 
 .sliderSection {
-  /* Único valor a tocar para cambiar la altura del carrusel. */
-  --hero-max-height: 76vh;
-
-  /* Ocupa todo el ancho de la página, pero con la altura acotada:
-     nunca pasa de --hero-max-height ni del alto natural en 16:9. */
-  width: 100%;
-  height: min(var(--hero-max-height), calc(100vw * 9 / 16));
-  position: relative;
-  background-color: transparent; /* Eliminamos el fondo negro */
-  overflow: hidden;
+  isolation: isolate;
+  background: #0e131d;
 }
 
 .swiperRoot {
@@ -27,369 +30,840 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: clamp(2.5rem, 8vh, 6rem);
 }
 
 .bgImageWrapper {
   position: absolute;
   inset: 0;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  background: #0e131d;
 }
 
-.blurredBg {
-  object-fit: cover;
-  object-position: center center;
-  filter: blur(40px) brightness(0.9); /* Resplandor ambiental claro, no borde oscuro */
-  transform: scale(1.15); /* Escala mayor para evitar bordes duros */
+.responsivePicture {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+  z-index: 1;
+  display: block;
 }
 
 .mainImage {
-  /* contain: el banner se ve entero, sin recortes. Lo que sobra a los
-     costados lo cubre .blurredBg, así no quedan franjas vacías. */
-  object-fit: contain;
-  object-position: center center;
-  width: 100%;
-  height: 100%;
   z-index: 1;
+  object-fit: cover;
+  object-position: center;
 }
 
-/* El banner no lleva zoom: al estar en contain, escalarlo le cortaría
-   los bordes del arte. El movimiento ambiental lo da el fondo borroso. */
-:global(.swiper-slide-active) .mainImage {
-  transform: none;
-}
-
-.hideOnMobile { display: block; }
-.showOnlyOnMobile { display: none !important; }
-
-/* Gradient overlay for better text readability */
+/* Keeps the content and controls readable without hiding the artwork. */
 .gradientOverlay {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.4) 30%,
-    transparent 60%
-  );
   pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(4, 8, 15, 0.2) 0%, rgba(4, 8, 15, 0.01) 38%, rgba(4, 8, 15, 0.14) 58%, rgba(4, 8, 15, 0.58) 100%),
+    linear-gradient(90deg, rgba(4, 8, 15, 0.22) 0%, transparent 48%);
 }
 
-/* ── Content Card ── */
+/* Optional message card for banners that include a title or a link. */
 .slideContentContainer {
   position: relative;
   z-index: 10;
   width: 100%;
-  max-width: 1200px;
-  padding: 0 5%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(1.25rem, 5vw, 5rem) calc(var(--ticker-height) + clamp(8.5rem, 16vh, 10.5rem));
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  pointer-events: none;
 }
 
-/* Apple-style Glassmorphism Card */
 .glassCard {
-  background: rgba(0, 0, 0, 0.2); /* Fondo ligeramente oscuro para que el texto resalte */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 1rem 1.2rem;
-  width: 100%;
-  max-width: 450px;
-  text-align: center;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  
+  width: min(100%, 33rem);
+  padding: clamp(1.1rem, 2vw, 1.65rem);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: #fff;
+  text-align: left;
+  pointer-events: auto;
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(1.5rem);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-left: 3px solid var(--color-gold);
+  border-radius: 0 1rem 1rem 0;
+  background: linear-gradient(112deg, rgba(9, 16, 27, 0.84), rgba(9, 16, 27, 0.48));
+  box-shadow: 0 1.25rem 3.5rem rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(0.75rem);
+  -webkit-backdrop-filter: blur(0.75rem);
 }
 
 :global(.swiper-slide-active) .glassCard {
-  animation: cardReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  animation: cardReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
 }
 
 @keyframes cardReveal {
-  to { opacity: 1; transform: translateY(0); }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .cardHeader {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
 }
 
 .indicatorPulse {
-  width: 8px;
-  height: 8px;
-  background-color: #ffb843; /* Oruro Gold */
+  width: 0.5rem;
+  height: 0.5rem;
+  flex: 0 0 auto;
   border-radius: 50%;
-  box-shadow: 0 0 10px #ffb843;
-  animation: pulse 2s infinite;
+  background: var(--color-gold);
+  box-shadow: 0 0 0 0 rgba(255, 184, 67, 0.56);
+  animation: pulse 2.2s infinite;
 }
 
 @keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 184, 67, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 184, 67, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 184, 67, 0); }
+  0%, 100% {
+    transform: scale(0.92);
+    box-shadow: 0 0 0 0 rgba(255, 184, 67, 0.56);
+  }
+
+  55% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0.45rem rgba(255, 184, 67, 0);
+  }
 }
 
 .tagLine {
+  color: var(--color-gold-light);
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: #ffb843; /* Oruro Gold */
 }
 
 .slideTitle {
-  font-family: var(--font-heading);
-  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
-  font-weight: 700;
-  line-height: 1.1;
   color: #fff;
-  letter-spacing: -0.02em;
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
 }
 
 .slideDesc {
-  font-family: var(--font-body);
-  font-size: clamp(0.9rem, 1.1vw, 1rem);
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.3;
-  max-width: 100%;
+  max-width: 31rem;
   margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-body);
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
+  line-height: 1.45;
 }
 
-/* Primary Action Button (Apple Style) */
 .actionWrapper {
   display: flex;
-  justify-content: center;
+  margin-top: 0.2rem;
 }
 
 .primaryButton {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #ffffff;
-  color: #000000;
-  padding: 0.8rem 2rem;
-  border-radius: 9999px;
+  padding: 0.72rem 1.1rem;
+  border-radius: var(--radius-full);
+  background: var(--color-gold);
+  color: #3a0a10;
   font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 700;
   text-decoration: none;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+  box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .primaryButton:hover {
-  transform: scale(1.05);
-  background: #ffb843; /* Oruro Gold */
-  color: #140205; /* Deep Crimson */
+  transform: translateY(-2px);
+  background: #fff;
+  color: var(--color-primary-dark);
+}
+
+.primaryButton:focus-visible,
+.navBtn:focus-visible,
+.socialIcon:focus-visible,
+.comunicadosTrigger:focus-visible,
+.comunicadosClose:focus-visible,
+.featuredComunicado:focus-visible,
+.comunicadoCard:focus-visible,
+.comunicadoQuickLink:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
 }
 
 .primaryButton svg {
-  width: 18px;
-  height: 18px;
-  transition: transform 0.3s ease;
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.2s ease;
 }
 
 .primaryButton:hover svg {
-  transform: translateX(4px);
+  transform: translateX(0.2rem);
 }
 
-/* ── Custom Navigation Controls ── */
+/* Previous/next buttons remain quiet until the visitor needs them. */
 .controlsContainer {
   position: absolute;
   inset: 0;
-  pointer-events: none;
   z-index: 20;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  justify-content: space-between;
+  padding: 0 clamp(0.75rem, 2.5vw, 2.75rem);
+  pointer-events: none;
 }
 
 .navBtn {
-  pointer-events: auto;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
+  width: 3.25rem;
+  height: 3.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
   cursor: pointer;
-  transition: all 0.3s ease;
+  pointer-events: auto;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 0.9rem;
+  background: rgba(12, 17, 28, 0.42);
+  color: #fff;
+  box-shadow: 0 0.6rem 1.7rem rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(0.75rem);
+  -webkit-backdrop-filter: blur(0.75rem);
+  transition: transform 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease;
 }
 
 .navBtn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
-  border-color: #ffb843;
-  color: #ffb843;
+  transform: translateY(-2px);
+  border-color: var(--color-gold);
+  background: rgba(12, 17, 28, 0.7);
+  color: var(--color-gold);
 }
 
-.navBtn svg { width: 24px; height: 24px; }
-
-/* ── Pagination ── */
-.customBullet {
-  width: 30px !important;
-  height: 3px !important;
-  background: rgba(255, 255, 255, 0.3) !important;
-  border-radius: 2px !important;
-  opacity: 1 !important;
-  margin: 0 4px !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  display: inline-block;
-  cursor: pointer;
-}
-.customBulletActive {
-  background: #ffb843 !important; /* Oruro Gold */
-  width: 60px !important;
+.navBtn svg {
+  width: 1.45rem;
+  height: 1.45rem;
 }
 
-/* ── Fallback ── */
-.heroFallback {
-  width: 100%;
-  height: 100vh;
+/* One ordered lower band: social links above the slide indicators. */
+.swiperRoot :global(.swiper-pagination) {
+  bottom: calc(var(--ticker-height) + clamp(0.85rem, 2.2vh, 1.6rem)) !important;
+  z-index: 25;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
-  color: white;
-  text-align: center;
 }
 
-/* ── Floating Social Icons (Professional SVG Style) ── */
+.customBullet {
+  width: 0.48rem !important;
+  height: 0.48rem !important;
+  margin: 0 0.26rem !important;
+  border-radius: var(--radius-full) !important;
+  background: rgba(255, 255, 255, 0.58) !important;
+  opacity: 1 !important;
+  cursor: pointer;
+  transition: width 0.28s ease, background-color 0.28s ease, transform 0.28s ease !important;
+}
+
+.customBulletActive {
+  width: 2rem !important;
+  background: var(--color-gold) !important;
+}
+
 .floatingSocials {
   position: absolute;
-  bottom: 40px;
-  right: 40px;
+  bottom: calc(var(--ticker-height) + clamp(3.5rem, 7vh, 5.5rem));
+  left: 50%;
   z-index: 30;
   display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  
+  width: max-content;
+  gap: 0.7rem;
+  transform: translateX(-50%);
   opacity: 0;
-  animation: cardReveal 1.2s cubic-bezier(0.16,1,0.3,1) 0.8s forwards;
+  animation: socialReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+}
+
+@keyframes socialReveal {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 1rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 .socialIcon {
-  width: 34px;
-  height: 34px;
-  background: var(--color-primary);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
+  width: 2.55rem;
+  height: 2.55rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 50%;
+  background: rgba(156, 7, 32, 0.9);
+  color: #fff;
+  box-shadow: 0 0.45rem 1.25rem rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
-.socialIcon svg { width: 16px; height: 16px; }
-
-/* Oruro Colors on Hover */
 .socialIcon:hover {
-  transform: translateY(-4px) scale(1.1);
-  color: #140205; /* Deep Crimson */
-  background: #ffb843; /* Oruro Gold */
-  border-color: #ffb843;
-  box-shadow: 0 12px 28px rgba(255, 184, 67, 0.4);
+  transform: translateY(-0.2rem);
+  background: var(--color-gold);
+  color: #3a0a10;
 }
 
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  .glassCard {
-    padding: 2rem;
-    max-width: 90%;
+.socialIcon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+/* The ticker belongs to the cover, so it remains visible during every slide. */
+.breakingNews {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 35;
+  height: var(--ticker-height);
+}
+
+/* Direct access to official notices without interrupting the carousel. */
+.comunicadosTrigger {
+  position: absolute;
+  top: clamp(0.9rem, 2.4vh, 1.7rem);
+  right: clamp(0.9rem, 2.5vw, 2.4rem);
+  z-index: 40;
+  display: inline-flex;
+  min-height: 2.65rem;
+  align-items: center;
+  gap: 0.52rem;
+  padding: 0.52rem 0.78rem;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 0.85rem;
+  background: rgba(15, 20, 30, 0.64);
+  box-shadow: 0 0.75rem 1.8rem rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(0.8rem);
+  -webkit-backdrop-filter: blur(0.8rem);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.comunicadosTrigger:hover {
+  color: #321018;
+  border-color: var(--color-gold);
+  background: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.comunicadosTrigger svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.comunicadosBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  padding: clamp(0.65rem, 2vw, 1.5rem);
+  background: rgba(4, 8, 15, 0.58);
+  backdrop-filter: blur(0.65rem);
+  -webkit-backdrop-filter: blur(0.65rem);
+}
+
+.comunicadosDialog {
+  width: min(100%, 31rem);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #202939;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 1.3rem;
+  background: #f8fafc;
+  box-shadow: -1.4rem 0 4rem rgba(0, 0, 0, 0.3);
+  animation: comunicadosIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes comunicadosIn {
+  from {
+    opacity: 0;
+    transform: translateX(1.25rem);
   }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.comunicadosHeader {
+  display: flex;
+  min-height: 5.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1rem 1rem 1.25rem;
+  color: #fff;
+  background:
+    radial-gradient(circle at 82% 10%, rgba(255, 191, 75, 0.2), transparent 10rem),
+    linear-gradient(118deg, #670d21, #9c0720 57%, #be1533);
+}
+
+.comunicadosHeader span {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: rgba(255, 244, 221, 0.74);
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.comunicadosHeader h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+  line-height: 1.1;
+}
+
+.comunicadosClose {
+  width: 2.45rem;
+  height: 2.45rem;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.23);
+  border-radius: 0.75rem;
+  background: rgba(47, 3, 13, 0.25);
+  cursor: pointer;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.comunicadosClose:hover {
+  background: rgba(255, 255, 255, 0.16);
+  transform: rotate(4deg);
+}
+
+.comunicadosClose svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.comunicadosBody {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.25rem;
+  overflow-y: auto;
+  padding: 1rem;
+  overscroll-behavior: contain;
+}
+
+.featuredComunicado {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  overflow: hidden;
+  color: inherit;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 0.65rem 1.6rem rgba(15, 23, 42, 0.08);
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.featuredComunicado:hover {
+  border-color: rgba(156, 7, 32, 0.44);
+  box-shadow: 0 0.85rem 1.9rem rgba(15, 23, 42, 0.12);
+  transform: translateY(-2px);
+}
+
+.featuredComunicadoImage {
+  position: relative;
+  min-height: 8.5rem;
+  overflow: hidden;
+  background: #121a27;
+}
+
+.featuredComunicadoImage img,
+.comunicadoCardImage img {
+  object-fit: cover;
+}
+
+.featuredComunicadoCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0.75rem 0.85rem;
+}
+
+.featuredComunicadoCopy small,
+.comunicadoCard small {
+  color: #a60d28;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.featuredComunicadoCopy strong {
+  display: -webkit-box;
+  margin-top: 0.3rem;
+  overflow: hidden;
+  color: #242c3b;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  line-height: 1.2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.featuredComunicadoCopy em {
+  margin-top: 0.56rem;
+  color: #687386;
+  font-family: var(--font-body);
+  font-size: 0.69rem;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.comunicadosSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.comunicadosSectionTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #475569;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.comunicadosSectionTitle a {
+  color: #9c0720;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.comunicadosSectionTitle a:hover {
+  color: #d51638;
+  text-decoration: underline;
+}
+
+.comunicadosGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.comunicadoCard {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 0.85rem;
+  background: #fff;
+  text-decoration: none;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.comunicadoCard:hover {
+  border-color: rgba(156, 7, 32, 0.43);
+  box-shadow: 0 0.65rem 1.5rem rgba(15, 23, 42, 0.1);
+  transform: translateY(-2px);
+}
+
+.comunicadoCardImage {
+  position: relative;
+  height: 6.2rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.8);
+  background:
+    linear-gradient(135deg, rgba(156, 7, 32, 0.92), rgba(55, 8, 18, 0.88)),
+    #540717;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.comunicadoCard > div:last-child {
+  padding: 0.65rem;
+}
+
+.comunicadoCard strong {
+  display: -webkit-box;
+  margin-top: 0.28rem;
+  overflow: hidden;
+  color: #303847;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 760;
+  line-height: 1.28;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.comunicadosLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.comunicadoQuickLink {
+  display: flex;
+  min-height: 4.1rem;
+  align-items: center;
+  gap: 0.72rem;
+  padding: 0.6rem 0.7rem;
+  color: inherit;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 0.85rem;
+  background: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.comunicadoQuickLink:hover {
+  border-color: rgba(156, 7, 32, 0.36);
+  background: #fff;
+  transform: translateX(2px);
+}
+
+.comunicadoQuickIcon {
+  width: 2.35rem;
+  height: 2.35rem;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  color: #9c0720;
+  border-radius: 0.7rem;
+  background: rgba(156, 7, 32, 0.09);
+}
+
+.comunicadoQuickIcon svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.comunicadoQuickLink > span:nth-child(2) {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.comunicadoQuickLink strong {
+  color: #303847;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.comunicadoQuickLink small {
+  margin-top: 0.16rem;
+  color: #718096;
+  font-family: var(--font-body);
+  font-size: 0.67rem;
+  line-height: 1.25;
+}
+
+.comunicadoQuickArrow {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: #9c0720;
+}
+
+/* Empty-state cover follows the exact same full-screen rhythm. */
+.heroFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: #fff;
+  text-align: center;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(255, 184, 67, 0.23), transparent 35%),
+    linear-gradient(135deg, #28070d, #0b1421);
+}
+
+.content {
+  max-width: 48rem;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 6vw, 5rem);
+  line-height: 1.02;
+}
+
+.highlight {
+  color: var(--color-gold);
 }
 
 @media (max-width: 768px) {
-  .sliderSection {
-    /* En celular el banner ya coincide con el ancho de pantalla, así que
-       el marco toma su misma proporción: sin franjas ni fondo borroso. */
-    height: auto;
-    aspect-ratio: 16 / 9;
+  .slideContentContainer {
+    padding: 0 1rem calc(var(--ticker-height) + 8.25rem);
   }
-  .glassCard {
-    padding: 1.5rem;
-    border-radius: 16px;
-  }
-  .slideTitle { font-size: 1.3rem; }
-  .slideDesc { font-size: 0.9rem; margin-bottom: 1.5rem; }
 
-  /* Imagen a lo ancho del marco. Como el marco ya es 16:9, un banner
-     1920x1080 encaja exacto: sin recorte y sin bordes. */
-  .mainImage,
-  :global(.swiper-slide-active) .mainImage {
-    object-fit: cover;
+  .glassCard {
+    width: min(100%, 31rem);
+    padding: 1rem 1.1rem;
+  }
+
+  .slideDesc {
+    display: none;
+  }
+
+  .controlsContainer {
+    padding: 0 0.65rem;
+  }
+
+  .navBtn {
+    width: 2.65rem;
+    height: 2.65rem;
+    border-radius: 0.7rem;
+  }
+
+  .navBtn svg {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .floatingSocials {
+    bottom: calc(var(--ticker-height) + 3.6rem);
+    gap: 0.58rem;
+  }
+
+  .socialIcon {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .socialIcon svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .comunicadosTrigger {
+    top: 0.75rem;
+    right: 0.75rem;
+    min-height: 2.45rem;
+    padding: 0.48rem 0.62rem;
+    border-radius: 0.75rem;
+    font-size: 0.68rem;
+  }
+
+  .comunicadosBackdrop {
+    padding: 0.65rem;
+  }
+
+  .comunicadosDialog {
+    width: min(100%, 32rem);
+    border-radius: 1rem;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .sliderSection,
+  .heroFallback {
+    --hero-header-height: calc(var(--navbar-height) + 1.75rem);
+  }
+
+  .slideContentContainer {
+    padding-bottom: calc(var(--ticker-height) + 7.9rem);
+  }
+
+  .tagLine {
+    font-size: 0.64rem;
+  }
+
+  .swiperRoot :global(.swiper-pagination) {
+    bottom: calc(var(--ticker-height) + 0.85rem) !important;
+  }
+
+  .comunicadosTrigger span {
+    display: none;
+  }
+
+  .comunicadosTrigger {
+    width: 2.45rem;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .featuredComunicado {
+    grid-template-columns: 5.6rem minmax(0, 1fr);
+  }
+
+  .featuredComunicadoImage {
+    min-height: 7.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glassCard,
+  .floatingSocials,
+  .indicatorPulse {
+    animation: none;
+  }
+
+  .glassCard,
+  .floatingSocials {
+    opacity: 1;
+  }
+
+  .glassCard {
     transform: none;
   }
 
-  /* Sin fondo borroso en celular */
-  .blurredBg { display: none !important; }
-
-  /* El contenido no empuja la altura del marco corto */
-  .slideInner { padding-bottom: 0; }
-  .gradientOverlay { background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.15) 45%, transparent 70%); }
-  
-  .controlsContainer { 
-    padding: 0 0.5rem; 
+  .comunicadosDialog {
+    animation: none;
   }
-  .navBtn {
-    width: 40px;
-    height: 40px;
-  }
-  .navBtn svg {
-    width: 20px;
-    height: 20px;
-  }
-  
-  .floatingSocials {
-    flex-direction: row;
-    bottom: 15px;
-    right: 50%;
-    transform: translateX(50%);
-    gap: 0.8rem;
-    animation: fadeInUp 0.8s forwards;
-  }
-  
-  .socialIcon {
-    width: 36px;
-    height: 36px;
-  }
-  
-  .socialIcon svg {
-    width: 16px;
-    height: 16px;
-  }
-  
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translate(50%, 20px); }
-    to { opacity: 1; transform: translate(50%, 0); }
-  }
-  
-  .hideOnMobile { display: none !important; }
-  .showOnlyOnMobile { display: block !important; }
 }

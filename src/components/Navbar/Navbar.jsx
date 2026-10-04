@@ -22,7 +22,7 @@ function getAcronym(nombre) {
   return words.map(w => w[0].toUpperCase()).join('');
 }
 
-// Los 14 enlaces de Institución se agrupan por tema y se muestran en columnas,
+// Los enlaces de Institución se agrupan por tema y se muestran en columnas,
 // todos visibles a la vez, en lugar de una única lista larga.
 const institucionGroups = [
   {
@@ -97,6 +97,8 @@ const navItems = [
   },
 ];
 
+const DESKTOP_NAV_BREAKPOINT = 1280;
+
 const getSecretariaIcon = (sec) => {
   const text = (sec.slug + ' ' + (sec.nombre_corto || '') + ' ' + (sec.nombre || '')).toLowerCase();
   if (text.includes('minería') || text.includes('mineria') || text.includes('metalurgia')) return Pickaxe;
@@ -120,6 +122,8 @@ export default function Navbar() {
   const [secretariasList, setSecretariasList] = useState([]);
   const [currentDateTime, setCurrentDateTime] = useState(null);
   const timeoutRef = useRef(null);
+  const navbarRef = useRef(null);
+  const desktopTriggerRefs = useRef({});
   const supabase = useMemo(() => createClient(), []);
 
   const fallbackSecretarias = [
@@ -147,10 +151,11 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     
     const handleResize = () => {
-      if (window.innerWidth > 900) {
+      if (window.innerWidth > DESKTOP_NAV_BREAKPOINT) {
         setMobileOpen(false);
         setActiveMobileAccordion(null);
         setActiveMobileGroup(null);
+        setActiveDropdown(null);
       }
     };
     window.addEventListener('resize', handleResize);
@@ -176,8 +181,31 @@ export default function Navbar() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       clearInterval(clockTimer);
+      clearTimeout(timeoutRef.current);
     };
   }, [supabase]);
+
+  useEffect(() => {
+    const closeOnOutsidePointerDown = (event) => {
+      if (!navbarRef.current?.contains(event.target)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener('pointerdown', closeOnOutsidePointerDown);
+    document.addEventListener('keydown', closeOnEscape);
+
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsidePointerDown);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, []);
 
   // Update navItems dynamically with DB secretariats
   const dynamicNavItems = navItems.map(item => {
@@ -206,7 +234,13 @@ export default function Navbar() {
   };
 
   const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => setActiveDropdown(null), 100);
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setActiveDropdown(null), 180);
+  };
+
+  const toggleDesktopDropdown = (label) => {
+    clearTimeout(timeoutRef.current);
+    setActiveDropdown((current) => current === label ? null : label);
   };
 
   const toggleMobileAccordion = (label, hasNestedGroups = false) => {
@@ -267,6 +301,7 @@ export default function Navbar() {
 
       {/* Main Navbar */}
       <motion.header
+        ref={navbarRef}
         className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -308,78 +343,117 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className={styles.desktopNav}>
-            {dynamicNavItems.map((item) => (
+          <nav className={styles.desktopNav} aria-label="Navegación principal">
+            {dynamicNavItems.map((item, index) => (
               <div
                 key={item.label}
                 className={styles.navItem}
                 onMouseEnter={() => item.children && handleMouseEnter(item.label)}
                 onMouseLeave={handleMouseLeave}
               >
-                <Link 
-                  href={item.href} 
-                  className={styles.navLink}
-                  onClick={(e) => {
-                    if (item.href === '#') e.preventDefault();
-                  }}
-                >
-                  <span className={styles.navEmoji}><item.Icon size={18} strokeWidth={2.2} /></span>
-                  {item.label}
-                  {item.children && (
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+                {item.children ? (
+                  <button
+                    ref={(element) => {
+                      desktopTriggerRefs.current[item.label] = element;
+                    }}
+                    type="button"
+                    className={styles.navLink}
+                    onClick={() => toggleDesktopDropdown(item.label)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Escape') {
+                        event.preventDefault();
+                        setActiveDropdown(null);
+                      }
+
+                      if (event.key === 'ArrowDown') {
+                        event.preventDefault();
+                        handleMouseEnter(item.label);
+                      }
+                    }}
+                    aria-expanded={activeDropdown === item.label}
+                    aria-controls={'desktop-menu-' + index}
+                    aria-haspopup="true"
+                  >
+                    <span className={styles.navEmoji}><item.Icon size={18} strokeWidth={2.2} /></span>
+                    {item.label}
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true">
                       <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
                     </svg>
-                  )}
-                </Link>
+                  </button>
+                ) : (
+                  <Link href={item.href} className={styles.navLink}>
+                    <span className={styles.navEmoji}><item.Icon size={18} strokeWidth={2.2} /></span>
+                    {item.label}
+                  </Link>
+                )}
 
                 <AnimatePresence>
                   {item.children && activeDropdown === item.label && (
-                    <motion.div
-                      className={
+                    <div
+                      className={[
+                        styles.menuAnchor,
                         item.groups
-                          ? styles.groupMenu
+                          ? styles.groupMenuAnchor
                           : item.label === 'Secretarías'
-                            ? styles.megaMenu
-                            : styles.dropdown
-                      }
-                      initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                            ? styles.megaMenuAnchor
+                            : styles.dropdownAnchor,
+                      ].join(' ')}
                       onMouseEnter={() => clearTimeout(timeoutRef.current)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      {item.groups ? (
-                        item.groups.map((group) => (
-                          <div key={group.title} className={styles.groupColumn}>
-                            <span className={styles.groupTitle}>{group.title}</span>
-                            {group.items.map((child) => (
-                              <Link key={child.label} href={child.href} className={styles.groupLink}>
+                      <motion.div
+                        id={'desktop-menu-' + index}
+                        className={
+                          item.groups
+                            ? styles.groupMenu
+                            : item.label === 'Secretarías'
+                              ? styles.megaMenu
+                              : styles.dropdown
+                        }
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.16, ease: 'easeOut' }}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Escape') {
+                            event.preventDefault();
+                            setActiveDropdown(null);
+                            desktopTriggerRefs.current[item.label]?.focus();
+                          }
+                        }}
+                      >
+                        {item.groups ? (
+                          item.groups.map((group) => (
+                            <div key={group.title} className={styles.groupColumn}>
+                              <span className={styles.groupTitle}>{group.title}</span>
+                              {group.items.map((child) => (
+                                <Link key={child.label} href={child.href} className={styles.groupLink} onClick={() => setActiveDropdown(null)}>
+                                  <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
+                                  {child.label}
+                                </Link>
+                              ))}
+                            </div>
+                          ))
+                        ) : (
+                          item.children.map((child) => (
+                            item.label === 'Secretarías' ? (
+                              <Link key={child.label} href={child.href} className={styles.megaLink} onClick={() => setActiveDropdown(null)}>
+                                <div className={styles.megaEmoji}><child.Icon size={24} strokeWidth={2} /></div>
+                                <div className={styles.megaText}>
+                                  <span className={styles.megaAcronym}>{child.acronym}</span>
+                                  <span className={styles.megaFullName}>{child.fullLabel}</span>
+                                </div>
+                              </Link>
+                            ) : (
+                              <Link key={child.label} href={child.href} className={styles.dropdownLink} onClick={() => setActiveDropdown(null)}>
                                 <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
                                 {child.label}
                               </Link>
-                            ))}
-                          </div>
-                        ))
-                      ) : (
-                        item.children.map((child) => (
-                          item.label === 'Secretarías' ? (
-                            <Link key={child.label} href={child.href} className={styles.megaLink}>
-                              <div className={styles.megaEmoji}><child.Icon size={24} strokeWidth={2} /></div>
-                              <div className={styles.megaText}>
-                                <span className={styles.megaAcronym}>{child.acronym}</span>
-                                <span className={styles.megaFullName}>{child.fullLabel}</span>
-                              </div>
-                            </Link>
-                          ) : (
-                            <Link key={child.label} href={child.href} className={styles.dropdownLink}>
-                              <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
-                              {child.label}
-                            </Link>
-                          )
-                        ))
-                      )}
-                    </motion.div>
+                            )
+                          ))
+                        )}
+                      </motion.div>
+                    </div>
                   )}
                 </AnimatePresence>
               </div>

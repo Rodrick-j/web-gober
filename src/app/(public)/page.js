@@ -4,7 +4,6 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 import GovernorSection from '@/components/GovernorSection/GovernorSection';
 import HeroSlider from '@/components/HeroSlider/HeroSlider';
 import IntroAnimation from '@/components/IntroAnimation/IntroAnimation';
-import BreakingNews from '@/components/BreakingNews/BreakingNews';
 
 // Dynamic imports para componentes below-the-fold
 const SecretariatsSection = dynamic(() => import('@/components/SecretariatsSection/SecretariatsSection'), { ssr: true });
@@ -29,13 +28,15 @@ const getCachedHomeData = unstable_cache(
       { data: configData },
       { data: secretarias },
       { data: ultimasNoticias },
-      { data: ultimosDocumentos }
+      { data: ultimosDocumentos },
+      { data: comunicadosRapidos }
     ] = await Promise.all([
       supabase.from('banners_inicio').select('*').eq('activo', true).order('orden', { ascending: true }),
       supabase.from('configuracion_global').select('*').in('clave', ['ticker_noticias', 'contacto_oficial', 'redes_sociales', 'comunicado_popup', 'video_inicio']),
       supabase.from('secretarias').select('id, nombre, nombre_corto, slug, icono, secretario_nombre, secretario_cargo, secretario_foto_url, secretario_bio').eq('activo', true).order('orden', { ascending: true }),
       supabase.from('noticias').select('id, titulo, resumen, fecha_publicacion, imagen_portada_url, video_youtube_url, secretarias(nombre_corto, icono, color_acento)').eq('estado', 'publicado').order('fecha_publicacion', { ascending: false }).limit(5),
-      supabase.from('documentos').select('id, tipo, numero, titulo, fecha_publicacion, archivo_url').eq('es_publico', true).order('fecha_publicacion', { ascending: false }).order('created_at', { ascending: false }).limit(5)
+      supabase.from('documentos').select('id, tipo, numero, titulo, fecha_publicacion, archivo_url').eq('es_publico', true).order('fecha_publicacion', { ascending: false }).order('created_at', { ascending: false }).limit(5),
+      supabase.from('noticias').select('id, titulo, resumen, fecha_publicacion, imagen_portada_url').eq('estado', 'publicado').eq('es_comunicado_rapido', true).order('fecha_publicacion', { ascending: false }).limit(6)
     ]);
 
     return {
@@ -43,15 +44,16 @@ const getCachedHomeData = unstable_cache(
       configData: configData || [],
       secretarias: secretarias || [],
       ultimasNoticias: ultimasNoticias || [],
-      ultimosDocumentos: ultimosDocumentos || []
+      ultimosDocumentos: ultimosDocumentos || [],
+      comunicadosRapidos: comunicadosRapidos || []
     };
   },
-  ['home-page-data-v2'],
+  ['home-page-data-v3'],
   { revalidate: 60, tags: ['home-data'] }
 );
 
 export default async function Home() {
-  const { banners, configData, secretarias, ultimasNoticias, ultimosDocumentos } = await getCachedHomeData();
+  const { banners, configData, secretarias, ultimasNoticias, ultimosDocumentos, comunicadosRapidos } = await getCachedHomeData();
 
   const tickerConfig = configData?.find(c => c.clave === 'ticker_noticias')?.valor || { velocidad_segundos: 60, mensajes: [] };
   const contactoConfig = configData?.find(c => c.clave === 'contacto_oficial')?.valor || { direccion: 'Calle Presidente Montes, entre Bolívar y Adolfo Mier, Oruro', telefono: '(591-2) 5270-000', email: 'contacto@oruro.gob.bo', latitud: -17.969520017575668, longitud: -67.11512711053955 };
@@ -67,8 +69,13 @@ export default async function Home() {
 
       <main>
         {/* Carrusel Principal */}
-        <HeroSlider banners={banners} redes={redesConfig} />
-        <BreakingNews config={tickerConfig} />
+        <HeroSlider
+          banners={banners}
+          redes={redesConfig}
+          ticker={tickerConfig}
+          comunicado={comunicadoConfig}
+          comunicados={comunicadosRapidos}
+        />
         <CenefaCultural />
 
         <GovernorSection />
