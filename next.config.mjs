@@ -6,6 +6,15 @@ const nextConfig = {
       bodySizeLimit: '50mb',
     },
     optimizePackageImports: ['lucide-react'],
+    outputFileTracingExcludes: {
+      '*': [
+        'node_modules/wrangler/**',
+        'node_modules/workerd/**',
+        'node_modules/@cloudflare/**',
+        'node_modules/miniflare/**',
+        'node_modules/esbuild/**',
+      ],
+    },
   },
   images: {
     qualities: [10, 20, 30, 40, 50, 60, 70, 75, 80, 85, 90, 95, 100],
