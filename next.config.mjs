@@ -6,15 +6,19 @@ const nextConfig = {
       bodySizeLimit: '50mb',
     },
     optimizePackageImports: ['lucide-react'],
-    outputFileTracingExcludes: {
-      '*': [
-        'node_modules/wrangler/**',
-        'node_modules/workerd/**',
-        'node_modules/@cloudflare/**',
-        'node_modules/miniflare/**',
-        'node_modules/esbuild/**',
-      ],
-    },
+  },
+  outputFileTracingExcludes: {
+    '*': [
+      'node_modules/wrangler/**',
+      'node_modules/workerd/**',
+      'node_modules/@cloudflare/**',
+      'node_modules/miniflare/**',
+      'node_modules/esbuild/**',
+      'node_modules/typescript/**',
+      'node_modules/eslint/**',
+      'node_modules/eslint-config-next/**',
+      '.git/**',
+    ],
   },
   images: {
     qualities: [10, 20, 30, 40, 50, 60, 70, 75, 80, 85, 90, 95, 100],
