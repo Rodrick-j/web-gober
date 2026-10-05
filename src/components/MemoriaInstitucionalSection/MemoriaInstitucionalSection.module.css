@@ -1,0 +1,344 @@
+.section {
+  padding: 4rem 0 2rem;
+  background: #fdfdfd;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.fullscreenMode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  padding: 0;
+  z-index: 9999;
+  background: #fdfdfd;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.title {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 0 0 1.25rem;
+  line-height: 1.15;
+  background: linear-gradient(135deg, #1a1a1a 0%, #8B1A1A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: 500;
+  max-width: 750px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* Year Selector */
+.yearSelectorContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.yearSelector {
+  display: flex;
+  gap: 0.5rem;
+  background: #f1f1f1;
+  padding: 0.35rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.yearBtn {
+  border: none;
+  background: transparent;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.yearBtn:hover {
+  color: #1a1a1a;
+  background: rgba(0,0,0,0.05);
+}
+
+.yearBtnActive {
+  background: #fff;
+  color: #8B1A1A;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.yearBtnActive:hover {
+  background: #fff;
+  color: #8B1A1A;
+}
+
+/* Viewer Wrapper */
+.viewerWrapper {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  min-height: 600px;
+}
+
+.viewerFullscreen {
+  height: 100vh;
+  border-radius: 0;
+  border: none;
+}
+
+/* Toolbar */
+.viewerToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.toolbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.toolbarInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.yearSelectorMini {
+  display: flex;
+  gap: 0.5rem;
+  background: #fff;
+  padding: 0.25rem;
+  border-radius: 8px;
+  border: 1px solid #eaeaea;
+}
+
+.yearBtnMini {
+  border: none;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.yearBtnMini:hover {
+  color: #1a1a1a;
+  background: #f1f1f1;
+}
+
+.yearBtnMiniActive {
+  background: #8B1A1A;
+  color: #fff;
+}
+
+.yearBtnMiniActive:hover {
+  background: #8B1A1A;
+  color: #fff;
+}
+
+.toolbarIcon {
+  font-size: 2rem;
+}
+
+.toolbarTitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.2rem;
+}
+
+.toolbarDesc {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+.toolbarActions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.actionBtn, .actionBtnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.actionBtn {
+  background: #1A448B;
+  color: #fff;
+}
+
+.actionBtn:hover {
+  background: #123063;
+}
+
+.actionBtnSecondary {
+  background: transparent;
+  color: #555;
+  border: 1px solid #ccc;
+}
+
+.actionBtnSecondary:hover {
+  background: #f1f1f1;
+  color: #1a1a1a;
+}
+
+/* PDF Container */
+.pdfContainer {
+  flex: 1;
+  background: #e9ecef;
+  position: relative;
+}
+
+.pdfIframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* No Data State */
+.noDataState {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  max-width: 400px;
+}
+
+.noDataIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.noDataState h3 {
+  font-size: 1.25rem;
+  color: #333;
+  margin: 0 0 0.5rem;
+}
+
+.noDataState p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .viewerToolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .toolbarActions {
+    width: 100%;
+  }
+  
+  .actionBtn, .actionBtnSecondary {
+    flex: 1;
+    justify-content: center;
+  }
+  
+  .viewerWrapper {
+    height: 70vh;
+    min-height: 500px;
+  }
+}
+/* PDF Cover */
+.pdfCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fdfdfd;
+  text-align: center;
+  padding: 2rem;
+}
+
+.pdfCoverIcon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.pdfCover h3 {
+  font-size: 1.4rem;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem;
+}
+
+.pdfCover p {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0 0 1.5rem;
+}
+
+.loadPdfBtn {
+  background: linear-gradient(135deg, #1A448B, #2B60C0);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 1.8rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(26, 68, 139, 0.25);
+}
+
+.loadPdfBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(26, 68, 139, 0.35);
+}

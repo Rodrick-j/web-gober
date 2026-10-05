@@ -1,0 +1,225 @@
+﻿.section {
+  padding: 4rem 0 2rem;
+  background: #f8f6f1;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #8B1A1A, #C0392B);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0 0 1rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Block section */
+.blockSection {
+  margin-bottom: 3rem;
+}
+
+.blockHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e8ddd0;
+}
+
+.blockIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.blockTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #8B1A1A;
+  margin: 0 0 0.35rem;
+}
+
+.blockDesc {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Principios Grid */
+.principiosGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.principioCard {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-left: 4px solid #8B1A1A;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.principioCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(139,26,26,0.12);
+}
+
+.principioIcon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.principioContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.principioQuechua {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #8B1A1A;
+  font-style: italic;
+}
+
+.principioEspanol {
+  font-size: 0.82rem;
+  color: #888;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.principioDesc {
+  font-size: 0.88rem;
+  color: #444;
+  line-height: 1.6;
+  margin: 0.35rem 0 0;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9b99a, transparent);
+}
+
+.dividerIcon {
+  font-size: 1.5rem;
+  opacity: 0.7;
+}
+
+/* Valores Grid */
+.valoresGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.valorCard {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border-top: 4px solid #C0392B;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.valorCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(139,26,26,0.12);
+}
+
+.valorIcon {
+  display: block;
+  font-size: 2.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.valorTitulo {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem;
+}
+
+.valorDesc {
+  font-size: 0.87rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Citation */
+.citation {
+  font-size: 0.78rem;
+  color: #999;
+  text-align: center;
+  margin: 2rem 0 0;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .principiosGrid,
+  .valoresGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .blockHeader {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}

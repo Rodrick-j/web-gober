@@ -67,7 +67,7 @@ export default function ClimaWidget() {
 
       <div className={`${styles.iframeWrapper} ${isFullscreen ? styles.fullscreenWrapper : ''}`}>
         <div className={styles.overlayTopLeft}>
-          <Image src="/imagotipo_gador_2026.png" alt="Gobernación de Oruro" width={215} height={60} className={styles.overlayLogo} />
+          <Image src="/imagotipo_gador_2026.png" alt="Gobernación de Oruro" width={90} height={25} className={styles.overlayLogo} />
         </div>
         
         <button 
@@ -79,7 +79,7 @@ export default function ClimaWidget() {
         </button>
 
         <div className={styles.overlayTopRight}>
-          <Image src="/logo-gador.png" alt="Escudo" width={37} height={55} className={styles.overlayLogo} />
+          <Image src="/logo-gador.png" alt="Escudo" width={18} height={27} className={styles.overlayLogo} />
         </div>
         
         <LazyEmbed

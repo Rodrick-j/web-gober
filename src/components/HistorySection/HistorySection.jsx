@@ -14,10 +14,10 @@ export default function HistorySection() {
       description: 'Antes de existir una administración departamental, el territorio giraba en torno a la Real Villa de San Felipe de Austria y su gesta libertaria de 1781. El 5 de septiembre de 1826, el Mariscal Sucre promulgó la ley que erigió el nuevo departamento de Oruro, conformado por tres provincias: Oruro, Paria y Carangas, dando origen a la Prefectura.'
     },
     {
-      year: 'S. XIX - XX',
+      year: '1826 - 2005',
       title: 'La Larga Era de la Prefectura Centralizada',
       icon: '🏛️',
-      description: 'Durante el siglo XIX y casi todo el siglo XX, la institución fue la Prefectura de Oruro, de naturaleza centralista. El Prefecto, máxima autoridad, era designado por el Presidente de la República y actuaba como brazo operativo del Ejecutivo nacional, dependiendo enteramente de La Paz.'
+      description: 'Desde el 5 de septiembre de 1826 hasta el 18 de diciembre de 2005, la institución fue la Prefectura de Oruro. Durante casi 180 años, el Prefecto fue designado directamente por el Presidente de la República, actuando como brazo operativo del Ejecutivo nacional. Esta era centralista concluyó el 18 de diciembre de 2005 con las primeras elecciones democráticas de Prefectos por voto popular directo en Bolivia.'
     },
     {
       year: '1995 - 2005',
@@ -47,7 +47,7 @@ export default function HistorySection() {
       year: '2026',
       title: 'Elecciones y Nueva Administración',
       icon: '🔄',
-      description: 'Tras dos vueltas electorales (marzo y abril de 2026), Edgar Sánchez asumió como actual Gobernador. Su gestión inició con el restablecimiento del diálogo interinstitucional y acuerdos estratégicos de infraestructura, como la carretera Crucero–Qaqachaca–Pocoata.'
+      description: 'Tras dos vueltas electorales (marzo y abril de 2026), Eddgar Sánchez asumió como actual Gobernador. Su gestión inició con el restablecimiento del diálogo interinstitucional y acuerdos estratégicos de infraestructura, como la carretera Crucero–Qaqachaca–Pocoata.'
     }
   ];
 

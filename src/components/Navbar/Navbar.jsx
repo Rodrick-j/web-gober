@@ -17,9 +17,19 @@ import styles from './Navbar.module.css';
 // Helper function to extract initials from full name
 function getAcronym(nombre) {
   if(!nombre) return '';
-  const ignoredWords = ['de', 'del', 'y', 'e', 'la', 'las', 'el', 'los', 'en', 'al', 'a', 'por', 'para'];
-  const words = nombre.split(' ').filter(w => !ignoredWords.includes(w.toLowerCase()));
-  return words.map(w => w[0].toUpperCase()).join('');
+  const ignoredWords = ['de', 'del', 'e', 'la', 'las', 'el', 'los', 'en', 'al', 'a', 'por', 'para'];
+  const words = nombre.split(' ').filter(w => w.trim() !== '');
+  let acr = '';
+  for(let i=0; i<words.length; i++) {
+    const w = words[i].toLowerCase();
+    if (ignoredWords.includes(w)) continue;
+    if (w === 'y') {
+       acr += 'y ';
+    } else {
+       acr += words[i][0].toUpperCase() + '.';
+    }
+  }
+  return acr.trim();
 }
 
 // Los enlaces de Institución se agrupan por tema y se muestran en columnas,

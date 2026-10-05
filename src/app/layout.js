@@ -1,12 +1,8 @@
-import { Inter, Outfit } from 'next/font/google';
 import ThemeInjector from '@/components/ThemeInjector/ThemeInjector';
 import './globals.css';
 import Script from 'next/script';
 
 import ConsoleSuppressor from '../components/ConsoleSuppressor';
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' });
 
 export const metadata = {
   title: 'Gobierno Autónomo Departamental de Oruro',
@@ -27,7 +23,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" data-scroll-behavior="smooth" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
+    <html lang="es" data-scroll-behavior="smooth" className="theme-light" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>

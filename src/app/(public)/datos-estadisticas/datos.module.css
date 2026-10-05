@@ -1,50 +1,234 @@
-.main { min-height: 100vh; background: #f5f5f5; padding-bottom: 5rem; }
+.main { 
+  min-height: 100vh; 
+  background: #f8fafc; 
+  padding-bottom: 6rem;
+  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+}
 
 .hero {
-  padding: 3rem 1rem 2.5rem;
-  background: linear-gradient(135deg, #6b0000, #3a0000);
+  position: relative;
+  padding: 5rem 1.5rem 4rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 50%, #8B0000 100%);
+  background-size: 200% 200%;
+  animation: gradientFlow 10s ease infinite;
   text-align: center;
   color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
 }
-.heroTitle { font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 0.5rem; }
-.heroSub { color: rgba(255, 255, 255, 0.85); max-width: 680px; margin: 0 auto; font-size: 0.95rem; }
 
-.container { max-width: 1080px; margin: 0 auto; padding: 2.5rem 1rem 0; }
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.heroTitle { 
+  font-size: clamp(2rem, 5vw, 3.5rem); 
+  font-weight: 900; 
+  letter-spacing: -1px;
+  margin: 0 0 1rem; 
+  background: linear-gradient(to right, #ffffff, #e2e8f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.heroSub { 
+  color: rgba(255, 255, 255, 0.85); 
+  max-width: 720px; 
+  margin: 0 auto; 
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  position: relative;
+  z-index: 1;
+}
+
+.container { 
+  max-width: 1200px; 
+  margin: -2.5rem auto 0; 
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 10;
+}
 
 .note {
-  background: #fff;
-  border: 1px solid #ececec;
-  border-left: 4px solid #8B0000;
-  border-radius: 12px;
-  padding: 1rem 1.25rem;
-  color: #555;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(139, 0, 0, 0.1);
+  border-left: 5px solid #8B0000;
+  border-radius: 16px;
+  padding: 1.25rem 1.75rem;
+  color: #334155;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 3.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
-.note a { color: #8B0000; font-weight: 600; }
 
-.section { margin-bottom: 2.5rem; }
+.note::before {
+  content: '💡';
+  font-size: 1.5rem;
+}
+
+.note a { 
+  color: #8B0000; 
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(139, 0, 0, 0.4);
+  transition: all 0.2s ease;
+}
+
+.note a:hover {
+  color: #a30000;
+  border-bottom-style: solid;
+}
+
+.section { 
+  margin-bottom: 3.5rem; 
+  animation: slideUp 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.section:nth-child(2) { animation-delay: 0.1s; }
+.section:nth-child(3) { animation-delay: 0.2s; }
+.section:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes slideUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .sectionTitle {
-  font-size: 1.15rem;
+  font-size: 1.4rem;
   font-weight: 800;
-  color: #1a1a1a;
-  margin: 0 0 1rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 2px solid #8B0000;
+  color: #1e293b;
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
 }
 
-.kpiGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; }
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #8B0000, #ff4757);
+  border-radius: 4px;
+}
+
+.kpiGrid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+  gap: 1.5rem; 
+}
+
 .kpi {
-  background: #fff;
-  border: 1px solid #ececec;
-  border-radius: 14px;
-  padding: 1.3rem 1.4rem;
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.04);
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 20px;
+  padding: 1.75rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
-.kpiIcon { font-size: 1.4rem; }
-.kpiValue { font-size: 1.6rem; font-weight: 800; color: #1a1a1a; margin: 0.35rem 0 0.15rem; }
-.kpiLabel { font-size: 0.85rem; color: #444; font-weight: 600; }
-.kpiSub { font-size: 0.76rem; color: #999; margin-top: 0.2rem; }
 
-.empty { text-align: center; padding: 3rem 1rem; color: #777; background: #fff; border: 1px solid #ececec; border-radius: 14px; }
+.kpi::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: linear-gradient(135deg, rgba(139, 0, 0, 0.03) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.kpi:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border-color: rgba(139, 0, 0, 0.2);
+}
+
+.kpi:hover::before {
+  opacity: 1;
+}
+
+.kpiIcon { 
+  font-size: 1.8rem; 
+  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  background: #f1f5f9;
+  border-radius: 14px;
+  color: #8B0000;
+  transition: transform 0.3s ease;
+}
+
+.kpi:hover .kpiIcon {
+  transform: scale(1.1) rotate(5deg);
+  background: #fee2e2;
+}
+
+.kpiValue { 
+  font-size: 2.2rem; 
+  font-weight: 900; 
+  color: #0f172a; 
+  margin: 0 0 0.25rem; 
+  letter-spacing: -1px;
+  line-height: 1.1;
+  background: linear-gradient(90deg, #0f172a, #334155);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.kpiLabel { 
+  font-size: 0.95rem; 
+  color: #475569; 
+  font-weight: 700; 
+  line-height: 1.4;
+}
+
+.kpiSub { 
+  font-size: 0.8rem; 
+  color: #94a3b8; 
+  margin-top: 0.75rem; 
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.empty { 
+  text-align: center; 
+  padding: 5rem 2rem; 
+  color: #64748b; 
+  background: #fff; 
+  border: 1px dashed #cbd5e1; 
+  border-radius: 20px; 
+  font-size: 1.1rem;
+  font-weight: 500;
+}

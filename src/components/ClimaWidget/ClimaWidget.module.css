@@ -91,7 +91,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  width: 250px;
+  width: 200px;
   height: 55px;
   background: rgba(255, 255, 255, 0.2); /* Mucho más transparente */
   backdrop-filter: blur(12px); /* Un poco más de desenfoque para tapar el logo de atrás sin ser un bloque blanco */

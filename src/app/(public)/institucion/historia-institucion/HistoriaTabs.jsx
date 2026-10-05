@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import HistorySection from '@/components/HistorySection/HistorySection';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
+import ValoresPrincipiosSection from '@/components/ValoresPrincipiosSection/ValoresPrincipiosSection';
+import MemoriaInstitucionalSection from '@/components/MemoriaInstitucionalSection/MemoriaInstitucionalSection';
 import ContenidoBloque from '@/components/ContenidoInstitucional/ContenidoBloque';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './HistoriaTabs.module.css';
@@ -16,7 +18,7 @@ const FALLBACK_VISION =
 const TABS = [
   { id: 'historia', icon: '📜', label: 'Historia de la Institución', mobileLabel: 'Historia' },
   { id: 'mision_vision', icon: '🎯', label: 'Misión y Visión', mobileLabel: 'Misión y Visión' },
-  { id: 'valores', icon: '⚖️', label: 'Valores y Principios', mobileLabel: 'Valores' },
+  { id: 'valores', icon: '⚖️', label: 'Valores y Principios', mobileLabel: 'Valores y Principios' },
   { id: 'objetivos', icon: '🏹', label: 'Objetivos Institucionales', mobileLabel: 'Objetivos' },
   { id: 'memoria', icon: '📊', label: 'Memoria Institucional', mobileLabel: 'Memoria' },
 ];
@@ -33,7 +35,7 @@ const tieneResenaPersonalizada = (bloque) => {
   return Boolean(
     texto &&
     texto.length > 30 &&
-    !/complete desde el panel administrativo|contenido en actualizaci[oó]n/i.test(texto)
+    !/complete desde el panel administrativo|contenido en actualizaci[oó]n|publique la memoria institucional/i.test(texto)
   );
 };
 
@@ -114,12 +116,16 @@ export default function HistoriaTabs({ contenido = {} }) {
 
           {activeTab === 'valores' && (
             <motion.div key="valores" {...fade}>
-              <div style={panelWrap}>
-                <ContenidoBloque
-                  titulo={contenido.valores_principios?.titulo || 'Valores y Principios'}
-                  cuerpo={contenido.valores_principios?.cuerpo}
-                />
-              </div>
+              {tieneResenaPersonalizada(contenido.valores_principios) ? (
+                <div style={panelWrap}>
+                  <ContenidoBloque
+                    titulo={contenido.valores_principios?.titulo || 'Valores y Principios'}
+                    cuerpo={contenido.valores_principios?.cuerpo}
+                  />
+                </div>
+              ) : (
+                <ValoresPrincipiosSection />
+              )}
             </motion.div>
           )}
 
@@ -136,14 +142,18 @@ export default function HistoriaTabs({ contenido = {} }) {
 
           {activeTab === 'memoria' && (
             <motion.div key="memoria" {...fade}>
-              <div style={panelWrap}>
-                <ContenidoBloque
-                  titulo={contenido.memoria_institucional?.titulo || 'Memoria Institucional / Informe de Gestión'}
-                  cuerpo={contenido.memoria_institucional?.cuerpo}
-                  archivoUrl={contenido.memoria_institucional?.archivo_url}
-                  archivoLabel="Descargar Memoria / Informe de Gestión"
-                />
-              </div>
+              {tieneResenaPersonalizada(contenido.memoria_institucional) ? (
+                <div style={panelWrap}>
+                  <ContenidoBloque
+                    titulo={contenido.memoria_institucional?.titulo || 'Memoria Institucional / Informe de Gestión'}
+                    cuerpo={contenido.memoria_institucional?.cuerpo}
+                    archivoUrl={contenido.memoria_institucional?.archivo_url}
+                    archivoLabel="Descargar Memoria / Informe de Gestión"
+                  />
+                </div>
+              ) : (
+                <MemoriaInstitucionalSection />
+              )}
             </motion.div>
           )}
         </AnimatePresence>

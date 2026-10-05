@@ -4,7 +4,6 @@ import Image from 'next/image';
 import MisionVisionSection from '@/components/MisionVisionSection/MisionVisionSection';
 import PlanificacionSection from '@/app/(public)/secretarias/[slug]/PlanificacionSection';
 import Programas2026View from '@/app/(public)/secretarias/[slug]/Programas2026View';
-import ProductivoSection from '@/app/(public)/secretarias/[slug]/ProductivoSection';
 import { secretariasContactData } from '@/data/secretariasContactData';
 import EstadisticasSection from '@/components/EstadisticasSection/EstadisticasSection';
 import { LazyEmbed } from '@/components/MediaLoader/LazyMedia';
@@ -17,7 +16,6 @@ export default function SecretariatTabs({ sec, slug }) {
 
   const hasPlanificacion = slug.includes('planificacion');
   const hasProgramas = slug.includes('finanzas');
-  const hasProductivo = slug.includes('desarrollo-productivo');
   const contactOverride = secretariasContactData[slug] || {};
   const unidadesList = contactOverride.unidades || [];
 
@@ -98,15 +96,6 @@ export default function SecretariatTabs({ sec, slug }) {
             style={{ '--acento': sec.color_acento || '#8b0000' }}
           >
             Proyectos y Programas
-          </button>
-        )}
-        {hasProductivo && (
-          <button 
-            className={`${styles.tabBtn} ${activeTab === 'productivo' ? styles.active : ''}`}
-            onClick={() => setActiveTab('productivo')}
-            style={{ '--acento': '#9c0720' }}
-          >
-            UP Reactiva TIC (Emprendedores)
           </button>
         )}
       </div>
@@ -357,12 +346,6 @@ export default function SecretariatTabs({ sec, slug }) {
         {activeTab === 'programas' && hasProgramas && (
           <div className={styles.contentBlockFull} style={{ padding: '0', background: 'transparent' }}>
             <Programas2026View />
-          </div>
-        )}
-
-        {activeTab === 'productivo' && hasProductivo && (
-          <div className={styles.contentBlockFull}>
-            <ProductivoSection secretariaId={sec.id} colorAcento="#9c0720" />
           </div>
         )}
       </div>
