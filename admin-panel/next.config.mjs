@@ -4,8 +4,6 @@ const adminRoot = fileURLToPath(new URL('.', import.meta.url));
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
-  assetPrefix: '/_admin_next',
   turbopack: {
     root: adminRoot,
   },

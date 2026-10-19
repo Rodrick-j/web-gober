@@ -5,6 +5,9 @@ import { createClient } from '@/lib/supabase/client';
 
 const ROLES = [
   { value: 'secretaria_admin', label: '🏛️ Admin de Secretaría', desc: 'Solo accede a su secretaría asignada' },
+  { value: 'unicom', label: '📢 UNICOM', desc: 'Administra Noticias, Carrusel y Videos de YouTube' },
+  { value: 'secretaria_general', label: '📜 Secretaría General', desc: 'Administra toda la Gaceta Oficial' },
+  { value: 'udni', label: '🧩 UDNI', desc: 'Administra los organigramas de las 10 secretarías' },
   { value: 'super_admin', label: '🛡️ Super Administrador', desc: 'Acceso total al panel y todas las secretarías' },
 ];
 
@@ -41,7 +44,7 @@ export default function EditarUsuarioClient({ usuario, secretarias }) {
         cargo: form.cargo || null,
         telefono: form.telefono || null,
         rol: form.rol,
-        secretaria_id: form.rol === 'super_admin' ? null : (form.secretaria_id || null),
+        secretaria_id: form.rol === 'secretaria_admin' ? (form.secretaria_id || null) : null,
         activo: form.activo,
       };
       const { error } = await supabase.from('usuarios_admin').update(updateData).eq('id', usuario.id);

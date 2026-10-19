@@ -30,12 +30,12 @@ export default function VideoSection({ urls = [] }) {
   return (
     <section className={`section ${styles.videoSection}`} id="video-destacado">
       <div className="container">
-        <ScrollReveal direction="up" className="section-header">
-          <span className="section-label">Gobernación en Acción</span>
-          <h2 className="section-title">{videoIds.length > 1 ? 'Videos Destacados' : 'Video Destacado'}</h2>
+        <ScrollReveal direction="up" className={`section-header ${styles.videoHeader}`}>
+          <span className="section-label">Oruro en acción</span>
+          <h2 className="section-title">Gestión Audiovisual</h2>
           <div className="divider" />
           <p className="section-subtitle">
-            Conoce más sobre las últimas obras, proyectos y gestión del Gobierno Autónomo Departamental de Oruro.
+            Contenido audiovisual oficial sobre las obras, proyectos y acciones que transforman nuestro departamento.
           </p>
         </ScrollReveal>
         

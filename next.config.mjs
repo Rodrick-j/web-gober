@@ -86,15 +86,15 @@ const nextConfig = {
     return [
       {
         source: '/admin',
-        destination: 'http://localhost:3001/admin',
+        destination: 'http://127.0.0.1:3002/admin',
       },
       {
         source: '/admin/:path*',
-        destination: 'http://localhost:3001/admin/:path*',
+        destination: 'http://127.0.0.1:3002/admin/:path*',
       },
       {
         source: '/_admin_next/_next/:path*',
-        destination: 'http://localhost:3001/_next/:path*',
+        destination: 'http://127.0.0.1:3002/_next/:path*',
       },
     ]
   },

@@ -7,6 +7,9 @@ export const metadata = { title: 'Usuarios & Roles — Admin GADOR' };
 const ROL_CONFIG = {
   super_admin: { label: 'Super Admin', color: '#E53935', bg: 'rgba(229,57,53,0.12)', border: 'rgba(229,57,53,0.25)' },
   secretaria_admin: { label: 'Admin Secretaría', color: '#3B82F6', bg: 'rgba(59,130,246,0.12)', border: 'rgba(59,130,246,0.25)' },
+  unicom: { label: 'UNICOM', color: '#F59E0B', bg: 'rgba(245,158,11,0.12)', border: 'rgba(245,158,11,0.25)' },
+  secretaria_general: { label: 'Secretaría General', color: '#10B981', bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.25)' },
+  udni: { label: 'UDNI', color: '#6366F1', bg: 'rgba(99,102,241,0.12)', border: 'rgba(99,102,241,0.25)' },
 };
 
 function timeAgo(dateStr) {
@@ -82,6 +85,25 @@ export default async function UsuariosAdminPage() {
             <div style={{ fontSize: '1.4rem', marginBottom: '0.4rem' }}>{stat.icon}</div>
             <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--admin-text)', lineHeight: 1 }}>{stat.value}</div>
             <div style={{ fontSize: '0.72rem', color: 'var(--admin-text-muted)', marginTop: '0.2rem' }}>{stat.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Roles por unidad */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+        {[
+          { rol: 'unicom', icon: '📢', items: ['Noticias', 'Carrusel', 'Videos de YouTube'] },
+          { rol: 'secretaria_general', icon: '📜', items: ['Gaceta Oficial (todas las secciones)'] },
+          { rol: 'udni', icon: '🧩', items: ['Organigramas de las 10 secretarías'] },
+        ].map(({ rol, icon, items }) => (
+          <div key={rol} style={{ background: 'var(--admin-surface)', border: `1px solid ${ROL_CONFIG[rol].border}`, borderRadius: '12px', padding: '1.25rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
+              <span style={{ fontSize: '1.25rem' }}>{icon}</span>
+              <strong style={{ color: ROL_CONFIG[rol].color, fontFamily: 'Outfit, sans-serif' }}>{ROL_CONFIG[rol].label}</strong>
+            </div>
+            <ul style={{ margin: 0, paddingLeft: '1.25rem', color: 'var(--admin-text-muted)', fontSize: '0.8rem', lineHeight: '1.8' }}>
+              {items.map(i => <li key={i}>{i}</li>)}
+            </ul>
           </div>
         ))}
       </div>

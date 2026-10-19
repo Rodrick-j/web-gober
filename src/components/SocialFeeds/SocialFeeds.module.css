@@ -1,9 +1,6 @@
 .container {
   padding: clamp(3.5rem, 7vw, 6.5rem) 1rem;
-  background:
-    radial-gradient(circle at 8% 18%, rgba(156, 7, 32, 0.08), transparent 26%),
-    radial-gradient(circle at 92% 76%, rgba(255, 184, 67, 0.12), transparent 28%),
-    linear-gradient(180deg, #fbfcff 0%, #f5f7fb 100%);
+  background: transparent;
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -534,5 +531,4 @@
   font-size: 0.75rem;
   color: var(--color-text-muted);
 }
-
 

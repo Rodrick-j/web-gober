@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules';
 import Link from 'next/link';
@@ -17,13 +17,23 @@ import 'swiper/css/navigation';
 import styles from './HeroSlider.module.css';
 
 function ResponsiveBannerImage({ banner, index, onLoad }) {
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const img = imageRef.current;
+
+    if (img && img.complete && img.naturalWidth > 0) {
+      onLoad();
+    }
+  }, [banner.id, onLoad]);
+
   const imageOptions = {
     alt: banner.titulo || 'Banner',
     fill: true,
     sizes: '100vw',
     quality: 85,
     loading: 'eager',
-    ...(index === 0 ? { fetchPriority: 'high' } : {}),
+    fetchPriority: index === 0 ? 'high' : 'low',
   };
 
   const { props: desktopImageProps } = getImageProps({
@@ -51,7 +61,7 @@ function ResponsiveBannerImage({ banner, index, onLoad }) {
       {mobileImageProps && (
         <source media="(min-width: 769px) and (max-width: 1100px) and (orientation: portrait)" srcSet={mobileImageProps.srcSet} sizes={mobileImageProps.sizes} />
       )}
-      <img {...desktopImageProps} alt={desktopImageProps.alt} className={styles.mainImage} onLoad={onLoad} />
+      <img ref={imageRef} {...desktopImageProps} alt={desktopImageProps.alt} className={styles.mainImage} onLoad={onLoad} />
     </picture>
   );
 }

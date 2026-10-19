@@ -1,12 +1,16 @@
 import { createClient } from '@/lib/supabase/server';
 import { getAdminUser } from '@/lib/auth';
 import Link from 'next/link';
+import { esRolRestringido, puedeAccederRuta, ROL_LABELS } from '@/lib/permissions';
 import styles from './dashboard.module.css';
 
 export const metadata = { title: 'Dashboard — Admin GADOR' };
 
 export default async function AdminDashboard() {
   const { perfil } = await getAdminUser();
+  const verNoticias = puedeAccederRuta(perfil.rol, '/admin/noticias');
+  const verGaceta = puedeAccederRuta(perfil.rol, '/admin/gaceta');
+  const verCarrusel = puedeAccederRuta(perfil.rol, '/admin/carrusel');
   const supabase = await createClient();
 
   let stats = { noticiasPublicadas: 0, noticiasBorrador: 0, documentos: 0, vistas: 0 };
@@ -59,13 +63,17 @@ export default async function AdminDashboard() {
           <p className="adminSubtitle">
             {perfil.rol === 'super_admin'
               ? 'Vista global · Gobernación Autónoma Departamental de Oruro'
+              : esRolRestringido(perfil.rol)
+              ? `Panel de ${ROL_LABELS[perfil.rol]} · ${new Date().toLocaleDateString('es-BO', { weekday: 'long', day: 'numeric', month: 'long' })}`
               : `Panel de ${perfil.secretarias?.nombre_corto || 'tu secretaría'} · ${new Date().toLocaleDateString('es-BO', { weekday: 'long', day: 'numeric', month: 'long' })}`}
           </p>
         </div>
-        <Link href="/admin/noticias/crear" className="btnPrimary" id="dashboard-new-news-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Nueva Noticia
-        </Link>
+        {puedeAccederRuta(perfil.rol, '/admin/noticias') && (
+          <Link href="/admin/noticias/crear" className="btnPrimary" id="dashboard-new-news-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Nueva Noticia
+          </Link>
+        )}
       </div>
 
       {/* ── STATS GRID ── */}
@@ -130,24 +138,46 @@ export default async function AdminDashboard() {
       <div className={styles.quickActions}>
         <div className={styles.quickTitle}>Accesos Rápidos</div>
         <div className={styles.quickGrid}>
+          {verNoticias && (
           <Link href="/admin/noticias/crear" className={styles.quickCard} id="quick-create-news">
             <div className={styles.quickIcon} style={{ background: 'rgba(229,57,53,0.1)', color: 'var(--admin-primary)' }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </div>
             <span>Crear Noticia</span>
           </Link>
+          )}
+          {verGaceta && (
           <Link href="/admin/gaceta" className={styles.quickCard} id="quick-gaceta">
             <div className={styles.quickIcon} style={{ background: 'rgba(59,130,246,0.1)', color: 'var(--admin-info)' }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             </div>
             <span>Subir Documento</span>
           </Link>
+          )}
+          {verCarrusel && (
           <Link href="/admin/carrusel" className={styles.quickCard} id="quick-carrusel">
             <div className={styles.quickIcon} style={{ background: 'rgba(245,158,11,0.1)', color: 'var(--admin-warning)' }}>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8"/></svg>
             </div>
             <span>Gestionar Carrusel</span>
           </Link>
+          )}
+          {puedeAccederRuta(perfil.rol, '/admin/videos') && (
+            <Link href="/admin/videos" className={styles.quickCard} id="quick-videos">
+              <div className={styles.quickIcon} style={{ background: 'rgba(239,68,68,0.1)', color: '#ef4444' }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="m15 10 4.5-2.5v9L15 14"/><rect x="3" y="6" width="12" height="12" rx="2"/></svg>
+              </div>
+              <span>Videos YouTube</span>
+            </Link>
+          )}
+          {puedeAccederRuta(perfil.rol, '/admin/organigramas') && (
+            <Link href="/admin/organigramas" className={styles.quickCard} id="quick-organigramas">
+              <div className={styles.quickIcon} style={{ background: 'rgba(99,102,241,0.1)', color: '#6366f1' }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg>
+              </div>
+              <span>Organigramas</span>
+            </Link>
+          )}
           {perfil.rol === 'super_admin' && (
             <Link href="/admin/secretarias" className={styles.quickCard} id="quick-secretarias">
               <div className={styles.quickIcon} style={{ background: 'rgba(16,185,129,0.1)', color: 'var(--admin-success)' }}>
@@ -160,6 +190,7 @@ export default async function AdminDashboard() {
       </div>
 
       {/* ── SECCIÓN DIVIDIDA: ACTUALIDAD VS HISTORIAL ── */}
+      {verNoticias && (
       <div className={styles.dashboardSplit}>
         
         {/* COLUMNA IZQUIERDA: LO MÁS ACTUAL */}
@@ -270,6 +301,7 @@ export default async function AdminDashboard() {
         </div>
 
       </div>
+      )}
     </div>
   );
 }

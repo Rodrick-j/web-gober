@@ -52,6 +52,14 @@ export function getDocumentosRecursosHumanos(tipo) {
       titulo,
       fecha_publicacion,
       archivo_pdf_url: `/documentos/recursos-humanos/${tipo}/${archivo}`,
+      archivo_preview_url:
+        tipo === 'perfil-cargos' && [
+          'mdc-sdaj.pdf',
+          'mdc-sdmaaymt.pdf',
+          'mdc-sdpd.pdf'
+        ].includes(archivo)
+          ? `/documentos/recursos-humanos/perfil-cargos/vista-ligera/${archivo}`
+          : null,
     })),
   };
 }

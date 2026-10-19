@@ -1,0 +1,495 @@
+.viewerPanel {
+  position: relative;
+  width: min(1320px, 100%);
+  margin: 0 auto 3rem;
+  overflow: hidden;
+  color: #192130;
+  border: 1px solid rgba(80, 91, 108, 0.18);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 26px 70px rgba(26, 33, 45, 0.12), 0 4px 14px rgba(26, 33, 45, 0.06);
+}
+
+.topAccent {
+  height: 5px;
+  background: linear-gradient(90deg, #67181a 0 48%, #9c0720 48% 82%, #d3aa58 82% 100%);
+}
+
+.viewerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.6rem 1.8rem;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(211, 170, 88, 0.2), transparent 17rem),
+    linear-gradient(120deg, #4b0d19, #711024 58%, #8d142b);
+}
+
+.headingBlock {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 1rem;
+}
+
+.officialSeal {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  place-items: center;
+  color: #f0cf8b;
+  border: 1px solid rgba(240, 207, 139, 0.45);
+  border-radius: 50%;
+  background: rgba(27, 3, 9, 0.2);
+}
+
+.officialSeal svg {
+  width: 27px;
+  height: 27px;
+}
+
+.kicker {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #f0cf8b;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.headingBlock h2 {
+  margin: 0;
+  color: #fff7e6;
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  font-weight: 850;
+  letter-spacing: -0.025em;
+  line-height: 1.12;
+  text-shadow: 0 2px 12px rgba(30, 0, 8, 0.24);
+}
+
+.headingBlock p {
+  max-width: 680px;
+  margin: 0.42rem 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.lawBadge {
+  display: flex;
+  min-width: 205px;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid rgba(240, 207, 139, 0.4);
+  border-radius: 8px;
+  background: rgba(31, 2, 9, 0.2);
+}
+
+.lawBadge small {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lawBadge strong {
+  margin-top: 0.15rem;
+  color: #fff4d5;
+  font-size: 0.76rem;
+}
+
+.viewTabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0.7rem;
+  gap: 0.55rem;
+  border-bottom: 1px solid #dfe2e7;
+  background: #f4f5f7;
+}
+
+.viewTab {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.65rem 0.85rem;
+  color: #4b5565;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.viewTab > span {
+  color: #9c0720;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+}
+
+.viewTab:hover {
+  color: #67181a;
+  border-color: rgba(156, 7, 32, 0.14);
+  background: #ffffff;
+}
+
+.viewTabActive {
+  color: #ffffff !important;
+  border-color: #711024 !important;
+  background: linear-gradient(120deg, #67181a, #92142c) !important;
+  box-shadow: 0 6px 16px rgba(103, 24, 26, 0.22);
+}
+
+.viewTabActive > span {
+  color: #f0cf8b;
+}
+
+.documentBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #d7dae0;
+  background: #ffffff;
+}
+
+.documentIdentity {
+  min-width: 0;
+}
+
+.documentIdentity > span {
+  display: block;
+  color: #8c1329;
+  font-size: 0.57rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.documentIdentity strong {
+  display: block;
+  margin-top: 0.18rem;
+  color: #172033;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.documentIdentity p {
+  max-width: 760px;
+  margin: 0.3rem 0 0;
+  color: #677184;
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.viewerControls {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem;
+  border: 1px solid #d9dde4;
+  border-radius: 9px;
+  background: #f5f6f8;
+}
+
+.viewerControls button {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  color: #465064;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  transition: color 160ms ease, background 160ms ease;
+}
+
+.viewerControls button:hover:not(:disabled) {
+  color: #ffffff;
+  background: #7b1126;
+}
+
+.viewerControls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.32;
+}
+
+.viewerControls svg,
+.downloadActions svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.zoomValue {
+  min-width: 42px;
+  color: #4d5768;
+  font-size: 0.64rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.viewport {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 430px;
+  max-height: min(68vh, 760px);
+  align-items: flex-start;
+  overflow: auto;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    #161b23;
+  background-size: 32px 32px;
+  scrollbar-color: #8a1a2d #252c37;
+  scrollbar-width: thin;
+}
+
+.imageCanvas {
+  min-width: 0;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.organigramImage {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.3);
+}
+
+.viewerFooter {
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.15rem;
+  border-top: 1px solid #d7dae0;
+  background: #ffffff;
+}
+
+.sourceNote {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.sourceNote > span {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: #21855f;
+  box-shadow: 0 0 0 4px rgba(33, 133, 95, 0.11);
+}
+
+.sourceNote p {
+  margin: 0;
+  overflow: hidden;
+  color: #667083;
+  font-size: 0.66rem;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sourceNote strong {
+  color: #313a49;
+}
+
+.downloadActions {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.55rem;
+}
+
+.downloadActions a {
+  display: inline-flex;
+  min-height: 39px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.72rem;
+  color: #67181a;
+  border: 1px solid rgba(103, 24, 26, 0.24);
+  border-radius: 7px;
+  background: #ffffff;
+  font-size: 0.64rem;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.downloadActions a:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 16px rgba(75, 13, 25, 0.13);
+}
+
+.downloadActions .primaryAction {
+  color: #ffffff;
+  border-color: #67181a;
+  background: linear-gradient(120deg, #67181a, #92142c);
+}
+
+.viewTab:focus-visible,
+.viewerControls button:focus-visible,
+.downloadActions a:focus-visible {
+  outline: 3px solid rgba(211, 170, 88, 0.9);
+  outline-offset: 2px;
+}
+
+.viewerPanel:fullscreen {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  flex-direction: column;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: #ffffff;
+}
+
+.viewerPanel:fullscreen .viewport {
+  max-height: none;
+  flex: 1;
+}
+
+@media (max-width: 760px) {
+  .viewerPanel {
+    border-radius: 14px;
+  }
+
+  .viewerHeader {
+    align-items: flex-start;
+    padding: 1.15rem;
+  }
+
+  .officialSeal {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+
+  .headingBlock p,
+  .lawBadge {
+    display: none;
+  }
+
+  .viewTabs {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .viewTabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .viewTab {
+    min-width: max-content;
+    flex: 1 0 auto;
+  }
+
+  .documentBar {
+    align-items: flex-end;
+    padding: 0.85rem;
+  }
+
+  .documentIdentity p {
+    display: none;
+  }
+
+  .documentIdentity strong {
+    font-size: 0.9rem;
+  }
+
+  .viewerControls button:nth-of-type(3) {
+    display: none;
+  }
+
+  .viewport {
+    min-height: 310px;
+    max-height: 62vh;
+  }
+
+  .imageCanvas {
+    padding: 0.55rem;
+  }
+
+  .viewerFooter {
+    min-height: 66px;
+    padding: 0.65rem 0.75rem;
+  }
+
+  .sourceNote {
+    display: none;
+  }
+
+  .downloadActions {
+    width: 100%;
+  }
+
+  .downloadActions a {
+    min-width: 0;
+    flex: 1;
+    padding-inline: 0.45rem;
+    font-size: 0.56rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .viewerHeader {
+    padding: 1rem 0.85rem;
+  }
+
+  .officialSeal {
+    display: none;
+  }
+
+  .headingBlock h2 {
+    font-size: 1.2rem;
+  }
+
+  .documentBar {
+    display: block;
+  }
+
+  .viewerControls {
+    width: fit-content;
+    margin-top: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewTab,
+  .viewerControls button,
+  .downloadActions a {
+    transition: none;
+  }
+}

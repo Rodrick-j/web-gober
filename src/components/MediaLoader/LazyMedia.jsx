@@ -52,7 +52,7 @@ export function LazyEmbed({
         ref={frameRef}
         src={shouldLoad ? src : undefined}
         title={title}
-        loading="lazy"
+        loading={eager ? 'eager' : 'lazy'}
         onLoad={(event) => {
           if (!shouldLoad) return;
           setLoadedSource(src);

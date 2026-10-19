@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { puedeVerItemNav, ROL_LABELS, esRolRestringido } from '@/lib/permissions';
 import styles from './AdminShell.module.css';
 
 // ── GRUPOS DE NAVEGACIÓN ──────────────────────────────
@@ -63,6 +64,15 @@ const buildNavGroups = () => [
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="2" y="7" width="20" height="14" rx="2"/>
             <path d="M16 3H8"/><path d="m8 11 4 4 4-4"/>
+          </svg>
+        ),
+      },
+      {
+        href: '/admin/videos',
+        label: 'Videos YouTube',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m15 10 4.5-2.5v9L15 14"/><rect x="3" y="6" width="12" height="12" rx="2"/>
           </svg>
         ),
       },
@@ -173,6 +183,16 @@ const buildNavGroups = () => [
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
             <rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/>
+          </svg>
+        ),
+      },
+      {
+        href: '/admin/organigramas',
+        label: 'Organigramas',
+        icon: (
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/>
+            <path d="M12 8v4M6 16v-4h12v4"/>
           </svg>
         ),
       },
@@ -300,12 +320,15 @@ export default function AdminShell({ perfil, secretarias, children }) {
     });
   };
 
-  const navGroups = buildNavGroups();
+  // Cada rol ve solo los módulos que le corresponden
+  const navGroups = buildNavGroups()
+    .map(group => ({ ...group, items: group.items.filter(item => puedeVerItemNav(perfil?.rol, item.href)) }))
+    .filter(group => group.items.length > 0);
   // Contexto de la ruta actual para el encabezado.
   const currentPage = allNavItems.find(item => isActive(item.href));
   const currentGroup = navGroups.find(group => group.items.some(item => isActive(item.href)));
-  const roleLabel = esSuperAdmin
-    ? 'Super Administrador'
+  const roleLabel = esRolRestringido(perfil?.rol) || esSuperAdmin
+    ? ROL_LABELS[perfil?.rol]
     : perfil?.secretarias?.nombre_corto || 'Secretaría';
 
   return (

@@ -4,6 +4,9 @@ import { useRouter } from 'next/navigation';
 
 const ROLES = [
   { value: 'secretaria_admin', label: '🏛️ Admin de Secretaría', desc: 'Solo accede a su secretaría asignada' },
+  { value: 'unicom', label: '📢 UNICOM', desc: 'Administra Noticias, Carrusel y Videos de YouTube' },
+  { value: 'secretaria_general', label: '📜 Secretaría General', desc: 'Administra toda la Gaceta Oficial' },
+  { value: 'udni', label: '🧩 UDNI', desc: 'Administra los organigramas de las 10 secretarías' },
   { value: 'super_admin', label: '🛡️ Super Administrador', desc: 'Acceso total al panel y todas las secretarías' },
 ];
 

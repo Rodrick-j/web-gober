@@ -13,7 +13,7 @@ export default function NewsSection({ noticias = [] }) {
   const featured = displayNoticias.length > 0 ? {
     id: displayNoticias[0].id,
     category: displayNoticias[0].secretarias?.nombre_corto || 'Institucional',
-    date: new Date(displayNoticias[0].fecha_publicacion).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }),
+    date: new Date(displayNoticias[0].fecha_publicacion).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }),
     title: displayNoticias[0].titulo,
     excerpt: displayNoticias[0].resumen,
     readTime: '3 min', // Placeholder or calculated
@@ -25,7 +25,7 @@ export default function NewsSection({ noticias = [] }) {
   const news = displayNoticias.length > 1 ? displayNoticias.slice(1).map(n => ({
     id: n.id,
     category: n.secretarias?.nombre_corto || 'Institucional',
-    date: new Date(n.fecha_publicacion).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }),
+    date: new Date(n.fecha_publicacion).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }),
     title: n.titulo,
     excerpt: n.resumen,
     emoji: n.secretarias?.icono || '📰',
@@ -43,12 +43,15 @@ export default function NewsSection({ noticias = [] }) {
         <ScrollReveal direction="up" className={`section-header ${styles.newsHeader}`}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <span className="section-label">Sala de Prensa</span>
-              <h2 className="section-title" style={{ textAlign: 'left' }}>Últimas Noticias</h2>
+              <span className="section-label">Información oficial</span>
+              <h2 className="section-title" style={{ textAlign: 'left' }}>Actualidad Departamental</h2>
               <div className="divider divider-left" />
+              <p className={styles.newsIntro}>
+                Conoce las decisiones, obras y acciones que impulsan el desarrollo de Oruro.
+              </p>
             </div>
             <Link href="/noticias" className="btn btn-outline" id="all-news-btn">
-              Ver todas las noticias
+              Explorar noticias
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
@@ -87,7 +90,7 @@ export default function NewsSection({ noticias = [] }) {
                   <h3 className={styles.featuredTitle}>{featured.title}</h3>
                   <p className={styles.featuredExcerpt}>{featured.excerpt}</p>
                   <Link href={`/noticias/${featured.id}`} className={`btn btn-primary ${styles.readMoreBtn}`} id={`read-more-${featured.id}`}>
-                    Leer nota completa
+                    Leer noticia
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>

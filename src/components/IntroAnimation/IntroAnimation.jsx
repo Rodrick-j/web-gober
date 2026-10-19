@@ -22,8 +22,8 @@ export default function IntroAnimation({ isSeen }) {
     sessionStorage.setItem('intro-seen-v5', 'true');
     document.body.style.overflow = 'hidden';
 
-    // Auto close after 3.2 seconds
-    const timer = setTimeout(() => handleClose(), 3200);
+    // Auto close after 2.4 seconds
+    const timer = setTimeout(() => handleClose(), 2400);
 
     return () => {
       clearTimeout(timer);
@@ -32,7 +32,7 @@ export default function IntroAnimation({ isSeen }) {
   }, []);
 
   const oruroText = 'ORURO'.split('');
-  const exitEase = { duration: 0.9, ease: [0.22, 1, 0.36, 1] };
+  const exitEase = { duration: 0.45, ease: [0.22, 1, 0.36, 1] };
 
   // Durante SSR, mostramos una pantalla oscura para ocultar la página.
   // Así evitamos que la página se vea por un segundo antes de que inicie la intro.

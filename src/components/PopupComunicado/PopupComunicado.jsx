@@ -13,12 +13,10 @@ export default function PopupComunicado({ config }) {
   const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
-    // Verificar si el comunicado está activo y tiene imagen.
     if (!config?.activo || !config?.imagen_url) {
       return;
     }
 
-    // Mostrar nuevamente con ?test_popup=1 aunque ya se haya visto en esta sesión.
     const forceShow = window.location.search.includes('test_popup=1');
     const hasSeenPopup = sessionStorage.getItem('comunicado_visto');
     const hasSeenIntro = sessionStorage.getItem('introSeen');
@@ -58,7 +56,7 @@ export default function PopupComunicado({ config }) {
 
   const title = config?.titulo?.trim() || 'Comunicado Oficial';
   const destinationUrl = config?.enlace || config?.imagen_url;
-  const actionLabel = config?.enlace ? 'Más información' : 'Ver imagen completa';
+  const actionLabel = config?.enlace ? 'Consultar información' : 'Ver documento completo';
   const formatClass = imageRatio > 1.15
     ? styles.landscape
     : imageRatio < 0.9
@@ -82,9 +80,9 @@ export default function PopupComunicado({ config }) {
   const dialogMotion = prefersReducedMotion
     ? { initial: false, animate: { opacity: 1 }, exit: { opacity: 0 } }
     : {
-        initial: { opacity: 0, scale: 0.94, y: 28 },
+        initial: { opacity: 0, scale: 0.96, y: 22 },
         animate: { opacity: 1, scale: 1, y: 0 },
-        exit: { opacity: 0, scale: 0.97, y: 16 },
+        exit: { opacity: 0, scale: 0.98, y: 12 },
       };
 
   return (
@@ -94,11 +92,10 @@ export default function PopupComunicado({ config }) {
           className={styles.overlay}
           onClick={handleClose}
           {...overlayMotion}
-          transition={{ duration: prefersReducedMotion ? 0.08 : 0.28 }}
+          transition={{ duration: prefersReducedMotion ? 0.08 : 0.24 }}
         >
           <motion.section
             className={`${styles.modalContent} ${formatClass}`}
-            style={{ '--document-ratio': imageRatio }}
             onClick={(event) => event.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -107,82 +104,98 @@ export default function PopupComunicado({ config }) {
             transition={
               prefersReducedMotion
                 ? { duration: 0.08 }
-                : { type: 'spring', stiffness: 320, damping: 28, mass: 0.85 }
+                : { type: 'spring', stiffness: 340, damping: 30, mass: 0.88 }
             }
           >
             <div className={styles.accentRail} aria-hidden="true" />
 
+            <div className={styles.officialStrip}>
+              <span><i aria-hidden="true" /> Portal institucional</span>
+              <span>Servicio de información ciudadana</span>
+            </div>
+
             <header className={styles.modalHeader}>
-              <div className={styles.headerIcon} aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path d="M4 13.4V9.7c0-.7.5-1.2 1.2-1.2h2.1l7.1-3.7c.8-.4 1.8.2 1.8 1.1v11.3c0 .9-1 1.5-1.8 1.1l-7.1-3.7H5.2c-.7 0-1.2-.5-1.2-1.2Z" fill="currentColor" />
-                  <path d="m7.5 14.7 1.1 4.1c.1.5.6.8 1.1.8h.8c.7 0 1.2-.7.9-1.4l-1.3-2.1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                  <path d="M19 8.2c.8.9 1.2 2 1.2 3.2 0 1.3-.4 2.4-1.2 3.3" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-                </svg>
+              <div className={styles.brandSignature}>
+                <Image
+                  src="/imagotipo_gador_2026.png"
+                  alt="Gobierno Autónomo Departamental de Oruro"
+                  width={1072}
+                  height={296}
+                  sizes="(max-width: 640px) 138px, 205px"
+                />
               </div>
 
+              <span className={styles.headerDivider} aria-hidden="true" />
+
               <div className={styles.headerCopy}>
-                <span>Información institucional</span>
+                <span>Dirección de Comunicación Social</span>
                 <h2 id="comunicado-title">{title}</h2>
               </div>
 
               <span className={styles.officialBadge}>
-                <span aria-hidden="true" />
-                Oficial
+                <small>Documento</small>
+                <strong>Oficial</strong>
               </span>
 
               <button
+                type="button"
                 className={styles.closeButton}
                 onClick={handleClose}
                 aria-label="Cerrar comunicado"
                 autoFocus
               >
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                   <path d="m6 6 12 12M18 6 6 18" />
                 </svg>
               </button>
             </header>
 
             <div className={styles.documentStage}>
-              <span className={styles.cornerTop} aria-hidden="true" />
-              <span className={styles.cornerBottom} aria-hidden="true" />
+              <div className={styles.documentMeta}>
+                <span>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                    <path d="M6.5 3.5h7l4 4v13h-11z" />
+                    <path d="M13.5 3.5v4h4M9.5 12h5M9.5 15.5h5" />
+                  </svg>
+                  Comunicado institucional
+                </span>
+                <span>Publicación de interés público</span>
+              </div>
 
-              <ContentWrapper {...wrapperProps}>
-                <div className={styles.imageWrapper}>
-                  <Image
-                    src={config.imagen_url}
-                    alt={title}
-                    fill
-                    sizes="(max-width: 640px) 92vw, 900px"
-                    className={styles.comunicadoImage}
-                    onLoad={(event) => {
-                      const { naturalWidth, naturalHeight } = event.currentTarget;
-                      if (naturalWidth && naturalHeight) {
-                        setImageRatio(naturalWidth / naturalHeight);
-                      }
-                    }}
-                    priority
-                    fetchPriority="high"
-                  />
-                </div>
-
-                {config?.enlace && (
-                  <span className={styles.imageHint}>
-                    Abrir comunicado
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M7 17 17 7M7 7h10v10" />
-                    </svg>
-                  </span>
-                )}
-              </ContentWrapper>
+              <div className={styles.documentViewport}>
+                <ContentWrapper {...wrapperProps}>
+                  <div className={styles.imageWrapper}>
+                    <Image
+                      src={config.imagen_url}
+                      alt={title}
+                      fill
+                      sizes="(max-width: 640px) 94vw, 960px"
+                      className={styles.comunicadoImage}
+                      onLoad={(event) => {
+                        const { naturalWidth, naturalHeight } = event.currentTarget;
+                        if (naturalWidth && naturalHeight) {
+                          setImageRatio(naturalWidth / naturalHeight);
+                        }
+                      }}
+                      priority
+                      fetchPriority="high"
+                    />
+                  </div>
+                </ContentWrapper>
+              </div>
             </div>
 
             <footer className={styles.modalFooter}>
               <div className={styles.publisher}>
-                <span className={styles.publisherMark} aria-hidden="true">G</span>
+                <span className={styles.publisherMark} aria-hidden="true">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M12 3 19 6v5c0 4.8-2.7 8-7 10-4.3-2-7-5.2-7-10V6z" />
+                    <path d="m8.8 12 2.1 2.1 4.5-4.6" />
+                  </svg>
+                </span>
                 <span>
                   <strong>Gobierno Autónomo Departamental de Oruro</strong>
-                  <small><i aria-hidden="true" /> Publicación institucional verificada</small>
+                  <small>Fuente oficial · Comunicación institucional</small>
                 </span>
               </div>
 
@@ -193,8 +206,8 @@ export default function PopupComunicado({ config }) {
                 className={styles.actionButton}
               >
                 <span>{actionLabel}</span>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M7 17 17 7M7 7h10v10" />
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path d="M5 12h14M14 7l5 5-5 5" />
                 </svg>
               </a>
             </footer>

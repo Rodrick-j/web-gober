@@ -57,6 +57,11 @@ export function getDocumentosDesarrolloOrganizacional(tipo) {
       titulo,
       fecha_publicacion: archivo.includes('2021') ? '2021-01-01' : '2026-01-01',
       archivo_pdf_url: `/documentos/desarrollo-organizacional/${tipo}/${archivo}`,
+      archivo_preview_url:
+        tipo === 'reglamentos-vigentes' &&
+        archivo === 're-sabs-rado-288-2026.pdf'
+          ? '/documentos/desarrollo-organizacional/reglamentos-vigentes/vista-ligera/re-sabs-rado-288-2026.pdf'
+          : null,
     })),
   };
 }

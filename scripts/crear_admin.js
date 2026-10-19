@@ -6,7 +6,8 @@
  *   SUPABASE_SERVICE_ROLE_KEY   ← Supabase Dashboard → Project Settings → API → service_role
  *
  * Uso:
- *   node scripts/crear_admin.js correo@dominio.com "MiContraseña123" "Nombre Apellido"
+ *   node scripts/crear_admin.js correo@dominio.com "MiContraseña123" "Nombre Apellido" [rol]
+ *   rol: super_admin (por defecto) | unicom | secretaria_general | udni
  *
  * Qué hace:
  *   1) Crea el usuario en Supabase Auth (email ya confirmado). Si ya existe, lo reutiliza.
@@ -17,10 +18,16 @@ require('dotenv').config({ path: '.env.local' });
 const URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-const [email, password, nombreCompleto] = process.argv.slice(2);
+const [email, password, nombreCompleto, rolArg] = process.argv.slice(2);
+const ROLES = ['super_admin', 'unicom', 'secretaria_general', 'udni'];
+const rol = rolArg || 'super_admin';
 
 if (!URL || !KEY) {
   console.error('❌ Falta NEXT_PUBLIC_SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY en .env.local');
+  process.exit(1);
+}
+if (!ROLES.includes(rol)) {
+  console.error(`❌ Rol inválido. Usa: ${ROLES.join(' | ')}`);
   process.exit(1);
 }
 if (!email || !password) {
@@ -68,8 +75,8 @@ async function main() {
     nombre,
     apellido,
     email: email.toLowerCase(),
-    cargo: 'Administrador del Sistema',
-    rol: 'super_admin',
+    cargo: rol === 'super_admin' ? 'Administrador del Sistema' : `Administrador ${rol.toUpperCase().replace('_', ' ')}`,
+    rol,
     secretaria_id: null,
     activo: true,
   };
@@ -85,8 +92,8 @@ async function main() {
     process.exit(1);
   }
 
-  console.log('✅ Perfil en usuarios_admin listo (rol: super_admin, activo: true).');
-  console.log('\n👉 Ya puedes iniciar sesión en http://localhost:3001/admin/login');
+  console.log(`✅ Perfil en usuarios_admin listo (rol: ${rol}, activo: true).`);
+  console.log('\n👉 Ya puedes iniciar sesión en http://localhost:3002/admin/login');
   console.log(`   Correo:      ${email}`);
   console.log(`   Contraseña:  ${password}`);
 }

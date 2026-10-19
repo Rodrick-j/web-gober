@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { verifyAdminSession } from '@/lib/auth';
+import { ROL_LABELS } from '@/lib/permissions';
 import { createClient } from '@/lib/supabase/server';
 import { createClient as createAdminClient } from '@supabase/supabase-js';
 
@@ -16,6 +17,10 @@ export async function POST(request) {
 
     if (!nombre || !email || !rol) {
       return NextResponse.json({ error: 'Nombre, email y rol son obligatorios.' }, { status: 400 });
+    }
+
+    if (!Object.hasOwn(ROL_LABELS, rol)) {
+      return NextResponse.json({ error: 'Rol no válido.' }, { status: 400 });
     }
 
     if (rol === 'secretaria_admin' && !secretaria_id) {
@@ -55,7 +60,7 @@ export async function POST(request) {
           auth_user_id: existingUser.id,
           nombre, apellido: apellido || null, email,
           cargo: cargo || null, telefono: telefono || null,
-          rol, secretaria_id: rol === 'super_admin' ? null : (secretaria_id || null),
+          rol, secretaria_id: rol === 'secretaria_admin' ? secretaria_id : null,
           activo: true,
         });
         if (profileError) {
@@ -75,7 +80,7 @@ export async function POST(request) {
       auth_user_id: authData.user.id,
       nombre, apellido: apellido || null, email,
       cargo: cargo || null, telefono: telefono || null,
-      rol, secretaria_id: rol === 'super_admin' ? null : (secretaria_id || null),
+      rol, secretaria_id: rol === 'secretaria_admin' ? secretaria_id : null,
       activo: true,
     });
 

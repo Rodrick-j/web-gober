@@ -9,6 +9,7 @@
 // =====================================================
 import { NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
+import { esRolRestringido, puedeAccederRuta } from '@/lib/permissions';
 
 export async function proxy(request) {
   let response = NextResponse.next({ request });
@@ -57,6 +58,24 @@ export async function proxy(request) {
     url.pathname = '/admin';
     url.search = '';
     return NextResponse.redirect(url);
+  }
+
+  // Roles restringidos (UNICOM, Secretaría General, UDNI): solo sus módulos
+  if (user && !isLoginRoute) {
+    const { data: perfil } = await supabase
+      .from('usuarios_admin')
+      .select('rol')
+      .eq('auth_user_id', user.id)
+      .eq('activo', true)
+      .maybeSingle();
+
+    if (perfil && esRolRestringido(perfil.rol) && !puedeAccederRuta(perfil.rol, path)) {
+      const url = request.nextUrl.clone();
+      url.pathname = '/admin';
+      url.search = '';
+      url.searchParams.set('error', 'forbidden');
+      return NextResponse.redirect(url);
+    }
   }
 
   return response;

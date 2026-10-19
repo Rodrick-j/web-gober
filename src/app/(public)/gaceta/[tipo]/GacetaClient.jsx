@@ -15,6 +15,7 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [previewTitle, setPreviewTitle] = useState('');
+  const [previewDownloadUrl, setPreviewDownloadUrl] = useState(null);
 
   // Extraer años únicos para los filtros
   const years = useMemo(() => {
@@ -34,14 +35,16 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
     });
   }, [documentos, selectedYear, searchTerm]);
 
-  const openPreview = (url, title) => {
+  const openPreview = (url, title, downloadUrl = url) => {
     setPreviewUrl(url);
     setPreviewTitle(title);
+    setPreviewDownloadUrl(downloadUrl);
   };
 
   const closePreview = () => {
     setPreviewUrl(null);
     setPreviewTitle('');
+    setPreviewDownloadUrl(null);
   };
 
   return (
@@ -57,7 +60,7 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
               </div>
               <div className={styles.previewActions}>
                 <a
-                  href={previewUrl}
+                  href={previewDownloadUrl || previewUrl}
                   download
                   className={styles.previewDownloadBtn}
                   onClick={e => e.stopPropagation()}
@@ -193,7 +196,7 @@ export default function GacetaClient({ documentos, tipoLabel, icon }) {
                   <div className={styles.docActions}>
                     <button
                       className={styles.previewBtn}
-                      onClick={() => openPreview(doc.archivo_pdf_url, doc.titulo)}
+                      onClick={() => openPreview(doc.archivo_preview_url || doc.archivo_pdf_url, doc.titulo, doc.archivo_pdf_url)}
                       disabled={!doc.archivo_pdf_url || doc.archivo_pdf_url === '#'}
                     >
                       <span>👁️</span> Ver PDF

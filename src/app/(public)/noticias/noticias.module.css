@@ -14,13 +14,10 @@
 }
 
 .portalHeader h1 {
-  font-size: 1.5rem !important; /* Más pequeño en celular */
-}
-
-@media (min-width: 768px) {
-  .portalHeader h1 {
-    font-size: 2.2rem !important;
-  }
+  font-size: clamp(2rem, 3.8vw, 3.2rem) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
 }
 
 .mainTitle {
@@ -38,15 +35,10 @@
 
 .subtitle {
   color: var(--color-text-muted);
-  font-size: 0.8rem; /* Aún más pequeño en celular */
-  max-width: 600px;
-  line-height: 1.4;
-}
-
-@media (min-width: 768px) {
-  .subtitle {
-    font-size: 1.1rem;
-  }
+  font-size: 1.15rem;
+  font-weight: 500;
+  max-width: 650px;
+  line-height: 1.65;
 }
 
 /* Search Form */
@@ -201,68 +193,72 @@
   flex-wrap: wrap;
 }
 
-/* Cápsulas reubicadas a la esquina inferior derecha, más pequeñas y translúcidas */
+/* Cápsulas modernas, legibles y elegantes */
 .featuredCard :global(.badge),
 .newsCard :global(.badge) {
-  position: absolute !important;
-  bottom: 1rem !important;
-  right: 1rem !important;
-  z-index: 10 !important;
-  background: rgba(156, 7, 32, 0.7) !important;
+  display: inline-block !important;
+  width: fit-content !important;
+  background: rgba(156, 7, 32, 0.85) !important;
   color: #ffffff !important;
-  font-weight: 700 !important;
-  font-size: 0.55rem !important; /* Texto muy pequeño para no chocar */
-  padding: 0.2rem 0.4rem !important;
-  border-radius: 4px !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+  font-weight: 800 !important;
+  font-size: 0.82rem !important;
+  padding: 0.35rem 0.85rem !important;
+  border-radius: 9999px !important;
+  border: 1px solid rgba(255, 184, 67, 0.45) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.5px !important;
-  backdrop-filter: blur(4px) !important;
-  max-width: 50%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  letter-spacing: 0.08em !important;
+  backdrop-filter: blur(8px) !important;
+  margin-bottom: 0.4rem;
+}
+
+.newsCard :global(.badge) {
+  font-size: 0.78rem !important;
+  padding: 0.25rem 0.7rem !important;
+  background: rgba(15, 23, 42, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 .cardDate {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9rem;
+  color: #e2e8f0;
   font-weight: 600;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
 .featuredTitle {
   font-family: var(--font-heading);
-  font-size: 1.05rem; /* Texto más pequeño */
+  font-size: clamp(1.6rem, 2.8vw, 2.5rem);
   font-weight: 900;
   color: #ffffff;
   line-height: 1.25;
-  margin-bottom: 0.75rem;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85);
+  margin-bottom: 0.9rem;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.85);
+  letter-spacing: -0.015em;
 }
 
 @media (min-width: 992px) {
   .featuredTitle {
-    font-size: 1.35rem;
+    font-size: 2.3rem;
   }
 }
 
 .featuredExcerpt {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.92);
-  line-height: 1.6;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.65;
+  font-weight: 400;
   margin-bottom: 1.5rem;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
 }
 
 @media (min-width: 992px) {
   .featuredExcerpt {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     -webkit-line-clamp: 3;
     margin-bottom: 2rem;
   }
@@ -271,15 +267,18 @@
 .readMore {
   color: #ffd27a; /* Dorado imperial para resaltar */
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 1.05rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  transition: gap 0.3s ease, color 0.2s ease;
 }
 
 .featuredCard:hover .readMore {
-  text-decoration: underline;
+  gap: 0.8rem;
+  color: #ffe6a6;
+  text-decoration: none;
 }
 
 .newsGrid {
@@ -380,36 +379,55 @@
 
 .cardTitle {
   font-family: var(--font-heading);
-  font-size: 0.75rem; /* Aún más pequeño */
+  font-size: 1.15rem;
   font-weight: 800;
   color: #ffffff;
-  line-height: 1.25;
+  line-height: 1.35;
   margin-bottom: 0.5rem;
   display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+  transition: color 0.2s ease;
+}
+
+.newsCard:hover .cardTitle {
+  color: #ffd27a;
+}
+
+.cardExcerpt {
+  display: -webkit-box;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
-.cardExcerpt {
-  display: none;
-}
-
 .cardAction {
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  color: #ffd27a; /* Dorado para legibilidad total */
+  gap: 0.4rem;
+  color: #ffd27a;
   font-weight: 800;
-  font-size: 0.75rem; /* Más pequeño para evitar choques */
+  font-size: 0.92rem;
   margin-top: auto;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+  transition: gap 0.25s ease, color 0.2s ease;
+}
+
+.newsCard:hover .cardAction {
+  gap: 0.7rem;
+  color: #ffe6a6;
 }
 
 @media (min-width: 768px) {
-  .cardTitle { font-size: 0.9rem; }
-  .cardAction { font-size: 0.8rem; }
+  .cardTitle { font-size: 1.2rem; }
+  .cardAction { font-size: 0.95rem; }
 }
 
 /* Empty state */

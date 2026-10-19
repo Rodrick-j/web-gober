@@ -5,30 +5,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { createClient } from '@/lib/supabase/client';
 import styles from './organigrama.module.css';
 import CenefaCultural from '@/components/CenefaCultural/CenefaCultural';
+import OfficialOrganigramViewer from '@/components/OfficialOrganigramViewer/OfficialOrganigramViewer';
 
 export default function OrganigramaPage() {
   const [secretarias, setSecretarias] = useState([]);
   const [selectedSec, setSelectedSec] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [organigramaOficial, setOrganigramaOficial] = useState(null); // { archivo_url, cuerpo, titulo }
 
   useEffect(() => {
     async function loadData() {
       try {
         const supabase = createClient();
 
-        const [{ data, error }, { data: orgRow }] = await Promise.all([
-          supabase
-            .from('secretarias')
-            .select('id, nombre, nombre_corto, slug, color_acento')
-            .eq('activo', true)
-            .order('orden'),
-          supabase
-            .from('contenido_institucional')
-            .select('titulo, cuerpo, archivo_url')
-            .eq('clave', 'organigrama_archivo')
-            .maybeSingle(),
-        ]);
+        const { data, error } = await supabase
+          .from('secretarias')
+          .select('id, nombre, nombre_corto, slug, color_acento')
+          .eq('activo', true)
+          .order('orden');
 
         if (data && !error) {
           setSecretarias(data);
@@ -36,7 +29,6 @@ export default function OrganigramaPage() {
           const secGeneral = data.find(s => s.slug.includes('general') || s.nombre_corto.includes('General'));
           setSelectedSec(secGeneral || data[0]);
         }
-        if (orgRow?.archivo_url) setOrganigramaOficial(orgRow);
       } catch (err) {
         console.error('Error cargando datos de organigrama:', err);
       } finally {
@@ -45,15 +37,6 @@ export default function OrganigramaPage() {
     }
     loadData();
   }, []);
-
-  const esImagen = organigramaOficial?.archivo_url && /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(organigramaOficial.archivo_url);
-
-  const handleSecChange = (e) => {
-    const sec = secretarias.find(s => s.slug === e.target.value);
-    if (sec) {
-      setSelectedSec(sec);
-    }
-  };
 
   const isCulturaTurismo = selectedSec?.slug === 'cultura-turismo';
   const accentColor = selectedSec?.color_acento || '#8B0000';
@@ -87,145 +70,48 @@ export default function OrganigramaPage() {
             animate={{ width: 80 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           />
+        </div>
 
-          {/* Selector visual de Secretarías — chips con color de acento */}
-          {!loading && secretarias.length > 0 && (
-            <motion.div
-              className={styles.filterSection}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
+        <OfficialOrganigramViewer />
+
+        {!loading && secretarias.length > 0 && (
+          <motion.section
+            className={styles.explorerNavigation}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            aria-labelledby="explorador-secretarias-title"
+          >
+            <div className={styles.explorerHeading}>
+              <span>Detalle organizacional</span>
+              <h2 id="explorador-secretarias-title">Explorador por Secretaría</h2>
+              <p>Selecciona una secretaría para consultar su estructura interna y sus niveles jerárquicos.</p>
+            </div>
+
+            <div className={styles.filterSection}>
               <div className={styles.chipsRow}>
-                {secretarias.map((s) => (
+                {secretarias.map((secretaria) => (
                   <button
-                    key={s.id}
-                    className={`${styles.secChip}${selectedSec?.id === s.id ? ` ${styles.secChipActive}` : ''}`}
+                    key={secretaria.id}
+                    type="button"
+                    className={`${styles.secChip}${selectedSec?.id === secretaria.id ? ` ${styles.secChipActive}` : ''}`}
                     style={{
-                      '--chip-color': s.color_acento || '#8B0000',
+                      '--chip-color': secretaria.color_acento || '#8B0000',
                     }}
-                    onClick={() => setSelectedSec(s)}
-                    id={`chip-${s.slug}`}
+                    onClick={() => setSelectedSec(secretaria)}
+                    id={`chip-${secretaria.slug}`}
+                    aria-pressed={selectedSec?.id === secretaria.id}
                   >
                     <span
                       className={styles.chipDot}
-                      style={{ background: s.color_acento || '#8B0000' }}
+                      style={{ background: secretaria.color_acento || '#8B0000' }}
                     />
-                    {s.nombre_corto}
+                    {secretaria.nombre_corto}
                   </button>
                 ))}
               </div>
-            </motion.div>
-          )}
-        </div>
-
-        {/* MÓDULO ESPECIAL PREMIUM DEL ORGANIGRAMA GENERAL */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          style={{
-            maxWidth: '1300px',
-            margin: '0 auto 3rem',
-            padding: '2.5rem',
-            background: 'linear-gradient(145deg, #ffffff, #fdfdfd)',
-            border: '1px solid #eaeaea',
-            borderRadius: '24px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.02)',
-            textAlign: 'center',
-            position: 'relative',
-            overflow: 'hidden'
-          }}
-        >
-          {/* Detalles decorativos */}
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '6px', background: 'linear-gradient(90deg, #8B0000, #C21807)' }} />
-          <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'radial-gradient(circle, rgba(139,0,0,0.04) 0%, rgba(255,255,255,0) 70%)', borderRadius: '50%' }} />
-
-          <h2 style={{ 
-            fontSize: '1.8rem', 
-            fontWeight: 800, 
-            color: '#1a1a1a', 
-            marginBottom: '0.5rem',
-            letterSpacing: '-0.03em'
-          }}>
-            Estructura Organizacional del Gobierno Autónomo Departamental de Oruro
-          </h2>
-          <p style={{ color: '#666', marginBottom: '2.5rem', fontSize: '1.05rem' }}>
-            Aprobada mediante normativa vigente. Jerarquía administrativa, secretarías, direcciones y unidades desconcentradas.
-          </p>
-
-          <div style={{
-            background: '#fcfcfc',
-            border: '1px solid #f0f0f0',
-            borderRadius: '16px',
-            padding: '1rem',
-            boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.02)'
-          }}>
-            <img
-              src="/organigrama-oficial-nuevo.png"
-              alt="Organigrama Institucional GADOR"
-              style={{ 
-                maxWidth: '100%', 
-                height: 'auto', 
-                borderRadius: '8px',
-                display: 'block',
-                margin: '0 auto'
-              }}
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-            {/* Fallback si la imagen no está */}
-            <div style={{
-              display: 'none',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '4rem 2rem',
-              background: '#f8f9fa',
-              borderRadius: '8px',
-              border: '2px dashed #d1d5db'
-            }}>
-              <span style={{ fontSize: '3rem', marginBottom: '1rem' }}>🖼️</span>
-              <h3 style={{ color: '#4b5563', margin: '0 0 0.5rem' }}>Falta la imagen del Organigrama</h3>
-              <p style={{ color: '#6b7280', margin: 0 }}>Guarda la imagen de tu computadora como <strong>organigrama-oficial-nuevo.png</strong> dentro de la carpeta <strong>public</strong> del proyecto para que aparezca aquí de forma automática.</p>
             </div>
-          </div>
-          
-          <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-             <a
-                href="/organigrama-oficial-nuevo.png"
-                download
-                className="btn btn-primary"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.75rem 1.5rem',
-                  background: '#8B0000',
-                  color: '#fff',
-                  borderRadius: '12px',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  transition: 'all 0.2s',
-                  boxShadow: '0 4px 12px rgba(139,0,0,0.2)'
-                }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                Descargar Organigrama
-              </a>
-          </div>
-        </motion.div>
-
-        {!loading && secretarias.length > 0 && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', margin: '4rem 0 2rem' }}>
-            <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, #ddd)', flex: 1, maxWidth: '200px' }} />
-            <h3 style={{ textAlign: 'center', color: '#8b0000', fontWeight: 700, margin: 0, fontSize: '1.2rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              Explorador Interactivo Detallado
-            </h3>
-            <div style={{ height: '1px', background: 'linear-gradient(270deg, transparent, #ddd)', flex: 1, maxWidth: '200px' }} />
-          </div>
+          </motion.section>
         )}
 
         {/* Carga */}

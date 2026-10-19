@@ -585,7 +585,7 @@ const municipiosBase = [
         tipo: 'escudo',
       },
       {
-        src: '/images/municipios/corque/lugar-corque.png',
+        src: '/images/municipios/corque/lugar-corque.webp',
         alt: 'Templo de San Juan Bautista de Corque',
         titulo: 'Templo de San Juan Bautista',
         tipo: 'turismo',
@@ -804,7 +804,7 @@ const municipiosBase = [
         tipo: 'escudo',
       },
       {
-        src: '/images/municipios/huayllamarca/lugar-nor-carangas.png',
+        src: '/images/municipios/huayllamarca/lugar-nor-carangas.webp',
         alt: 'Paisaje representativo de Nor Carangas',
         titulo: 'Paisaje de la Provincia Nor Carangas',
         tipo: 'turismo',
@@ -1164,7 +1164,7 @@ const municipiosBase = [
         tipo: 'escudo',
       },
       {
-        src: '/images/municipios/pampa-aullagas/lugar-pampa-aullagas.png',
+        src: '/images/municipios/pampa-aullagas/lugar-pampa-aullagas.webp',
         alt: 'Paisaje representativo de Pampa Aullagas',
         titulo: 'Paisaje de Pampa Aullagas',
         tipo: 'turismo',
@@ -1469,7 +1469,7 @@ const municipiosBase = [
         tipo: 'escudo',
       },
       {
-        src: '/images/municipios/choquecota/lugar-choquecota.png',
+        src: '/images/municipios/choquecota/lugar-choquecota.webp',
         alt: 'Paisaje y patrimonio de Choquecota',
         titulo: 'Paisaje y patrimonio de Choquecota',
         tipo: 'turismo',
