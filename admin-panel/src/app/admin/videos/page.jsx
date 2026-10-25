@@ -17,6 +17,8 @@ function getYouTubeId(value) {
   return null;
 }
 
+const POR_PAGINA = 8;
+
 export default function VideosPage() {
   const [supabase] = useState(() => createClient());
   const [videos, setVideos] = useState([]);
@@ -24,6 +26,7 @@ export default function VideosPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState(null);
+  const [pagina, setPagina] = useState(0);
 
   useEffect(() => {
     supabase
@@ -44,11 +47,13 @@ export default function VideosPage() {
     if (!getYouTubeId(url)) return setMsg({ type: 'error', text: 'Ingresa un enlace válido de YouTube (youtube.com o youtu.be).' });
     if (videos.includes(url)) return setMsg({ type: 'error', text: 'Ese video ya está en la lista.' });
     setVideos(prev => [...prev, url]);
+    setPagina(0);
     setNuevo('');
   };
 
   const quitar = (url) => setVideos(prev => prev.filter(v => v !== url));
 
+  // `i` es la posición real en el arreglo (0 = más antiguo). En pantalla se muestra al revés.
   const mover = (i, dir) => setVideos(prev => {
     const j = i + dir;
     if (j < 0 || j >= prev.length) return prev;
@@ -75,12 +80,21 @@ export default function VideosPage() {
     }
   };
 
+  const total = videos.length;
+  const totalPaginas = Math.max(1, Math.ceil(total / POR_PAGINA));
+  const paginaActual = Math.min(pagina, totalPaginas - 1);
+  // Más nuevos primero: se invierte una copia y se corta la página
+  const visibles = [...videos]
+    .map((url, idx) => ({ url, idx }))
+    .reverse()
+    .slice(paginaActual * POR_PAGINA, (paginaActual + 1) * POR_PAGINA);
+
   const card = { background: 'var(--admin-surface)', border: '1px solid var(--admin-border)', borderRadius: '14px', padding: '1.25rem' };
 
   return (
     <div className="adminPage" style={{ maxWidth: '860px' }}>
       <h1 className="adminTitle">▶ Videos de YouTube</h1>
-      <p className="adminSubtitle">Videos destacados que aparecen en la página principal del portal.</p>
+      <p className="adminSubtitle">Videos destacados de la página principal. Se muestran del más reciente al más antiguo; los nuevos aparecen arriba.</p>
 
       {msg && (
         <div style={{
@@ -107,7 +121,7 @@ export default function VideosPage() {
         <div style={{ ...card, color: 'var(--admin-text-muted)', textAlign: 'center' }}>Aún no hay videos. Agrega el primero arriba.</div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-          {videos.map((url, i) => {
+          {visibles.map(({ url, idx: i }) => {
             const id = getYouTubeId(url);
             return (
               <div key={url} style={{ ...card, display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -115,15 +129,30 @@ export default function VideosPage() {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={`https://i.ytimg.com/vi/${id}/mqdefault.jpg`} alt="" width={160} height={90} style={{ borderRadius: '8px', objectFit: 'cover' }} />
                 )}
-                <a href={url} target="_blank" rel="noopener noreferrer" style={{ flex: 1, minWidth: '180px', color: 'var(--admin-text)', wordBreak: 'break-all', fontSize: '0.85rem' }}>{url}</a>
+                <div style={{ flex: 1, minWidth: '180px' }}>
+                  <span style={{ display: 'inline-block', marginBottom: '0.25rem', padding: '0.1rem 0.55rem', borderRadius: '99px', fontSize: '0.7rem', fontWeight: 700, background: 'var(--admin-surface-2)', color: 'var(--admin-text-muted)' }}>
+                    {i === total - 1 ? 'Más reciente · ' : ''}Video n.º {i + 1}
+                  </span>
+                  <a href={url} target="_blank" rel="noopener noreferrer" style={{ display: 'block', color: 'var(--admin-text)', wordBreak: 'break-all', fontSize: '0.85rem' }}>{url}</a>
+                </div>
                 <div style={{ display: 'flex', gap: '0.4rem' }}>
-                  <button type="button" className="btnSecondary" onClick={() => mover(i, -1)} disabled={i === 0} aria-label="Subir">↑</button>
-                  <button type="button" className="btnSecondary" onClick={() => mover(i, 1)} disabled={i === videos.length - 1} aria-label="Bajar">↓</button>
+                  <button type="button" className="btnSecondary" onClick={() => mover(i, 1)} disabled={i === total - 1} aria-label="Subir (más reciente)">↑</button>
+                  <button type="button" className="btnSecondary" onClick={() => mover(i, -1)} disabled={i === 0} aria-label="Bajar (más antiguo)">↓</button>
                   <button type="button" className="btnDanger" onClick={() => quitar(url)}>Quitar</button>
                 </div>
               </div>
             );
           })}
+        </div>
+      )}
+
+      {!loading && totalPaginas > 1 && (
+        <div style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <button type="button" className="btnSecondary" onClick={() => setPagina(paginaActual - 1)} disabled={paginaActual === 0}>← Más recientes</button>
+          <span style={{ fontSize: '0.82rem', color: 'var(--admin-text-muted)' }}>
+            Página {paginaActual + 1} de {totalPaginas} · {total} videos
+          </span>
+          <button type="button" className="btnSecondary" onClick={() => setPagina(paginaActual + 1)} disabled={paginaActual >= totalPaginas - 1}>Más antiguos →</button>
         </div>
       )}
 
