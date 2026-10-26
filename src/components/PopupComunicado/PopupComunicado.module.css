@@ -6,11 +6,10 @@
   place-items: center;
   overflow: hidden;
   padding: 1rem;
-  background:
-    linear-gradient(115deg, rgba(31, 39, 50, 0.84), rgba(9, 14, 22, 0.9)),
-    rgba(12, 17, 25, 0.9);
-  backdrop-filter: blur(14px) saturate(70%);
-  -webkit-backdrop-filter: blur(14px) saturate(70%);
+  /* Fondo translúcido: la página se sigue viendo detrás del comunicado */
+  background: rgba(15, 23, 42, 0.42);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 .overlay::before {
@@ -18,7 +17,7 @@
   inset: 0;
   pointer-events: none;
   content: '';
-  opacity: 0.22;
+  opacity: 0;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
