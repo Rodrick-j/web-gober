@@ -19,9 +19,16 @@ const INITIAL_SOCIAL = {
 
 const INITIAL_NOTICE = {
   activo: false,
-  imagen_url: '',
-  enlace: '',
 };
+
+const MAX_COMUNICADOS = 5;
+let comunicadoSeq = 0;
+const nuevoComunicado = (datos = {}) => ({
+  id: `c${Date.now()}_${comunicadoSeq++}`,
+  imagen_url: datos.imagen_url || '',
+  enlace: datos.enlace || '',
+  file: null,
+});
 
 const INITIAL_CONTACT = {
   direccion: '',
@@ -144,7 +151,7 @@ export default function ConfiguracionPage() {
   const [nuevoMensaje, setNuevoMensaje] = useState('');
   const [redes, setRedes] = useState(INITIAL_SOCIAL);
   const [comunicado, setComunicado] = useState(INITIAL_NOTICE);
-  const [comunicadoFile, setComunicadoFile] = useState(null);
+  const [comunicados, setComunicados] = useState([]);
   const [contacto, setContacto] = useState(INITIAL_CONTACT);
   const [videosInicio, setVideosInicio] = useState([]);
   const [nuevoVideo, setNuevoVideo] = useState('');
@@ -186,11 +193,12 @@ export default function ConfiguracionPage() {
         instagram: social.instagram || '',
         tiktok: social.tiktok || '',
       });
-      setComunicado({
-        activo: Boolean(notice.activo),
-        imagen_url: notice.imagen_url || '',
-        enlace: notice.enlace || '',
-      });
+      setComunicado({ activo: Boolean(notice.activo) });
+      // Formato nuevo: lista de comunicados. Formato anterior: un solo imagen_url/enlace.
+      const guardados = Array.isArray(notice.comunicados) && notice.comunicados.length
+        ? notice.comunicados
+        : (notice.imagen_url ? [{ imagen_url: notice.imagen_url, enlace: notice.enlace }] : []);
+      setComunicados(guardados.slice(0, MAX_COMUNICADOS).map(nuevoComunicado));
       setVideosInicio(
         Array.isArray(homeVideo.urls) ? homeVideo.urls : (homeVideo.url ? [homeVideo.url] : []),
       );
@@ -271,14 +279,20 @@ export default function ConfiguracionPage() {
       const latitude = parseCoordinate(contacto.latitud, 'latitud');
       const longitude = parseCoordinate(contacto.longitud, 'longitud');
 
-      let finalImageUrl = comunicado.imagen_url;
-      if (comunicadoFile) {
-        finalImageUrl = await withTimeout(
-          uploadFile(comunicadoFile, 'general'),
-          45000,
-          'La imagen tardó demasiado en subir. Intenta nuevamente.',
-        );
+      // Sube las imágenes nuevas de cada comunicado y arma la lista final
+      const comunicadosFinales = [];
+      for (const item of comunicados) {
+        let imagen = item.imagen_url;
+        if (item.file) {
+          imagen = await withTimeout(
+            uploadFile(item.file, 'general'),
+            45000,
+            'Una imagen tardó demasiado en subir. Intenta nuevamente.',
+          );
+        }
+        if (imagen) comunicadosFinales.push({ ...item, imagen_url: imagen, file: null });
       }
+      const lista = comunicadosFinales.map(({ imagen_url, enlace }) => ({ imagen_url, enlace: enlace.trim() }));
 
       const rows = [
         {
@@ -297,8 +311,10 @@ export default function ConfiguracionPage() {
           valor: {
             ...safeObject(configSnapshot.comunicado_popup),
             activo: comunicado.activo,
-            imagen_url: finalImageUrl,
-            enlace: comunicado.enlace.trim(),
+            comunicados: lista,
+            // Compatibilidad: el primero también se guarda en los campos antiguos
+            imagen_url: lista[0]?.imagen_url || '',
+            enlace: lista[0]?.enlace || '',
           },
         },
         {
@@ -331,8 +347,7 @@ export default function ConfiguracionPage() {
 
       await revalidateConfig();
       setVelocidad(parsedSpeed);
-      setComunicado((current) => ({ ...current, imagen_url: finalImageUrl }));
-      setComunicadoFile(null);
+      setComunicados(comunicadosFinales);
       setConfigSnapshot((current) => ({
         ...current,
         ...Object.fromEntries(rows.map((row) => [row.clave, row.valor])),
@@ -512,21 +527,42 @@ export default function ConfiguracionPage() {
         <section id="comunicado" className={`${styles.panel} ${styles.widePanel} ${styles.noticePanel}`}>
           <div className={styles.panelHeader}>
             <span className={`${styles.panelIcon} ${styles.redIcon}`}><SectionIcon name="image" /></span>
-            <div><span>Contenido visual prioritario</span><h2>Imagen emergente de inicio</h2><p>Gestiona el comunicado que recibe al ciudadano al ingresar al portal.</p></div>
+            <div><span>Contenido visual prioritario</span><h2>Imagen emergente de inicio</h2><p>Hasta {MAX_COMUNICADOS} comunicados, cada uno con su propio enlace. Con más de uno se muestran como carrusel.</p></div>
             <button type="button" role="switch" aria-checked={comunicado.activo} className={`${styles.switch} ${comunicado.activo ? styles.switchActive : ''}`} onClick={() => setComunicado((current) => ({ ...current, activo: !current.activo }))}><i /><span>{comunicado.activo ? 'Activo' : 'Inactivo'}</span></button>
           </div>
-          <div className={`${styles.panelBody} ${styles.noticeGrid}`}>
-            <div className={styles.uploadColumn}>
-              <div className={styles.noticeInfo}><strong>Recomendación de imagen</strong><p>Usa formato WebP, JPG o PNG, composición vertical u horizontal y un peso menor a 5 MB.</p></div>
-              <FileUpload onFileSelect={setComunicadoFile} accept="image/*" label="Seleccionar nueva imagen" icon="＋" maxSizeMB={5} />
-              <label className={styles.linkField}><span>Enlace al hacer clic <small>Opcional</small></span><input type="url" value={comunicado.enlace} onChange={(event) => setComunicado((current) => ({ ...current, enlace: event.target.value }))} placeholder="https://..." /></label>
+          <div className={styles.panelBody}>
+            <div className={styles.noticeInfo}><strong>Recomendación de imagen</strong><p>Usa formato WebP, JPG o PNG, composición vertical u horizontal y un peso menor a 5 MB.</p></div>
+
+            <div className={styles.comunicadosList}>
+              {comunicados.length === 0 && (
+                <div className={styles.emptyPreview}><SectionIcon name="image" /><strong>No hay comunicados cargados</strong><span>Agrega el primero con el botón de abajo.</span></div>
+              )}
+              {comunicados.map((item, index) => (
+                <div key={item.id} className={styles.comunicadoCard}>
+                  <div className={styles.comunicadoHead}>
+                    <strong>Comunicado {index + 1}</strong>
+                    <button type="button" className={styles.removeButton} onClick={() => setComunicados((current) => current.filter((c) => c.id !== item.id))}>Quitar</button>
+                  </div>
+                  <div className={styles.comunicadoBody}>
+                    <div className={styles.comunicadoThumb}>
+                      {item.imagen_url
+                        ? <Image src={item.imagen_url} alt={`Comunicado ${index + 1} actual`} fill sizes="200px" />
+                        : <span>Sin imagen</span>}
+                    </div>
+                    <div className={styles.comunicadoFields}>
+                      <FileUpload onFileSelect={(file) => setComunicados((current) => current.map((c) => (c.id === item.id ? { ...c, file } : c)))} accept="image/*" label={item.imagen_url ? 'Reemplazar imagen' : 'Seleccionar imagen'} icon="＋" maxSizeMB={5} />
+                      <label className={styles.linkField}><span>Enlace al hacer clic <small>Opcional</small></span><input type="url" value={item.enlace} onChange={(event) => setComunicados((current) => current.map((c) => (c.id === item.id ? { ...c, enlace: event.target.value } : c)))} placeholder="https://..." /></label>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className={styles.currentPreview}>
-              <div className={styles.previewHeader}><div><span>Vista publicada</span><strong>{comunicado.imagen_url ? 'Imagen actual' : 'Sin imagen'}</strong></div><em className={comunicado.activo ? styles.activeStatus : styles.inactiveStatus}><i />{comunicado.activo ? 'Visible en inicio' : 'No visible'}</em></div>
-              <div className={styles.previewFrame}>
-                {comunicado.imagen_url ? <Image src={comunicado.imagen_url} alt="Vista previa del comunicado actual" fill sizes="(max-width: 900px) 100vw, 42vw" priority={false} /> : <div className={styles.emptyPreview}><SectionIcon name="image" /><strong>No existe una imagen publicada</strong><span>Selecciona un archivo para preparar el comunicado.</span></div>}
-                {comunicado.imagen_url && <span className={styles.previewLabel}>Portal institucional · Inicio</span>}
-              </div>
+
+            <div className={styles.comunicadosFooter}>
+              <button type="button" className={styles.addButton} onClick={() => setComunicados((current) => [...current, nuevoComunicado()])} disabled={comunicados.length >= MAX_COMUNICADOS}>
+                + Agregar comunicado
+              </button>
+              <span>{comunicados.length} de {MAX_COMUNICADOS} · <em className={comunicado.activo ? styles.activeStatus : styles.inactiveStatus}>{comunicado.activo ? 'Visible en inicio' : 'No visible'}</em></span>
             </div>
           </div>
         </section>

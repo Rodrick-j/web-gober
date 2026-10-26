@@ -39,8 +39,6 @@ const institucionGroups = [
     title: 'Acerca de Nosotros',
     items: [
       { label: 'Historia, Misión y Visión', Icon: Landmark, href: '/institucion/historia-institucion' },
-      { label: 'Datos de Municipio', Icon: BookOpen, href: '/institucion/historia' },
-      { label: 'Geoportal de Oruro', Icon: Map, href: '/geoportal', disabled: true },
       { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
     ],
   },

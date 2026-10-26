@@ -448,3 +448,17 @@
   .page *,
   .statePage * { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* ── Varios comunicados (popup de inicio) ── */
+.comunicadosList { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+.comunicadoCard { padding: 1rem; border: 1px solid var(--admin-border); border-radius: 14px; background: var(--admin-surface-2); }
+.comunicadoHead { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; color: var(--admin-text); font-size: .85rem; }
+.removeButton { padding: .35rem .8rem; border: 1px solid rgba(239, 68, 68, .4); border-radius: 8px; background: rgba(239, 68, 68, .1); color: #ef4444; font-size: .75rem; font-weight: 700; cursor: pointer; }
+.comunicadoBody { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 1rem; align-items: start; }
+.comunicadoThumb { position: relative; min-height: 190px; overflow: hidden; border-radius: 10px; background: #090c12; display: grid; place-items: center; color: var(--admin-text-muted); font-size: .75rem; }
+.comunicadoThumb > img { object-fit: contain; }
+.comunicadoFields { display: flex; flex-direction: column; gap: .75rem; min-width: 0; }
+.comunicadosFooter { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; color: var(--admin-text-muted); font-size: .8rem; }
+.addButton { padding: .65rem 1.1rem; border: 1px dashed rgba(239, 41, 74, .55); border-radius: 10px; background: rgba(239, 41, 74, .08); color: var(--admin-text); font-weight: 700; cursor: pointer; }
+.addButton:disabled { opacity: .45; cursor: not-allowed; }
+@media (max-width: 700px) { .comunicadoBody { grid-template-columns: 1fr; } .comunicadoThumb { min-height: 220px; } }

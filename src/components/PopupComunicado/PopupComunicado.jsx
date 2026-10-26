@@ -1,19 +1,34 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import styles from './PopupComunicado.module.css';
 
 const DEFAULT_IMAGE_RATIO = 4 / 5;
+const MAX_COMUNICADOS = 5;
+const INTERVALO_MS = 7000;
 
 export default function PopupComunicado({ config }) {
   const [isVisible, setIsVisible] = useState(false);
   const [imageRatio, setImageRatio] = useState(DEFAULT_IMAGE_RATIO);
+  const [indice, setIndice] = useState(0);
+  const [pausado, setPausado] = useState(false);
   const prefersReducedMotion = useReducedMotion();
 
+  // Lista de comunicados (hasta 5). Si solo existe el formato antiguo, se usa ese único comunicado.
+  const lista = useMemo(() => {
+    const nuevos = Array.isArray(config?.comunicados)
+      ? config.comunicados.filter((c) => c?.imagen_url)
+      : [];
+    if (nuevos.length) return nuevos.slice(0, MAX_COMUNICADOS);
+    return config?.imagen_url ? [{ imagen_url: config.imagen_url, enlace: config.enlace || '' }] : [];
+  }, [config]);
+  const total = lista.length;
+  const actual = lista[Math.min(indice, Math.max(total - 1, 0))];
+
   useEffect(() => {
-    if (!config?.activo || !config?.imagen_url) {
+    if (!config?.activo || total === 0) {
       return;
     }
 
@@ -26,7 +41,19 @@ export default function PopupComunicado({ config }) {
       const timer = window.setTimeout(() => setIsVisible(true), delayTime);
       return () => window.clearTimeout(timer);
     }
-  }, [config]);
+  }, [config, total]);
+
+  const irA = useCallback((i) => {
+    setImageRatio(DEFAULT_IMAGE_RATIO);
+    setIndice(((i % total) + total) % total);
+  }, [total]);
+
+  // Carrusel automático (solo con más de un comunicado)
+  useEffect(() => {
+    if (!isVisible || total < 2 || pausado || prefersReducedMotion) return undefined;
+    const timer = window.setInterval(() => irA(indice + 1), INTERVALO_MS);
+    return () => window.clearInterval(timer);
+  }, [isVisible, total, pausado, prefersReducedMotion, indice, irA]);
 
   const handleClose = useCallback(() => {
     setIsVisible(false);
@@ -43,6 +70,8 @@ export default function PopupComunicado({ config }) {
     const previousOverflow = document.body.style.overflow;
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') handleClose();
+      if (total > 1 && event.key === 'ArrowRight') irA(indice + 1);
+      if (total > 1 && event.key === 'ArrowLeft') irA(indice - 1);
     };
 
     document.body.style.overflow = 'hidden';
@@ -52,20 +81,20 @@ export default function PopupComunicado({ config }) {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [handleClose, isVisible]);
+  }, [handleClose, isVisible, total, indice, irA]);
 
   const title = config?.titulo?.trim() || 'Comunicado Oficial';
-  const destinationUrl = config?.enlace || config?.imagen_url;
-  const actionLabel = config?.enlace ? 'Consultar información' : 'Ver documento completo';
+  const destinationUrl = actual?.enlace || actual?.imagen_url;
+  const actionLabel = actual?.enlace ? 'Consultar información' : 'Ver documento completo';
   const formatClass = imageRatio > 1.15
     ? styles.landscape
     : imageRatio < 0.9
       ? styles.portrait
       : styles.square;
-  const ContentWrapper = config?.enlace ? 'a' : 'div';
-  const wrapperProps = config?.enlace
+  const ContentWrapper = actual?.enlace ? 'a' : 'div';
+  const wrapperProps = actual?.enlace
     ? {
-        href: config.enlace,
+        href: actual.enlace,
         target: '_blank',
         rel: 'noopener noreferrer',
         className: `${styles.imageLink} ${styles.imageLinkInteractive}`,
@@ -162,11 +191,22 @@ export default function PopupComunicado({ config }) {
                 <span>Publicación de interés público</span>
               </div>
 
-              <div className={styles.documentViewport}>
+              <div
+                className={styles.documentViewport}
+                onMouseEnter={() => setPausado(true)}
+                onMouseLeave={() => setPausado(false)}
+              >
+                <motion.div
+                  key={indice}
+                  className={styles.slide}
+                  initial={prefersReducedMotion ? false : { opacity: 0, x: 24 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.35, ease: 'easeOut' }}
+                >
                 <ContentWrapper {...wrapperProps}>
                   <div className={styles.imageWrapper}>
                     <Image
-                      src={config.imagen_url}
+                      src={actual.imagen_url}
                       alt={title}
                       fill
                       sizes="(max-width: 640px) 94vw, 960px"
@@ -182,6 +222,31 @@ export default function PopupComunicado({ config }) {
                     />
                   </div>
                 </ContentWrapper>
+                </motion.div>
+
+                {total > 1 && (
+                  <>
+                    <button type="button" className={`${styles.navArrow} ${styles.navPrev}`} onClick={() => irA(indice - 1)} aria-label="Comunicado anterior">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m15 6-6 6 6 6" /></svg>
+                    </button>
+                    <button type="button" className={`${styles.navArrow} ${styles.navNext}`} onClick={() => irA(indice + 1)} aria-label="Comunicado siguiente">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="m9 6 6 6-6 6" /></svg>
+                    </button>
+                    <div className={styles.dots} role="tablist" aria-label="Comunicados">
+                      {lista.map((_, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          role="tab"
+                          aria-selected={i === indice}
+                          aria-label={`Comunicado ${i + 1} de ${total}`}
+                          className={`${styles.dot} ${i === indice ? styles.dotActive : ''}`}
+                          onClick={() => irA(i)}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
