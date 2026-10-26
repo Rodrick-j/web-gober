@@ -56,8 +56,8 @@ export default async function Home() {
   const { banners, configData, secretarias, ultimasNoticias, ultimosDocumentos, comunicadosRapidos } = await getCachedHomeData();
 
   const tickerConfig = configData?.find(c => c.clave === 'ticker_noticias')?.valor || { velocidad_segundos: 60, mensajes: [] };
-  const contactoConfig = configData?.find(c => c.clave === 'contacto_oficial')?.valor || { direccion: 'Calle Presidente Montes, entre Bolívar y Adolfo Mier, Oruro', telefono: '(591-2) 5270-000', email: 'contacto@oruro.gob.bo', latitud: -17.969520017575668, longitud: -67.11512711053955 };
-  const redesConfig = configData?.find(c => c.clave === 'redes_sociales')?.valor || { facebook: '#', twitter: '#', youtube: '#', instagram: '#', tiktok: '#' };
+  const contactoConfig = configData?.find(c => c.clave === 'contacto_oficial')?.valor || { direccion: 'Oficina central: Plaza 10 de Febrero, Calle Presidente Montes entre Bolívar y Adolfo Mier, Oruro', telefono: '(+591) 52-50319', fax: '(+591) 52-55467', email: 'gador@oruro.gob.bo', latitud: -17.969520017575668, longitud: -67.11512711053955 };
+  const redesConfig = configData?.find(c => c.clave === 'redes_sociales')?.valor || { facebook: '#', twitter: '#', youtube: '#', instagram: 'https://www.instagram.com/infounicom.gador/', tiktok: '#' };
   const comunicadoConfig = configData?.find(c => c.clave === 'comunicado_popup')?.valor || { activo: false, imagen_url: '', enlace: '' };
   const videoInicioConfig = configData?.find(c => c.clave === 'video_inicio')?.valor || { urls: ['https://youtu.be/p_RYdGArBqE'] };
   const videoUrls = videoInicioConfig.urls || (videoInicioConfig.url ? [videoInicioConfig.url] : []);

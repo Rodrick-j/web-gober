@@ -124,7 +124,7 @@ export default async function NoticiaDetailPage({ params }) {
     .select('valor')
     .eq('clave', 'redes_sociales')
     .single();
-  const redesGobernacion = configData?.valor || { facebook: '#', instagram: '#', tiktok: '#', youtube: '#' };
+  const redesGobernacion = configData?.valor || { facebook: '#', instagram: 'https://www.instagram.com/infounicom.gador/', tiktok: '#', youtube: '#' };
 
   const fechaStr = formatFecha(noticia.fecha_publicacion, {
     weekday: 'long',

@@ -40,14 +40,14 @@ const institucionGroups = [
     items: [
       { label: 'Historia, Misión y Visión', Icon: Landmark, href: '/institucion/historia-institucion' },
       { label: 'Datos de Municipio', Icon: BookOpen, href: '/institucion/historia' },
-      { label: 'Geoportal de Oruro', Icon: Map, href: '/geoportal' },
+      { label: 'Geoportal de Oruro', Icon: Map, href: '/geoportal', disabled: true },
       { label: 'Organigrama', Icon: GitMerge, href: '/institucion/organigrama' },
     ],
   },
   {
     title: 'Planificación',
     items: [
-      { label: 'Plan Estratégico Institucional', Icon: ScrollText, href: '/institucion/plan-estrategico' },
+      { label: 'Plan Estratégico Institucional', Icon: ScrollText, href: '/institucion/plan-estrategico', disabled: true },
       { label: 'Seguimiento al POA', Icon: ClipboardList, href: '/institucion/seguimiento-poa' },
       { label: 'Marco Normativo', Icon: Scale, href: '/institucion/marco-normativo' },
     ],
@@ -438,10 +438,17 @@ export default function Navbar() {
                             <div key={group.title} className={styles.groupColumn}>
                               <span className={styles.groupTitle}>{group.title}</span>
                               {group.items.map((child) => (
-                                <Link key={child.label} href={child.href} className={styles.groupLink} onClick={() => setActiveDropdown(null)}>
-                                  <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
-                                  {child.label}
-                                </Link>
+                                child.disabled ? (
+                                  <span key={child.label} className={`${styles.groupLink} ${styles.linkDisabled}`} aria-disabled="true" title="Próximamente">
+                                    <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
+                                    {child.label}
+                                  </span>
+                                ) : (
+                                  <Link key={child.label} href={child.href} className={styles.groupLink} onClick={() => setActiveDropdown(null)}>
+                                    <span className={styles.dropdownEmoji}><child.Icon size={16} strokeWidth={2.2} /></span>
+                                    {child.label}
+                                  </Link>
+                                )
                               ))}
                             </div>
                           ))
@@ -584,9 +591,15 @@ export default function Navbar() {
                                         transition={{ duration: 0.16, ease: 'easeOut' }}
                                       >
                                         {group.items.map((child) => (
-                                          <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={closeMobileMenu}>
-                                            <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
-                                          </Link>
+                                          child.disabled ? (
+                                            <span key={child.label} className={`${styles.mobileSubLink} ${styles.linkDisabled}`} aria-disabled="true" title="Próximamente">
+                                              <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
+                                            </span>
+                                          ) : (
+                                            <Link key={child.label} href={child.href} className={styles.mobileSubLink} onClick={closeMobileMenu}>
+                                              <span className={styles.navEmoji}><child.Icon size={16} strokeWidth={2.2} /></span> {child.label}
+                                            </Link>
+                                          )
                                         ))}
                                       </motion.div>
                                     )}

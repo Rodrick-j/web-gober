@@ -98,8 +98,13 @@ export default async function Footer() {
     .in('clave', ['redes_sociales', 'contacto_oficial']);
 
   const redes = configRows?.find((row) => row.clave === 'redes_sociales')?.valor
-    || { facebook: '#', twitter: '#', youtube: '#', instagram: '#', tiktok: '#' };
-  const contacto = configRows?.find((row) => row.clave === 'contacto_oficial')?.valor || {};
+    || { facebook: '#', twitter: '#', youtube: '#', instagram: 'https://www.instagram.com/infounicom.gador/', tiktok: '#' };
+  const contacto = configRows?.find((row) => row.clave === 'contacto_oficial')?.valor || {
+    direccion: 'Oficina central: Plaza 10 de Febrero, Calle Presidente Montes entre Bolívar y Adolfo Mier, Oruro',
+    telefono: '(+591) 52-50319',
+    fax: '(+591) 52-55467',
+    email: 'gador@oruro.gob.bo',
+  };
 
   const { data: dbSecretarias } = await supabase
     .from('secretarias')
